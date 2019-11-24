@@ -1,0 +1,1410 @@
+1
+00:00:18,220 --> 00:00:23,340
+so hello everyone welcome to the fifth lecture
+of this week so we are talking about word
+
+2
+00:00:23,340 --> 00:00:29,439
+embeddings so in the last lecture we discussed
+the what is the different ideas behind using
+
+3
+00:00:29,439 --> 00:00:35,710
+word embeddings what what can be some interpretation
+given to the different dimensions here and
+
+4
+00:00:35,710 --> 00:00:39,970
+what are different tasks where you can use
+these word embeddings but we do not go through
+
+5
+00:00:39,970 --> 00:00:44,720
+the learning part how do we actually obtained
+these word embeddings for different words
+
+6
+00:00:44,720 --> 00:00:52,640
+so today in this lecture we will try to discuss
+in detail how do we obtain these embeddings
+
+7
+00:00:52,640 --> 00:00:59,000
+so so in the last lecture we discussed that
+there are two different models for word embeddings
+
+8
+00:00:59,000 --> 00:01:04,330
+so for their main to main models one is continuous
+back away words model and another is skip
+
+9
+00:01:04,330 --> 00:01:10,860
+gram model what is the idea there in continuous
+back of words model using the map neighbor
+
+10
+00:01:10,860 --> 00:01:16,790
+neighboring words i am trying to predict the
+center word in a skip gram model using the
+
+11
+00:01:16,790 --> 00:01:21,329
+center word i am trying to break the neighboring
+words
+
+12
+00:01:21,329 --> 00:01:28,950
+so let us see what we do will c b o w model
+so here let us say we have a prose like this
+
+13
+00:01:28,950 --> 00:01:33,470
+the recently introduced continuous skip gram
+model is an efficient method for learning
+
+14
+00:01:33,470 --> 00:01:39,830
+high quality distributed vector representation
+and so on so that i data that i have so much
+
+15
+00:01:39,830 --> 00:01:46,729
+and i am i am trying to learn representation
+for various words embeddings so at a time
+
+16
+00:01:46,729 --> 00:01:51,200
+i will go through one particular window here
+so i will focus on a word so let us say i
+
+17
+00:01:51,200 --> 00:01:58,700
+am focusing on one ah word like learning ok
+so what i will do i will take a window around
+
+18
+00:01:58,700 --> 00:02:04,190
+that word now window size can vary and this
+can be a hyper parameter that you will choose
+
+19
+00:02:04,190 --> 00:02:09,429
+so you can chose a i will take forward before
+there and forward after that so using these
+
+20
+00:02:09,429 --> 00:02:14,670
+eight words around this word learning i will
+try to predict this word learning so how do
+
+21
+00:02:14,670 --> 00:02:21,879
+we do that so yes so imagine is sliding window
+over the text that includes the central word
+
+22
+00:02:21,879 --> 00:02:26,780
+and with four words that precede and the four
+words that follow it like here learning is
+
+23
+00:02:26,780 --> 00:02:31,500
+my focus word and there are four words before
+it and for words after that and you can also
+
+24
+00:02:31,500 --> 00:02:36,750
+call that as the context words and usually
+the context words you are trying to break
+
+25
+00:02:36,750 --> 00:02:44,980
+the focus word so so this is some sort of
+network representation and how this learning
+
+26
+00:02:44,980 --> 00:02:50,650
+will take place
+so you are seeing here in the input you have
+
+27
+00:02:50,650 --> 00:03:02,190
+a so input you have various column vectors
+so what do i mean y this so here so what you
+
+28
+00:03:02,190 --> 00:03:07,180
+are doing here you are putting in one hot
+encoding as the input so i have this column
+
+29
+00:03:07,180 --> 00:03:22,420
+vector of size v 
+so the column of size v now so v is the size
+
+30
+00:03:22,420 --> 00:03:28,270
+of my vocabulary i have that many words my
+vocabulary so i may not use this only v ok
+
+31
+00:03:28,270 --> 00:03:34,300
+v is the size of my vocabulary now in your
+context your heading having certain word that
+
+32
+00:03:34,300 --> 00:03:38,650
+will be there in the vocabulary so let us
+say this is the index of that word so this
+
+33
+00:03:38,650 --> 00:03:45,350
+input would be everything else a zero and
+this will be one ok so one hot encoding of
+
+34
+00:03:45,350 --> 00:03:52,910
+that word so column vector so like that in
+you are context suppose you have here eight
+
+35
+00:03:52,910 --> 00:04:00,629
+words so we will feed all these eight one
+hot forms so here it might be one here zero
+
+36
+00:04:00,629 --> 00:04:10,069
+here it might be one somewhere and everything
+else zero ok that is your input that you are
+
+37
+00:04:10,069 --> 00:04:24,659
+feeding now using this input then you are
+having a hidden layer this is n dimension
+
+38
+00:04:24,659 --> 00:04:29,050
+ok i remember this n will be important we
+will see what is this n
+
+39
+00:04:29,050 --> 00:04:36,470
+so now the size v now i want to map these
+two this n dimensions so i will have a weight
+
+40
+00:04:36,470 --> 00:04:50,970
+matrix let us set up do one of dimension so
+this is ah v cross one sorry so this you can
+
+41
+00:04:50,970 --> 00:04:57,870
+take it as one cross v so you will have it
+h v cross n ok so that the final representation
+
+42
+00:04:57,870 --> 00:05:09,101
+is n dimensional now so you will have the
+same weight matrix at each input so you will
+
+43
+00:05:09,101 --> 00:05:15,060
+get and then you can take the average of all
+these now from these n dimension you again
+
+44
+00:05:15,060 --> 00:05:30,840
+go to your v dimension this is you are output
+layer so what will be the second weight here
+
+45
+00:05:30,840 --> 00:05:41,340
+this will be n cross v ok see i starting with
+a v dimension going to n dimension and hidden
+
+46
+00:05:41,340 --> 00:05:48,350
+and then going to the v dimension in the output
+now so what you are doing here so before going
+
+47
+00:05:48,350 --> 00:05:52,500
+into what are the connections a network you
+are putting some input there are your context
+
+48
+00:05:52,500 --> 00:05:58,290
+words so suppose you are having eight different
+one hot vectors and whatever happens here
+
+49
+00:05:58,290 --> 00:06:07,740
+finally you are trying to create your ah center
+word this should be your center word ok so
+
+50
+00:06:07,740 --> 00:06:16,789
+what will happen here you will have various
+weights w one w n some numbers you will w
+
+51
+00:06:16,789 --> 00:06:26,060
+v some v different numbers you will get
+and you want to ensure that the actual center
+
+52
+00:06:26,060 --> 00:06:32,110
+word suppose this is my center word this is
+the highest probability and if it is not having
+
+53
+00:06:32,110 --> 00:06:37,590
+the highest probability you will try to modify
+the weights in your network so that it it
+
+54
+00:06:37,590 --> 00:06:41,660
+it gets a higher probability then what is
+getting right now
+
+55
+00:06:41,660 --> 00:06:49,430
+so now let us see what do we mean by all these
+connections ok so what would happen from here
+
+56
+00:06:49,430 --> 00:06:55,820
+so let us go back to the slides so each word
+is encoded in one hot form that is here we
+
+57
+00:06:55,820 --> 00:07:00,400
+have a single hidden layer and an output layer
+so you are having two different weight matrixes
+
+58
+00:07:00,400 --> 00:07:08,180
+one is v cross n another n cross v ok so so
+from input you go to hidden from hidden you
+
+59
+00:07:08,180 --> 00:07:17,259
+go to output output you are trying to predict
+the ah the center word so what is my training
+
+60
+00:07:17,259 --> 00:07:26,050
+object is here so you see i am getting some
+word some numbers for different all my v words
+
+61
+00:07:26,050 --> 00:07:31,639
+at the output layer and this you can think
+of as the probability value and you might
+
+62
+00:07:31,639 --> 00:07:35,770
+have a question that how do i convert these
+numbers to probability we will see that so
+
+63
+00:07:35,770 --> 00:07:41,301
+assume that you having v different probability
+values now you want to maximize the conditional
+
+64
+00:07:41,301 --> 00:07:45,759
+probability of observing the actual output
+word given the input context word with regard
+
+65
+00:07:45,759 --> 00:07:48,490
+to weights
+so you say that i want to maximize the probability
+
+66
+00:07:48,490 --> 00:07:54,800
+that i will obtain the actual what that i
+saw in my input and not any other word so
+
+67
+00:07:54,800 --> 00:07:59,710
+whatever probability i am getting that becomes
+my objective function so i want to maximize
+
+68
+00:07:59,710 --> 00:08:04,360
+this condition probability of output word
+given all my input words and this probability
+
+69
+00:08:04,360 --> 00:08:11,190
+will be express in terms of all these weights
+that i am having in my network so in our example
+
+70
+00:08:11,190 --> 00:08:15,949
+what would happen i am giving this input all
+these eight words an efficient method for
+
+71
+00:08:15,949 --> 00:08:20,210
+high quality distributed vector and i want
+to maximize the probability of getting learning
+
+72
+00:08:20,210 --> 00:08:26,419
+as the output this my centre word
+now so what happens from input to the hidden
+
+73
+00:08:26,419 --> 00:08:32,830
+layer so input we are saying you are feeding
+one hot vectors so if there are eight different
+
+74
+00:08:32,830 --> 00:08:37,330
+input words i am having eight different one
+hot vectors now what do i mean by multi bank
+
+75
+00:08:37,330 --> 00:08:44,360
+this one hot vector with my first weight matrix
+the dimension we cross n so you can think
+
+76
+00:08:44,360 --> 00:08:50,190
+of it like that so you put using an input
+so this is one word and having a corresponding
+
+77
+00:08:50,190 --> 00:08:56,709
+ah element is one that that is my input word
+and you are multiplying it with v cross n
+
+78
+00:08:56,709 --> 00:09:04,160
+weight matrix so this operation is nothing
+like this nothing but you are taking the corresponding
+
+79
+00:09:04,160 --> 00:09:10,160
+row of this matrix this matrix has v different
+rows so these v rows you can think of as if
+
+80
+00:09:10,160 --> 00:09:15,551
+corresponding to v different words in my vocabulary
+so whenever you are feeding a one hot form
+
+81
+00:09:15,551 --> 00:09:21,290
+of one word you are picking up that row ok
+and so you are doing it for a different words
+
+82
+00:09:21,290 --> 00:09:27,769
+so you are picking a different rows in my
+ah initial weight word weight for matrix and
+
+83
+00:09:27,769 --> 00:09:32,889
+then so you are having given c input words
+so activation function for the hidden layer
+
+84
+00:09:32,889 --> 00:09:38,079
+will be simply summing the corresponding hot
+rows so i will pick up the hot rows here that
+
+85
+00:09:38,079 --> 00:09:44,490
+correspond to the input words and divide by
+c so that i have an average representation
+
+86
+00:09:44,490 --> 00:09:50,629
+so now you understand what is going from input
+to hidden layer you are taking ah c different
+
+87
+00:09:50,629 --> 00:09:55,749
+one hot c different rows from your weight
+matrix and averaging those thats what goes
+
+88
+00:09:55,749 --> 00:10:02,910
+in your ah hidden layer now what happendes
+from hidden to output layer so remember we
+
+89
+00:10:02,910 --> 00:10:09,179
+have a ah second weight matrix w two that
+goes from hidden to output layer and its dimension
+
+90
+00:10:09,179 --> 00:10:16,269
+is n cross v so now a hidden layer dimension
+each one cross m so if i multiply this one
+
+91
+00:10:16,269 --> 00:10:22,429
+cross a matrix with this n cross v matrix
+i will get a one cross v matrix ok and that
+
+92
+00:10:22,429 --> 00:10:29,329
+is my output layer so these one cross v matrix
+even think of as having weights for different
+
+93
+00:10:29,329 --> 00:10:37,129
+words in my vocabulary and i want to maximize
+weight for my center word ok so from the hidden
+
+94
+00:10:37,129 --> 00:10:41,170
+layer to output layer the second word matrix
+w two can be used to compute a score for each
+
+95
+00:10:41,170 --> 00:10:48,489
+word in my vocabulary and now so you can obtain
+the weights how do we convert them to probability
+
+96
+00:10:48,489 --> 00:10:53,699
+values and for that you use soft max what
+is the idea of soft max
+
+97
+00:10:53,699 --> 00:11:00,459
+so here you will you get the weights w one
+to w v they can be any real numbers ok now
+
+98
+00:11:00,459 --> 00:11:06,360
+how do you convert that to probability distribution
+so this is a simple idea that is in soft max
+
+99
+00:11:06,360 --> 00:11:16,230
+so in soft max what you do is you are given
+w one to w v and you want to convert that
+
+100
+00:11:16,230 --> 00:11:20,769
+to a probability distribution so you will
+see that i simply multiply all these by so
+
+101
+00:11:20,769 --> 00:11:27,720
+i will put an exponent over these so e to
+the power w one e to the power w v now they
+
+102
+00:11:27,720 --> 00:11:34,149
+are all positive numbers and then to convert
+them to probability i will just divided by
+
+103
+00:11:34,149 --> 00:11:44,740
+summation over e w i for all i ok
+so now this is this will some off to one because
+
+104
+00:11:44,740 --> 00:11:50,889
+this is normalize and these are my probability
+distribution so i have these weights i use
+
+105
+00:11:50,889 --> 00:11:55,860
+a soft max to convert them to probability
+values and then i will try to maximize the
+
+106
+00:11:55,860 --> 00:12:00,269
+probability of my actual center word this
+will become my training objective and based
+
+107
+00:12:00,269 --> 00:12:08,600
+on that i will learn my weights ok so i will
+i will talk a bit about this learning problem
+
+108
+00:12:08,600 --> 00:12:14,000
+in the when i go to the next model of escape
+ground but suppose we have some way of learning
+
+109
+00:12:14,000 --> 00:12:20,269
+these weights and finally i have the optimal
+set of weights w one and w two now where are
+
+110
+00:12:20,269 --> 00:12:28,739
+the word vectors what are your word vectors
+here i am feeding one hot vector this is not
+
+111
+00:12:28,739 --> 00:12:33,819
+being learned this is the same so where are
+my word vectors being learned now if you think
+
+112
+00:12:33,819 --> 00:12:41,069
+about it so what i am learning are the weight
+matter research ok this is off v cross n this
+
+113
+00:12:41,069 --> 00:12:47,809
+is n cross v so i can take a transfer this
+also will become v cross n so you can think
+
+114
+00:12:47,809 --> 00:12:57,019
+of it as if for each word you are learning
+a n dimension representation ok so after you
+
+115
+00:12:57,019 --> 00:13:04,309
+learn this matrix these weight one and wait
+two will correspond to your ah word embeddings
+
+116
+00:13:04,309 --> 00:13:09,920
+ok
+so w one will be of size so w one will be
+
+117
+00:13:09,920 --> 00:13:22,449
+of size v cross n so you can take any vector
+i and get a n dimensional representation and
+
+118
+00:13:22,449 --> 00:13:26,949
+the sign you can also think of as your d d
+dimensional representation ok so for each
+
+119
+00:13:26,949 --> 00:13:31,620
+word you are getting a d dimensional vector
+similarly for w two you will get similarly
+
+120
+00:13:31,620 --> 00:13:41,209
+if you take a transpose you will get a v cross
+n representation and in general what you what
+
+121
+00:13:41,209 --> 00:13:48,350
+you do you can take a ah so you are getting
+two vectors one for from w one one from w
+
+122
+00:13:48,350 --> 00:13:52,889
+two so we can finally combine these two vectors
+you can either concatenate these vectors or
+
+123
+00:13:52,889 --> 00:13:59,499
+the same word or some these over or taken
+average and that works fine so this is the
+
+124
+00:13:59,499 --> 00:14:04,499
+addition about what is the kind of network
+that you use for learning these embeddings
+
+125
+00:14:04,499 --> 00:14:16,040
+ok so these weights are nothing but my embeddings
+that i am learning ok so this is about continuous
+
+126
+00:14:16,040 --> 00:14:20,730
+back of words model now what will happen skip
+gram in a skip gram model the network will
+
+127
+00:14:20,730 --> 00:14:26,639
+slightly change so now i will feed only the
+center word here only one input vector but
+
+128
+00:14:26,639 --> 00:14:31,089
+i will predict multiple contexts words ok
+so now from input to hidden there are only
+
+129
+00:14:31,089 --> 00:14:37,449
+one so the only one input vector but output
+there are multiple vector so let us look at
+
+130
+00:14:37,449 --> 00:14:46,260
+the skip gram model skip gram model is the
+opposite of c b o w model so so you have the
+
+131
+00:14:46,260 --> 00:14:51,929
+center word as the sing single input vector
+and the target context words are at the output
+
+132
+00:14:51,929 --> 00:14:57,870
+layer this is my output layer and you can
+now very easily correlate with what we did
+
+133
+00:14:57,870 --> 00:15:04,120
+in c b o w so the the weights correspond to
+roughly the same idea
+
+134
+00:15:04,120 --> 00:15:11,209
+so now let us formally define so we see how
+in the using the network we can think about
+
+135
+00:15:11,209 --> 00:15:15,769
+the learning how the learning will take place
+and how the weight updates will take place
+
+136
+00:15:15,769 --> 00:15:26,649
+but suppose you want to write it mathematically
+and how do we do that so so yeah this is very
+
+137
+00:15:26,649 --> 00:15:33,470
+analogues to what we find the case of c b
+o w so here from input to hidden layer i am
+
+138
+00:15:33,470 --> 00:15:38,600
+simply copying the row from the weight matrix
+w one so i am having only one input so i will
+
+139
+00:15:38,600 --> 00:15:45,329
+copy only one row and that will go to my hidden
+layer now at the output layer we will have
+
+140
+00:15:45,329 --> 00:15:50,819
+see different distributions and i will try
+to predict the see different context words
+
+141
+00:15:50,819 --> 00:15:56,509
+using my hidden layer and objective is to
+maximize the some prediction errors across
+
+142
+00:15:56,509 --> 00:16:01,279
+all the context version my output layer so
+you want to predict although so i want to
+
+143
+00:16:01,279 --> 00:16:06,540
+maximize the probability for observing my
+actual context words so let us say we have
+
+144
+00:16:06,540 --> 00:16:13,470
+a window where i am having ah small c words
+in the left small c words in the right so
+
+145
+00:16:13,470 --> 00:16:22,040
+what can be my training objective it can be
+i am trying to maximize suppose i take a log
+
+146
+00:16:22,040 --> 00:16:33,440
+probability w t plus a given w t w t is the
+center word and i am going from minus c less
+
+147
+00:16:33,440 --> 00:16:45,049
+than equal to j that is equal to c window
+of size c around j and j is not equal to zero
+
+148
+00:16:45,049 --> 00:16:51,660
+and this i can do for all possibility all
+possible center words and this becomes my
+
+149
+00:16:51,660 --> 00:16:59,199
+training objective ok so we will see that
+so i am predicting surrounding words in the
+
+150
+00:16:59,199 --> 00:17:07,850
+window of length c of each word my objective
+function is i want to maximize the log probability
+
+151
+00:17:07,850 --> 00:17:14,030
+of any context word given the current center
+word so i am trying to maximize this probability
+
+152
+00:17:14,030 --> 00:17:20,860
+probability of w t plus j given w t and sum
+over all the possible context words and then
+
+153
+00:17:20,860 --> 00:17:27,009
+i can sum it over all the possible words in
+my input and this becomes my overall objective
+
+154
+00:17:27,009 --> 00:17:32,090
+so j theta and theta of all the parameters
+all the weight matrix w one and w two that
+
+155
+00:17:32,090 --> 00:17:38,920
+i am trying to learn
+so now this is my objective function and i
+
+156
+00:17:38,920 --> 00:17:47,610
+want to maximize that ah and by doing that
+i want to learn my parameter theta and how
+
+157
+00:17:47,610 --> 00:17:57,639
+do we do that so firstly let us see how will
+be compute these probability probability w
+
+158
+00:17:57,639 --> 00:18:05,019
+t plus j given w t now this will be actually
+you have already seen that in the case of
+
+159
+00:18:05,019 --> 00:18:14,009
+ah using the network but using which ah some
+mathematics can be show that so idea is that
+
+160
+00:18:14,009 --> 00:18:27,720
+let us say i am having a probability for p
+w o given w i w i is my context world and
+
+161
+00:18:27,720 --> 00:18:36,820
+w is the output word that is the i am sorry
+so i i should say as the center word and this
+
+162
+00:18:36,820 --> 00:18:41,539
+is my output word these are all the context
+words ok let us say for a given context words
+
+163
+00:18:41,539 --> 00:18:51,500
+how do we write it and i am saying we can
+write it in this form that is exponent v prime
+
+164
+00:18:51,500 --> 00:19:10,130
+w o transpose v w i divide by sum over w is
+equal to one to capital w v prime w transpose
+
+165
+00:19:10,130 --> 00:19:17,769
+v w i ok and these are formulation of this
+probability and let us try to understand that
+
+166
+00:19:17,769 --> 00:19:22,470
+so whatever different is we have written here
+so one thing you are seeing there is a v and
+
+167
+00:19:22,470 --> 00:19:36,660
+there is a v prime so for each word you have
+two vectors one is v another is v prime so
+
+168
+00:19:36,660 --> 00:19:45,940
+v is for the so v is use only for the input
+center word and v prime is use for output
+
+169
+00:19:45,940 --> 00:19:49,870
+so when i am trying to use the input word
+to pre the output word i will simply take
+
+170
+00:19:49,870 --> 00:19:57,590
+a dot product of these now both both is vector
+like column vectors so v w i will be of this
+
+171
+00:19:57,590 --> 00:20:12,259
+form 
+and v prime w will also be as a column vector
+
+172
+00:20:12,259 --> 00:20:18,419
+so how do i get a number by multiplying these
+two i will take a transpose of this ok and
+
+173
+00:20:18,419 --> 00:20:23,450
+multiplied with this and thats what i am doing
+here v prime w transpose times v w i that
+
+174
+00:20:23,450 --> 00:20:30,879
+gives me single number now this number i want
+to convert to a probability value so then
+
+175
+00:20:30,879 --> 00:20:38,299
+i am using a softmax over that exponent over
+this number divide by i will do it for all
+
+176
+00:20:38,299 --> 00:20:43,350
+the words in output ok so hey thats why i
+have a summation over all the words w is the
+
+177
+00:20:43,350 --> 00:20:47,100
+total number of words in my vocabulary this
+is nothing about a probability distribution
+
+178
+00:20:47,100 --> 00:20:55,820
+and you can see that summation p w o given
+w i for all words w o will add to one because
+
+179
+00:20:55,820 --> 00:21:00,139
+because of this normalization factor so this
+is added to word this is giving me a condition
+
+180
+00:21:00,139 --> 00:21:10,600
+probability of w o given w i now as a simple
+exercise you can also try to see how this
+
+181
+00:21:10,600 --> 00:21:19,139
+number comes from the network that we talked
+about ok so so we had a networking interpretation
+
+182
+00:21:19,139 --> 00:21:25,540
+now we have a simple matrix short of interpretation
+so how they correspond to each other and they
+
+183
+00:21:25,540 --> 00:21:33,620
+use the idea that word one sorry weights one
+and weights two what are these weights weight
+
+184
+00:21:33,620 --> 00:21:43,299
+one correspond to the input and way to correspond
+to output use this idea and see that by using
+
+185
+00:21:43,299 --> 00:21:48,830
+the network also are you getting the same
+form of this probability by putting x softness
+
+186
+00:21:48,830 --> 00:21:53,110
+over the output layer and you will you will
+see that you are actually getting the same
+
+187
+00:21:53,110 --> 00:22:00,019
+form so now i have this formulation w o given
+w i this particular formulation and i put
+
+188
+00:22:00,019 --> 00:22:06,960
+it here for all the words in my context and
+this becomes my j theta
+
+189
+00:22:06,960 --> 00:22:21,710
+this is my objective function now what is
+my objective i want to learn my v an v prime
+
+190
+00:22:21,710 --> 00:22:30,259
+so i will try to learn my v v and v prime
+such that this is optimized and for that there
+
+191
+00:22:30,259 --> 00:22:37,129
+is a simple ah way that is you can use getting
+descent algorithm so you can try to take partial
+
+192
+00:22:37,129 --> 00:22:42,580
+derivative of j theta with respect to each
+of these parameters and update your weights
+
+193
+00:22:42,580 --> 00:22:50,870
+accordingly so so this is the ah probability
+condition probability distribution function
+
+194
+00:22:50,870 --> 00:22:55,070
+that we have found and v n v prime are input
+and output vector representation of the same
+
+195
+00:22:55,070 --> 00:23:01,370
+of the same word w so every word has now two
+vectors
+
+196
+00:23:01,370 --> 00:23:09,049
+so suppose i have d dimensional vectors so
+d is my ah so so d is the dimensional of my
+
+197
+00:23:09,049 --> 00:23:14,700
+hidden layers in network terms or for each
+word what is the representation that we using
+
+198
+00:23:14,700 --> 00:23:20,940
+we using dimension representation so i have
+the many words so what is the size of my parameter
+
+199
+00:23:20,940 --> 00:23:28,690
+theta so i have ah capital v words for each
+word i have been input vector and output vector
+
+200
+00:23:28,690 --> 00:23:35,710
+so there are two v vector and each vector
+of dimension d so i have two d times capital
+
+201
+00:23:35,710 --> 00:23:43,410
+v that many parameter slower this should my
+whole set theta and what is the ah simple
+
+202
+00:23:43,410 --> 00:23:49,309
+gradient descent formula so this is like you
+take the derivative with respect to the ah
+
+203
+00:23:49,309 --> 00:23:57,010
+that particular parameter so so theta j new
+is theta j old minus alpha is my learning
+
+204
+00:23:57,010 --> 00:24:03,249
+date and you take a partial derivative of
+j theta with respect to the parameter when
+
+205
+00:24:03,249 --> 00:24:07,929
+putting the old values
+now i i i am supposing that you know the idea
+
+206
+00:24:07,929 --> 00:24:14,659
+ah gradient descent that is used to optimize
+your minimize a particular function ah so
+
+207
+00:24:14,659 --> 00:24:23,220
+if i want to give this idea very briefly so
+this is like suppose you have a simple function
+
+208
+00:24:23,220 --> 00:24:29,830
+like this and i want to find out for what
+parameter theta of what parameter x will suppose
+
+209
+00:24:29,830 --> 00:24:37,940
+this is a function over x and this my y for
+what value of x this is minimized so what
+
+210
+00:24:37,940 --> 00:24:44,659
+i will do i will start with n e x ok so suppose
+i am starting with this x zero i will find
+
+211
+00:24:44,659 --> 00:24:53,720
+out the value of function so i i go to the
+function so why is suppose f x zero now i
+
+212
+00:24:53,720 --> 00:24:58,280
+want to know what is the value of x where
+there is minimized so what i will do i will
+
+213
+00:24:58,280 --> 00:25:10,200
+take the derivative of the function at this
+point f prime at x zero and so now if i have
+
+214
+00:25:10,200 --> 00:25:14,789
+to minimize if this direction of my gradient
+i have to go in the opposite direction of
+
+215
+00:25:14,789 --> 00:25:26,509
+my gradient so my new value should be x naught
+minus f prime x naught so i will go into opposite
+
+216
+00:25:26,509 --> 00:25:32,929
+direction and i will use some learning rate
+with what rate you will go in this direction
+
+217
+00:25:32,929 --> 00:25:37,950
+and this is simply the idea of you keep on
+doing that so you go somewhere again you find
+
+218
+00:25:37,950 --> 00:25:44,029
+our suppose you are going at this point ok
+so now your gradient will point you to this
+
+219
+00:25:44,029 --> 00:25:49,330
+direction so will try to go in this direction
+again gradient will point you some direction
+
+220
+00:25:49,330 --> 00:25:54,309
+and finally you will converge so this is a
+very simple idea of gradient descent but i
+
+221
+00:25:54,309 --> 00:26:01,009
+will suggest that you have a look at it that
+what is actually the gradient descent
+
+222
+00:26:01,009 --> 00:26:05,700
+so this is simple function but your function
+can be over multiple parameters so like here
+
+223
+00:26:05,700 --> 00:26:16,169
+i have my theta two d v dimension so i have
+two d times capital v many parameters my theta
+
+224
+00:26:16,169 --> 00:26:21,090
+is a function my j theta is a function of
+all these parameters so what i will do i take
+
+225
+00:26:21,090 --> 00:26:24,519
+a partial derivative with respect to each
+of these parameters and accordingly update
+
+226
+00:26:24,519 --> 00:26:34,379
+those parameters and this is how it will look
+like so we are not going in in doing the derivation
+
+227
+00:26:34,379 --> 00:26:38,870
+because that wont be in the scope of this
+course but if you are interested you can try
+
+228
+00:26:38,870 --> 00:26:45,620
+to find out if i derive this form what update
+values do i get for different what vectors
+
+229
+00:26:45,620 --> 00:26:53,529
+how do i update these vectors and now once
+i have done that i have two different vectors
+
+230
+00:26:53,529 --> 00:27:00,100
+v and v prime and i can simply some these
+over and that will give me the final embedding
+
+231
+00:27:00,100 --> 00:27:08,299
+for each word and if you want to understand
+more about how do we learn these parameters
+
+232
+00:27:08,299 --> 00:27:13,179
+so you might have a look at this paper and
+this gives the nice tutorial for parameter
+
+233
+00:27:13,179 --> 00:27:23,330
+learning and also if you want to try out an
+interactive demo so you can try out here
+
+234
+00:27:23,330 --> 00:27:30,259
+now so so what to work is one famous model
+and the such two variation c v w and skip
+
+235
+00:27:30,259 --> 00:27:36,870
+gram and both are used so in some tasks skip
+gram has shown to be better in some c b o
+
+236
+00:27:36,870 --> 00:27:41,350
+w has shown to be better and there are many
+other tricks that i used for learning these
+
+237
+00:27:41,350 --> 00:27:45,450
+parameters that we have not covered i have
+only tried to give you the intuition so i
+
+238
+00:27:45,450 --> 00:27:51,159
+hope you will at least have an idea that how
+these word vectors are learned from my data
+
+239
+00:27:51,159 --> 00:27:55,499
+by just predicting neighboring words from
+the context or context from the neighboring
+
+240
+00:27:55,499 --> 00:28:01,869
+word and what is the embedding so how these
+weight vectors for my embeddings
+
+241
+00:28:01,869 --> 00:28:08,840
+so now there are some other models so one
+other popular model is glove model ok and
+
+242
+00:28:08,840 --> 00:28:14,789
+so so what is a basic cognition of glove model
+when so in this skip gram so i am trying to
+
+243
+00:28:14,789 --> 00:28:23,799
+learn my ah all my embedding from scratch
+ok so in glove model what they are saying
+
+244
+00:28:23,799 --> 00:28:29,040
+so from a coppers you can kind of count the
+co occurrence see know with so thats what
+
+245
+00:28:29,040 --> 00:28:35,360
+we did in the distribution semantics we would
+counting co occurrence now what they are saying
+
+246
+00:28:35,360 --> 00:28:39,179
+so this gives a very good idea about the words
+so which words are similar to what are the
+
+247
+00:28:39,179 --> 00:28:45,279
+words and suppose you find out what is the
+co occurrence probability for any towards
+
+248
+00:28:45,279 --> 00:28:51,530
+now try to make word vectors such that when
+you do a dot product between towards you get
+
+249
+00:28:51,530 --> 00:28:55,090
+close to the actual co occurrence that you
+are seeing in the corpus
+
+250
+00:28:55,090 --> 00:29:00,119
+and by doing that you will get a low dimensional
+representation and also it will take care
+
+251
+00:29:00,119 --> 00:29:04,759
+of the words that are coming very sparsely
+where you do not have enough data in the corpus
+
+252
+00:29:04,759 --> 00:29:09,610
+to predict the co occurrence and this is the
+simple objective function so that is if you
+
+253
+00:29:09,610 --> 00:29:14,460
+look at the objective function so forget word
+f f is a few simple function that that make
+
+254
+00:29:14,460 --> 00:29:19,169
+sure that if certain words are certain co
+occurrence we are very very popular you do
+
+255
+00:29:19,169 --> 00:29:25,340
+not bayes your learning towards those see
+you just clip those at certain point so everything
+
+256
+00:29:25,340 --> 00:29:31,090
+above that will be converted to this one
+now what so this is the main idea here of
+
+257
+00:29:31,090 --> 00:29:37,409
+this glove vectors so you are having in word
+definition for i and j that you want to learn
+
+258
+00:29:37,409 --> 00:29:43,440
+an idea is try to learn them that are that
+such that they are resembling their whatever
+
+259
+00:29:43,440 --> 00:29:47,409
+you get from the co occurrence probability
+so p i j is from the co occurrence you can
+
+260
+00:29:47,409 --> 00:29:53,480
+use either p m i condition probability or
+many other things so find out w i w j such
+
+261
+00:29:53,480 --> 00:29:58,620
+that they are close to this co occurrence
+probability and then we have these objective
+
+262
+00:29:58,620 --> 00:30:04,799
+function and you optimize this objective function
+and try to learn your different weights so
+
+263
+00:30:04,799 --> 00:30:09,190
+so you are trying to combine the best of both
+words using the count based methods and the
+
+264
+00:30:09,190 --> 00:30:14,549
+direct prediction methods and using both of
+these you are trying to come up with your
+
+265
+00:30:14,549 --> 00:30:19,240
+word vectors and these vectors have also become
+very very popular because the training is
+
+266
+00:30:19,240 --> 00:30:25,910
+much more faster then then my skip gram model
+because now you are not going to the each
+
+267
+00:30:25,910 --> 00:30:30,779
+individual word in your and all the windows
+you have already computer the counts now you
+
+268
+00:30:30,779 --> 00:30:38,450
+are only looking at the pairs word pairs and
+one maximizing that and so even with the small
+
+269
+00:30:38,450 --> 00:30:42,019
+corpus and small vectors they have shown very
+good performance
+
+270
+00:30:42,019 --> 00:30:48,440
+so so one good thing is that suppose you want
+to use this vector finding of your task so
+
+271
+00:30:48,440 --> 00:30:54,169
+either word vectors or glove vectors are freely
+available on different websites so what do
+
+272
+00:30:54,169 --> 00:30:59,129
+we already told the website in the previous
+lecture for glove you can go to this stanford
+
+273
+00:30:59,129 --> 00:31:04,049
+website and there you can download code as
+well as the vectors and these vectors you
+
+274
+00:31:04,049 --> 00:31:08,720
+can use for many of your tasks where you are
+trying to find out whether two words are similar
+
+275
+00:31:08,720 --> 00:31:14,120
+or you are trying to find out some analogy
+task a is to b then c is to what and many
+
+276
+00:31:14,120 --> 00:31:21,419
+other application they have been used in so
+i think this is what i had to say for this
+
+277
+00:31:21,419 --> 00:31:27,789
+tropical distribution semantics this is a
+very ah very well growing research field and
+
+278
+00:31:27,789 --> 00:31:34,480
+lot of new thinks happening so i hope whatever
+we have discussed will help you to to also
+
+279
+00:31:34,480 --> 00:31:39,830
+understand the papers in this field if you
+want to going in further depth and also you
+
+280
+00:31:39,830 --> 00:31:45,820
+can try out these ideas for many of your applications
+so in the next week what we will do so we
+
+281
+00:31:45,820 --> 00:31:51,440
+will start with a separate notion of semantics
+that is leska semantics so how to use lexicon
+
+282
+00:31:51,440 --> 00:31:54,950
+to find semantics between words
+thank you
+

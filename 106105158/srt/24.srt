@@ -1,0 +1,1078 @@
+1
+00:00:18,210 --> 00:00:23,910
+so welcome back for the third lecture of this
+week ah in the last lecture we had discussed
+
+2
+00:00:23,910 --> 00:00:27,480
+top down and bottom up parsing approach and
+then finally we came up with the dynamic programming
+
+3
+00:00:27,480 --> 00:00:35,030
+approach of ah using c k y algorithm and we
+converted a grammar to chomsky normal form
+
+4
+00:00:35,030 --> 00:00:44,199
+now how once my grammar is converted to chomsky
+normal form how do i c k y algorithm work
+
+5
+00:00:44,199 --> 00:00:48,700
+so this is the idea
+so i will take a sentence i have n words in
+
+6
+00:00:48,700 --> 00:00:54,530
+my sentence so you will think about n plus
+one lines that are separating them is starting
+
+7
+00:00:54,530 --> 00:01:03,350
+from zero to one ok and so once you have done
+that any x i j will denote words between line
+
+8
+00:01:03,350 --> 00:01:11,399
+i and j and so you you will build up a table
+such that any x i j will contain all the possible
+
+9
+00:01:11,399 --> 00:01:17,860
+non terminal that can derive words between
+the lines i and j ok and you do that bottom
+
+10
+00:01:17,860 --> 00:01:24,630
+up
+so so what i am saying you have word one word
+
+11
+00:01:24,630 --> 00:01:34,930
+two up to word n in your input stream so you
+assume some lines like zero one two n minus
+
+12
+00:01:34,930 --> 00:01:45,719
+one n ok so for example x zero two is words
+w one w two and so on so now what you will
+
+13
+00:01:45,719 --> 00:01:56,850
+you do you build up a table ok and table will
+be some sort of triangular table 
+
+14
+00:01:56,850 --> 00:02:12,140
+so this can be zero one two so this element
+will denote x zero one what are all the non
+
+15
+00:02:12,140 --> 00:02:18,540
+terminals that derive this word between zero
+and one similarly here you will write x one
+
+16
+00:02:18,540 --> 00:02:26,530
+two and so on suppose they want a three words
+so this is x two three ok so we will write
+
+17
+00:02:26,530 --> 00:02:31,120
+down all the non terminals that derive this
+you first fill this then you will go next
+
+18
+00:02:31,120 --> 00:02:43,299
+step x zero two x one three ok and once you
+fill this you will use x zero three the final
+
+19
+00:02:43,299 --> 00:02:47,310
+one ok
+now what is the where are we using the fact
+
+20
+00:02:47,310 --> 00:02:59,900
+that ah this grammar is in c n f chomsky normal
+form i will make sure fact that at any point
+
+21
+00:02:59,900 --> 00:03:05,530
+this can come from only two non terminals
+or a single terminal so at this point when
+
+22
+00:03:05,530 --> 00:03:10,240
+i am seeing at a as a individual word so zero
+one will always be a individual word similarly
+
+23
+00:03:10,240 --> 00:03:16,740
+for one and two so this will come by a rule
+capital a goes to small a a rule of this kind
+
+24
+00:03:16,740 --> 00:03:20,849
+ok so i will find out all the non terminals
+that derives this terminal thats how i will
+
+25
+00:03:20,849 --> 00:03:24,740
+fill the diagonal elements the first diagonal
+elements
+
+26
+00:03:24,740 --> 00:03:32,560
+next time this cannot come from a single terminal
+because they are two words ok so this has
+
+27
+00:03:32,560 --> 00:03:37,440
+to come from two non terminals so i will find
+out if there is a rule that gives me these
+
+28
+00:03:37,440 --> 00:03:45,389
+two non terminals and thats where i am using
+chomsky normal form ok so finally when i am
+
+29
+00:03:45,389 --> 00:03:52,959
+here i will see if the sentence as generate
+the whole sentence so i am catching all the
+
+30
+00:03:52,959 --> 00:03:58,330
+possible intermediate steps here so that i
+denoted i have to ah do certain in again and
+
+31
+00:03:58,330 --> 00:04:03,000
+again ok
+so this is the simple home exercise so in
+
+32
+00:04:03,000 --> 00:04:08,710
+the in the last lecture we had given you a
+grammar in chomsky normal form now take the
+
+33
+00:04:08,710 --> 00:04:14,120
+sentence book the flight through houston and
+use the c k y algorithm to find a parse tree
+
+34
+00:04:14,120 --> 00:04:26,560
+for that ok ah so but what i will do i will
+do an example in todays class also so that
+
+35
+00:04:26,560 --> 00:04:31,720
+it becomes become more much more comfortable
+with using c k y algorithm
+
+36
+00:04:31,720 --> 00:04:42,000
+so lets take this example a pilot likes flying
+planes and the grammar is given to you ok
+
+37
+00:04:42,000 --> 00:04:57,830
+so let do that in the way i had explained
+so zero one two three four five there are
+
+38
+00:04:57,830 --> 00:05:15,669
+five words ok and this is the line 
+
+39
+00:05:15,669 --> 00:05:21,520
+ok and now you should understand how do we
+denote these elements so this is x zero one
+
+40
+00:05:21,520 --> 00:05:31,389
+this is denote only the first word this is
+x one two x two three x three four x four
+
+41
+00:05:31,389 --> 00:05:40,159
+five this will be x zero two words between
+zero to two x zero three x zero four x zero
+
+42
+00:05:40,159 --> 00:05:51,250
+five x one three x one four x one five x two
+four x two five and x three five now i have
+
+43
+00:05:51,250 --> 00:05:56,570
+to fill here what are different non terminals
+that filled each of the individual elements
+
+44
+00:05:56,570 --> 00:06:03,750
+x zero one
+what is x zero one my word is a so a pilot
+
+45
+00:06:03,750 --> 00:06:13,289
+likes flying planes so is there a non terminal
+that derives the word a and if you see the
+
+46
+00:06:13,289 --> 00:06:22,749
+grammar dt derives a ok so you can fill in
+dt here dt derives a pilot n n derives pilot
+
+47
+00:06:22,749 --> 00:06:33,639
+likes v b z derives likes flying so you see
+there are two non terminals vbg and j j they
+
+48
+00:06:33,639 --> 00:06:42,560
+derive this and planes n n s ok so filling
+the diagonal element is very easy the first
+
+49
+00:06:42,560 --> 00:06:48,729
+diagonal elements then you go the next step
+x zero two now x zero two can come from x
+
+50
+00:06:48,729 --> 00:06:54,570
+zero one and x one two as a break up of these
+two points so is there an non terminal where
+
+51
+00:06:54,570 --> 00:07:00,870
+or is there a rule in my grammar when the
+right hand side i have dt followed by n n
+
+52
+00:07:00,870 --> 00:07:05,699
+and if you see your grammar yes n p gives
+me dt followed by n n so i can fill in n p
+
+53
+00:07:05,699 --> 00:07:12,249
+here x one three comes from x one two and
+x two three yes x one three pilot likes so
+
+54
+00:07:12,249 --> 00:07:17,900
+it comes from pilot and likes so any non terminal
+that gives me n n followed by v b z and if
+
+55
+00:07:17,900 --> 00:07:24,389
+you see there is no non terminal so i will
+fill in empty here
+
+56
+00:07:24,389 --> 00:07:37,460
+similarly and if v b z followed by vbg no
+anything from v b z followed by j j x three
+
+57
+00:07:37,460 --> 00:07:53,740
+five v b g followed by n n s yes v p and j
+j followed by n n s n p ok so there are two
+
+58
+00:07:53,740 --> 00:08:02,099
+possibilities so fine this row is done this
+diagonal is done now we go to next step now
+
+59
+00:08:02,099 --> 00:08:08,779
+how do i derive x zero three a pilot likes
+now thats why i am using the chomsky normal
+
+60
+00:08:08,779 --> 00:08:15,409
+form i cannot derive it at the sequence of
+three non terminals because each individual
+
+61
+00:08:15,409 --> 00:08:21,599
+non terminal can give me at most not at most
+exactly two non terminals ok so what are the
+
+62
+00:08:21,599 --> 00:08:31,910
+two places from which it can come so one possibilities
+i can break x zero three as x zero one and
+
+63
+00:08:31,910 --> 00:08:41,950
+x one three one word into two words or x zero
+two x two three there are two possibilities
+
+64
+00:08:41,950 --> 00:08:48,800
+ok so i have to check individually each of
+these possibilities x zero one x one three
+
+65
+00:08:48,800 --> 00:08:59,370
+x zero one is dt followed by null so this
+is already gone ok this is no non terminal
+
+66
+00:08:59,370 --> 00:09:08,450
+x zero two is n p followed by x two three
+is v b z so n p followed by v b z is there
+
+67
+00:09:08,450 --> 00:09:13,540
+a non terminal when the right hand side i
+have np followed by v b z ok and if you see
+
+68
+00:09:13,540 --> 00:09:19,641
+your grammar there is nothing so this is also
+null so here it is null there is no non terminal
+
+69
+00:09:19,641 --> 00:09:29,200
+let me derive a pilot likes ok
+now pilot likes flying one to four so again
+
+70
+00:09:29,200 --> 00:09:40,730
+one to four will be one two two four or one
+three three four so one two two four one two
+
+71
+00:09:40,730 --> 00:09:46,810
+is n n two four is null so this part is null
+one three three four one three is null so
+
+72
+00:09:46,810 --> 00:10:00,200
+this becomes null also two five will be two
+three three five and two four four five so
+
+73
+00:10:00,200 --> 00:10:06,460
+two three here is v b z and three five is
+v p is there something that v b z and v p
+
+74
+00:10:06,460 --> 00:10:19,520
+yes v p this means v b z and v p two four
+four five two four is null ok so this is my
+
+75
+00:10:19,520 --> 00:10:26,660
+v p similarly now you will go to x zero four
+now what are difference which you can break
+
+76
+00:10:26,660 --> 00:10:35,830
+x zero four now zero four again you to break
+it in a sequence of two non terminals so it
+
+77
+00:10:35,830 --> 00:10:47,520
+can be zero one followed by one four or zero
+two followed by two four or zero three followed
+
+78
+00:10:47,520 --> 00:10:54,870
+by three four there are three ways
+so let us see one by one zero one is d t one
+
+79
+00:10:54,870 --> 00:11:01,270
+four is null so this part is gone zero two
+is empty and two four is null this part is
+
+80
+00:11:01,270 --> 00:11:13,450
+also gone zero three is null already so this
+is null ok one five one five can be one two
+
+81
+00:11:13,450 --> 00:11:25,700
+two five one three three five one four four
+five one two and two five yes n n followed
+
+82
+00:11:25,700 --> 00:11:40,890
+by a v p so is there something in my grammar
+n n followed by v p no so this is gone 
+
+83
+00:11:40,890 --> 00:11:47,590
+similarly one three followed by three five
+one three is null ok and one three is null
+
+84
+00:11:47,590 --> 00:11:51,700
+so this is gone one four followed by four
+five one four is null so this is also gone
+
+85
+00:11:51,700 --> 00:11:58,560
+so this is also null now the only thing remain
+is x zero five
+
+86
+00:11:58,560 --> 00:12:04,660
+now how can i fill x zero five what are different
+ways so let me write down here zero five can
+
+87
+00:12:04,660 --> 00:12:16,920
+be zero one followed by one five zero two
+followed by two five zero three followed by
+
+88
+00:12:16,920 --> 00:12:25,481
+three five zero four followed by four five
+ok zero one followed by one five zero one
+
+89
+00:12:25,481 --> 00:12:31,630
+is there one five is null this is gone zero
+two followed by two five zero two is there
+
+90
+00:12:31,630 --> 00:12:40,130
+and two five is also there this is n p followed
+by v p and this is a sentence in my grammar
+
+91
+00:12:40,130 --> 00:12:49,840
+so s gives me n p v p so this is one possibility
+already so that means this sentence is grammatical
+
+92
+00:12:49,840 --> 00:12:56,520
+at least there is one s that derives this
+but are there any further ah s
+
+93
+00:12:56,520 --> 00:13:06,040
+so for that we have to look at other possibilities
+zero three three five ok this is null and
+
+94
+00:13:06,040 --> 00:13:18,920
+zero four four five is null ok so fine so
+if you see there i think we made one mistake
+
+95
+00:13:18,920 --> 00:13:25,620
+here there should have been another v p in
+this case ok so there is v p one v p two and
+
+96
+00:13:25,620 --> 00:13:32,130
+then there will be s n p v p one and n p v
+p two so yeah i will search that look back
+
+97
+00:13:32,130 --> 00:13:38,170
+into this ah calculation we did and see where
+where we made a mistake ok but everything
+
+98
+00:13:38,170 --> 00:13:47,010
+else is the same that we did here so there
+are two different s in which this ah sentence
+
+99
+00:13:47,010 --> 00:13:55,960
+can be parse two different ways so now once
+you know this i will say that use the previous
+
+100
+00:13:55,960 --> 00:14:03,050
+ah example so that is book the flight through
+houston from the other grammar and try to
+
+101
+00:14:03,050 --> 00:14:12,200
+get its parse tree
+so now in this example what we saw there are
+
+102
+00:14:12,200 --> 00:14:18,250
+two possibilities so can you think of the
+possiblit[ies] why there are two possibilities
+
+103
+00:14:18,250 --> 00:14:30,140
+in this case a pilot likes flying planes ok
+so whether he likes to fly the plane or whether
+
+104
+00:14:30,140 --> 00:14:35,060
+he likes to see flying planes something like
+that so there are interpretation thats why
+
+105
+00:14:35,060 --> 00:14:40,050
+there are two different parse parse edge of
+this sentence so each individual parse with
+
+106
+00:14:40,050 --> 00:14:46,350
+we will denote one particular interpretation
+now by using this context by this c k y algorithm
+
+107
+00:14:46,350 --> 00:14:52,740
+we denote all the possible parse trees using
+my grammar but i have no way of saying which
+
+108
+00:14:52,740 --> 00:14:59,050
+parse is more probable than the other parse
+i cannot assign some probabilities to them
+
+109
+00:14:59,050 --> 00:15:04,800
+ok so something if i have so this is the sentence
+the man saw the dog with the telescope it
+
+110
+00:15:04,800 --> 00:15:09,510
+has two different interpretation in terms
+of two different parse edges whatever i have
+
+111
+00:15:09,510 --> 00:15:14,930
+covered till now it cannot tell me which parse
+is more probable than other
+
+112
+00:15:14,930 --> 00:15:20,230
+so now we would like to have a way in which
+we can assign them the probabilities that
+
+113
+00:15:20,230 --> 00:15:25,400
+this parse edge is more probable than the
+other and for that what we use is called probabilistic
+
+114
+00:15:25,400 --> 00:15:30,740
+context free grammars so this is simple extension
+of context free grammar where in addition
+
+115
+00:15:30,740 --> 00:15:36,020
+to whatever we have seen in context free grammar
+each rule is also signed some probability
+
+116
+00:15:36,020 --> 00:15:43,480
+ok so as you see in the formulation it is
+t n s and r they are exactly same as what
+
+117
+00:15:43,480 --> 00:15:48,320
+we had seen in the context free grammar plus
+there is something called p so i am assigning
+
+118
+00:15:48,320 --> 00:15:54,000
+a probability distribution over the rules
+and only the constraint here is that from
+
+119
+00:15:54,000 --> 00:15:59,940
+a given non terminal the lateral side the
+probability generating anything should add
+
+120
+00:15:59,940 --> 00:16:05,540
+up to one so if there are five possibilities
+if i add all the five possibilities the rule
+
+121
+00:16:05,540 --> 00:16:11,320
+for all the five possibilities they should
+add up to one ok so this is the constraint
+
+122
+00:16:11,320 --> 00:16:17,250
+so probability in the rule gives the gives
+the probability of each rule p r so the constraint
+
+123
+00:16:17,250 --> 00:16:22,860
+is for all x in non terminals probability
+of x to gamma for all the possible gammas
+
+124
+00:16:22,860 --> 00:16:31,780
+should add up to one ok
+so let me give you an example so so this is
+
+125
+00:16:31,780 --> 00:16:42,250
+one simple cnf sorry simple p c f g in chomsky
+normal form ah so so what do you see here
+
+126
+00:16:42,250 --> 00:16:47,380
+from s there is only one rule s goes to n
+p v p ok so because there is only one rule
+
+127
+00:16:47,380 --> 00:16:55,030
+it has a possibility of one from from v p
+there are two rules v p can give v followed
+
+128
+00:16:55,030 --> 00:17:04,679
+by n p or v p followed by pp so so the constraint
+is that for the possibilities of these two
+
+129
+00:17:04,679 --> 00:17:08,560
+rules should add up to one so that is what
+is happening here the first rule has a possibility
+
+130
+00:17:08,560 --> 00:17:11,980
+of point seven second rule has a possibility
+of point three so there is two add up to one
+
+131
+00:17:11,980 --> 00:17:18,929
+now pp gives me p n p only one rule with pp
+on left hand side so this is the possibility
+
+132
+00:17:18,929 --> 00:17:26,549
+of one p gives me only with again possibility
+one v gives me saw this is the possibility
+
+133
+00:17:26,549 --> 00:17:30,159
+one
+now all these rules in the right hand sides
+
+134
+00:17:30,159 --> 00:17:35,809
+are starting from the n p n p giving to me
+n p pp all the words let us call as like astronomers
+
+135
+00:17:35,809 --> 00:17:39,410
+ears and so on so all these should add up
+to one and you can see that this actually
+
+136
+00:17:39,410 --> 00:17:43,419
+happen point four plus point one point five
+point six eight point seven two point nine
+
+137
+00:17:43,419 --> 00:17:47,870
+and one so all these possibilities are adding
+up to one so this is the constraint that is
+
+138
+00:17:47,870 --> 00:17:52,809
+being followed the rules have the same format
+as in context free grammar but you shall have
+
+139
+00:17:52,809 --> 00:17:58,510
+a possibilities now how does it help it helps
+in that i can now assign possibilities to
+
+140
+00:17:58,510 --> 00:18:06,500
+each individual parse tree
+so suppose this is one parse tree astronomers
+
+141
+00:18:06,500 --> 00:18:10,860
+for the sentence astronomers saw starts with
+ears how do i find the probability of this
+
+142
+00:18:10,860 --> 00:18:17,380
+parse tree this is the parse so i know s gives
+me n p and v p yes this is the first rule
+
+143
+00:18:17,380 --> 00:18:25,279
+that i am applying now as my p c f g the probability
+of this rule is one s giving n p v p is one
+
+144
+00:18:25,279 --> 00:18:31,480
+so i have this one here n p giving astronomers
+deriving astronomers is probability point
+
+145
+00:18:31,480 --> 00:18:38,540
+one v p deriving v and p is probability point
+seven v giving saw is one n p giving n p vp
+
+146
+00:18:38,540 --> 00:18:44,590
+is point four n p giving stars is point one
+eight and so on these are the rule probability
+
+147
+00:18:44,590 --> 00:18:51,480
+as per my grammar as my p c f g so what i
+will do i will just multiply all these probabilities
+
+148
+00:18:51,480 --> 00:18:56,809
+one times point one times point seven times
+point one times point four times point one
+
+149
+00:18:56,809 --> 00:19:02,629
+eight times point one eight this is my probabilities
+of this parse trees
+
+150
+00:19:02,629 --> 00:19:09,299
+and if i get a second parse tree where instead
+of v p giving me v and n p v p giving v p
+
+151
+00:19:09,299 --> 00:19:15,179
+followed by pp i can again compute its probability
+by multiplying its corresponding rule probabilities
+
+152
+00:19:15,179 --> 00:19:23,519
+and i can find the probabilities of both the
+parse trees individually ok
+
+153
+00:19:23,519 --> 00:19:33,100
+so now how do i use that to compute the probability
+of the tree that is simply the product of
+
+154
+00:19:33,100 --> 00:19:40,330
+the probabilities of all the rules that i
+used to generate this and probability of assignments
+
+155
+00:19:40,330 --> 00:19:46,769
+and the probability sentences is nothing but
+find out all the parse trees and the probabilities
+
+156
+00:19:46,769 --> 00:19:52,350
+of the individual parse trees and just sum
+them up ok so probability of this sentence
+
+157
+00:19:52,350 --> 00:19:57,549
+is the sum of the probabilities of the trees
+that have this as their yield that is another
+
+158
+00:19:57,549 --> 00:20:05,159
+way of saying that those parse trees are used
+to generate this particular string
+
+159
+00:20:05,159 --> 00:20:11,629
+so in the first case i had this sentence and
+they were to parse trees i can compute the
+
+160
+00:20:11,629 --> 00:20:16,929
+probabilities of individual one so p t one
+and p t two i can find out and then to find
+
+161
+00:20:16,929 --> 00:20:21,559
+the probability of the whole sentence i just
+add up these two probabilities p t one plus
+
+162
+00:20:21,559 --> 00:20:27,679
+p t two and that gives me the probability
+of this whole sequence
+
+163
+00:20:27,679 --> 00:20:32,519
+similarly if i have another sentence like
+book the dinner flight and as as per a different
+
+164
+00:20:32,519 --> 00:20:37,950
+grammar i can compute the parse trees the
+two parse trees compute the probabilities
+
+165
+00:20:37,950 --> 00:20:44,409
+for the individual one ok so parse tree one
+here book the dinner flight is one point six
+
+166
+00:20:44,409 --> 00:20:48,860
+two into ten to the power minus six and book
+the dinner flight will have a probability
+
+167
+00:20:48,860 --> 00:20:52,039
+of two point two eight into ten to the power
+minus seven so one thing i can immediately
+
+168
+00:20:52,039 --> 00:20:58,760
+see is that the first one parse is more likely
+interpretation than the second one
+
+169
+00:20:58,760 --> 00:21:04,659
+lets look at some of the features of probabilistic
+context free grammars so why we started with
+
+170
+00:21:04,659 --> 00:21:10,700
+this formulation so we said that using the
+context free grammar given a sentence we can
+
+171
+00:21:10,700 --> 00:21:15,630
+find out all the possible parse trees but
+you are not able to assign any probabilities
+
+172
+00:21:15,630 --> 00:21:22,279
+to that so by using p c f g if for a given
+string the number of parse trees are increasing
+
+173
+00:21:22,279 --> 00:21:27,279
+i can also assign the probabilities for each
+individual parse tree so that gives me some
+
+174
+00:21:27,279 --> 00:21:34,119
+plausibility which parse tree is more probable
+than the other one for the given string so
+
+175
+00:21:34,119 --> 00:21:40,929
+this is important but at the same time we
+should understand that although by using p
+
+176
+00:21:40,929 --> 00:21:46,730
+c f g i can compute what is the probability
+of the sentence by taking all the parse trees
+
+177
+00:21:46,730 --> 00:21:51,610
+taking the individual probabilities and adding
+them up this is this just not giving a very
+
+178
+00:21:51,610 --> 00:21:57,240
+good ah plausibility of the sentence ok this
+is only looking at the structural factors
+
+179
+00:21:57,240 --> 00:22:02,571
+not some lexical co occurrence
+so in general to find the probability of the
+
+180
+00:22:02,571 --> 00:22:09,869
+sentence you would prefer to use language
+model than a p c f g p c f g is good only
+
+181
+00:22:09,869 --> 00:22:15,619
+for find the probability of a parse tree which
+parse is more probable than another one yes
+
+182
+00:22:15,619 --> 00:22:23,840
+if the it it helps in some cases like in real
+text you might find some grammatical mistakes
+
+183
+00:22:23,840 --> 00:22:28,929
+so p c f g will allow that but will give you
+very very low probability so in one case you
+
+184
+00:22:28,929 --> 00:22:33,710
+can also probably find out which sentence
+has some grammatical mistake if the p c f
+
+185
+00:22:33,710 --> 00:22:44,309
+g is giving it low probability and yeah this
+is something that i said earlier so in practice
+
+186
+00:22:44,309 --> 00:22:48,679
+this is not good for modeling the probability
+of the sentence ok language model is much
+
+187
+00:22:48,679 --> 00:22:56,159
+better than p c f g so why is that the case
+so a simple example is if we have the same
+
+188
+00:22:56,159 --> 00:23:00,570
+sentence i have two different trees one is
+smaller than the other the smaller tree will
+
+189
+00:23:00,570 --> 00:23:04,090
+always have a higher probability than the
+larger one because all the probabilities are
+
+190
+00:23:04,090 --> 00:23:10,289
+less than one and for a larger tree you are
+multiplying the probabilities ok
+
+191
+00:23:10,289 --> 00:23:16,309
+so yeah the take away here is that you would
+use p c f g to find out what what are all
+
+192
+00:23:16,309 --> 00:23:20,809
+the probabilities for different parse trees
+for a sentence ok and try to choose the best
+
+193
+00:23:20,809 --> 00:23:27,559
+one
+so now once we have this formulation of p
+
+194
+00:23:27,559 --> 00:23:32,169
+c f g there are some interesting questions
+that we would like to explore using that so
+
+195
+00:23:32,169 --> 00:23:39,240
+suppose i am given a sentence w one m ok i
+am given a grammar g and there are various
+
+196
+00:23:39,240 --> 00:23:45,730
+parse trees t is one of those so what is the
+most likely parse for this sentence given
+
+197
+00:23:45,730 --> 00:23:51,990
+the grammar so which parse is tree t gives
+me maximum probabilities argmax of probability
+
+198
+00:23:51,990 --> 00:24:01,039
+given the sentence and the grammar ok then
+what is the probability of the sentence probability
+
+199
+00:24:01,039 --> 00:24:08,519
+of the sentence given by grammar and then
+finally how do we learn the rule probabilities
+
+200
+00:24:08,519 --> 00:24:12,480
+of my grammar g which these are the three
+interesting questions that we would like to
+
+201
+00:24:12,480 --> 00:24:17,580
+answer in the next lectures
+so for example how do i find the most likely
+
+202
+00:24:17,580 --> 00:24:24,259
+parse of a of a sentence so one simple solution
+is find out all the possible trees and take
+
+203
+00:24:24,259 --> 00:24:30,539
+the one with the highest probability but is
+there any efficient method for doing that
+
+204
+00:24:30,539 --> 00:24:35,990
+what is the probability of a sentence again
+i can find out probabilities of the individual
+
+205
+00:24:35,990 --> 00:24:41,470
+parse trees add them up this gives me the
+probability of the sentence but can i do at
+
+206
+00:24:41,470 --> 00:24:48,289
+by extortion numerating all that and adding
+it or is this some other method and finally
+
+207
+00:24:48,289 --> 00:24:52,480
+there is some interesting question that how
+do i learn the rule probabilities in the grammar
+
+208
+00:24:52,480 --> 00:24:58,440
+g and the answer to this will be similar to
+what we saw in the case of ah head and markov
+
+209
+00:24:58,440 --> 00:25:04,220
+models so there are so there are they will
+be again two ways of running the parameter
+
+210
+00:25:04,220 --> 00:25:12,010
+one will be when the ah i am given the corpus
+and some labeled parse trees i can use them
+
+211
+00:25:12,010 --> 00:25:17,379
+to find the probabilities under the scenario
+where i am given the corpus but not the parse
+
+212
+00:25:17,379 --> 00:25:22,869
+tree i am only given the grammar grammar in
+the sense cfg not the rule probabilities then
+
+213
+00:25:22,869 --> 00:25:28,220
+how do i learn the parameters so this will
+be again very very interesting topic and there
+
+214
+00:25:28,220 --> 00:25:34,200
+you can use some ideas where that i had shown
+earlier for the ah algorithm
+
+215
+00:25:34,200 --> 00:25:37,789
+so in the next lecture we will start trying
+to answer some of these questions
+
+216
+00:25:37,789 --> 00:25:39,580
+thank you
+

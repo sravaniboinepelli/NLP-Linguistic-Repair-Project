@@ -1,0 +1,1575 @@
+1
+00:00:17,340 --> 00:00:22,840
+so welcome back for the third module of this
+week so in the last week we have in the last
+
+2
+00:00:22,840 --> 00:00:28,369
+module we had finished the discussions on
+hidden markov models how do we learn the parameters
+
+3
+00:00:28,369 --> 00:00:32,450
+and how do we use that for estimating the
+part of speech tags sequences for a given
+
+4
+00:00:32,450 --> 00:00:39,870
+sentence hidden markov models for generative
+models ok and if you remember we discussed
+
+5
+00:00:39,870 --> 00:00:44,740
+this distinction between generative model
+and discriminative model so we will see a
+
+6
+00:00:44,740 --> 00:00:50,480
+discriminative model maximum entropy model
+for this sequence labeling task but before
+
+7
+00:00:50,480 --> 00:00:56,160
+that let me start with some sort of motivation
+and why do we move from h m m s to maximum
+
+8
+00:00:56,160 --> 00:01:01,250
+entropy model what are the limitations of
+h m m
+
+9
+00:01:01,250 --> 00:01:06,950
+so then problem with the h m m s also this
+is known as the markov model tagging is handling
+
+10
+00:01:06,950 --> 00:01:11,680
+unknown words suppose at run time you get
+some unknown word that was not there in the
+
+11
+00:01:11,680 --> 00:01:19,640
+corpus because the prob the emission probabilities
+will not be known there is no where you can
+
+12
+00:01:19,640 --> 00:01:26,119
+come to you can actually use the viterbi decoding
+so what do you do in that case so you might
+
+13
+00:01:26,119 --> 00:01:30,979
+want to use some sort of morphological cues
+ok suppose the word we word is ending with
+
+14
+00:01:30,979 --> 00:01:35,700
+e d you might think that over this might be
+a past tense of a word that we did not encounter
+
+15
+00:01:35,700 --> 00:01:39,840
+in in the corpus or suppose you are finding
+capitalization in the middle of the set of
+
+16
+00:01:39,840 --> 00:01:44,380
+the sentence you might think that this might
+be a proper name name
+
+17
+00:01:44,380 --> 00:01:52,840
+but how do we actually include that in hidden
+markov models second so we use the first order
+
+18
+00:01:52,840 --> 00:02:00,759
+markov assumption where each tag dependent
+on the previous only on the previous tag so
+
+19
+00:02:00,759 --> 00:02:06,770
+this does not take care of certain certain
+situations for example here i have two sentences
+
+20
+00:02:06,770 --> 00:02:15,300
+is clearly marked was such he clearly marked
+so what you seeing here ah marked in one case
+
+21
+00:02:15,300 --> 00:02:22,000
+is a past participle in the first case second
+case it is a verb in past tense but just the
+
+22
+00:02:22,000 --> 00:02:29,560
+previous context is not sufficient to tell
+this ok so so so because in h m m s we are
+
+23
+00:02:29,560 --> 00:02:34,290
+only using this the previous context this
+might not be sufficient to handle this particular
+
+24
+00:02:34,290 --> 00:02:38,140
+case
+so how will you ah take care of this issue
+
+25
+00:02:38,140 --> 00:02:43,860
+so you might want to move to a higher order
+h m m say it second order ok so you can use
+
+26
+00:02:43,860 --> 00:02:54,549
+a high order model but this is just one some
+some limitations suppose you want to use what
+
+27
+00:02:54,549 --> 00:03:03,010
+whether this is the first word in the sentence
+ok or you ah you want to you want use any
+
+28
+00:03:03,010 --> 00:03:11,230
+arbitrary arbitrary think like ah whether
+there is a verb ending with e d previous to
+
+29
+00:03:11,230 --> 00:03:16,719
+this word you want to use this information
+there is no way you can use that in in the
+
+30
+00:03:16,719 --> 00:03:25,219
+case of achievements so that's where we we
+move from achievements to my explanatory model
+
+31
+00:03:25,219 --> 00:03:30,599
+that allow very very heterogeneous set of
+features so you can use a lot of different
+
+32
+00:03:30,599 --> 00:03:41,079
+of your wishes from the data for your model
+so so what is the important distinction so
+
+33
+00:03:41,079 --> 00:03:46,500
+now in the maximum entropy model so they are
+discriminative as compared to ah generative
+
+34
+00:03:46,500 --> 00:03:52,360
+models which are as means you are allowed
+to identify very very heterogeneous set of
+
+35
+00:03:52,360 --> 00:03:58,420
+features not only the tag given the previous
+tag or the word given the tag you can use
+
+36
+00:03:58,420 --> 00:04:04,249
+any sort of features which might which you
+think might contribute to the choice of part
+
+37
+00:04:04,249 --> 00:04:09,350
+of speech tags ok
+so so for example whether this is the first
+
+38
+00:04:09,350 --> 00:04:13,870
+word of the article this is something that
+you can use as a feature in in maximum entropy
+
+39
+00:04:13,870 --> 00:04:19,590
+model or whether the next word is t o you
+can use the next word as a feature whether
+
+40
+00:04:19,590 --> 00:04:24,651
+one of the five previous five words is a preposition
+this is again something that you can use as
+
+41
+00:04:24,651 --> 00:04:30,090
+a feature in maximum entropy model but here
+h m m cannot make each of this
+
+42
+00:04:30,090 --> 00:04:37,090
+so what maximum model does it combines all
+this various heterogeneous features in probabilistic
+
+43
+00:04:37,090 --> 00:04:44,180
+framework ok to be able to come up with the
+actual part of speech tag sequence for a given
+
+44
+00:04:44,180 --> 00:04:52,810
+sentence so so this is the maximum entropy
+model so this is how you write the probability
+
+45
+00:04:52,810 --> 00:05:02,090
+of so why is the class that is one of the
+the probability for any of the tags given
+
+46
+00:05:02,090 --> 00:05:09,610
+x is my observation it can include anything
+in my in my context it can load load the current
+
+47
+00:05:09,610 --> 00:05:14,750
+word previous word next word anything in the
+sentence ok you can so you can define your
+
+48
+00:05:14,750 --> 00:05:18,370
+context while you are dealing with maximum
+entropy model you are saying that i can i
+
+49
+00:05:18,370 --> 00:05:24,030
+can use all this information in my features
+given this i want to compute the probability
+
+50
+00:05:24,030 --> 00:05:29,330
+of my class and here discriminative model
+so i can directly compute the probability
+
+51
+00:05:29,330 --> 00:05:37,020
+of class given the observation ok so i can
+compete y given x and how do i i compute that
+
+52
+00:05:37,020 --> 00:05:49,490
+it is simply x is a logging in model so summation
+over lambda i and f i x y now f i x y are
+
+53
+00:05:49,490 --> 00:05:57,330
+my various features that i have identified
+over my observation x and my class y and lambda
+
+54
+00:05:57,330 --> 00:06:03,509
+is are the weight is the weight given to the
+feature f i so each feature f i is given a
+
+55
+00:06:03,509 --> 00:06:07,030
+weight lambda
+so i i i summed over all the possible lambda
+
+56
+00:06:07,030 --> 00:06:13,419
+is fi's and taking the exponent and then i
+do some sort of normalization so that probability
+
+57
+00:06:13,419 --> 00:06:20,930
+y given x adds up to one for all the possible
+classes y ok this is a normalization constant
+
+58
+00:06:20,930 --> 00:06:29,840
+so this is the very very simple form of maximum
+entropy model so so let me tell again so z
+
+59
+00:06:29,840 --> 00:06:37,590
+x condition on the parameters lambda is normalization
+constant so this is nothing but this exponent
+
+60
+00:06:37,590 --> 00:06:42,830
+you sum over all the possible class x y ok
+for all the possible class x y you compute
+
+61
+00:06:42,830 --> 00:06:49,659
+this and add this so once you do that you
+are you are ensuring that probability y given
+
+62
+00:06:49,659 --> 00:06:59,280
+x will added to one for all possible values
+and lambdas are my features the weights given
+
+63
+00:06:59,280 --> 00:07:07,639
+to my different features
+now x de denotes my observed data and y and
+
+64
+00:07:07,639 --> 00:07:14,930
+y denotes my class now what is interesting
+is that what is the form of form that the
+
+65
+00:07:14,930 --> 00:07:20,080
+features in maximum entry model can take as
+opposed to something like h m m what are the
+
+66
+00:07:20,080 --> 00:07:26,409
+features so what is interesting here you are
+seeing f is is a function of x and y both
+
+67
+00:07:26,409 --> 00:07:32,180
+in the observation in the class so i am defining
+my feature on on both of this and we are all
+
+68
+00:07:32,180 --> 00:07:38,979
+binary binary features so let us let us see
+what are my features so in maximum entropy
+
+69
+00:07:38,979 --> 00:07:47,379
+model my feature send code elements from the
+context x and the tag y now context x is now
+
+70
+00:07:47,379 --> 00:07:52,389
+this is something that you you must be careful
+about context is not my current word w but
+
+71
+00:07:52,389 --> 00:07:57,740
+is taken around the word w ok i can define
+my context it can be the sentence that contains
+
+72
+00:07:57,740 --> 00:08:02,520
+w it can be it's previous three words next
+three words it it is something that can be
+
+73
+00:08:02,520 --> 00:08:08,509
+defined on the on the current word ok and
+y is the tag that i have i am predicting
+
+74
+00:08:08,509 --> 00:08:13,659
+now what are my features these are binary
+valued functions over x and y and this is
+
+75
+00:08:13,659 --> 00:08:20,509
+like f x y is one if a certain conditions
+condition hold on x and y and zero otherwise
+
+76
+00:08:20,509 --> 00:08:26,849
+and here is one example what can be some conditions
+like i am having the current word w if the
+
+77
+00:08:26,849 --> 00:08:32,500
+word w is capitalized and my tag y is n n
+p then my feature f x y will take a value
+
+78
+00:08:32,500 --> 00:08:38,240
+of one otherwise it will take a value of zero
+that is one sort of feature ok similarly you
+
+79
+00:08:38,240 --> 00:08:43,260
+can define any arbitrary set of features that
+we have z so it can be f x y is equal to one
+
+80
+00:08:43,260 --> 00:08:50,790
+if one of the previous five words is as a
+tag of preposition and the current tag is
+
+81
+00:08:50,790 --> 00:08:56,581
+save up this is one sort of a zero otherwise
+so like that you can define an so you have
+
+82
+00:08:56,581 --> 00:09:02,950
+a lot of freedom here in defining and choosing
+your features and once you have completed
+
+83
+00:09:02,950 --> 00:09:07,980
+all these features the model learns the the
+weights for all these feature features the
+
+84
+00:09:07,980 --> 00:09:12,100
+the weights lambdas and then this is very
+very simple function to compute the probability
+
+85
+00:09:12,100 --> 00:09:21,150
+of ah plus given any observation ok
+so let's see some other examples for the features
+
+86
+00:09:21,150 --> 00:09:28,780
+ok so this is again for any generic sequence
+labeling task so here it is for finding named
+
+87
+00:09:28,780 --> 00:09:34,570
+entities so it can be here like location drug
+and person three different named entities
+
+88
+00:09:34,570 --> 00:09:41,260
+and some examples are given like in arcadia
+arcadia is a location in quebec location taking
+
+89
+00:09:41,260 --> 00:09:47,480
+zantac zantac is drug and saw sauce you so
+you see you as a person and now you are defining
+
+90
+00:09:47,480 --> 00:09:55,760
+certain features so let us see certain features
+like the first feature is my tag is location
+
+91
+00:09:55,760 --> 00:10:03,370
+so my class y is location previous word that
+is on x previous word is in and my current
+
+92
+00:10:03,370 --> 00:10:07,520
+word is capitalized
+so what are all the cases we have this feature
+
+93
+00:10:07,520 --> 00:10:14,710
+will be one it will be one here in arcadia
+previous what is a in and it is capitalized
+
+94
+00:10:14,710 --> 00:10:21,370
+and the tag is location it will also be one
+for second case is capitalized previous word
+
+95
+00:10:21,370 --> 00:10:29,370
+is in and the tag is location next feature
+so y is location and w has an extended leg
+
+96
+00:10:29,370 --> 00:10:33,140
+in latin character so you can see that you
+are using a very very arbitrary set of features
+
+97
+00:10:33,140 --> 00:10:38,450
+ok but possibly you have some some hypothesis
+that this features will be helpful for this
+
+98
+00:10:38,450 --> 00:10:44,080
+task operating the predicting the tag for
+this word so this is this feature so for which
+
+99
+00:10:44,080 --> 00:10:49,450
+of the case it will be one so it will be one
+for the second case it has an extended latin
+
+100
+00:10:49,450 --> 00:10:57,240
+character ok the and the tag is location
+third feature y is a drug and the word ends
+
+101
+00:10:57,240 --> 00:11:06,970
+with c and there will be one for taking zantac
+yes the word w ends to the c so you so you
+
+102
+00:11:06,970 --> 00:11:13,310
+can see some some examples of what kind of
+features you can take but important thing
+
+103
+00:11:13,310 --> 00:11:20,740
+is to know the intuition that you can choose
+any feature around the word w and that involves
+
+104
+00:11:20,740 --> 00:11:33,870
+also the current class so how do we so now
+once i have all these features suppose the
+
+105
+00:11:33,870 --> 00:11:38,250
+the learning has taken place i know all the
+parameters lambdas how do i go about tagging
+
+106
+00:11:38,250 --> 00:11:45,560
+my sentence with that x so i have the words
+in my corpus w one to w a and i i want to
+
+107
+00:11:45,560 --> 00:11:50,800
+find out the tags document tags so what i
+will do i want to find out tags sequence t
+
+108
+00:11:50,800 --> 00:11:56,170
+one to t n
+so any sequence will have this condition probability
+
+109
+00:11:56,170 --> 00:12:05,670
+right so n so t i conditioned on x i for i
+is equal to one to i now this is x i not w
+
+110
+00:12:05,670 --> 00:12:13,880
+i x i is my context around the word w i and
+this is independent so i can use this model
+
+111
+00:12:13,880 --> 00:12:19,570
+to find out what is the optimal tag sequence
+i can do it independently for each word and
+
+112
+00:12:19,570 --> 00:12:29,230
+then i will find out tag sequence ok so so
+as we have said my context x i includes may
+
+113
+00:12:29,230 --> 00:12:35,130
+also include some previously assigned tags
+for a fixed history and i will be using a
+
+114
+00:12:35,130 --> 00:12:39,840
+beam search algorithm for finding the optimal
+or the most probable sequence this is something
+
+115
+00:12:39,840 --> 00:12:45,670
+we will take up in the in the next ah lecture
+in detail that how do we actually come go
+
+116
+00:12:45,670 --> 00:12:53,580
+about doing beam search in maximum entropy
+model ok
+
+117
+00:12:53,580 --> 00:13:00,710
+so yeah just a brief idea here in beef search
+beam search what you do actually so you have
+
+118
+00:13:00,710 --> 00:13:06,070
+ah positions in the sentence a starting from
+one to the end so at each position we will
+
+119
+00:13:06,070 --> 00:13:18,310
+keep only the top k possible sequences and
+next time starting from this k ah k complete
+
+120
+00:13:18,310 --> 00:13:26,230
+sequences you find out what are the next k
+based sequences ok so so let me just quickly
+
+121
+00:13:26,230 --> 00:13:34,680
+say so i have from suppose my sentence as
+n words so what is the idea suppose my size
+
+122
+00:13:34,680 --> 00:13:43,170
+beam size is k so at point one i will keep
+top k sequences so at point one i will have
+
+123
+00:13:43,170 --> 00:13:47,850
+only one part of speech tags so that means
+i will keep top k part of speech tags at it's
+
+124
+00:13:47,850 --> 00:13:55,200
+position one now when i go to position two
+now i will have a sequence now two might have
+
+125
+00:13:55,200 --> 00:13:59,980
+some some other possibilities of part of speech
+tags so what i will do i will find out the
+
+126
+00:13:59,980 --> 00:14:10,990
+probability of each of these k with all part
+of speech tags here and you store top k sequences
+
+127
+00:14:10,990 --> 00:14:20,060
+again ok so tag one tag two some case top
+k sequences again at three i have some possibilities
+
+128
+00:14:20,060 --> 00:14:26,570
+top k times these probabilities this possibilities
+again you store only top k out of this and
+
+129
+00:14:26,570 --> 00:14:31,810
+you keep on doing that ah until you are here
+so here you will to choose the best one and
+
+130
+00:14:31,810 --> 00:14:36,260
+that will give you the complete sequence so
+important here is that at each point you are
+
+131
+00:14:36,260 --> 00:14:41,720
+is storing top k full sequences which starting
+from the initial point so here you will you
+
+132
+00:14:41,720 --> 00:14:47,930
+will you will find some t one t two you will
+find some t one t two t three and so on top
+
+133
+00:14:47,930 --> 00:14:56,480
+k at it's time so we will look at this in
+detail in the next lecture so for now let
+
+134
+00:14:56,480 --> 00:15:04,740
+us look at the basics of maxent maximum entropy
+model so what is a maximum entropy model so
+
+135
+00:15:04,740 --> 00:15:10,970
+maximum entropy model have this particular
+principle that is you are given the observation
+
+136
+00:15:10,970 --> 00:15:19,080
+and you have certain hypothesis so ah you
+take what is given to you but do not make
+
+137
+00:15:19,080 --> 00:15:25,480
+any additional ah assumptions so that is take
+the model that satisfies all the questions
+
+138
+00:15:25,480 --> 00:15:31,490
+that you having but does not take any other
+ah assumptions ok
+
+139
+00:15:31,490 --> 00:15:38,850
+so so what does that mean so you are given
+a collection of facts yes and you want to
+
+140
+00:15:38,850 --> 00:15:43,180
+take a model that is satisfying all these
+facts or you are saying that is consistent
+
+141
+00:15:43,180 --> 00:15:49,450
+with all these facts but otherwise it is not
+making any further assumption that is after
+
+142
+00:15:49,450 --> 00:15:57,310
+being ah after satisfying all these constraints
+it is as uniform as possible or in other words
+
+143
+00:15:57,310 --> 00:16:02,950
+for all the possible models that satisfy a
+given set of constraints choose the one that
+
+144
+00:16:02,950 --> 00:16:08,710
+is the most uniform of all
+now what do i mean by this let's take a simple
+
+145
+00:16:08,710 --> 00:16:18,700
+example so here i have an so this i have a
+simple example i have an english word in and
+
+146
+00:16:18,700 --> 00:16:27,120
+i want to make some transition system that
+tries to mimic some so it is translating from
+
+147
+00:16:27,120 --> 00:16:34,870
+english to french ok and i want i have some
+data already with me from some actual translator
+
+148
+00:16:34,870 --> 00:16:38,450
+who who translated some sentences from english
+to french
+
+149
+00:16:38,450 --> 00:16:48,300
+now so i want to model the this expert translators
+decision that how do i i translate this word
+
+150
+00:16:48,300 --> 00:16:59,310
+in to any french word now how do i start so
+so suppose you have a vocabulary of all possible
+
+151
+00:16:59,310 --> 00:17:07,281
+french phrases ok and you want to estimate
+probability p f so that is what is the probability
+
+152
+00:17:07,281 --> 00:17:12,439
+that that french phrase will be a translation
+of the english word in so you want to compute
+
+153
+00:17:12,439 --> 00:17:22,720
+that for all the possible french phrases they
+might be say millions of french phrases so
+
+154
+00:17:22,720 --> 00:17:29,159
+so what you will do we will start by collecting
+a large sample of instances of expert decisions
+
+155
+00:17:29,159 --> 00:17:34,669
+ok
+now from this facts you will try from this
+
+156
+00:17:34,669 --> 00:17:43,840
+sample you will try to observe some ah some
+facts for example so so the goal would be
+
+157
+00:17:43,840 --> 00:17:51,299
+extract some facts from the sample of instances
+and then use these facts inside your model
+
+158
+00:17:51,299 --> 00:17:56,049
+ok so firstly you have to extract the facts
+so in our scenario this will be equivalent
+
+159
+00:17:56,049 --> 00:18:01,649
+to finding out the features that is my facts
+and once i found these features or the facts
+
+160
+00:18:01,649 --> 00:18:05,580
+i use them rightly in my model
+so let us see what are the different sort
+
+161
+00:18:05,580 --> 00:18:14,509
+of facts i can find out for example this can
+be my first clue so i find that in all the
+
+162
+00:18:14,509 --> 00:18:21,490
+samples i have seen the translator always
+translates in into one of these five phrases
+
+163
+00:18:21,490 --> 00:18:28,679
+dans ah a au cours de pendant so they are
+five different french phrases where the translator
+
+164
+00:18:28,679 --> 00:18:35,379
+is translating so now now this is now this
+is helpful to explain what is the my maximum
+
+165
+00:18:35,379 --> 00:18:41,649
+entropy model now i want to find out the probability
+of the probability distribution over french
+
+166
+00:18:41,649 --> 00:18:55,289
+phrases all so suppose i have ah say one million
+french phrases so f one to f ah million ok
+
+167
+00:18:55,289 --> 00:18:59,440
+so i have one million french phrases i want
+to compute this probability distribution i
+
+168
+00:18:59,440 --> 00:19:07,820
+want to find out the probability distribution
+given this constraint that is the translator
+
+169
+00:19:07,820 --> 00:19:14,509
+always chooses among from one of these five
+phases so what is my constraint this would
+
+170
+00:19:14,509 --> 00:19:23,870
+be so let me call these ah f one f two f three
+f four or say dans ah and also let me call
+
+171
+00:19:23,870 --> 00:19:32,660
+these probability say f one plus probability
+f two plus probability f three plus probability
+
+172
+00:19:32,660 --> 00:19:38,279
+f four plus probability f five is equal to
+so this is my constraint
+
+173
+00:19:38,279 --> 00:19:49,690
+now so so now given this constraint i have
+to choose one model so suppose i have only
+
+174
+00:19:49,690 --> 00:19:54,710
+this much information from the data now what
+is the model that i should choose among all
+
+175
+00:19:54,710 --> 00:20:00,139
+the possibilities now firstly do you think
+there are infinite number of possibilities
+
+176
+00:20:00,139 --> 00:20:07,690
+in which i can choose my model that satisfy
+this constraint so of course probability for
+
+177
+00:20:07,690 --> 00:20:15,179
+f six to probability f million will be zero
+ok because if any if any of this is nonzero
+
+178
+00:20:15,179 --> 00:20:24,649
+this constraint will not be satisfied
+yes so because all all the probabilities need
+
+179
+00:20:24,649 --> 00:20:30,920
+to add up to one so that means all this has
+is this is anyways easy but what are all the
+
+180
+00:20:30,920 --> 00:20:36,299
+models that will satisfy this constraint so
+you can see there are infinite solutions for
+
+181
+00:20:36,299 --> 00:20:45,740
+this for this equation so you can choose p
+f one any number from zero to two one and
+
+182
+00:20:45,740 --> 00:20:50,240
+you can always find some f two f three f four
+f five that will satisfy and same goes for
+
+183
+00:20:50,240 --> 00:20:56,159
+f two and so on so there are infinite models
+that satisfy this constraint
+
+184
+00:20:56,159 --> 00:21:00,279
+now what maximum entropy model does among
+all the models that satisfy this constraint
+
+185
+00:21:00,279 --> 00:21:10,059
+it takes the one that is most uniform now
+among all these models what is the most uniform
+
+186
+00:21:10,059 --> 00:21:16,090
+model so that is you are not making any dimensions
+given this constraint take the model that's
+
+187
+00:21:16,090 --> 00:21:20,970
+most uniform so it is easy to see in this
+case that the most uniform model will be one
+
+188
+00:21:20,970 --> 00:21:29,059
+that gives p f i is equal to one by five for
+i is equal to one to five ok for all these
+
+189
+00:21:29,059 --> 00:21:33,740
+five phrases gives the probability one by
+five and everything else it gives a probability
+
+190
+00:21:33,740 --> 00:21:43,360
+zero so this is the most uniform model given
+this constraint yes so allocate the total
+
+191
+00:21:43,360 --> 00:21:48,960
+probability evenly among all these five phrases
+that is the most uniform model subject to
+
+192
+00:21:48,960 --> 00:21:55,340
+our knowledge
+now is this the most uniform model overall
+
+193
+00:21:55,340 --> 00:22:03,710
+suppose i didn't have this constraint what
+was the most uniform model as such the most
+
+194
+00:22:03,710 --> 00:22:08,480
+uniform model will be that gives equal probability
+to each of the million french phrases so it's
+
+195
+00:22:08,480 --> 00:22:12,790
+gives the probability of one by million to
+each of these that is a most uniform model
+
+196
+00:22:12,790 --> 00:22:16,509
+so the model that i have obtained which is
+giving probability one by five to each of
+
+197
+00:22:16,509 --> 00:22:25,279
+these five it not the most uniform model it
+is most uniform given this constraint ok given
+
+198
+00:22:25,279 --> 00:22:35,100
+this constraint this is the most uniform model
+and this is the idea so so i will take some
+
+199
+00:22:35,100 --> 00:22:42,350
+facts some observations given the observations
+i will find out what is the most uniform model
+
+200
+00:22:42,350 --> 00:22:48,259
+let's take let's go further so this was easy
+in this case so where we had five phases only
+
+201
+00:22:48,259 --> 00:22:55,399
+knows i got a second clue that the expert
+chose either dans or en thirty percent of
+
+202
+00:22:55,399 --> 00:23:01,659
+the time ok so we were supposed f one and
+f two so now i have so this is my constraint
+
+203
+00:23:01,659 --> 00:23:10,960
+one so now i have constraint two p f one plus
+p f two is equal to zero point three now given
+
+204
+00:23:10,960 --> 00:23:16,769
+these two constraints what would be the most
+uniform model so if you just take a quick
+
+205
+00:23:16,769 --> 00:23:23,020
+look you can see that the most uniform model
+will be p f one is equal to point one five
+
+206
+00:23:23,020 --> 00:23:30,140
+p f two is equal to point one five and f three
+f of five f five which will get point seven
+
+207
+00:23:30,140 --> 00:23:36,480
+divided by three and that will set both both
+the constraint this will be the most uniform
+
+208
+00:23:36,480 --> 00:23:42,789
+model ok so this is not as uniform as this
+model so as you are getting more and more
+
+209
+00:23:42,789 --> 00:23:47,809
+observations you are going far from the most
+uniform models but you are coming up with
+
+210
+00:23:47,809 --> 00:23:51,879
+some other models that i as uniform as possible
+but satisfying these constraints
+
+211
+00:23:51,879 --> 00:23:58,360
+now what happens if you get a third clue like
+in half of the case cases expert shows either
+
+212
+00:23:58,360 --> 00:24:07,580
+dans or an so that is p f two plus p f three
+is equal to point five that is three you know
+
+213
+00:24:07,580 --> 00:24:13,009
+immediately you will see that it becomes difficult
+to just look at this equation and try to solve
+
+214
+00:24:13,009 --> 00:24:19,139
+for what is the distribution that is most
+uniform and that's why we we need to understand
+
+215
+00:24:19,139 --> 00:24:24,510
+the the concept of maximum entropy so i want
+to find out the model that is most uniform
+
+216
+00:24:24,510 --> 00:24:28,240
+doing the constraints that is equivalent to
+finding the model that is having the maximum
+
+217
+00:24:28,240 --> 00:24:37,130
+entropy among model ok
+so now so yes how do we so as we get more
+
+218
+00:24:37,130 --> 00:24:43,110
+and more ah clues it becomes difficult to
+see which is the most uniform model so for
+
+219
+00:24:43,110 --> 00:24:47,970
+that you have to understand how do we measure
+the uniformity of a model and that's where
+
+220
+00:24:47,970 --> 00:24:53,549
+we use the idea of entropy so some of you
+might have already come across this term of
+
+221
+00:24:53,549 --> 00:25:01,909
+entropy so what is entropy entropy measures
+what is the ah uncertainty of dis dis distribution
+
+222
+00:25:01,909 --> 00:25:09,960
+so so going to the basics so suppose i have
+an event x that occurs to the probability
+
+223
+00:25:09,960 --> 00:25:16,840
+of p x ok
+so entropy measures what is the amount of
+
+224
+00:25:16,840 --> 00:25:25,970
+surprise in this event so if it is very very
+surprising then ah the entropy will be high
+
+225
+00:25:25,970 --> 00:25:34,620
+if it is like very obvious then entropy will
+be low so for an event when it is ah more
+
+226
+00:25:34,620 --> 00:25:40,260
+surprising when the probability is low probability
+is high and the probability hi high it is
+
+227
+00:25:40,260 --> 00:25:46,710
+like obvious ok so then the entropy will be
+low but when the probability when the so the
+
+228
+00:25:46,710 --> 00:25:52,049
+interview will be low but when the probability
+is low so there is a lot of surprise in that
+
+229
+00:25:52,049 --> 00:25:58,259
+even if that happens then the probability
+entropy is high so that's why entropy is ah
+
+230
+00:25:58,259 --> 00:26:03,200
+log of one by probability ok
+so the probability is low entropy will be
+
+231
+00:26:03,200 --> 00:26:09,289
+high so for a distribution how do we compute
+the entropy for a distribution so i just take
+
+232
+00:26:09,289 --> 00:26:21,149
+the expected value of surprise that is summation
+over p x log one by p x ok so so i take the
+
+233
+00:26:21,149 --> 00:26:27,179
+expected surprise over all the possible values
+of p so this is a very very a standard formula
+
+234
+00:26:27,179 --> 00:26:36,570
+for entropy minus summation p x log p x now
+so here we are talking about distributions
+
+235
+00:26:36,570 --> 00:26:44,029
+in the case of distributions when will be
+the entropy maximum so if you look at this
+
+236
+00:26:44,029 --> 00:26:50,230
+formula
+so let's take one simple example of coin tossing
+
+237
+00:26:50,230 --> 00:26:56,450
+ok so i am tossing a coin so it can be head
+or tail let us say that head has a probability
+
+238
+00:26:56,450 --> 00:27:06,139
+of p and tail has a probability of one minus
+p ok so what is the entropy of this model
+
+239
+00:27:06,139 --> 00:27:15,910
+it will be minus p log p minus one minus p
+log one minus p and if you actually so these
+
+240
+00:27:15,910 --> 00:27:23,769
+are all based on too if you actually go on
+plotting this as a function of p from zero
+
+241
+00:27:23,769 --> 00:27:32,440
+to one you will find that the entropy it starts
+increasing it becomes the highest at p is
+
+242
+00:27:32,440 --> 00:27:40,610
+equal to half and it starts decreasing afterwards
+now can we intuitively understand this
+
+243
+00:27:40,610 --> 00:27:46,389
+so what we are saying when both head and tail
+have equal probability then the entropy of
+
+244
+00:27:46,389 --> 00:27:55,539
+them of my model is the highest what is entropy
+it measures how much is the surprise ok so
+
+245
+00:27:55,539 --> 00:28:02,480
+let's take a point like this so at this point
+what will happen so head has a probability
+
+246
+00:28:02,480 --> 00:28:07,320
+very low probability but tail as a very high
+probability so you more or less no ok it will
+
+247
+00:28:07,320 --> 00:28:13,989
+probably tail when you toss a coin it is probable
+most probably be a tail so there is not ah
+
+248
+00:28:13,989 --> 00:28:22,179
+so there is not much more surprises that are
+coming but when both head and tail have equal
+
+249
+00:28:22,179 --> 00:28:27,700
+probability then you are very very confused
+you do not know whether the it will be head
+
+250
+00:28:27,700 --> 00:28:32,679
+or it will be tail so the amount of so expected
+surprise that you will get is the maximum
+
+251
+00:28:32,679 --> 00:28:42,580
+ok so this is the idea so this is a distribution
+over only ah this two variables p and ah this
+
+252
+00:28:42,580 --> 00:28:45,580
+p n q are you can say this have p n one minus
+p
+
+253
+00:28:45,580 --> 00:28:52,840
+but even if you take any any n number of variables
+the reservation will be having the maximum
+
+254
+00:28:52,840 --> 00:28:59,429
+en entropy wave whenever it is the most uniform
+ok so this gives such the intuition that why
+
+255
+00:28:59,429 --> 00:29:09,169
+we chose the most uniform model for getting
+the maximum entropy now coming back to a maximum
+
+256
+00:29:09,169 --> 00:29:14,960
+entropy model so we want to among all the
+possible distributions we want to choose a
+
+257
+00:29:14,960 --> 00:29:25,889
+model that maximizes by entropy ok
+now so i want to maximize entropy subject
+
+258
+00:29:25,889 --> 00:29:30,990
+to certain constraints right so we will have
+certain constraints from the data and these
+
+259
+00:29:30,990 --> 00:29:36,652
+constraints are nothing but my features so
+i will select some features and i will make
+
+260
+00:29:36,652 --> 00:29:43,909
+sure that the the ambiguous probability from
+the data that i am finding for the features
+
+261
+00:29:43,909 --> 00:29:49,730
+is similar to the probability that my model
+is giving that and subject to this constraint
+
+262
+00:29:49,730 --> 00:29:57,210
+i will ah i will maximize my problem my entropy
+as you also seen as we keep on adding constraints
+
+263
+00:29:57,210 --> 00:30:04,499
+one by one the entropy of my model decreases
+ok it comes close to my data initially might
+
+264
+00:30:04,499 --> 00:30:08,460
+start with the most uniform model that is
+giving the equal probability to everything
+
+265
+00:30:08,460 --> 00:30:13,739
+but as you keep on adding constraint one by
+one you come close you go far far away from
+
+266
+00:30:13,739 --> 00:30:19,100
+the most uniform model so you decrease your
+entropy and you come closer to data so this
+
+267
+00:30:19,100 --> 00:30:25,360
+is the idea so give us some constraints we
+want to come as close as possible to the data
+
+268
+00:30:25,360 --> 00:30:31,470
+but otherwise we want to obtain the most ah
+most uniform model in terms of maximum entropy
+
+269
+00:30:31,470 --> 00:30:38,119
+so coming close the data in this case means
+finding the ah empirical probabilities of
+
+270
+00:30:38,119 --> 00:30:44,220
+these features and ah i am trying to make
+it trying the model probabilities to be close
+
+271
+00:30:44,220 --> 00:30:49,830
+to this so this is my maximum entropy principle
+i am given some n different feature functions
+
+272
+00:30:49,830 --> 00:30:58,220
+f one to f n i want my probably distribution
+p to lie in the subset in the subset of all
+
+273
+00:30:58,220 --> 00:31:07,059
+the possible distributions that satisfy this
+constraint ok so all the all the ah probability
+
+274
+00:31:07,059 --> 00:31:11,169
+distributions that satisfy this constraint
+among those i want to choose the one that
+
+275
+00:31:11,169 --> 00:31:17,909
+is having the maximum entropy ok so what do
+i mean by satisfying this constraint so what
+
+276
+00:31:17,909 --> 00:31:24,539
+is the empirical count of or expectation of
+a feature so empirical expectation means how
+
+277
+00:31:24,539 --> 00:31:33,320
+many times this features actually ah this
+x y actually occurred and f i x y was one
+
+278
+00:31:33,320 --> 00:31:38,600
+in my data ok so p hat is my ah empirical
+probability
+
+279
+00:31:38,600 --> 00:31:48,860
+now what will be my model probability so it
+will be so model probability p f i it will
+
+280
+00:31:48,860 --> 00:32:00,039
+be summation x y p x y f x y now this p x
+y because we are computing finally p y given
+
+281
+00:32:00,039 --> 00:32:13,049
+x i can write as summation x y p x p y given
+x f x y ok and because we are not computing
+
+282
+00:32:13,049 --> 00:32:21,549
+p s n l model i can probably approximate it
+with the ah empirical count of x so this gives
+
+283
+00:32:21,549 --> 00:32:29,190
+me the model probability of the feature so
+i want to make it closer to the p tilde f
+
+284
+00:32:29,190 --> 00:32:35,659
+i that is the empirical probability of the
+feature ok
+
+285
+00:32:35,659 --> 00:32:41,169
+so i have the empirical count model count
+and i want to select the distribution that
+
+286
+00:32:41,169 --> 00:32:48,090
+is most uniform subject to this constraint
+ok so now so i am computing this probability
+
+287
+00:32:48,090 --> 00:32:54,070
+distribution so what will be the maximum entropy
+model that is the one that gives me the high
+
+288
+00:32:54,070 --> 00:33:03,340
+entropy h y given x and that if you do some
+quickness that will be minus sigma x y p x
+
+289
+00:33:03,340 --> 00:33:13,799
+p y given x log p y given x ok and again we
+will approximate this by p tilde ok so this
+
+290
+00:33:13,799 --> 00:33:20,090
+is my maximum entropy model and i want to
+maximize it subject to constraint that this
+
+291
+00:33:20,090 --> 00:33:31,009
+and these are equal so this gives me the model
+maximize this h subject to these constraints
+
+292
+00:33:31,009 --> 00:33:35,649
+ok
+so for that we use the trick of being the
+
+293
+00:33:35,649 --> 00:33:58,929
+lagrangian ok so so i want to now a k lagrangian
+p or lambda that is my h p plus summation
+
+294
+00:33:58,929 --> 00:34:12,419
+i lambda i p f i minus p tilde f i so that
+is i want to maximize this sorry so i want
+
+295
+00:34:12,419 --> 00:34:25,260
+to maximize this yes subject to this constraint
+ok
+
+296
+00:34:25,260 --> 00:35:07,870
+so now if i put these values inside this so
+i will get plus sigma lambda i 
+
+297
+00:35:07,870 --> 00:35:29,900
+summation x y p x y stepwise p tilde x p y
+given x f x y minus summation x y p tilde
+
+298
+00:35:29,900 --> 00:35:49,710
+x y f x y ok this is my ah lagrangian and
+i want to maximize that so i will i want to
+
+299
+00:35:49,710 --> 00:35:57,570
+find out this distribution that maximizes
+this so let me just substitute this fifty
+
+300
+00:35:57,570 --> 00:36:06,450
+everywhere (Refer Time: 36:00 ok so in term
+what you are doing you are maximizing it with
+
+301
+00:36:06,450 --> 00:36:16,860
+respect to this d and that you can do by differentiating
+it with respect to d ok and then putting it
+
+302
+00:36:16,860 --> 00:36:27,230
+to zero and that will actually give you the
+the equation that we have seen that is p lambda
+
+303
+00:36:27,230 --> 00:36:32,620
+y given x that is our t in this case it will
+come out to be exponential over summation
+
+304
+00:36:32,620 --> 00:36:38,840
+lambda f i x y divided by the normalization
+constant ok this is simple exercise that you
+
+305
+00:36:38,840 --> 00:36:43,720
+can do you can just differentiate it with
+respect to this parameter t and you will actually
+
+306
+00:36:43,720 --> 00:36:49,030
+come up with something close to what we have
+seen in the formulation of maximum entropy
+
+307
+00:36:49,030 --> 00:36:55,580
+model and this normalization constant is nothing
+but something that that makes this probability
+
+308
+00:36:55,580 --> 00:37:06,010
+p lambda y given x summation over y to one
+and that gives me the normalization constant
+
+309
+00:37:06,010 --> 00:37:11,870
+um ok
+so this is my maximum entropy model so you
+
+310
+00:37:11,870 --> 00:37:16,810
+are you have to the the important part here
+is to find out the set of features once you
+
+311
+00:37:16,810 --> 00:37:23,290
+have a set of features you can use this particular
+equation to compute the probability of a class
+
+312
+00:37:23,290 --> 00:37:35,070
+y given the observation x so next in the next
+lecture i will try to take up ah is a problem
+
+313
+00:37:35,070 --> 00:37:41,310
+that will make the idea of maximum entropy
+model for that clear then we will see how
+
+314
+00:37:41,310 --> 00:37:47,380
+given a new sentence we use this maximum entropy
+model to come up with the tag sequence and
+
+315
+00:37:47,380 --> 00:37:53,060
+there we will study this beam algorithm beam
+search algorithm ok so see you then
+

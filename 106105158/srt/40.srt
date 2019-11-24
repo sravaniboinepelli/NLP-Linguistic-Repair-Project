@@ -1,0 +1,1389 @@
+1
+00:00:16,550 --> 00:00:21,930
+so welcome back for the fourth lecture of
+this week so we had already started our discussions
+
+2
+00:00:21,930 --> 00:00:26,640
+on word sense disambiguation in the last lecture
+and we talked about some [app/approaches]
+
+3
+00:00:26,640 --> 00:00:32,300
+that we use i that are either knowledge based
+or use some machine learning algorithm so
+
+4
+00:00:32,300 --> 00:00:36,790
+ah in this lecture we will talk about some
+approaches that are either semi supervised
+
+5
+00:00:36,790 --> 00:00:46,230
+or unsupervised so ah why do we need to talk
+about the ah semi supervised or supervised
+
+6
+00:00:46,230 --> 00:00:52,329
+approaches so so in all the machine learning
+approaches that that that we can use for this
+
+7
+00:00:52,329 --> 00:00:58,340
+this particular problem or any other problem
+what is one particular bottleneck let's take
+
+8
+00:00:58,340 --> 00:01:04,320
+the naive bayes algorithm ok so for for applying
+naive bayes algorithm you want to compute
+
+9
+00:01:04,320 --> 00:01:08,750
+the features at that is as as such easy some
+sort of domain knowledge will be required
+
+10
+00:01:08,750 --> 00:01:13,840
+but you have to find out all these numbers
+like what is the probability of a particular
+
+11
+00:01:13,840 --> 00:01:23,580
+sense what is the probability of a feature
+given a sense yes now how do you got get all
+
+12
+00:01:23,580 --> 00:01:36,380
+these values for getting all these values
+you need to have some sort of label data set
+
+13
+00:01:36,380 --> 00:01:41,340
+and what do i mean by labeled data set in
+this context i will have various sentences
+
+14
+00:01:41,340 --> 00:01:47,160
+where this my ambiguous for would have occurred
+and somebody has labeled it that this is sense
+
+15
+00:01:47,160 --> 00:01:54,640
+one in this sentence the word w occurs this
+is sense two and so on so no in some a good
+
+16
+00:01:54,640 --> 00:02:00,310
+number of sentences somebody has labeled each
+word as belonging to one or the other senses
+
+17
+00:02:00,310 --> 00:02:05,729
+and from there i can compute all these course
+and this has to be done for each an individual
+
+18
+00:02:05,729 --> 00:02:10,129
+word ok
+and this can be really really expensive getting
+
+19
+00:02:10,129 --> 00:02:14,690
+all this annotations them and that is true
+for any generic machine learning task so need
+
+20
+00:02:14,690 --> 00:02:20,850
+to have all these annotations first and that
+is quite expensive that's why if you can find
+
+21
+00:02:20,850 --> 00:02:27,170
+some sort of semi supervised approach where
+starting with very few labels you can generate
+
+22
+00:02:27,170 --> 00:02:32,460
+lot of different labels and which may be which
+may not be hundred percent accurate but you
+
+23
+00:02:32,460 --> 00:02:40,730
+can assume that they are mostly correct so
+that is also quite well appreciated that is
+
+24
+00:02:40,730 --> 00:02:47,430
+you are trying to use some sort of semi supervised
+approach and that will save a lot of efforts
+
+25
+00:02:47,430 --> 00:02:54,760
+in labeling and also you use a lot of bootstrapping
+here
+
+26
+00:02:54,760 --> 00:03:01,030
+so you see one such approach for word sense
+disambiguation that was proposed by yarowsky
+
+27
+00:03:01,030 --> 00:03:07,320
+so so this is also called minimally supervised
+word sense disambiguation and what is the
+
+28
+00:03:07,320 --> 00:03:13,819
+motivation that for a machine o for using
+a supervised learning [alg/algorithm] i have
+
+29
+00:03:13,819 --> 00:03:19,630
+to use annotations and that that are quite
+ah expressive inexpensive so i use bootstrapping
+
+30
+00:03:19,630 --> 00:03:25,730
+so what is the idea i start with some small
+seed set and i am learning the my decision
+
+31
+00:03:25,730 --> 00:03:33,070
+is classified from the small seed set use
+my decision list to label the rest of the
+
+32
+00:03:33,070 --> 00:03:38,460
+corpus again from there find out what are
+the labels that are confident modify your
+
+33
+00:03:38,460 --> 00:03:44,540
+decision list algorithm again run it on the
+corpus find out more labels and so on so you
+
+34
+00:03:44,540 --> 00:03:50,420
+try to go in some sort of a loop of starting
+from some seed set label some sentences ext
+
+35
+00:03:50,420 --> 00:03:55,430
+extending your seed sets of or patterns or
+rules again applying it getting more labels
+
+36
+00:03:55,430 --> 00:04:04,860
+done and so on until you have somehow conversion
+so and you can use some sort of heuristics
+
+37
+00:04:04,860 --> 00:04:11,700
+for doing this ah semi automatic labeling
+and two heuristics are very common in the
+
+38
+00:04:11,700 --> 00:04:17,290
+case of words disambiguation one is one sense
+per discourse and another is one ah sense
+
+39
+00:04:17,290 --> 00:04:25,069
+for collocation one sense for collocation
+we have already seen in the in the ah previous
+
+40
+00:04:25,069 --> 00:04:30,850
+example of decision list classifier what is
+one one sense for discourse so idea is that
+
+41
+00:04:30,850 --> 00:04:37,400
+suppose you are taking one particular document
+or one particular long context if the same
+
+42
+00:04:37,400 --> 00:04:43,939
+word has been repeated multiple times most
+probably it is using the same sense so for
+
+43
+00:04:43,939 --> 00:04:49,439
+example you are seeing the commentary or some
+news article about sports and you find the
+
+44
+00:04:49,439 --> 00:04:54,320
+word bat has been used at one point and you
+know this category is sense one
+
+45
+00:04:54,320 --> 00:05:01,090
+now if the same word bat occurs in some some
+nearby places you can probably assume that
+
+46
+00:05:01,090 --> 00:05:07,249
+this is also being used the same sense and
+this is the idea so in the same discourse
+
+47
+00:05:07,249 --> 00:05:12,569
+if your word appears multiple times i tag
+it with the same sense so these are my two
+
+48
+00:05:12,569 --> 00:05:17,939
+different heuristics one sense for discourse
+that is a word tends to preserve its meaning
+
+49
+00:05:17,939 --> 00:05:22,400
+across all its occurrences in a given discourse
+and one sense for collocation we have already
+
+50
+00:05:22,400 --> 00:05:29,050
+seen that if it is used with the same collocation
+it will have one meaning and generally it
+
+51
+00:05:29,050 --> 00:05:34,259
+is strong for nearby collocations and if the
+distance becomes higher it becomes weaker
+
+52
+00:05:34,259 --> 00:05:40,240
+and weaker so now how do we use this ideas
+to construct a semi supervised approach for
+
+53
+00:05:40,240 --> 00:05:48,559
+words disambiguation so idea would be let's
+take the same example that is i'm having the
+
+54
+00:05:48,559 --> 00:05:54,941
+word plant it has two senses one is industrial
+sense another is living thing sense so i will
+
+55
+00:05:54,941 --> 00:06:00,710
+starts with some sort of seed labels or some
+seed ah collocation so suppose i say that
+
+56
+00:06:00,710 --> 00:06:07,039
+with the first sense that is industrial if
+the word plant occurs with manufacturing it
+
+57
+00:06:07,039 --> 00:06:13,150
+will have only the first sense similarly if
+the word plant occurs with life it will have
+
+58
+00:06:13,150 --> 00:06:18,279
+the living thing sense ok
+so this becomes my decision list classifier
+
+59
+00:06:18,279 --> 00:06:23,469
+i check simply if the words plant is occurring
+with manufacturing all life manufacturing
+
+60
+00:06:23,469 --> 00:06:33,129
+i say it is sense one if if life sense two
+ok so what will i do i'll take my whole corpus
+
+61
+00:06:33,129 --> 00:06:39,460
+see wherever with the word plant one of these
+words either manufacturing or life occurs
+
+62
+00:06:39,460 --> 00:06:44,949
+wherever the word manufacture occurs i say
+ok this is labeled as this is my pseudo label
+
+63
+00:06:44,949 --> 00:06:51,199
+sentence so now i have some set of pseudo
+label sentences both with manufacturing and
+
+64
+00:06:51,199 --> 00:06:59,050
+using manufacturing in life so what i would
+have now from my corpus i would have labeled
+
+65
+00:06:59,050 --> 00:07:08,219
+some sentences ok with sense one with sense
+two so these are all the sentences where the
+
+66
+00:07:08,219 --> 00:07:16,580
+words plant occurs with manufacturing and
+these are all the where the plant occurs with
+
+67
+00:07:16,580 --> 00:07:21,199
+life ok
+so now the idea would be so now i am doing
+
+68
+00:07:21,199 --> 00:07:34,990
+going in in in iterations so now i will treat
+the match my labeled data ok although to be
+
+69
+00:07:34,990 --> 00:07:40,999
+ah very ah clear we can also call it my pseudo
+labeled data it is like i am only making an
+
+70
+00:07:40,999 --> 00:07:45,729
+assumption that they are labeled with sense
+one and sense two now treat it as your label
+
+71
+00:07:45,729 --> 00:07:52,759
+data and then apply your decision list classical
+algorithm to find out what are the good collocations
+
+72
+00:07:52,759 --> 00:07:58,789
+suppose you find some three four collocations
+here so it can be ah different things about
+
+73
+00:07:58,789 --> 00:08:03,529
+growth and whatever or the word car like what
+we saw in the previous case so we find some
+
+74
+00:08:03,529 --> 00:08:10,080
+collocations here now use this collocations
+and your algorithm to build a new decision
+
+75
+00:08:10,080 --> 00:08:18,419
+list classifier 
+new classifier again you will use that to
+
+76
+00:08:18,419 --> 00:08:28,759
+label new sentences and you will have new
+data you will get new collocations from there
+
+77
+00:08:28,759 --> 00:08:33,750
+and you keep on repeating the system so let's
+see for this particular example so suppose
+
+78
+00:08:33,750 --> 00:08:41,960
+i use that and i label some sentences with
+sense of ah living thing some with sense of
+
+79
+00:08:41,960 --> 00:08:46,000
+industrial plant ok
+so you see here everywhere life is occurring
+
+80
+00:08:46,000 --> 00:08:52,180
+here everywhere the word manufacturing is
+occurring now from these labeled or by pseudo
+
+81
+00:08:52,180 --> 00:08:56,740
+labeled data i will try to extract some more
+collocations like here suppose i see that
+
+82
+00:08:56,740 --> 00:09:03,490
+the word like animal and kingdom occur a lot
+with this sense but they do not occur with
+
+83
+00:09:03,490 --> 00:09:08,120
+this sense so this becomes my collocation
+now now use your decision list classify algorithms
+
+84
+00:09:08,120 --> 00:09:15,270
+previously that we have talked about to make
+ah so make to make my decision list ok now
+
+85
+00:09:15,270 --> 00:09:20,170
+again run it over the coppers and then you
+can find suppose the word where plant and
+
+86
+00:09:20,170 --> 00:09:26,769
+animal occurs so here you can again label
+it with sense of sense of living thing and
+
+87
+00:09:26,769 --> 00:09:32,509
+from from once you have done that you can
+extract some more collocations from here and
+
+88
+00:09:32,509 --> 00:09:39,130
+you keep on doing that so idea would be something
+like that so you have this whole corpus where
+
+89
+00:09:39,130 --> 00:09:47,240
+the word plant occurs somewhere by using this
+initial seed set of life and manufacturing
+
+90
+00:09:47,240 --> 00:09:53,660
+you have label sense a and sense b now what
+you will do you will treat them as label data
+
+91
+00:09:53,660 --> 00:10:00,930
+from their capture some more collocations
+so something like this so you capture collocation
+
+92
+00:10:00,930 --> 00:10:07,839
+like cell animal species microscopic for for
+the sense of life and equipment employee automated
+
+93
+00:10:07,839 --> 00:10:12,550
+manufacturing for the sense of ah industrial
+ah plant
+
+94
+00:10:12,550 --> 00:10:17,740
+now use that to label more sentences and it
+is a more sentences that you have labeled
+
+95
+00:10:17,740 --> 00:10:25,100
+ok so all these content this might microscopic
+speech anyone and so on now you have a larger
+
+96
+00:10:25,100 --> 00:10:30,149
+data again extract collocations from where
+build build here recently and try to label
+
+97
+00:10:30,149 --> 00:10:36,050
+the rest of the corpus so you keep on iterating
+this and ideally at some point you will have
+
+98
+00:10:36,050 --> 00:10:45,160
+you whole corpus covered now so ah so when
+do you stop when the error on the training
+
+99
+00:10:45,160 --> 00:10:49,259
+data is less than a threshold so we can have
+some small training data to check how could
+
+100
+00:10:49,259 --> 00:10:56,019
+your ah this bootstrapping approach is performing
+or when no more training data is covered by
+
+101
+00:10:56,019 --> 00:11:02,060
+the algorithm when you see that all the examples
+have been covered and when whatever final
+
+102
+00:11:02,060 --> 00:11:07,149
+decision list you get by this algorithm use
+that for word sense disambiguation now what
+
+103
+00:11:07,149 --> 00:11:12,129
+is the advantage of this approach so ah so
+you can see that the advantage here are that
+
+104
+00:11:12,129 --> 00:11:16,269
+it would have to put the efforts into manual
+labeling of the corpus
+
+105
+00:11:16,269 --> 00:11:20,290
+so you can start with some some very small
+seed side set keep on applying this algorithm
+
+106
+00:11:20,290 --> 00:11:29,190
+retroactively and obtain the final classifier
+now so so accuracy also turns out to be quite
+
+107
+00:11:29,190 --> 00:11:37,070
+good but what are the different ah what maybe
+one problem with this approach ah so one problem
+
+108
+00:11:37,070 --> 00:11:43,519
+of this approach might be that the whole accuracy
+that you get by this approach depends on how
+
+109
+00:11:43,519 --> 00:11:50,040
+good are your initial ah initial seed set
+if your initial seed set is not good then
+
+110
+00:11:50,040 --> 00:11:57,120
+you may not ah go very far in this in this
+approach so the the good thing is if you chose
+
+111
+00:11:57,120 --> 00:12:02,709
+choose very good initial seeds that have lot
+of precondition the corpus and are also very
+
+112
+00:12:02,709 --> 00:12:08,720
+very distinctive you see this gives starts
+give giving you very good precision and good
+
+113
+00:12:08,720 --> 00:12:13,920
+recall from the very beginning
+so now this is a semi supervised approach
+
+114
+00:12:13,920 --> 00:12:20,480
+and i hope the idea is clear now we will see
+one unsupervised approach for what watson
+
+115
+00:12:20,480 --> 00:12:27,180
+disambiguation by unsupervised i would mean
+that the senses for the words are not defined
+
+116
+00:12:27,180 --> 00:12:33,540
+a priori but they are sort of learned from
+the data so from the data you try to find
+
+117
+00:12:33,540 --> 00:12:40,160
+out what are the different senses a word is
+used in and this becomes your ah sense definition
+
+118
+00:12:40,160 --> 00:12:46,370
+for each word and this field is also called
+word sense induction as such so you are trying
+
+119
+00:12:46,370 --> 00:12:54,459
+to induce the sense of the word by its usage
+in the corpus now what is the basic idea
+
+120
+00:12:54,459 --> 00:13:00,819
+so we will talk about the algorithm the hyperlex
+so key i idea here is word sense induction
+
+121
+00:13:00,819 --> 00:13:07,279
+that is instead of taking some sense that
+are defined by a dictionary try to extract
+
+122
+00:13:07,279 --> 00:13:12,589
+the senses from a corpus itself so the way
+the world is used in a corpus use that for
+
+123
+00:13:12,589 --> 00:13:17,720
+extracting senses of the word and these copper
+senses or uses will correspond to clusters
+
+124
+00:13:17,720 --> 00:13:27,440
+of similar context for a word now let's take
+one example to get the intuition so here you
+
+125
+00:13:27,440 --> 00:13:33,319
+are seeing the word space and there are many
+other words that are coming along with this
+
+126
+00:13:33,319 --> 00:13:42,399
+space so the connections show here that two
+different words occur together in a arc occur
+
+127
+00:13:42,399 --> 00:13:48,810
+together above some threshold number of times
+in a corpus ok so and as denotes that they
+
+128
+00:13:48,810 --> 00:13:53,759
+are probably similar in the sense that they
+are co occurring a lot so now try to look
+
+129
+00:13:53,759 --> 00:13:59,949
+at this this simple picture so what do you
+seeing the words like retail parking are connected
+
+130
+00:13:59,949 --> 00:14:05,139
+retail square are connected feet and parking
+connected here in the left hand side right
+
+131
+00:14:05,139 --> 00:14:12,769
+hand side you are seeing words like astronauts
+mission and ah n a s a shuttle all these are
+
+132
+00:14:12,769 --> 00:14:16,029
+connected
+now by looking at these connections so what
+
+133
+00:14:16,029 --> 00:14:21,499
+is one thing that you are seeing is that you
+are finding out two different clusters here
+
+134
+00:14:21,499 --> 00:14:26,879
+ok one in the left hand side one in the right
+hand side one is denoting one sense of space
+
+135
+00:14:26,879 --> 00:14:34,319
+in the sense of parking space retail space
+in secondary space as such ah space where
+
+136
+00:14:34,319 --> 00:14:43,070
+astronauts will be going in and that involves
+n a s a and all now from the corpus i can
+
+137
+00:14:43,070 --> 00:14:50,139
+find out that ah astronauts n a s a and shuttle
+n a s a connected retail parking retail square
+
+138
+00:14:50,139 --> 00:14:57,810
+all these are connected but how will i find
+out that the word space has two senses and
+
+139
+00:14:57,810 --> 00:15:05,100
+these two senses correspond to ah some particular
+words so if you look at the figure again you
+
+140
+00:15:05,100 --> 00:15:10,529
+can see that for a particular sense of the
+word space the words will be highly connected
+
+141
+00:15:10,529 --> 00:15:16,519
+to each other for another sense again these
+words are highly connected to each other but
+
+142
+00:15:16,519 --> 00:15:21,070
+there will not be much connections between
+the words in this sense and words in that
+
+143
+00:15:21,070 --> 00:15:28,019
+sense so that is if i construct this as a
+graph and [kin/can] use some sort of clustering
+
+144
+00:15:28,019 --> 00:15:33,889
+algorithm to find out what are the different
+ah portions of partitions of this graph so
+
+145
+00:15:33,889 --> 00:15:38,740
+one partition will belong to one sense another
+partition will correspond to another sense
+
+146
+00:15:38,740 --> 00:15:44,680
+and this is the idea try to exploit how much
+their that the difference for the same sense
+
+147
+00:15:44,680 --> 00:15:50,410
+the words will co occur a lot together but
+it will not happen for the words across to
+
+148
+00:15:50,410 --> 00:15:56,790
+senses and there are many many different algorithms
+that are developed based on this idea for
+
+149
+00:15:56,790 --> 00:16:02,120
+word sense disambig[uation] induction ok
+so now we will talk about a very simple approach
+
+150
+00:16:02,120 --> 00:16:09,269
+hyperlex that uses this idea now what is this
+algorithm hyperlex so what it does is that
+
+151
+00:16:09,269 --> 00:16:15,779
+for a given word that it ambiguous by using
+the data in my corpus it tries to identify
+
+152
+00:16:15,779 --> 00:16:21,610
+what are the ah main hubs so each hub will
+correspond to one sense of this word so it
+
+153
+00:16:21,610 --> 00:16:27,040
+tries to enter what are the main hubs and
+every other word in my ah co occurring graph
+
+154
+00:16:27,040 --> 00:16:30,559
+will be connected to one or the other hubs
+ok
+
+155
+00:16:30,559 --> 00:16:35,439
+so so you know everything is divided into
+these hubs so how do you detect these house
+
+156
+00:16:35,439 --> 00:16:43,279
+and how do you connect the words to one of
+these hubs so so so in hyperlex algorithm
+
+157
+00:16:43,279 --> 00:16:50,079
+the idea is that the different usage of the
+target words from highly interconnected bundles
+
+158
+00:16:50,079 --> 00:16:55,980
+or high density components and each component
+will have one one of the nodes this is hub
+
+159
+00:16:55,980 --> 00:17:01,770
+that is having a high degree then the other
+nodes nodes so how do you start applying this
+
+160
+00:17:01,770 --> 00:17:07,160
+algorithm so first firstly you have to construct
+your co occurrence graph co occur occurrence
+
+161
+00:17:07,160 --> 00:17:12,050
+graph we have seen already in the previous
+week that i find out how many times these
+
+162
+00:17:12,050 --> 00:17:17,209
+two words occur in the corpus and i use some
+function of that to find out how much their
+
+163
+00:17:17,209 --> 00:17:22,380
+ah association is strong how strong is their
+association and i will probably retain only
+
+164
+00:17:22,380 --> 00:17:27,710
+those words that have a very high association
+so i start with connect correct ah building
+
+165
+00:17:27,710 --> 00:17:35,840
+this graph from the corpus co occurrences
+now so what do you do this graph is connected
+
+166
+00:17:35,840 --> 00:17:42,810
+around this word this ah ambiguous word like
+a space in the previous example so first thing
+
+167
+00:17:42,810 --> 00:17:48,250
+i will do i arrange all the nodes in this
+graph in the decreasing order the of their
+
+168
+00:17:48,250 --> 00:17:53,140
+degree so i will forget about the word space
+but every other word will be connecting the
+
+169
+00:17:53,140 --> 00:18:00,040
+decreasing order of their degree so what i
+will ah assume that whatever the hubs are
+
+170
+00:18:00,040 --> 00:18:03,680
+will have high degree shape
+so take the node that is having the highest
+
+171
+00:18:03,680 --> 00:18:09,960
+degree among all the connections and this
+will be the first hub try to find out what
+
+172
+00:18:09,960 --> 00:18:15,720
+is the neighborhood of this hub take them
+to the to it's to this sense cluster remove
+
+173
+00:18:15,720 --> 00:18:20,500
+this from the graph altogether from the remaining
+graph find out what is the node with the highest
+
+174
+00:18:20,500 --> 00:18:25,760
+degree make it the second hub find out its
+neighborhood make it the second sense cluster
+
+175
+00:18:25,760 --> 00:18:33,080
+remove it keep on doing that so so once i
+have arrange the nodes in the graph g in decreasing
+
+176
+00:18:33,080 --> 00:18:38,910
+order of degree now select the node from g
+that has the highest degree and this will
+
+177
+00:18:38,910 --> 00:18:46,830
+be the hub of the first high density component
+now delete this hub and all it's neighbors
+
+178
+00:18:46,830 --> 00:18:52,970
+from the graph from the remaining graph again
+repeat the step three and four to find out
+
+179
+00:18:52,970 --> 00:18:58,240
+what are the hubs and what are their high
+density components so let us try to see this
+
+180
+00:18:58,240 --> 00:19:05,490
+algorithm on a simple example so here what
+do you have you have the word bar that is
+
+181
+00:19:05,490 --> 00:19:12,520
+the central world and i want to detect what
+are it's different senses so what we have
+
+182
+00:19:12,520 --> 00:19:18,820
+done we have first try to construct the co
+occurrence graph so this is this is what you
+
+183
+00:19:18,820 --> 00:19:24,170
+are seeing is a co occurrence graph that tells
+what is the strength of association between
+
+184
+00:19:24,170 --> 00:19:33,200
+two words ok ah one thing here so so so i
+will talk about what is association measure
+
+185
+00:19:33,200 --> 00:19:38,740
+so according to this association measure you
+will take a threshold and choose only those
+
+186
+00:19:38,740 --> 00:19:44,180
+which is that that are above or below the
+threshold depending on how you are defining
+
+187
+00:19:44,180 --> 00:19:51,680
+your threshold in this particular case so
+the number denotes what is the distance between
+
+188
+00:19:51,680 --> 00:19:57,780
+two words so you are only retaining those
+words whose distance is below a threshold
+
+189
+00:19:57,780 --> 00:20:02,300
+so your threshold is point two five so we
+written only those connections that are below
+
+190
+00:20:02,300 --> 00:20:09,720
+point two five and distance can be captured
+by something that is inversely reverse to
+
+191
+00:20:09,720 --> 00:20:16,130
+the association so in this case it is one
+minus liability of max of probability ah so
+
+192
+00:20:16,130 --> 00:20:26,610
+it is one minus max of probability w i given
+w j and probability w j given w i so we take
+
+193
+00:20:26,610 --> 00:20:33,000
+the max of that to find out what is the association
+would be w i w j and this will now capture
+
+194
+00:20:33,000 --> 00:20:43,670
+the distance because this corresponds to the
+similarity how similar they are their condition
+
+195
+00:20:43,670 --> 00:20:49,320
+probability if i take one minus max of that
+that is how much they are different what what
+
+196
+00:20:49,320 --> 00:20:54,680
+is the distance
+so once we have done that for all the words
+
+197
+00:20:54,680 --> 00:21:00,140
+all the pair of words i'll take only those
+that are having distance below a threshold
+
+198
+00:21:00,140 --> 00:21:06,580
+that means they are quite near and they that
+is captured in the left hand side of the figure
+
+199
+00:21:06,580 --> 00:21:12,410
+now once you have done that now you apply
+your algorithm that is finding out what are
+
+200
+00:21:12,410 --> 00:21:19,150
+different hubs and taking their ah different
+neighborhoods so first i'll arrange all the
+
+201
+00:21:19,150 --> 00:21:24,240
+words in decreasing order of the degree now
+what are the no nodes here that are having
+
+202
+00:21:24,240 --> 00:21:31,840
+the highest degree so you find the word like
+iron iron has a degree of one two three and
+
+203
+00:21:31,840 --> 00:21:38,860
+four coffee has degree of one two three and
+four wine also has a degree of one two three
+
+204
+00:21:38,860 --> 00:21:45,230
+and four ok so now there are multiple words
+that are having the highest agree so we'll
+
+205
+00:21:45,230 --> 00:21:49,860
+choose some preference may be either the lexical
+graphical order on some or some ordering on
+
+206
+00:21:49,860 --> 00:21:54,530
+the or some travels or ordering on the graph
+and suppose you say from i will choose the
+
+207
+00:21:54,530 --> 00:22:01,290
+one from the left and and you choose the word
+like iron here as your first hub so what is
+
+208
+00:22:01,290 --> 00:22:09,570
+the next next step make iron as your first
+hub and then take all the neighbors of iron
+
+209
+00:22:09,570 --> 00:22:15,760
+and put them with this ah with this hub so
+we taking the two neighbors gold and steel
+
+210
+00:22:15,760 --> 00:22:23,770
+and putting them with this hub here ok
+and that becomes you first hyperlex components
+
+211
+00:22:23,770 --> 00:22:31,140
+now how do you find the next hub you remove
+this hub and all it's neighbors so i remove
+
+212
+00:22:31,140 --> 00:22:36,340
+iron gold and steel from the graph again find
+out what is the node with the highest degree
+
+213
+00:22:36,340 --> 00:22:42,370
+you will find the word like coffee here so
+take coffee of the second hub take its neighbors
+
+214
+00:22:42,370 --> 00:22:47,710
+so it will be chocolate cocktail and wine
+so these become it's neighbors it's become
+
+215
+00:22:47,710 --> 00:22:53,870
+my second hope hub and all the component with
+that remove that from the graph now find out
+
+216
+00:22:53,870 --> 00:22:59,510
+the next hub so this can be the word soap
+that is having a degree three you take the
+
+217
+00:22:59,510 --> 00:23:05,770
+words soap and wax as your third hub and it's
+component and then finally you will have the
+
+218
+00:23:05,770 --> 00:23:11,110
+word like pressure and dyne thats your four
+hub so this is my hub and these are different
+
+219
+00:23:11,110 --> 00:23:18,301
+descendants of the hub so from your corpus
+you are focusing on one word k bar and you
+
+220
+00:23:18,301 --> 00:23:22,020
+are trying to construct the co occurrence
+matrix finding out the association between
+
+221
+00:23:22,020 --> 00:23:27,940
+various words building out this graph from
+there you are detecting what are your various
+
+222
+00:23:27,940 --> 00:23:33,630
+hubs and the descendants and this becomes
+your instruction on this is your target word
+
+223
+00:23:33,630 --> 00:23:40,130
+different hubs and their descendants and this
+is what you have ah obtained in a completely
+
+224
+00:23:40,130 --> 00:23:47,240
+unsupervised manner because nobody told you
+how many ah senses the word bar put have or
+
+225
+00:23:47,240 --> 00:23:53,800
+what are the different senses of bar you found
+it automatically by using the corpus data
+
+226
+00:23:53,800 --> 00:24:00,840
+so so for all other words other than hub you
+attach them to the root hub that is closest
+
+227
+00:24:00,840 --> 00:24:07,030
+to them and how do you find what is the closest
+hub you can take the distance between that
+
+228
+00:24:07,030 --> 00:24:13,630
+node and the different route hubs ok
+and this distance is simply the summation
+
+229
+00:24:13,630 --> 00:24:17,500
+over the path length what is the path length
+you just keep on adding the path length that
+
+230
+00:24:17,500 --> 00:24:24,240
+is the distance between any node and the root
+hubs attach this node to one of the root hubs
+
+231
+00:24:24,240 --> 00:24:30,380
+only and this is something that i talked about
+that how do we compute the distance between
+
+232
+00:24:30,380 --> 00:24:36,410
+two nodes in my original co occurrence graph
+i take this one minus max probability of w
+
+233
+00:24:36,410 --> 00:24:46,170
+i given w j and probability of w j given w
+i so now so we can see that how do we ah start
+
+234
+00:24:46,170 --> 00:24:53,780
+from my corpus and construct different senses
+of a word so y y hub and ah descendants now
+
+235
+00:24:53,780 --> 00:24:58,230
+at run time so we we are talking about this
+problem whats in the disambiguation so at
+
+236
+00:24:58,230 --> 00:25:05,130
+run time i am given a ah sentence where this
+word is provided and i want to find out what
+
+237
+00:25:05,130 --> 00:25:10,910
+is it's appropriate sense that is used among
+all the possible senses i have fine formed
+
+238
+00:25:10,910 --> 00:25:19,340
+by this algorithm so what is the approach
+so let us say i have this context or the sentence
+
+239
+00:25:19,340 --> 00:25:26,590
+where this word w i occurs and w i is my target
+word that has multiple senses so suppose they
+
+240
+00:25:26,590 --> 00:25:34,590
+are it has k senses k hubs that is k senses
+so what do we do we associate a score vector
+
+241
+00:25:34,590 --> 00:25:46,840
+as with each word in the context such that
+s k denotes what is the contribution of the
+
+242
+00:25:46,840 --> 00:25:52,950
+ah so what is the contribution it will have
+to the k th hub and this is simply taken by
+
+243
+00:25:52,950 --> 00:26:00,920
+one divide by one plus distance between the
+hub and the word if it is if the hub is an
+
+244
+00:26:00,920 --> 00:26:07,950
+ancestor of the word w otherwise it' is zero
+and you do that for all the words in my context
+
+245
+00:26:07,950 --> 00:26:13,790
+and sum those over so find out a simple vector
+that tells me which sense has how much score
+
+246
+00:26:13,790 --> 00:26:18,322
+which has a have how much score and whichever
+has hub has the highest score i will choose
+
+247
+00:26:18,322 --> 00:26:32,700
+that so to tell that again so what we will
+do so we will have a sentence w one to w n
+
+248
+00:26:32,700 --> 00:26:47,600
+and i have this word w i that has s one to
+s k k hubs ok now i want to find out which
+
+249
+00:26:47,600 --> 00:26:52,640
+of these k senses is used in this particular
+particular example particular sentence so
+
+250
+00:26:52,640 --> 00:27:03,210
+what will i do for each word w one w two up
+to w n i will construct this core vector ok
+
+251
+00:27:03,210 --> 00:27:09,620
+so [sco/score] vector has that many dimension
+as the number of hubs so it has k dimension
+
+252
+00:27:09,620 --> 00:27:18,020
+so i'll construct this vector for each of
+the words ok
+
+253
+00:27:18,020 --> 00:27:25,020
+so now what are the entries in this vector
+this entity tells me how much contribution
+
+254
+00:27:25,020 --> 00:27:32,350
+this words will make to the first hub this
+contribution would be if this word is an ancest[or]
+
+255
+00:27:32,350 --> 00:27:39,140
+if if the particular hub h of the sense one
+is an ancestor or this word w one it will
+
+256
+00:27:39,140 --> 00:27:48,020
+be one divided by one plus distance of h one
+and w one ok so that is if the distance is
+
+257
+00:27:48,020 --> 00:27:56,200
+high this score will be low if the distance
+is smaller this will give a high score on
+
+258
+00:27:56,200 --> 00:28:03,390
+the other hand if this word if the hub is
+not ancestor i will put a score of like that
+
+259
+00:28:03,390 --> 00:28:12,260
+i will put all the different values here and
+finally once i have all the values i will
+
+260
+00:28:12,260 --> 00:28:19,940
+add all these so for each hub i'll add all
+the possible scores and i will take a final
+
+261
+00:28:19,940 --> 00:28:25,030
+vector that is how much contributions all
+the words together are making for hub one
+
+262
+00:28:25,030 --> 00:28:31,720
+hub two and hub k and i take the one that
+is having the maximum score among all these
+
+263
+00:28:31,720 --> 00:28:39,830
+and that becomes my winner sense ok
+so ah so this is the overall idea of this
+
+264
+00:28:39,830 --> 00:28:45,030
+approach so what we have done here we did
+did not start with any distance defined sense
+
+265
+00:28:45,030 --> 00:28:51,230
+we used a corpus and defined our own senses
+by seeing what are the different components
+
+266
+00:28:51,230 --> 00:28:58,070
+that occurred together so so idea is that
+for a for a given sense of a word different
+
+267
+00:28:58,070 --> 00:29:01,950
+words would have a high co occurrence they
+will make some sort of cluster so identify
+
+268
+00:29:01,950 --> 00:29:07,690
+different cluster size different senses
+now once you have these senses if you want
+
+269
+00:29:07,690 --> 00:29:12,750
+to op use them for ward sense disambiguation
+at run time whenever the word is used find
+
+270
+00:29:12,750 --> 00:29:20,370
+out from the context words which of thus ah
+different hubs they are closer to so whichever
+
+271
+00:29:20,370 --> 00:29:28,130
+hub gets the high score becomes your disambiguate
+sense so thats ah these are some different
+
+272
+00:29:28,130 --> 00:29:33,380
+ideas for ah approaching this problem words
+and disambiguation although i said earlier
+
+273
+00:29:33,380 --> 00:29:39,680
+there are many many different ah approaches
+that have been proposed so in the next lecture
+
+274
+00:29:39,680 --> 00:29:46,320
+we will briefly talk about ah an idea of word
+sense ah discovery that is how do you find
+
+275
+00:29:46,320 --> 00:29:52,620
+out if the world has got a new sense in the
+corpus this is a relatively new ah new field
+
+276
+00:29:52,620 --> 00:29:59,260
+and ah we will see how the ideas that we have
+developed in this these lectures to you how
+
+277
+00:29:59,260 --> 00:30:03,330
+do we use them to find out if a word has got
+new sense in the corpus ok
+
+278
+00:30:03,330 --> 00:30:04,640
+thank you
+

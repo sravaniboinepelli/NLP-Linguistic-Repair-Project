@@ -1,0 +1,1455 @@
+1
+00:00:18,080 --> 00:00:23,540
+so hello everyone welcome back to the we week
+ten of this course so we have been doing a
+
+2
+00:00:23,540 --> 00:00:28,880
+lot of basics in this course and last week
+we finished our discussions on semantics and
+
+3
+00:00:28,880 --> 00:00:32,590
+during semantics we also talked about various
+applications where you can use topic models
+
+4
+00:00:32,590 --> 00:00:38,220
+and other ah things like distribution semantics
+and semantics so starting from this week we
+
+5
+00:00:38,220 --> 00:00:42,650
+will focus mainly on applications so you will
+use both the basics that we have covered and
+
+6
+00:00:42,650 --> 00:00:47,750
+some new methods for solving very specific
+tasks and for this course we have chosen the
+
+7
+00:00:47,750 --> 00:00:53,479
+task that are very very popular in the field
+of n l p and text panel so this week we will
+
+8
+00:00:53,479 --> 00:00:58,150
+start with ah so we will start the first two
+lectures was entity linking and then we will
+
+9
+00:00:58,150 --> 00:01:03,659
+go towards information extraction
+so today we are starting with entity linking
+
+10
+00:01:03,659 --> 00:01:11,590
+so so what is entity linking as such what
+is the problem there so we we were discussing
+
+11
+00:01:11,590 --> 00:01:17,760
+sometimes in in in the starting and in some
+lectures that when we ah encounter text data
+
+12
+00:01:17,760 --> 00:01:23,370
+lot of entities are mentioned there and it
+would be helpful for a task if you what are
+
+13
+00:01:23,370 --> 00:01:29,350
+the different entities that are used in this
+particular text data now there are various
+
+14
+00:01:29,350 --> 00:01:34,600
+knowledge basis and resources where you have
+a good list of all these entities and some
+
+15
+00:01:34,600 --> 00:01:39,440
+descriptions of these available so suppose
+you can find out from a text what are the
+
+16
+00:01:39,440 --> 00:01:43,840
+important entities here and if you can link
+them to a knowledge base then you can do a
+
+17
+00:01:43,840 --> 00:01:49,490
+lot of further inferences over these for example
+this entity is a person and there in the in
+
+18
+00:01:49,490 --> 00:01:53,430
+the database you will have ma lot of information
+about this and you can make use of all these
+
+19
+00:01:53,430 --> 00:01:58,450
+information so this as if you are having some
+background knowledge about various entities
+
+20
+00:01:58,450 --> 00:02:04,390
+given a text data when you encounter the entity
+you try to link it to the knowledge base and
+
+21
+00:02:04,390 --> 00:02:08,539
+then you can extract the background knowledge
+about it and use that for different task in
+
+22
+00:02:08,539 --> 00:02:14,170
+this particular data so this is a problem
+of entity linking so we can define it in this
+
+23
+00:02:14,170 --> 00:02:21,340
+manner that entity linking is the task of
+identifying all mentions in text of a specific
+
+24
+00:02:21,340 --> 00:02:29,069
+entity from a database or in ah ontology
+so what we are assuming here we have a database
+
+25
+00:02:29,069 --> 00:02:33,980
+or we can also call it knowledge base ontology
+where i know what are the different entities
+
+26
+00:02:33,980 --> 00:02:39,650
+that i that i need and with that inform with
+that entity i will have sa some different
+
+27
+00:02:39,650 --> 00:02:45,000
+sort of information ah for example in wikipedia
+think of all the wikipedia pages you have
+
+28
+00:02:45,000 --> 00:02:50,030
+you can call you can think of all these wikipedia
+pages at the entity pages and you have lot
+
+29
+00:02:50,030 --> 00:02:52,150
+of information about the entities in each
+page
+
+30
+00:02:52,150 --> 00:02:57,840
+so this is my knowledge base now when you
+encounter a text there your problem is find
+
+31
+00:02:57,840 --> 00:03:05,660
+out if a particular ah n gram or a sequence
+of phrases sequence of words together correspond
+
+32
+00:03:05,660 --> 00:03:10,680
+to an entity in the in the wikipedia and if
+so then link it to that wikipedia page and
+
+33
+00:03:10,680 --> 00:03:17,350
+this is ah the overall i idea of entity linking
+problem
+
+34
+00:03:17,350 --> 00:03:23,040
+so ah lot of different databases can be used
+for example researchers have used wikipedia
+
+35
+00:03:23,040 --> 00:03:32,310
+lot then yago freebase etcetera and the task
+of entity linking when you are doing you can
+
+36
+00:03:32,310 --> 00:03:37,599
+break it into two different phases so one
+phase would be you find out from the text
+
+37
+00:03:37,599 --> 00:03:44,260
+what are the appropriate an candidates or
+entities that should be ah linked so this
+
+38
+00:03:44,260 --> 00:03:49,930
+is called the entity ah mention detection
+part identify what are the mentions of entities
+
+39
+00:03:49,930 --> 00:03:54,319
+that should be linked to the database and
+once you found out what are the important
+
+40
+00:03:54,319 --> 00:03:59,190
+entities the next one would be to appropriately
+link it to the database that's the second
+
+41
+00:03:59,190 --> 00:04:04,989
+from second part reference disambiguation
+or entity resolution now why would that be
+
+42
+00:04:04,989 --> 00:04:10,470
+a problem see same as we discussed in the
+case of words is disambiguation with the same
+
+43
+00:04:10,470 --> 00:04:16,680
+entity name there might be different reference
+ok so so for example newyork it can be newyork
+
+44
+00:04:16,680 --> 00:04:20,250
+city and there might be movie with the name
+newyork there might be t v serial with the
+
+45
+00:04:20,250 --> 00:04:24,419
+name newyork so when in a text you have a
+mention of newyork you want to know whether
+
+46
+00:04:24,419 --> 00:04:30,250
+you want to link it to the newyork city or
+the film or t v series or something else ok
+
+47
+00:04:30,250 --> 00:04:35,919
+so there is a problem of ah disambiguation
+here and this is also to be handled when we
+
+48
+00:04:35,919 --> 00:04:40,309
+are solving the problem of entity linking
+find out what are the appropriate entities
+
+49
+00:04:40,309 --> 00:04:47,069
+then appropriately link them to their ah entries
+in the database
+
+50
+00:04:47,069 --> 00:04:53,080
+so what are the things your challenge is that
+one needs to handle in this problem so one
+
+51
+00:04:53,080 --> 00:04:59,021
+is mean variations so the same entity can
+be written in many different ways ok so for
+
+52
+00:04:59,021 --> 00:05:03,599
+example simple things like hilary clinton
+so in a in a text you can all you might tried
+
+53
+00:05:03,599 --> 00:05:08,710
+it with only the name clinton with the last
+name clinton ok or maybe there is a middle
+
+54
+00:05:08,710 --> 00:05:13,259
+name also involved here so you can write it
+in different different manners so your problem
+
+55
+00:05:13,259 --> 00:05:17,120
+is you have to you have to handle all these
+name variations and all these should map to
+
+56
+00:05:17,120 --> 00:05:23,169
+the appropriate entity in the knowledge base
+and then the second challenge is entity ambiguity
+
+57
+00:05:23,169 --> 00:05:27,619
+that is the same string can refer to more
+than one entities so this is also we discussed
+
+58
+00:05:27,619 --> 00:05:33,740
+newyork can refer to multiple entities so
+both these challenges are to be handled in
+
+59
+00:05:33,740 --> 00:05:41,719
+the problem of entity linking
+so now ah for for this course what we will
+
+60
+00:05:41,719 --> 00:05:47,419
+do we will take one particular database that
+is wikipedia as our ah base database so so
+
+61
+00:05:47,419 --> 00:05:52,719
+we will always link a text to wikipedia so
+this will be our database by default for this
+
+62
+00:05:52,719 --> 00:05:56,469
+lecture in the next lecture but in general
+you can use any other database and you can
+
+63
+00:05:56,469 --> 00:06:02,500
+accordingly modify your approaches for that
+so one particular terminology so if you are
+
+64
+00:06:02,500 --> 00:06:07,819
+using wikipedia as your knowledge base then
+this task of entity linking is called wikification
+
+65
+00:06:07,819 --> 00:06:12,379
+or wikifying so you are taking a text and
+you are trying to wikify that so that means
+
+66
+00:06:12,379 --> 00:06:17,779
+find out the entities that are important and
+then linked them to ah their appropriate wikipedia
+
+67
+00:06:17,779 --> 00:06:25,389
+pages that's the problem of wikification
+so now let us going detail about this problem
+
+68
+00:06:25,389 --> 00:06:31,319
+what are the different ah processing involved
+and what are the different techniques you
+
+69
+00:06:31,319 --> 00:06:39,240
+can used so here is one example of ah entity
+linking or wikification as such so on the
+
+70
+00:06:39,240 --> 00:06:44,319
+top what you are seen you are seeing a research
+article ok from physics domain and you are
+
+71
+00:06:44,319 --> 00:06:50,319
+having ah so this like an abstract here so
+you are having text such as degeneracy is
+
+72
+00:06:50,319 --> 00:06:55,729
+removed due to a geometric gradient onto a
+metasurface and so on so there is a text involved
+
+73
+00:06:55,729 --> 00:07:01,250
+here now what what is the task you are trying
+to wikify that so that means you are trying
+
+74
+00:07:01,250 --> 00:07:07,699
+to identify what are the encap ah important
+entities and what are their ah pages in wikipedia
+
+75
+00:07:07,699 --> 00:07:13,520
+so if you see on the bottom so you are you
+are finding various links so spin optics so
+
+76
+00:07:13,520 --> 00:07:20,339
+where optics is linked to some some different
+page an an example is from a degeneracy so
+
+77
+00:07:20,339 --> 00:07:25,839
+link so this is linked to degenerate energy
+levels that is a page in wikipedia and you
+
+78
+00:07:25,839 --> 00:07:31,499
+can also find out some specific content about
+that page if you just ah take your mouse over
+
+79
+00:07:31,499 --> 00:07:37,740
+there and that is being done to many different
+words here optics control light photon helicity
+
+80
+00:07:37,740 --> 00:07:44,479
+angular momentum and so on so that means these
+words are the appropriate mentions and they
+
+81
+00:07:44,479 --> 00:07:52,139
+are then linked to their wikipedia pages so
+this is the process of wikification
+
+82
+00:07:52,139 --> 00:07:59,460
+similarly here you are seeing a news article
+and so a in the article so with the news you
+
+83
+00:07:59,460 --> 00:08:06,310
+are seeing various words are ah hyperlinks
+so there you can click this word and go to
+
+84
+00:08:06,310 --> 00:08:12,020
+their appropriate wikipedia page also for
+example here in baghdad so it will open the
+
+85
+00:08:12,020 --> 00:08:17,849
+wikipedia description of the word baghdad
+and you might just want to read the summary
+
+86
+00:08:17,849 --> 00:08:22,339
+or if you want to know more you can click
+on this opening wikipedia and go to the wikipedia
+
+87
+00:08:22,339 --> 00:08:29,639
+page so now so so we can also see why this
+might be very important application so so
+
+88
+00:08:29,639 --> 00:08:33,930
+you can you can talk about reading news articles
+or scientific articles also any other text
+
+89
+00:08:33,930 --> 00:08:39,669
+it can be tweet text so when you reading the
+article there might be many different terms
+
+90
+00:08:39,669 --> 00:08:43,620
+that are very very specific domain and if
+you are not in expert in the domain you will
+
+91
+00:08:43,620 --> 00:08:47,820
+not know what these terms stand for
+so then what you would do you will take this
+
+92
+00:08:47,820 --> 00:08:53,190
+terms and try to search in the dictionary
+or some on google or some or may be on wikipedia
+
+93
+00:08:53,190 --> 00:08:58,090
+and that will require a lot of time from your
+side to fully understand that article so what
+
+94
+00:08:58,090 --> 00:09:04,280
+is wikification doing so it is helping you
+in that given a text it will automatically
+
+95
+00:09:04,280 --> 00:09:09,020
+identify what are the important entities and
+it will link the wikipedia ah pages so it
+
+96
+00:09:09,020 --> 00:09:14,060
+will avoid it will do all the tasks for you
+and you can even see the description in the
+
+97
+00:09:14,060 --> 00:09:18,750
+same page or you can go to the wikipedia page
+and read more about it so that helps a lot
+
+98
+00:09:18,750 --> 00:09:26,830
+in doing ah in in enhancing your reading for
+a certain ah news article or scientific article
+
+99
+00:09:26,830 --> 00:09:33,030
+additionally it can also help if you are pla
+planning two certain task on that text ok
+
+100
+00:09:33,030 --> 00:09:37,930
+you fo your own to get some semantics from
+the text then also having this knowledge that
+
+101
+00:09:37,930 --> 00:09:43,600
+this entity corresponds to this wikipedia
+entity might ah help you in getting some knowledge
+
+102
+00:09:43,600 --> 00:09:49,040
+from the wikipedia page and take it as a feature
+for your task so this is also one other application
+
+103
+00:09:49,040 --> 00:09:52,930
+for this wikification
+so we have seen for scientific articles and
+
+104
+00:09:52,930 --> 00:09:59,750
+news articles you can also do it for very
+short text like tweets so tweets have very
+
+105
+00:09:59,750 --> 00:10:05,520
+little context so here you are seeing with
+four different tweets go gators and here the
+
+106
+00:10:05,520 --> 00:10:10,530
+problem is what does this gator refer to so
+in wikipedia there are two different mentions
+
+107
+00:10:10,530 --> 00:10:15,410
+that are possible florida gators football
+of florida gators mens basketball in this
+
+108
+00:10:15,410 --> 00:10:20,490
+particular context it refers to florida gators
+mens basketball and you want to link it to
+
+109
+00:10:20,490 --> 00:10:25,740
+that particular entity similarly here a stay
+up hawk fans we are going through a slump
+
+110
+00:10:25,740 --> 00:10:31,160
+now but we have to stay positive go hawks
+so here you have entities like fans slump
+
+111
+00:10:31,160 --> 00:10:36,870
+and hawks and they need to be linked to appropriate
+entities again you are seeing their multiple
+
+112
+00:10:36,870 --> 00:10:41,770
+possibilities and you need to find out what
+is the appropriate mention wikipedia same
+
+113
+00:10:41,770 --> 00:10:46,780
+with the other examples that you are seeing
+here so you can do it for also for short text
+
+114
+00:10:46,780 --> 00:10:51,160
+like tweets with tweets there is a very little
+information and you want to find out what
+
+115
+00:10:51,160 --> 00:10:57,440
+is the appropriate entity that this tweet
+links to so and you can also think of many
+
+116
+00:10:57,440 --> 00:11:02,430
+other application on your own where this entity
+linking is important
+
+117
+00:11:02,430 --> 00:11:08,070
+so now how is actually done so for that let
+us try to understand what are the different
+
+118
+00:11:08,070 --> 00:11:17,090
+phrases again what do we need to ah do systematically
+so what are the common steps so first step
+
+119
+00:11:17,090 --> 00:11:23,360
+is it will determine what are the linkable
+phrases and this step is also called mention
+
+120
+00:11:23,360 --> 00:11:30,540
+detection that is from the text find out what
+phrases what n grams are to be linked for
+
+121
+00:11:30,540 --> 00:11:36,050
+example we were seen words like baghdad and
+here gators what the what the mentions that
+
+122
+00:11:36,050 --> 00:11:40,810
+word to be linked to the ah knowledge base
+and this is this is this approach for detecting
+
+123
+00:11:40,810 --> 00:11:46,160
+these words is called mention detection now
+once we have found out what are the appropriate
+
+124
+00:11:46,160 --> 00:11:52,070
+mentions for to be linked then what will be
+the next step next step would be you have
+
+125
+00:11:52,070 --> 00:11:57,540
+to identify what are the possible candidates
+to which it can be linked ah right like in
+
+126
+00:11:57,540 --> 00:12:02,710
+the previous slide we were seen gators can
+link can link to two different ah entries
+
+127
+00:12:02,710 --> 00:12:07,030
+so identify what are the possible entries
+and this will call this is called the link
+
+128
+00:12:07,030 --> 00:12:13,080
+generation part so you have to select what
+are the candidate entity links and what are
+
+129
+00:12:13,080 --> 00:12:18,180
+the ah all the links you have to list somehow
+this is called link generation part
+
+130
+00:12:18,180 --> 00:12:22,270
+now once you know what are all the links then
+what will be the next step you have to find
+
+131
+00:12:22,270 --> 00:12:27,340
+out what is the most appropriate link for
+all the all these set and this will call the
+
+132
+00:12:27,340 --> 00:12:33,360
+ah disambiguation part so this is use the
+context to disambiguate what is the appropriate
+
+133
+00:12:33,360 --> 00:12:38,880
+link it this entity should be link to and
+you might also want to filter you might want
+
+134
+00:12:38,880 --> 00:12:43,530
+to improve your whole task and we will see
+some examples for all these how do you filter
+
+135
+00:12:43,530 --> 00:12:48,600
+and improve your task based on this
+so these are three main steps sometimes you
+
+136
+00:12:48,600 --> 00:12:52,740
+might combine the first two steps also that
+is when you are detecting the wan mentions
+
+137
+00:12:52,740 --> 00:12:57,630
+you also finding the candidates at the same
+time so that is also possible
+
+138
+00:12:57,630 --> 00:13:03,890
+so now so let us let us see these steps again
+in the context of wikification so so you are
+
+139
+00:13:03,890 --> 00:13:09,360
+having a text where you have this sentence
+degeneracy is removed ok and there are some
+
+140
+00:13:09,360 --> 00:13:14,650
+words before and after so what is mention
+detection find out that the word degeneracy
+
+141
+00:13:14,650 --> 00:13:19,900
+is to be linked is the appropriate mention
+so that's in green in this slide so that is
+
+142
+00:13:19,900 --> 00:13:25,820
+a mention detection part then second part
+would be link generation find out all the
+
+143
+00:13:25,820 --> 00:13:31,960
+appropriate all the possible phrases pages
+in the wiki ah in my database so here you
+
+144
+00:13:31,960 --> 00:13:37,150
+can see the degeneracy ah occurs in mathematics
+in biology in graph theory and degenerate
+
+145
+00:13:37,150 --> 00:13:43,050
+energy levels so there are four possible links
+so then you have a task of disambiguation
+
+146
+00:13:43,050 --> 00:13:49,690
+that among the four links what should be the
+appropriate ah ah page wa to which this entity
+
+147
+00:13:49,690 --> 00:13:54,190
+should be linked and that will be the third
+step and that is the disambiguation and you
+
+148
+00:13:54,190 --> 00:14:00,180
+will say ok this is the fourth one degenerate
+energy levels is the appropriate ah entity
+
+149
+00:14:00,180 --> 00:14:08,920
+page for my for my mention of degeneracy and
+these are three steps for this entity linking
+
+150
+00:14:08,920 --> 00:14:13,570
+now so we might ah like to understand what
+are the some of the vasi basic features of
+
+151
+00:14:13,570 --> 00:14:19,370
+wikipedia that can help us in designing an
+algorithm for wikification so wikipedia all
+
+152
+00:14:19,370 --> 00:14:24,840
+of you know about wikipedia and you have been
+reading wikipedia for many of your ah for
+
+153
+00:14:24,840 --> 00:14:29,230
+for knowing different concepts and all so
+so what do you seen wikipedia there is a page
+
+154
+00:14:29,230 --> 00:14:34,550
+like that there is a title and certain texts
+about the page and you see there are various
+
+155
+00:14:34,550 --> 00:14:41,650
+links also so there is an article then additionally
+they can be some redirect pages so you might
+
+156
+00:14:41,650 --> 00:14:45,820
+have come across you are searching for something
+in wikipedia and it it redirects you to some
+
+157
+00:14:45,820 --> 00:14:51,820
+other page in wikipedia so these are also
+ill ah lot of redirect pages in wikipedia
+
+158
+00:14:51,820 --> 00:14:56,070
+then there are disambiguation pages we will
+see an example in the next slide then there
+
+159
+00:14:56,070 --> 00:15:00,060
+are category template pages that allocate
+what are the different categories in wikipedia
+
+160
+00:15:00,060 --> 00:15:05,240
+this category what are the subcategories and
+then there are some admin pages now what is
+
+161
+00:15:05,240 --> 00:15:11,710
+important for our task is that there are lot
+of hyperlinks in wikipedia ok so what hyperlinks
+
+162
+00:15:11,710 --> 00:15:16,490
+in wikipedia so different words and phrases
+are linked within the wikipedia itself so
+
+163
+00:15:16,490 --> 00:15:21,270
+we will see that in wikipedia article certain
+concepts have a hyperlink and you click on
+
+164
+00:15:21,270 --> 00:15:25,210
+the hyper hyperlink and you will go to the
+corresponding wikipedia page so there are
+
+165
+00:15:25,210 --> 00:15:30,070
+lot of in links and out links that are going
+on within wikipedia
+
+166
+00:15:30,070 --> 00:15:37,940
+so ah so united states for example whenever
+you have a ah phrase like united states you
+
+167
+00:15:37,940 --> 00:15:45,620
+may have a link saying it is linking to the
+united states t v serial or american t v show
+
+168
+00:15:45,620 --> 00:15:51,110
+etcetera so you will find if you will see
+the source this will be like that of the hyperlink
+
+169
+00:15:51,110 --> 00:15:55,589
+so you will have a ah double parenthesis to
+denote what is the appropriate entity inside
+
+170
+00:15:55,589 --> 00:16:02,010
+the source and that if you see the source
+wise you can find out and these are various
+
+171
+00:16:02,010 --> 00:16:08,520
+hyperlinks that you have in wikipedia then
+you have a lot of disambiguation pages for
+
+172
+00:16:08,520 --> 00:16:13,980
+some entities where a lot of different mentions
+are available you might have also categories
+
+173
+00:16:13,980 --> 00:16:18,400
+in disambiguation that in the in the category
+of entertainment what are the possibilities
+
+174
+00:16:18,400 --> 00:16:21,770
+in the in the category of politics what are
+the possibilities and so on
+
+175
+00:16:21,770 --> 00:16:28,460
+so like here the you have for the entity newyork
+disambiguation page so you will have h places
+
+176
+00:16:28,460 --> 00:16:34,910
+what are the possibilities then media entertain
+entertainment and you will see that in each
+
+177
+00:16:34,910 --> 00:16:42,020
+category there are lot of entities that correspond
+to this ah the main entity newyork so you
+
+178
+00:16:42,020 --> 00:16:47,770
+will see in in these cases is the same single
+entity can map to may be fifteen twenty different
+
+179
+00:16:47,770 --> 00:16:52,740
+pages in wikipedia and they are nicely categorized
+in this disambiguation page categories may
+
+180
+00:16:52,740 --> 00:16:59,680
+or may not be there in various pages so so
+what are so what so what do we need to about
+
+181
+00:16:59,680 --> 00:17:08,430
+the whole architecture lot of pages in wikipedia
+and each page has some hm name that will be
+
+182
+00:17:08,430 --> 00:17:13,730
+the identify you may be the identifier then
+lot of text involved in the text you have
+
+183
+00:17:13,730 --> 00:17:19,309
+various hyperlinks where different phrases
+are linked to their own wikipedia pages and
+
+184
+00:17:19,309 --> 00:17:24,500
+some entities will have their own disambiguation
+page where you will find out what are the
+
+185
+00:17:24,500 --> 00:17:32,779
+different ah ways in which this entity can
+be used this maybe also under various categories
+
+186
+00:17:32,779 --> 00:17:40,840
+so now so once you know about that so let's
+say some small statistics so that is we talked
+
+187
+00:17:40,840 --> 00:17:46,279
+about word net for sense disambiguation sa
+we given a sentence we want to find out each
+
+188
+00:17:46,279 --> 00:17:52,139
+word what is the appropriate sense in wordnet
+it corresponds to so in wordnet how many entities
+
+189
+00:17:52,139 --> 00:17:57,779
+we had we had roughly eighty k eighty thousand
+different entity definitions and one hundred
+
+190
+00:17:57,779 --> 00:18:04,360
+forty two thousand different sen senses on
+the other hand wikipedia is much larger repository
+
+191
+00:18:04,360 --> 00:18:09,529
+so in wikipedia overall there are four million
+entity defin definitions and this keeps on
+
+192
+00:18:09,529 --> 00:18:16,179
+increasing and there are twenty four million
+different senses so is much much larger in
+
+193
+00:18:16,179 --> 00:18:24,519
+in compassion to ah wordnet so our task is
+from all these twenty four million senses
+
+194
+00:18:24,519 --> 00:18:30,080
+find out given a text what are the entities
+import that are important and what which of
+
+195
+00:18:30,080 --> 00:18:37,779
+the sense they they correspond to
+so now let us see what are the simple measures
+
+196
+00:18:37,779 --> 00:18:42,840
+that we can think of for the three steps or
+let us say only the two steps the mention
+
+197
+00:18:42,840 --> 00:18:49,519
+detection and disambiguation mention detection
+that is in a text whether a given n gram is
+
+198
+00:18:49,519 --> 00:18:56,100
+in appropriate mention or not so so what we
+will do initially we will see some sort of
+
+199
+00:18:56,100 --> 00:19:04,080
+measures that can be taken simply by the wikipedia
+structure or wikipedia data so let us see
+
+200
+00:19:04,080 --> 00:19:09,879
+so let's talk about this mention detection
+part whether a particular phrase is a good
+
+201
+00:19:09,879 --> 00:19:18,330
+candidate for a mention so so what will be
+a good measure for this so so if you think
+
+202
+00:19:18,330 --> 00:19:25,409
+about using wikipedia structures we can say
+that ok wikipedia has lot of pages suppose
+
+203
+00:19:25,409 --> 00:19:33,010
+i find out this particular n gram how many
+times it occurs in wikipedia and among whatever
+
+204
+00:19:33,010 --> 00:19:37,940
+times it occurs what fraction of times it
+is actually linked to something
+
+205
+00:19:37,940 --> 00:19:45,090
+ok so so what is the idea if an if a word
+is linked much more number of times that means
+
+206
+00:19:45,090 --> 00:19:49,830
+it might be a good candidate for mention if
+it is not linked many times that means this
+
+207
+00:19:49,830 --> 00:19:54,039
+may not be a very good candidate and this
+a very simple criteria that you can used from
+
+208
+00:19:54,039 --> 00:20:01,340
+wikipedia so in this is called the keyphraseness
+of a word or also a phrase so number of wikipedia
+
+209
+00:20:01,340 --> 00:20:05,419
+articles that use it as an anchor divided
+by the number of articles that mention it
+
+210
+00:20:05,419 --> 00:20:15,299
+at all so that means i will take a word w
+and i will find out what are all the wikipedia
+
+211
+00:20:15,299 --> 00:20:21,100
+pages where it occurs ok so it occurs suppose
+in five [pedia/wikipedia] articles article
+
+212
+00:20:21,100 --> 00:20:30,799
+one article two article three four and five
+and among the five articles say four and two
+
+213
+00:20:30,799 --> 00:20:37,749
+provide a link with this w so where w occurs
+with the link to some wikipedia page and a
+
+214
+00:20:37,749 --> 00:20:42,149
+four also this w occurs with the link to a
+wikipedia page but a one a three a five do
+
+215
+00:20:42,149 --> 00:20:45,450
+not provide a link so here w occurs without
+a link
+
+216
+00:20:45,450 --> 00:20:51,830
+ok so now so what is this keyphraseness so
+keyphraseness is what fraction of the page
+
+217
+00:20:51,830 --> 00:20:58,299
+in wikipedia is it linked wherever it occurs
+so five linked to so keyphraseness will be
+
+218
+00:20:58,299 --> 00:21:04,350
+two by five ok and that is a good measure
+in that it will tell me ok whenever encounter
+
+219
+00:21:04,350 --> 00:21:12,009
+a new phrase w how many times it is actually
+linked in wikipedia and use that to detect
+
+220
+00:21:12,009 --> 00:21:18,789
+if it is a good mention at all so this is
+a very simple measure so we will say ah how
+
+221
+00:21:18,789 --> 00:21:24,610
+many times it occurs and among whatever time
+it occurs how many times it is linked to another
+
+222
+00:21:24,610 --> 00:21:29,640
+wikipedia article now here we do not worry
+about whether it is linked always to the same
+
+223
+00:21:29,640 --> 00:21:34,700
+wikipedia article or multiple wikipedia articles
+the only thing is it is linked to something
+
+224
+00:21:34,700 --> 00:21:40,980
+then we will considerate in the numerator
+so this is the keyphraseness for a for a word
+
+225
+00:21:40,980 --> 00:21:49,159
+now what can be a good measure for disambiguation
+so now let's again think about it can we use
+
+226
+00:21:49,159 --> 00:21:55,029
+wikipedia to to find out a good measure for
+disambiguation so so what can be the simplest
+
+227
+00:21:55,029 --> 00:22:04,049
+measure that you can think of so i have a
+word and it can correspond to multiple entities
+
+228
+00:22:04,049 --> 00:22:12,070
+ah so for example so let's say ah i have a
+word w and in general it can link to three
+
+229
+00:22:12,070 --> 00:22:21,149
+wikipedia pages a one a two a three all are
+possible reference for this wikipedia page
+
+230
+00:22:21,149 --> 00:22:25,570
+now what can be a good baseline to find out
+what is an appropriate ah disambiguation page
+
+231
+00:22:25,570 --> 00:22:35,080
+so for that i can again use wikipedia so i
+will see in the whole wikipedia whenever w
+
+232
+00:22:35,080 --> 00:22:42,399
+is link to something so link to these a one
+a two a three what fraction of times it is
+
+233
+00:22:42,399 --> 00:22:47,330
+link to a a one suppose it link to a one ninety
+percent of the time a two eight percent of
+
+234
+00:22:47,330 --> 00:22:53,919
+the time and a three two percent of the time
+and this can be an a good measure to say ok
+
+235
+00:22:53,919 --> 00:22:59,570
+ninety percent of times w links to the article
+a one so this so by default i will say ok
+
+236
+00:22:59,570 --> 00:23:08,070
+w will link to a one so that can be one simple
+measure and this is ah called the commonness
+
+237
+00:23:08,070 --> 00:23:14,889
+so this is commonness so i will define the
+commonness for a word and a concept concept
+
+238
+00:23:14,889 --> 00:23:19,940
+here are three concept three wikipedia concepts
+and what is the definition so the fraction
+
+239
+00:23:19,940 --> 00:23:26,231
+of times a particular sense is used as a destination
+in wikipedia so number of times word is link
+
+240
+00:23:26,231 --> 00:23:30,899
+to c divided by number of times word is link
+to any c prime
+
+241
+00:23:30,899 --> 00:23:37,019
+ok so like here it will be ninety divided
+by hundred suppose they are ninety eight and
+
+242
+00:23:37,019 --> 00:23:44,879
+two pages so ninety divided by hundred is
+the ah commonness for w and a one eight by
+
+243
+00:23:44,879 --> 00:23:48,679
+hundred is commonness for w a two and two
+by hundred is commonness for w and a three
+
+244
+00:23:48,679 --> 00:23:56,970
+so this is another simple measure
+so so you have you have seen keyphraseness
+
+245
+00:23:56,970 --> 00:24:05,059
+and commonness ok and they are simple measures
+it is direct from wikipedia so now let us
+
+246
+00:24:05,059 --> 00:24:12,539
+see one example so here is one text that is
+like a report of a match and what you are
+
+247
+00:24:12,539 --> 00:24:19,039
+seeing you are seeing words the they are coloured
+and colours depend on the kre keyphrasenesses
+
+248
+00:24:19,039 --> 00:24:24,759
+score that is from zero to one so dark green
+is keyphraseness one that means it is always
+
+249
+00:24:24,759 --> 00:24:30,740
+linked in wikipedia so here like bulgaria
+national football team is roughly always linked
+
+250
+00:24:30,740 --> 00:24:36,480
+to wikipedia is has a high keyphraseness some
+words like here the knock out are not always
+
+251
+00:24:36,480 --> 00:24:41,749
+linked they have a very low keyphraseness
+now what about the commonness so now you will
+
+252
+00:24:41,749 --> 00:24:46,029
+take a particular entity like here germany
+and you will see what are the all candidate
+
+253
+00:24:46,029 --> 00:24:52,460
+candidates like germany germany national football
+team nazi germany german empire similarly
+
+254
+00:24:52,460 --> 00:24:57,249
+for world cup it can be fifa world cup f i
+s alpine ski world cup two thousand nine fina
+
+255
+00:24:57,249 --> 00:25:02,609
+swimming world cup world cup mens golf etcetera
+these are a various can candidates and you
+
+256
+00:25:02,609 --> 00:25:07,020
+are computing com commonness by seeing how
+many times this word is actually linked to
+
+257
+00:25:07,020 --> 00:25:11,759
+these ah these entities divided by any number
+of time divided by the number of times it
+
+258
+00:25:11,759 --> 00:25:15,009
+is actually linked and this gives you the
+commonness
+
+259
+00:25:15,009 --> 00:25:19,330
+so germany is linked to the germany the word
+germany like ninety four percent of a time
+
+260
+00:25:19,330 --> 00:25:24,210
+germany national football team one point three
+nine percent of the time and so on similarly
+
+261
+00:25:24,210 --> 00:25:32,419
+for fifa world world cup so now from there
+you can choose by default the word the sense
+
+262
+00:25:32,419 --> 00:25:37,700
+with the highest commonness so like nineteen
+ninety eight fifa world cup will come up here
+
+263
+00:25:37,700 --> 00:25:44,950
+fifa world cup will come up here but they
+will a problem with this entity right the
+
+264
+00:25:44,950 --> 00:25:52,019
+germany will written the word germany ninety
+four percent time but in this case the appropriate
+
+265
+00:25:52,019 --> 00:25:57,489
+mention is germany national football team
+and it will not be able to detect this
+
+266
+00:25:57,489 --> 00:26:03,011
+so so this is the idea about keyphraseness
+and commonness and clearly you can see if
+
+267
+00:26:03,011 --> 00:26:10,629
+there is a one there is one problem with this
+approach ok so now so is it always the best
+
+268
+00:26:10,629 --> 00:26:18,630
+decision to use either the only the commonness
+for linking their particular entity and ah
+
+269
+00:26:18,630 --> 00:26:23,549
+so what do you say so from whatever we saw
+in the last page is it always the best deci
+
+270
+00:26:23,549 --> 00:26:32,059
+decision to use commonness ah it cannot be
+right because what you are seeing whenever
+
+271
+00:26:32,059 --> 00:26:40,150
+a word w occurs in any context ok i will always
+assign it to a one by default because it has
+
+272
+00:26:40,150 --> 00:26:47,519
+the highest commonness so that means i have
+never using the context in which the word
+
+273
+00:26:47,519 --> 00:26:54,720
+w occurs by default i am assigning it to the
+category or link a one so that means i will
+
+274
+00:26:54,720 --> 00:27:00,029
+always make some mistakes right there will
+be some pages at least weight should link
+
+275
+00:27:00,029 --> 00:27:06,399
+to a two or a three and in those cases i will
+link it to a one by default so i cannot design
+
+276
+00:27:06,399 --> 00:27:10,700
+a very good system by this approach i will
+there is a like there is always the chance
+
+277
+00:27:10,700 --> 00:27:18,309
+of maching making mistakes because you are
+taking the the the default case and this also
+
+278
+00:27:18,309 --> 00:27:24,869
+corresponds to the ah to the to one of the
+baseline that you can use in words sense disambiguation
+
+279
+00:27:24,869 --> 00:27:31,609
+that is you take sense of a word that is most
+ah probable sense that is like a baseline
+
+280
+00:27:31,609 --> 00:27:34,999
+but this will never help you in designing
+a very good system because you are doing it
+
+281
+00:27:34,999 --> 00:27:38,729
+independent of the context you are always
+linking it to this page
+
+282
+00:27:38,729 --> 00:27:44,510
+so now what we will see in the next lecture
+is that can we also use the context to improve
+
+283
+00:27:44,510 --> 00:27:48,649
+this method instead of using commonness can
+we use something from the context to find
+
+284
+00:27:48,649 --> 00:27:56,509
+out ok among the three what should be the
+appropriate ah link for this particular entity
+
+285
+00:27:56,509 --> 00:28:04,249
+so so what did we see so commonness and keyphraseness
+are simple measures they can help you to design
+
+286
+00:28:04,249 --> 00:28:10,799
+a good baseline that will work ah most of
+the times but cannot help you build in accurate
+
+287
+00:28:10,799 --> 00:28:15,330
+system because you will always give some wrong
+links and we can see why because there is
+
+288
+00:28:15,330 --> 00:28:22,489
+a default to the most probable link ok and
+whenever the word is used in in not so probable
+
+289
+00:28:22,489 --> 00:28:28,440
+links it can never be correctly assigned so
+we need to use the context and that's what
+
+290
+00:28:28,440 --> 00:28:32,470
+we will see in the next lecture that how do
+we use the context from the word to disambiguate
+
+291
+00:28:32,470 --> 00:28:33,269
+the links
+thank you
+

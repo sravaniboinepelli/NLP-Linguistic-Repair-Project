@@ -1,0 +1,1205 @@
+1
+00:00:17,470 --> 00:00:22,460
+so welcome back for the fourth week of the
+course so in the last week we had discussed
+
+2
+00:00:22,460 --> 00:00:27,949
+a lot about part of speech tagging and what
+are the various algorithms as such one can
+
+3
+00:00:27,949 --> 00:00:35,329
+use to solve this problem and we started with
+one particular classifier that is h m m model
+
+4
+00:00:35,329 --> 00:00:40,620
+for doing part of speech tagging so we had
+gone through the basics of h m m and what
+
+5
+00:00:40,620 --> 00:00:48,350
+are the different probabilities then one need
+to use to be able to come up with the the
+
+6
+00:00:48,350 --> 00:00:55,180
+ah best sequence given a new sentence so what
+do you mean i mean by sequence given new sentence
+
+7
+00:00:55,180 --> 00:01:01,510
+i want to find out what are the part of speech
+tags for each of the word in the sentence
+
+8
+00:01:01,510 --> 00:01:07,490
+so there are multiple there are many many
+possibilities and you need to find out what
+
+9
+00:01:07,490 --> 00:01:13,290
+is the best probable tag sequence so we formulated
+this problem as noisy in the noise channel
+
+10
+00:01:13,290 --> 00:01:20,900
+model framework and then we came up with the
+hidden markov model by using certain assumptions
+
+11
+00:01:20,900 --> 00:01:28,380
+so in the last class so we had also discussed
+a bit about what we will be doing at run time
+
+12
+00:01:28,380 --> 00:01:33,950
+when we are given a sentence so let me start
+from there and we will see a particular algorithm
+
+13
+00:01:33,950 --> 00:01:41,000
+on the viterbi decoding to find out the actual
+tag sequences in a very very efficient manner
+
+14
+00:01:41,000 --> 00:01:46,970
+and then later on i will go to the parameter
+learning part so we had talked about it in
+
+15
+00:01:46,970 --> 00:01:52,940
+the in the last week also but we will devote
+sometime over that in this week
+
+16
+00:01:52,940 --> 00:02:02,270
+so so we had seen this figure in the last
+week itself so we have the sentence promised
+
+17
+00:02:02,270 --> 00:02:08,259
+to back the bill and i want to obtain the
+part of speech tag sequence for the sentence
+
+18
+00:02:08,259 --> 00:02:14,799
+so how do i start i first start by finding
+out what are the probable part of speech tags
+
+19
+00:02:14,799 --> 00:02:20,530
+for each of the individual words in the sentence
+so further word here promised the two possible
+
+20
+00:02:20,530 --> 00:02:27,340
+tags are v b d and v b n it can be past tense
+or the participle for the [wor/word] word
+
+21
+00:02:27,340 --> 00:02:33,560
+to there is only one part of speech tag possible
+for the word back there are four part of speech
+
+22
+00:02:33,560 --> 00:02:37,670
+tags possible we have seen that in one of
+the lectures for the word the there are two
+
+23
+00:02:37,670 --> 00:02:42,620
+part of speech tags possible for the word
+bill there are two word of speech tags possible
+
+24
+00:02:42,620 --> 00:02:48,900
+so i start by enumerating all the possibilities
+for each of the individual words in the sentence
+
+25
+00:02:48,900 --> 00:02:55,410
+now i want to find out what is the actual
+part of speech tag sequence for this word
+
+26
+00:02:55,410 --> 00:03:02,280
+for this sentence now looking at this picture
+how many different possibilities can you see
+
+27
+00:03:02,280 --> 00:03:09,340
+ok so if you start from any of the part of
+speech tag for the word promised and go to
+
+28
+00:03:09,340 --> 00:03:15,990
+any of the participant tag for the word bill
+any particular path denotes a possible tag
+
+29
+00:03:15,990 --> 00:03:22,349
+sequence so if you try to count the number
+of possibilities ok so it will be two times
+
+30
+00:03:22,349 --> 00:03:27,459
+one times four times two times two ok it will
+be roughly thirty two possible part of speech
+
+31
+00:03:27,459 --> 00:03:32,610
+tag sequences and among the study to i have
+to find out what is the most probable tag
+
+32
+00:03:32,610 --> 00:03:38,599
+sequence
+now how should i do that so one knife method
+
+33
+00:03:38,599 --> 00:03:43,220
+would be that i enumerate all the possible
+sequences so all the thirty two sequences
+
+34
+00:03:43,220 --> 00:03:47,950
+i compute the probability for each sequence
+so now you know how to compute the probability
+
+35
+00:03:47,950 --> 00:03:55,910
+by using the h m m kind of model so we did
+one simple example in the last class and find
+
+36
+00:03:55,910 --> 00:04:00,459
+out which of the tag sequence has the highest
+probability that will be a naive method you
+
+37
+00:04:00,459 --> 00:04:06,110
+might even do that for if you have say only
+thirty two or fifty possible text sequences
+
+38
+00:04:06,110 --> 00:04:10,590
+but think about the sentences that might have
+ten to fifteen words and some words might
+
+39
+00:04:10,590 --> 00:04:17,489
+have five to six different tags so you will
+see that it will grown exponentially ok so
+
+40
+00:04:17,489 --> 00:04:23,009
+enumerating all the sequences and computing
+the probabilities is not an efficient solution
+
+41
+00:04:23,009 --> 00:04:30,630
+so you might want to do something more efficient
+so that you can find out what is the most
+
+42
+00:04:30,630 --> 00:04:40,820
+probable tag sequence in a very very ah efficient
+manner ok so what should be in good algorithm
+
+43
+00:04:40,820 --> 00:04:48,550
+so so let me take this this figure this example
+to to give you the intuition on what kind
+
+44
+00:04:48,550 --> 00:04:55,870
+of algorithm would be used for finding the
+actual tag sequence so to do it efficiently
+
+45
+00:04:55,870 --> 00:05:02,650
+ok so the idea here is that if you are enumerated
+all the thirty two possibilities you are doing
+
+46
+00:05:02,650 --> 00:05:10,650
+some computations again and again ok so can
+you try to reduce the time by doing it in
+
+47
+00:05:10,650 --> 00:05:16,840
+a dynamic programming approach where you first
+store computations for the smaller paths and
+
+48
+00:05:16,840 --> 00:05:21,520
+use that for the larger paths so we have seen
+one particular example of dining programming
+
+49
+00:05:21,520 --> 00:05:26,900
+in in the case of added distance
+so we will try to use a similar concept here
+
+50
+00:05:26,900 --> 00:05:33,310
+for for decoding the actual tag sequence and
+this will be called viterbi decoding ok so
+
+51
+00:05:33,310 --> 00:05:44,520
+looking at the picture so how you can save
+the computation time ok so let's take this
+
+52
+00:05:44,520 --> 00:05:56,030
+sentence here now let's let me take two different
+paths so one path that is there in the actual
+
+53
+00:05:56,030 --> 00:06:21,930
+sequence s v b d t o v b d t and n m and let
+me take another path that is v b d t u then
+
+54
+00:06:21,930 --> 00:06:32,930
+j j then d t and then n n ok so there are
+two paths that we start with the same tag
+
+55
+00:06:32,930 --> 00:06:54,310
+and end with the same tag ok so so so in v
+b d to v b n n p sorry d t n n and v b d t
+
+56
+00:06:54,310 --> 00:07:13,210
+o j j d t n n ok so now they are two different
+tag sequences ok and i will i want to find
+
+57
+00:07:13,210 --> 00:07:22,940
+out probability of both of these to find out
+which one is better now what is the idea of
+
+58
+00:07:22,940 --> 00:07:29,781
+viterbi decoding the idea is that so you are
+ending with the same sequence here d t and
+
+59
+00:07:29,781 --> 00:07:36,840
+n m ok so let us look at only till that point
+tell d t because after d t the computation
+
+60
+00:07:36,840 --> 00:07:41,259
+will be the probabilities will be the same
+ok
+
+61
+00:07:41,259 --> 00:07:45,190
+so this is one way of saving computation ok
+in both of these the composition of d t will
+
+62
+00:07:45,190 --> 00:07:52,740
+be the same so you can save on that but what
+is more important here so when you arrive
+
+63
+00:07:52,740 --> 00:07:59,270
+at the tech d t in one case you are coming
+from v b another case you are coming from
+
+64
+00:07:59,270 --> 00:08:09,790
+j j ok so there are two different ways you
+are coming to d t in these two sequences let
+
+65
+00:08:09,790 --> 00:08:23,930
+us suppose that at this point ok i can store
+for the word or further tech d t what is the
+
+66
+00:08:23,930 --> 00:08:33,269
+best way of arriving at d t is it via this
+path or is it via this path so i suppose i
+
+67
+00:08:33,269 --> 00:08:40,079
+can find out at this point what is the best
+way of arriving a d t is it this path of that
+
+68
+00:08:40,079 --> 00:08:45,940
+path
+if i can store if i can somehow find that
+
+69
+00:08:45,940 --> 00:08:52,350
+the later computations will so for the two
+paths the later computations will be the same
+
+70
+00:08:52,350 --> 00:09:00,600
+ok so then i do not need to compute these
+probabilities again for the next sequence
+
+71
+00:09:00,600 --> 00:09:06,110
+so if i can store at this point that the best
+way is coming from v b and not from j j so
+
+72
+00:09:06,110 --> 00:09:12,149
+then i am doing it for the next next steps
+that are going by d t i do not need to explore
+
+73
+00:09:12,149 --> 00:09:21,360
+this path so this is the idea suppose i write
+them as steps so step one two three four and
+
+74
+00:09:21,360 --> 00:09:31,600
+five at each step for each part of speech
+tag if i can store what is the best previous
+
+75
+00:09:31,600 --> 00:09:36,850
+tag from which it is it should come so what
+which previous tag will maximize the probability
+
+76
+00:09:36,850 --> 00:09:44,329
+of arriving at this particular tag then the
+computation of shared for the same path and
+
+77
+00:09:44,329 --> 00:09:49,639
+i do not need to repeat the same computation
+again again so in this particular example
+
+78
+00:09:49,639 --> 00:09:55,670
+once i can store at step four for d t the
+best way is coming from v b and not from j
+
+79
+00:09:55,670 --> 00:10:02,480
+j when i go further i need not worry about
+this path at all i can simply continue with
+
+80
+00:10:02,480 --> 00:10:09,550
+this path ok because if this probability is
+p one this is p two the next probability will
+
+81
+00:10:09,550 --> 00:10:16,399
+be shared it will be times probability of
+n n given d t and probability of bill given
+
+82
+00:10:16,399 --> 00:10:21,129
+n m ok that will be shared across the two
+paths so if i know at this point p two is
+
+83
+00:10:21,129 --> 00:10:28,369
+higher than p one i can probably fo i can
+forget this path for going via d t and this
+
+84
+00:10:28,369 --> 00:10:32,449
+is the idea this i will do for each of the
+speech step
+
+85
+00:10:32,449 --> 00:10:36,980
+so similarly for step three for each of the
+four part four part of speech tags like for
+
+86
+00:10:36,980 --> 00:10:43,759
+v b i will so so here it is easy because for
+each part of speech tag it can come only via
+
+87
+00:10:43,759 --> 00:10:51,189
+t o ok so it it is important for this case
+because for d t it can come via four previous
+
+88
+00:10:51,189 --> 00:10:55,019
+tags so i needed store which of the previous
+tags it is coming from which has the highest
+
+89
+00:10:55,019 --> 00:11:00,709
+probability similarly fine and p which of
+the four previous tags has the highest probability
+
+90
+00:11:00,709 --> 00:11:05,499
+so that is what i am going to do a d c step
+for each part of speech take i will store
+
+91
+00:11:05,499 --> 00:11:11,299
+what is the best probability of arriving at
+this part of speech ok
+
+92
+00:11:11,299 --> 00:11:21,839
+so let us look at the formulation so intuition
+is that so as i have explained we are recording
+
+93
+00:11:21,839 --> 00:11:32,060
+what is the optimal path at each state for
+a given step ok what we are storing what is
+
+94
+00:11:32,060 --> 00:11:40,639
+the cheapest cost of arriving at a particular
+ah state that means that has the highest probability
+
+95
+00:11:40,639 --> 00:11:49,290
+in the cheapest cost now once we have found
+out what are the tags at different points
+
+96
+00:11:49,290 --> 00:11:55,100
+we also want to write down the sequence so
+i also need to store a batteries so this is
+
+97
+00:11:55,100 --> 00:12:00,449
+the highest probability so what is the particular
+part of speech tag that gives the highest
+
+98
+00:12:00,449 --> 00:12:05,959
+this highest probability ok so i want to store
+this delta j s what that is the cheapest cost
+
+99
+00:12:05,959 --> 00:12:14,019
+or the highest probability to step j at step
+s and also the backtrace from that state to
+
+100
+00:12:14,019 --> 00:12:20,249
+the best predecessor ok so for the previous
+example that we were seen for d t the best
+
+101
+00:12:20,249 --> 00:12:30,959
+predecessor was v b and not j ok
+so now so this i am doing at any step as for
+
+102
+00:12:30,959 --> 00:12:43,310
+state j how do i use that to compute for the
+next step ok so let us again look look at
+
+103
+00:12:43,310 --> 00:12:57,920
+it so suppose i have stored delta j s ok so
+here s is three and j is my state it can be
+
+104
+00:12:57,920 --> 00:13:05,739
+v b j j n n and r b so i have stored for all
+these part four different part of speech tags
+
+105
+00:13:05,739 --> 00:13:12,170
+what is the cheapest cost of arriving at this
+point what does that mean i i know at this
+
+106
+00:13:12,170 --> 00:13:20,389
+point which path is better v b d t o v b or
+v b n t o v b ok so i know that for all these
+
+107
+00:13:20,389 --> 00:13:26,720
+four different part of speech tags so i store
+the step for this step for this state what
+
+108
+00:13:26,720 --> 00:13:35,110
+is the optimal cost other what is the most
+probable path so this cost i have or this
+
+109
+00:13:35,110 --> 00:13:41,730
+probability i have now how do i use this probability
+is to compute for the next step say want to
+
+110
+00:13:41,730 --> 00:13:54,529
+compute delta j plus one s how will i compute
+that so now delta g s would have taken care
+
+111
+00:13:54,529 --> 00:14:06,129
+of the word back already so what are the things
+that i added for going from 
+
+112
+00:14:06,129 --> 00:14:16,139
+so i am sorry here this should be stepped
+yes so this is delta j s plus one ok so this
+
+113
+00:14:16,139 --> 00:14:21,769
+is a stap s plus one i want to find out probability
+delta j
+
+114
+00:14:21,769 --> 00:14:29,079
+so i know the probabilities are step s now
+what is the additional information the transition
+
+115
+00:14:29,079 --> 00:14:37,889
+from this is state to this state and the emission
+probability of this word given is the state
+
+116
+00:14:37,889 --> 00:15:00,089
+so i can compute it using delta j s plus one
+is delta i s times the probability of this
+
+117
+00:15:00,089 --> 00:15:10,410
+tag sequence that is probability of tag t
+j given t i this is the probability of tag
+
+118
+00:15:10,410 --> 00:15:20,499
+sequence transition and the emission probability
+that is probability of word edge step s plus
+
+119
+00:15:20,499 --> 00:15:28,829
+one given t j ok
+so this i am doing for some ith state but
+
+120
+00:15:28,829 --> 00:15:36,459
+there are four p there can be some n number
+of states so i will find out the max of those
+
+121
+00:15:36,459 --> 00:15:46,600
+among all the states at the previous step
+i have delta s i multiplied with it the transition
+
+122
+00:15:46,600 --> 00:15:53,669
+probability and the emission probability at
+at step s plus one ok and the max gives me
+
+123
+00:15:53,669 --> 00:16:03,540
+what is the best path at this is state j at
+step as for this one ok so now suppose out
+
+124
+00:16:03,540 --> 00:16:08,930
+of these four i found out this is the best
+path so we will also like to store what is
+
+125
+00:16:08,930 --> 00:16:15,869
+the best predecessor ok and this is nothing
+but orgmax of this function ok so i call that
+
+126
+00:16:15,869 --> 00:16:33,860
+size s plus one that is orgmax of the same
+function ok and that is what i am also storing
+
+127
+00:16:33,860 --> 00:16:41,619
+and that's all this will continue so what
+will happen at the end i am at a step five
+
+128
+00:16:41,619 --> 00:16:54,649
+ok and i know what is the probability so let
+me write down delta n n at five and delta
+
+129
+00:16:54,649 --> 00:17:02,199
+v b at five i know both these probabilities
+what is the best way of reaching at this state
+
+130
+00:17:02,199 --> 00:17:06,069
+what is the best probability of reaching at
+this state at this fine i can just take the
+
+131
+00:17:06,069 --> 00:17:14,169
+maximum of these two and this will give me
+the the best probability of any possible part
+
+132
+00:17:14,169 --> 00:17:20,760
+of speech tag sequence and then i can use
+the backtraces from here to obtain the actual
+
+133
+00:17:20,760 --> 00:17:26,329
+part of speech tag sequence and this is my
+vita by decoding algorithm
+
+134
+00:17:26,329 --> 00:17:35,190
+so if we see that formally so yes so i am
+i am storing at each step s what is the cheapest
+
+135
+00:17:35,190 --> 00:17:40,350
+cause of the best probability of reaching
+there also the predecessor and using that
+
+136
+00:17:40,350 --> 00:17:46,049
+i am also computing the probabilities for
+the next step ok that is so that is similar
+
+137
+00:17:46,049 --> 00:17:52,669
+to what we have seen here the probability
+at the previous step transition probability
+
+138
+00:17:52,669 --> 00:17:58,690
+and emission probability then i take the max
+over all the previous possible states also
+
+139
+00:17:58,690 --> 00:18:05,620
+show the predecessor for the next step and
+how do we end once we have gone through the
+
+140
+00:18:05,620 --> 00:18:11,509
+sentence end i will have the probabilities
+for all the states possible at the end the
+
+141
+00:18:11,509 --> 00:18:16,880
+ending word i will take the maximum of those
+n backtrace from there and that will give
+
+142
+00:18:16,880 --> 00:18:23,519
+me the optimal automat tag sequence for this
+particular sentence ok
+
+143
+00:18:23,519 --> 00:18:31,570
+so i hope this algorithm is clear so let us
+take a simple example so that you can become
+
+144
+00:18:31,570 --> 00:18:36,340
+much more familiar with that how do you use
+this video decoding algorithm finding problem
+
+145
+00:18:36,340 --> 00:18:49,519
+so what do you see in this in this problem
+i have a sentence 
+
+146
+00:18:49,519 --> 00:19:00,000
+the light book ok and you are given some sort
+of emission probabilities first that the word
+
+147
+00:19:00,000 --> 00:19:13,350
+the can come from the tag determiner or noun
+so they are two possibilities determiner noun
+
+148
+00:19:13,350 --> 00:19:29,759
+the word light can come from noun adjective
+and verb ok possibility by using vita b decoded
+
+149
+00:19:29,759 --> 00:19:37,940
+algorithm so how do we start so i have three
+steps one two three ok so i want to store
+
+150
+00:19:37,940 --> 00:19:54,000
+at each step for each state ok so let me call
+it delta one at step one similarly delta two
+
+151
+00:19:54,000 --> 00:20:03,799
+as step one ok so what is the this probability
+so this will be what is the probability that
+
+152
+00:20:03,799 --> 00:20:11,100
+the tag determiner occurs in the start of
+the sentence multiply with the probability
+
+153
+00:20:11,100 --> 00:20:17,940
+of emitting the from the tag determiner ok
+so let us see how these probabilities given
+
+154
+00:20:17,940 --> 00:20:24,570
+in this case probability of determine occurring
+in the start of the sentence so in this question
+
+155
+00:20:24,570 --> 00:20:34,340
+in the la in the last ah sentence it is written
+assume that all the tags that have the same
+
+156
+00:20:34,340 --> 00:20:41,120
+probability stop in the beginning of the sentence
+so probabilities are given implicitly ok so
+
+157
+00:20:41,120 --> 00:20:47,870
+now the question is it how many tags would
+you assume so here you can take any assumption
+
+158
+00:20:47,870 --> 00:20:52,610
+so in this question you are shown only four
+tags determiner noun verb an adjective so
+
+159
+00:20:52,610 --> 00:20:56,309
+assume there are only four part of speech
+tags and each one has equal probability of
+
+160
+00:20:56,309 --> 00:21:00,299
+occurring at the start of the sentence so
+what will the probability of determine occurring
+
+161
+00:21:00,299 --> 00:21:10,450
+at the start of sentence it will be one by
+four ok similarly for noun one by four times
+
+162
+00:21:10,450 --> 00:21:24,309
+probability of the given determiner and that
+is given here h point three ok i am probability
+
+163
+00:21:24,309 --> 00:21:35,830
+of the given noun is given as point one so
+this is your delta two one and delta one one
+
+164
+00:21:35,830 --> 00:21:46,710
+so you can also further write them oh point
+zero two five and this will be point zero
+
+165
+00:21:46,710 --> 00:21:55,139
+seven five so better write them as two point
+five into ten to power minus two seven point
+
+166
+00:21:55,139 --> 00:22:01,789
+five into ten to the minus two ok
+so you have delta one one del two one now
+
+167
+00:22:01,789 --> 00:22:12,740
+you go to the next step ok so now here you
+want to find out delta one two in step two
+
+168
+00:22:12,740 --> 00:22:24,360
+what is the best probability of reaching noun
+noun noun you can reach via either here or
+
+169
+00:22:24,360 --> 00:22:33,820
+here ok so you need to compute both the possibilities
+and take the max over that so let us compute
+
+170
+00:22:33,820 --> 00:22:50,210
+this probabilities ok so what will be that
+so first will be delta one one times probability
+
+171
+00:22:50,210 --> 00:23:05,159
+of getting noun from determine 
+times probability of light given noun s and
+
+172
+00:23:05,159 --> 00:23:17,289
+second one will be delta two one times probability
+noun given noun times probability light given
+
+173
+00:23:17,289 --> 00:23:27,860
+noun ok so let us compute these two probabilities
+so you will take the max of these ok so let
+
+174
+00:23:27,860 --> 00:23:37,379
+us compute compute these probabilities so
+this would be 
+
+175
+00:23:37,379 --> 00:23:47,470
+so let me take it here seven point five into
+ten to the minus two probability of noun given
+
+176
+00:23:47,470 --> 00:23:53,909
+to determiner so that is that we can see from
+the table given to us noun given determiner
+
+177
+00:23:53,909 --> 00:24:12,110
+point five and light given noun each three
+into ten to power minus three ok and this
+
+178
+00:24:12,110 --> 00:24:25,730
+gives me three point seven five into three
+eleven point twenty five into ten to the minus
+
+179
+00:24:25,730 --> 00:24:38,610
+five and the second one becomes two point
+five into ten to power minus two times probability
+
+180
+00:24:38,610 --> 00:24:46,870
+of n given n this is point two into probably
+at given and that will be three into ten to
+
+181
+00:24:46,870 --> 00:24:55,049
+the minus three ok and that is point five
+one point five one point five into ten to
+
+182
+00:24:55,049 --> 00:25:01,679
+power minus five ok and from these two you
+can say that this one is higher than the next
+
+183
+00:25:01,679 --> 00:25:13,820
+one so this is what you will take so you can
+store delta one two h eleven point two five
+
+184
+00:25:13,820 --> 00:25:27,139
+into ten to power minus five ok and you will
+also store the backtrace that is coming from
+
+185
+00:25:27,139 --> 00:25:36,149
+this path ok same thing you will do for adjective
+and verb adjective again there will be two
+
+186
+00:25:36,149 --> 00:25:45,940
+possibilities coming from determiner and noun
+for work there will be two possibilities again
+
+187
+00:25:45,940 --> 00:25:51,529
+you compute the probabilities using the formula
+and store what is the best probability so
+
+188
+00:25:51,529 --> 00:25:58,749
+it will be delta three at step two delta two
+h step ok
+
+189
+00:25:58,749 --> 00:26:04,559
+so this is what you will store also you will
+store the backtrace once you have done that
+
+190
+00:26:04,559 --> 00:26:13,429
+now we'll go to the final step so where you
+will store delta one step three one means
+
+191
+00:26:13,429 --> 00:26:19,749
+noun here and delta two at the step three
+again you will compute that by taking all
+
+192
+00:26:19,749 --> 00:26:26,419
+the three possibilities times the transition
+and all so this will be max over three quantity
+
+193
+00:26:26,419 --> 00:26:32,490
+this will be max over three quantities again
+you will find out the two values delta one
+
+194
+00:26:32,490 --> 00:26:37,370
+three and delta two three and how will you
+actually determine the finest sequence you
+
+195
+00:26:37,370 --> 00:26:48,919
+will take the max of this suppose max comes
+out to be this one then you will go to the
+
+196
+00:26:48,919 --> 00:26:55,140
+predecessor ok suppose the predecessor was
+this one you will go to hear suppose predecessor
+
+197
+00:26:55,140 --> 00:27:02,230
+of as this one and so on so you will find
+out this sequence assuming this is the these
+
+198
+00:27:02,230 --> 00:27:07,100
+are the best fervent ok
+but i hope the idea is clear that how do you
+
+199
+00:27:07,100 --> 00:27:13,529
+actually do this computation so i would encourage
+that you you complete this particular exercise
+
+200
+00:27:13,529 --> 00:27:32,710
+on your own now coming to the the point of
+learning the parameters so what are the parameters
+
+201
+00:27:32,710 --> 00:27:42,009
+do we need in the in the so we need three
+different parameters ok so we need the probability
+
+202
+00:27:42,009 --> 00:27:50,840
+of starting the sentence ok that is let me
+call this in the in the in the language of
+
+203
+00:27:50,840 --> 00:27:57,389
+h m m the pi that is what is the probability
+that a particular tag or estate start the
+
+204
+00:27:57,389 --> 00:28:11,860
+sequence ok so i want this probability pi
+i for all posh tags ok then i need the probability
+
+205
+00:28:11,860 --> 00:28:18,649
+of transition from one part of speech at another
+ok so this my transition matrix i need all
+
+206
+00:28:18,649 --> 00:28:32,369
+this a i j transiting from probability t j
+given t i s and i need my emission probabilities
+
+207
+00:28:32,369 --> 00:28:43,701
+that is probability of the word given a tag
+so you can use it using a matrix b so i need
+
+208
+00:28:43,701 --> 00:28:49,909
+all these three probabilities to actually
+use this viterbi decoding algorithm at runtime
+
+209
+00:28:49,909 --> 00:28:55,850
+if i do not have these probabilities i cannot
+teach you viterbi decoding
+
+210
+00:28:55,850 --> 00:29:12,230
+so the question is so these are my parameters
+of the h m so how do we actually find out
+
+211
+00:29:12,230 --> 00:29:18,210
+these parameters of my h m so here i am saying
+there are two different scenarios that you
+
+212
+00:29:18,210 --> 00:29:26,159
+might have ok so first scenario is where a
+label data set is available what do you mean
+
+213
+00:29:26,159 --> 00:29:32,879
+by a label data set you have a set of sentences
+available to you for each sentence you also
+
+214
+00:29:32,879 --> 00:29:36,899
+know what is the actual part of speech tags
+sequence so what is the part of speech tag
+
+215
+00:29:36,899 --> 00:29:41,129
+for individual world somebody is manually
+labeled it for you so this is a label data
+
+216
+00:29:41,129 --> 00:29:49,779
+set this one scenario second scenario is you
+only have the corpus but you do not have any
+
+217
+00:29:49,779 --> 00:29:55,700
+data where the sentences are labeled with
+the part of speech categories ok so i have
+
+218
+00:29:55,700 --> 00:30:07,179
+the tooks is a clear so scenario one where
+you have a label data set a scenario to only
+
+219
+00:30:07,179 --> 00:30:17,830
+corpus but no labels so what i am saying for
+these two scenarios you can find the parameters
+
+220
+00:30:17,830 --> 00:30:23,539
+in different manner so suppose you have scenario
+one you have a label data set so what you
+
+221
+00:30:23,539 --> 00:30:28,509
+can do for finding the parameters of h m m
+so this is something we also took them the
+
+222
+00:30:28,509 --> 00:30:33,720
+in the last week
+so for example if the label data set i want
+
+223
+00:30:33,720 --> 00:30:39,720
+to find a parameter like them the transition
+probabilities probability of tags a given
+
+224
+00:30:39,720 --> 00:30:46,429
+tag i how will you find that the label data
+set you will have all the possible tag sequences
+
+225
+00:30:46,429 --> 00:30:54,710
+that actually occurred in the corpus now from
+that you will find out number of times t i
+
+226
+00:30:54,710 --> 00:31:01,750
+n t j occur together in the corpus divided
+by number of times only t i occurs so this
+
+227
+00:31:01,750 --> 00:31:07,330
+was what we said as maximum likelihood estimator
+you can use that to find this probability
+
+228
+00:31:07,330 --> 00:31:13,110
+same with all the other probabilities pi i
+as well as p you can find using maximum likelihood
+
+229
+00:31:13,110 --> 00:31:18,740
+estimate
+now problem comes when you have the corpus
+
+230
+00:31:18,740 --> 00:31:24,720
+but no labels ok so now there are no labels
+so how would you actually find out probability
+
+231
+00:31:24,720 --> 00:31:32,960
+of t j given t i when in the in the data there
+is no label on which word got a tag t i or
+
+232
+00:31:32,960 --> 00:31:40,239
+which one got it at t j so you cannot compute
+it directly from the from from any labels
+
+233
+00:31:40,239 --> 00:31:44,110
+so what is the method that you will use for
+learning the parameters when the corpus is
+
+234
+00:31:44,110 --> 00:31:50,940
+available but labels are not available and
+that is what we will see in the next lecture
+
+235
+00:31:50,940 --> 00:31:55,379
+ok
+so we will be using baum welch algorithm to
+
+236
+00:31:55,379 --> 00:32:01,929
+estimate the parameters of the hidden markov
+model when the labels are not available ok
+
+237
+00:32:01,929 --> 00:32:07,831
+so this is similar to expectation maximization
+algorithm and you will see what is the addition
+
+238
+00:32:07,831 --> 00:32:14,119
+for this algorithm and how we actually apply
+this ok so hope in this lecture you understood
+
+239
+00:32:14,119 --> 00:32:20,210
+how to apply with viterbi decoding when the
+parameters of h m m are given ok and so you
+
+240
+00:32:20,210 --> 00:32:26,210
+can do that for and in the next lecture we
+will discuss how do we run the parameters
+
+241
+00:32:26,210 --> 00:32:29,149
+when the labels are not available
+thank you
+

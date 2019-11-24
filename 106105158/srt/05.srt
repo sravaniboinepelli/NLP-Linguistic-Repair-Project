@@ -1,0 +1,1898 @@
+1
+00:00:19,170 --> 00:00:23,780
+hello everyone welcome back to the final lecture
+of the first week so in the last lecture we
+
+2
+00:00:23,780 --> 00:00:28,680
+were discussing about various empirical laws
+so in particular zipfs law and heaps law that
+
+3
+00:00:28,680 --> 00:00:34,180
+how the whats the vocabulary are distributed
+in a corpus ok and we say that the distribution
+
+4
+00:00:34,180 --> 00:00:40,360
+is not very uniform there was certain words
+that are very very common so we saw that roughly
+
+5
+00:00:40,360 --> 00:00:45,830
+hundred hundred words in the vocabulary made
+for fifty percent of the corpus that by the
+
+6
+00:00:45,830 --> 00:00:50,449
+time mean that number of tokens and on the
+other hand there are fifty percent who have
+
+7
+00:00:50,449 --> 00:00:54,850
+words in the in the vocabulary that occur
+only once ok and we discussed whatever various
+
+8
+00:00:54,850 --> 00:01:01,230
+relationships from among the numb the my vocabulary
+size and the number of tokens that i observe
+
+9
+00:01:01,230 --> 00:01:08,890
+in a corpus and also how they grow with respect
+to each other and zipfs law gives gave me
+
+10
+00:01:08,890 --> 00:01:13,930
+a relation between the frequency and the rank
+of a word
+
+11
+00:01:13,930 --> 00:01:19,590
+so today in this lecture we will start with
+the basic key processing in in language so
+
+12
+00:01:19,590 --> 00:01:25,960
+we will cover the the basic concepts and what
+are the challenges that one might face while
+
+13
+00:01:25,960 --> 00:01:39,271
+doing the processing ok so we are going to
+the basics of text processing ok so we will
+
+14
+00:01:39,271 --> 00:01:44,500
+start with the problem of tokenization as
+the name would suggest ok remember the name
+
+15
+00:01:44,500 --> 00:01:50,649
+token token is an individual word in my corpus
+so now what happens when i am preprocessing
+
+16
+00:01:50,649 --> 00:01:57,979
+the text in given in any language what i will
+face is a string of characters the sequence
+
+17
+00:01:57,979 --> 00:02:04,679
+of characters now i need to indentify what
+are all the different words that are there
+
+18
+00:02:04,679 --> 00:02:06,501
+in this in this sequence
+
+19
+00:02:06,501 --> 00:02:10,869
+so now tokenization is a process by which
+i convert the string of characters into sequence
+
+20
+00:02:10,869 --> 00:02:16,100
+of various words so i am trying to segment
+it by the various words that i am observing
+
+21
+00:02:16,100 --> 00:02:24,890
+ok so now before going into what is tokenization
+i will just talk about a slightly related
+
+22
+00:02:24,890 --> 00:02:31,409
+problem sentence segmentation ok so this you
+may or may not have to do always and it depends
+
+23
+00:02:31,409 --> 00:02:37,239
+on what is your application so for example
+suppose you are doing classification for the
+
+24
+00:02:37,239 --> 00:02:41,930
+whole document in to certain classes you might
+not have to go to the individual sentence
+
+25
+00:02:41,930 --> 00:02:47,599
+and you can just talk about what are the various
+words that are present in in this document
+
+26
+00:02:47,599 --> 00:02:51,700
+on the other hand suppose you are trying to
+find out what are the important sentences
+
+27
+00:02:51,700 --> 00:02:57,970
+in this document in that application you will
+have to go to the individual sentence so now
+
+28
+00:02:57,970 --> 00:03:02,890
+if you have to go to the individual sen sentence
+the first task that you will face is how do
+
+29
+00:03:02,890 --> 00:03:07,990
+i segment these whole document into a sequence
+of sentences ok so this is sentence one one
+
+30
+00:03:07,990 --> 00:03:12,250
+sentence two and so on and this task is called
+sentence segmentation
+
+31
+00:03:12,250 --> 00:03:21,930
+so now you might feel that this is very trivial
+task but let us see is it trivial ok so what
+
+32
+00:03:21,930 --> 00:03:28,049
+is sentence segmentation it's a problem of
+deciding where my sentence begins and ends
+
+33
+00:03:28,049 --> 00:03:33,500
+so that i have a complete unit of words that
+that i call as a sentence now do you think
+
+34
+00:03:33,500 --> 00:03:38,530
+there might be certain challenges involved
+suppose i am talking about the language english
+
+35
+00:03:38,530 --> 00:03:45,480
+can i always say that wherever i have a dot
+it is the end of the sentence let us see
+
+36
+00:03:45,480 --> 00:03:52,329
+so there are many ways in which i can end
+my sentence so i can have exclamation or question
+
+37
+00:03:52,329 --> 00:03:58,610
+mark that ends the sentence and they are mostly
+unambiguous so whenever i have a exclamation
+
+38
+00:03:58,610 --> 00:04:03,280
+or question mark i can say probably this is
+the end of the sentence but is the case the
+
+39
+00:04:03,280 --> 00:04:09,300
+same with a dot so i can think of a scenario
+where i have a dot in english and but its
+
+40
+00:04:09,300 --> 00:04:18,130
+not the end of the sentence so we can find
+all sorts of abbreviations right they end
+
+41
+00:04:18,130 --> 00:04:24,630
+with a period like doctor mister mph ok so
+you have three dots here so you cannot each
+
+42
+00:04:24,630 --> 00:04:27,740
+of there this as the end of your sentence
+
+43
+00:04:27,740 --> 00:04:35,220
+so again you have numbers two point four four
+point three and so on so that means the problem
+
+44
+00:04:35,220 --> 00:04:40,450
+of deciding whether a particular dot is the
+end of the sentence or not is not entirely
+
+45
+00:04:40,450 --> 00:04:47,070
+trivial so i need to build certain algorithm
+for finding out is it my end of the sentence
+
+46
+00:04:47,070 --> 00:04:54,080
+ok so in in text processing we we face this
+kind of problem in nearly every every simple
+
+47
+00:04:54,080 --> 00:04:59,500
+every simple task that we are doing ok so
+even if it looks a trivial task we face with
+
+48
+00:04:59,500 --> 00:05:05,190
+this problem that ok can i always call dot
+as a end of the sentence
+
+49
+00:05:05,190 --> 00:05:11,930
+so how do we go about solving this now if
+you think about it whenever i see a dot or
+
+50
+00:05:11,930 --> 00:05:17,950
+question mark or exclamation i always have
+to decide one of the two things is it the
+
+51
+00:05:17,950 --> 00:05:24,000
+end of the sentence or is not the end of the
+sentence ok so any data point that i am seeing
+
+52
+00:05:24,000 --> 00:05:29,680
+i have to divide into one of these two classes
+ok so if you call think of these as two classes
+
+53
+00:05:29,680 --> 00:05:33,850
+end of the sentence or not end of the sentence
+so each point you have to divide into one
+
+54
+00:05:33,850 --> 00:05:38,740
+of the two classes and this in general this
+problem in general is called classification
+
+55
+00:05:38,740 --> 00:05:43,420
+problem ok you are classifying into one of
+the two classes
+
+56
+00:05:43,420 --> 00:05:50,160
+now so the idea is very very sim simple so
+you have two classes and each data point you
+
+57
+00:05:50,160 --> 00:05:53,310
+have to divide into one of the two classes
+so that means you have to build some sort
+
+58
+00:05:53,310 --> 00:06:00,130
+of plural algorithm for doing that so in this
+case i have to build the binary classifier
+
+59
+00:06:00,130 --> 00:06:03,960
+what they mean by a binary classifier there
+are two classes end of the sentence or not
+
+60
+00:06:03,960 --> 00:06:07,510
+end of the sentence in general there can be
+multiple classes
+
+61
+00:06:07,510 --> 00:06:13,460
+so now for each dot or in general for every
+word i need to decide whether this is the
+
+62
+00:06:13,460 --> 00:06:21,210
+end of the sentence or not the end of the
+sentence so in general my classifica[tion]-
+
+63
+00:06:21,210 --> 00:06:25,770
+classifiers that i will build can be some
+rules that i write by hand ok some simple
+
+64
+00:06:25,770 --> 00:06:31,970
+if the nice rules or it can be some expressions
+i say my particular example matches with this
+
+65
+00:06:31,970 --> 00:06:37,270
+set of expressions it is one plus if i doesn't
+match it is a class or i can build a machine
+
+66
+00:06:37,270 --> 00:06:43,260
+learning classifier so in this particular
+scenario what can be the simplest thing to
+
+67
+00:06:43,260 --> 00:06:50,050
+do let us see can we build a simple rule based
+classifier
+
+68
+00:06:50,050 --> 00:06:54,360
+so so we we will start with a example of a
+simple decision tree so by decision tree i
+
+69
+00:06:54,360 --> 00:07:01,810
+mean a set of if and i say statements ok so
+i am at a particular word i want to decide
+
+70
+00:07:01,810 --> 00:07:10,380
+whether this is the end of the sentence or
+not ok 
+
+71
+00:07:10,380 --> 00:07:17,960
+ok so i can have the simple if then else kind
+of decision tree here so met a word and i
+
+72
+00:07:17,960 --> 00:07:22,460
+the first thing i check is are there lots
+of blank lines after that so this would happen
+
+73
+00:07:22,460 --> 00:07:27,620
+in a text whenever this is the end of the
+a paragraph and there are some blank lines
+
+74
+00:07:27,620 --> 00:07:31,710
+so if you i feel that there are a lot of blank
+lines after after me that means after this
+
+75
+00:07:31,710 --> 00:07:36,460
+word i may say ok this might be the end of
+the sentence with a good confidence so that's
+
+76
+00:07:36,460 --> 00:07:41,400
+why the branch here says yes this is the end
+of the sentence but suppose there are not
+
+77
+00:07:41,400 --> 00:07:46,810
+lot of blank blank lines then i will check
+if the final punctuation is a question mark
+
+78
+00:07:46,810 --> 00:07:53,509
+exclamation or a colon in that case ok so
+there are quite unambiguous and i may say
+
+79
+00:07:53,509 --> 00:07:55,560
+this is the end of the sentence
+
+80
+00:07:55,560 --> 00:08:01,620
+now suppose it is not then i will check if
+the final punctuation is a period so if it
+
+81
+00:08:01,620 --> 00:08:05,410
+is a period if it is not a period this is
+easy easy to say that this is not the end
+
+82
+00:08:05,410 --> 00:08:10,560
+of the sentence but suppose this is a end
+of this is a period so again i cannot say
+
+83
+00:08:10,560 --> 00:08:15,960
+for certain if it is the end of the sentence
+so i give a again check for simplicity i might
+
+84
+00:08:15,960 --> 00:08:20,940
+have a list of abbreviations and i can check
+if the word that i am correcting facing is
+
+85
+00:08:20,940 --> 00:08:27,910
+one of the abbreviations in my list if it
+is there i say ok this is not end of the sentence
+
+86
+00:08:27,910 --> 00:08:33,810
+if it is so here i am etcetera or any other
+abbreviation if the answer is yes i am not
+
+87
+00:08:33,810 --> 00:08:37,990
+end of the sentence if the answer is no that
+means this word is not an abbreviation and
+
+88
+00:08:37,990 --> 00:08:41,580
+this will be the end of the sentence this
+is very very simple
+
+89
+00:08:41,580 --> 00:08:47,399
+if then else rule rules ok this may not be
+correct but this is one particular ah way
+
+90
+00:08:47,399 --> 00:08:54,269
+in which this problem can be solved in general
+you might want to use some other sort of indications
+
+91
+00:08:54,269 --> 00:08:59,250
+we call them as various features these are
+various observations that you make from your
+
+92
+00:08:59,250 --> 00:09:07,680
+corpus ok so what are some examples ok so
+suppose i see the word that is ending with
+
+93
+00:09:07,680 --> 00:09:16,420
+dot can i use this as a feature whether my
+word starts with an upper case lower case
+
+94
+00:09:16,420 --> 00:09:19,420
+cap all caps or is it number ok
+
+95
+00:09:19,420 --> 00:09:33,899
+how will that help so let us see i have here
+i am here and my word is four point three
+
+96
+00:09:33,899 --> 00:09:38,650
+so i am at dot i want to find out if it is
+the end of the sentence if i can say that
+
+97
+00:09:38,650 --> 00:09:44,250
+the previous the current word is a number
+it's an high probability that this will be
+
+98
+00:09:44,250 --> 00:09:48,430
+in number and it will not be the end of the
+sentence so this can be used as an another
+
+99
+00:09:48,430 --> 00:09:50,920
+feature ok
+
+100
+00:09:50,920 --> 00:09:58,740
+so again by feature you can think of a simple
+rule whether the word i am currently at is
+
+101
+00:09:58,740 --> 00:10:06,250
+a number ok or i can use the fact where as
+the case of the word with dot its upper case
+
+102
+00:10:06,250 --> 00:10:11,740
+or lower case so you so what happens generally
+in abbreviations we are mostly in upper case
+
+103
+00:10:11,740 --> 00:10:18,230
+so suppose i have doctor and it starts with
+an upper case ok i can say that this might
+
+104
+00:10:18,230 --> 00:10:19,829
+be an application ok
+
+105
+00:10:19,829 --> 00:10:24,120
+saying with the lower case lower case will
+give me more probability that this is not
+
+106
+00:10:24,120 --> 00:10:35,240
+an abbreviation similarly i can also use in
+the case of the word after dot ok so is it
+
+107
+00:10:35,240 --> 00:10:41,110
+upper case lower case capital or number so
+how will that help so again whenever i have
+
+108
+00:10:41,110 --> 00:10:45,300
+the end of the sentence the next word in general
+starts with a capital so again this can be
+
+109
+00:10:45,300 --> 00:10:53,680
+used what can be some other features so i
+can have some numerical features so that is
+
+110
+00:10:53,680 --> 00:10:59,209
+i will have certain thresholds what is the
+length of the word ending with dot is it if
+
+111
+00:10:59,209 --> 00:11:04,689
+the length is small it might be an abbreviation
+if the length is larger it might not be an
+
+112
+00:11:04,689 --> 00:11:11,189
+abbreviation ok and i can also use probably
+the what is the probability that the word
+
+113
+00:11:11,189 --> 00:11:16,490
+that is ending with dot occurs at the end
+of the sentence ok so if it is really the
+
+114
+00:11:16,490 --> 00:11:21,499
+end of the sentence it might happen then that
+in a large corpus this end sentence quite
+
+115
+00:11:21,499 --> 00:11:26,860
+often same thing i I can do with the next
+word after dot is it the start of the sentence
+
+116
+00:11:26,860 --> 00:11:33,600
+what is the probability that it occurs in
+the start of the sentence in a large corpus
+
+117
+00:11:33,600 --> 00:11:39,720
+ok so you might be able to use any of these
+features to decide given a particular word
+
+118
+00:11:39,720 --> 00:11:47,291
+is it the end of the sentence or not ok so
+now suppose i ask you this question do you
+
+119
+00:11:47,291 --> 00:11:53,350
+have the same problem in other languages like
+hindi so in hindi you will see that in general
+
+120
+00:11:53,350 --> 00:11:57,779
+there is only agenda that you use to indicate
+the end of the sentence and this is not used
+
+121
+00:11:57,779 --> 00:12:03,269
+for any other purpose so this problem you
+will see is again language depen dependent
+
+122
+00:12:03,269 --> 00:12:07,029
+this problem is there for english but not
+so for hindi but you will see there are other
+
+123
+00:12:07,029 --> 00:12:11,579
+problems that do no exist for english language
+but are there for other indian languages ok
+
+124
+00:12:11,579 --> 00:12:19,490
+we will see some of the those examples in
+the same branch ok
+
+125
+00:12:19,490 --> 00:12:24,410
+now so how do we implement a decision tree
+so as you have seen this is simple if then
+
+126
+00:12:24,410 --> 00:12:32,160
+else statement ok so now what is important
+is that you choose the correct set of features
+
+127
+00:12:32,160 --> 00:12:37,490
+so how do you go about choosing the set of
+features we see in your from your data what
+
+128
+00:12:37,490 --> 00:12:44,550
+are some observations that can separate my
+two classes here so my two classes here are
+
+129
+00:12:44,550 --> 00:12:48,060
+end of the sentence and non the end of the
+sentence and what are the observations we
+
+130
+00:12:48,060 --> 00:12:57,269
+were having ok in general it might be an abbreviation
+in the case of the word and that is before
+
+131
+00:12:57,269 --> 00:13:02,129
+the dot maybe upper case or lower case and
+one of these might indicate one plus the other
+
+132
+00:13:02,129 --> 00:13:10,160
+might indicate other plus so all these are
+my observations that i use as my features
+
+133
+00:13:10,160 --> 00:13:14,749
+now whenever i am using a numerical features
+like the length of the word before dot i need
+
+134
+00:13:14,749 --> 00:13:20,649
+to pick some sort of threshold ok that is
+whether the length of the word is between
+
+135
+00:13:20,649 --> 00:13:27,519
+two to three or say more than three between
+five to seven like that so my tree can be
+
+136
+00:13:27,519 --> 00:13:33,220
+if the length of the word is between five
+to seven i could one plus otherwise i could
+
+137
+00:13:33,220 --> 00:13:39,290
+another another plus
+ok so now here is one problem suppose i keep
+
+138
+00:13:39,290 --> 00:13:45,680
+on increasing my features it can be both ah
+numerical or non numerical features it might
+
+139
+00:13:45,680 --> 00:13:53,829
+be difficult to set up my if then else rules
+by hand so in that scenario i can try to use
+
+140
+00:13:53,829 --> 00:13:59,000
+some sort of machine learning technique to
+learn this decision tree ok in in the literature
+
+141
+00:13:59,000 --> 00:14:04,449
+there are lot of such ah algorithms available
+that given a data and a set of features we
+
+142
+00:14:04,449 --> 00:14:09,959
+will construct a decision tree for you ok
+so i will just give you so the names of some
+
+143
+00:14:09,959 --> 00:14:15,459
+of the algorithms and the basic idea on this
+they work is that so at every point we have
+
+144
+00:14:15,459 --> 00:14:20,060
+to choose a particular subject ok so you have
+to choose a feature value that it splits my
+
+145
+00:14:20,060 --> 00:14:25,170
+data into certain parts and i have certain
+criteria to find out what is the best way
+
+146
+00:14:25,170 --> 00:14:29,970
+to split so one particular criteria is what
+is the information given by this ok so these
+
+147
+00:14:29,970 --> 00:14:34,680
+algorithm that we have mentioned here like
+i d three c four point five point cart they
+
+148
+00:14:34,680 --> 00:14:44,009
+all use one of these criterions ok
+in general once you have identified what are
+
+149
+00:14:44,009 --> 00:14:49,019
+your interesting features for these task you
+are not limited to only one classifier a decision
+
+150
+00:14:49,019 --> 00:14:57,430
+tree you can also try out some other classifiers
+like support vector machines logistic regression
+
+151
+00:14:57,430 --> 00:15:02,589
+and neural networks these all these are quite
+popular classifiers for various mbb applications
+
+152
+00:15:02,589 --> 00:15:09,870
+so we will talk about some of these as we
+will go to some some advanced topics in this
+
+153
+00:15:09,870 --> 00:15:14,220
+course
+ok now coming back to our problem tokenization
+
+154
+00:15:14,220 --> 00:15:18,209
+ok we said that tokenization is a process
+of segmenting a string of charac characters
+
+155
+00:15:18,209 --> 00:15:23,190
+into words finding out what are the different
+words in this question now remember we talked
+
+156
+00:15:23,190 --> 00:15:28,589
+about token and type distinction suppose i
+give you a simple sentence here i have a can
+
+157
+00:15:28,589 --> 00:15:37,389
+opener but i cant open these cans how many
+tokens are there if you count there are eleven
+
+158
+00:15:37,389 --> 00:15:45,279
+different words eleven different occurrences
+of words so you have eleven word tokens but
+
+159
+00:15:45,279 --> 00:15:50,620
+how many unique words are there so you will
+find there are only ten unique words ok which
+
+160
+00:15:50,620 --> 00:15:55,699
+word repeats is the word i repeats twice so
+there are ten types and eleven tokens so my
+
+161
+00:15:55,699 --> 00:16:04,660
+tokenization is to find out each of the eleven
+word tokens from the sentence
+
+162
+00:16:04,660 --> 00:16:10,459
+in practice at least for english you can use
+certain toolkits that are available like nltk
+
+163
+00:16:10,459 --> 00:16:15,300
+in python corenlp in java and you can you
+can also use the unix commands so in this
+
+164
+00:16:15,300 --> 00:16:19,699
+course you will mainly be using nltk toolkit
+for doing all the pre processing task and
+
+165
+00:16:19,699 --> 00:16:34,189
+in some other ah tasks as well ok but in general
+you can use any of these three ah possibilities
+
+166
+00:16:34,189 --> 00:16:39,910
+so for english most of the the the problems
+that we will see are taken care of the tokenizers
+
+167
+00:16:39,910 --> 00:16:45,600
+tokenizers that we have discussed previously
+ok but still it is good to know what are the
+
+168
+00:16:45,600 --> 00:16:50,350
+challenges that are involved when i have i
+tried to design a tokenization algorithm ok
+
+169
+00:16:50,350 --> 00:16:55,959
+see for example here you will see that it
+have if i encounter a word like finlands in
+
+170
+00:16:55,959 --> 00:17:03,079
+my data so one question that i have is whether
+i treat it as simple finland as it is finlands
+
+171
+00:17:03,079 --> 00:17:08,530
+or i I convert it to finlands by removing
+the apostrophe ok so this question you might
+
+172
+00:17:08,530 --> 00:17:13,010
+also try to defer to the next processing step
+that you will see but sometimes you might
+
+173
+00:17:13,010 --> 00:17:19,890
+want to tackle this in the same stuff ok
+similarly if you see what are do i treat it
+
+174
+00:17:19,890 --> 00:17:24,990
+as a single token or two tokens what are this
+trouble you might have to solve in the same
+
+175
+00:17:24,990 --> 00:17:30,790
+step whether i treat it as a single token
+or multiple tokens same with i am shouldn't
+
+176
+00:17:30,790 --> 00:17:36,680
+and so on similarly whenever your name end
+at each like san francisco should i treat
+
+177
+00:17:36,680 --> 00:17:42,910
+it as a single token or two separate tokens
+now remember when we were talking about some
+
+178
+00:17:42,910 --> 00:17:48,200
+of the cases why and page hard so you might
+have to find out that this particular sequence
+
+179
+00:17:48,200 --> 00:17:52,460
+of tokens is a single entity and treat it
+as a single entity not as multiple different
+
+180
+00:17:52,460 --> 00:17:58,390
+tokens ok so this problem is related similarly
+if you find m dot p dot h whether you call
+
+181
+00:17:58,390 --> 00:18:04,790
+it a single token or multiple tokens
+so now there are no fixed answers to to these
+
+182
+00:18:04,790 --> 00:18:08,280
+and some of these might depend on what is
+the application for which you are doing this
+
+183
+00:18:08,280 --> 00:18:13,380
+pre processing ok but one thing you can always
+keep in mind suppose you are doing if for
+
+184
+00:18:13,380 --> 00:18:18,490
+the application of information trivial if
+the same sort of steps that you apply for
+
+185
+00:18:18,490 --> 00:18:24,180
+your documents should be applied to your query
+as well otherwise you will not be able to
+
+186
+00:18:24,180 --> 00:18:28,950
+match them perfectly ok so suppose if i am
+using it for information trivial so i should
+
+187
+00:18:28,950 --> 00:18:38,130
+use the same convention for both both my documents
+as well as the queries
+
+188
+00:18:38,130 --> 00:18:45,230
+ok so then another problem can be how do i
+handle hyphens in my day ok this looks again
+
+189
+00:18:45,230 --> 00:18:49,910
+a simple problem but we we will see its not
+that simple so let us see some kind of examples
+
+190
+00:18:49,910 --> 00:18:54,570
+what are the various sorts of hypens that
+can be there in my corpus
+
+191
+00:18:54,570 --> 00:18:59,860
+so here i have a sentence from a research
+paper abstract and the sentence says this
+
+192
+00:18:59,860 --> 00:19:06,190
+paper describes mimic an adaptive mixed initiative
+spoken dialogue system that provides movie
+
+193
+00:19:06,190 --> 00:19:11,720
+show time information ok so in this sentence
+itself you see two different hyphens one is
+
+194
+00:19:11,720 --> 00:19:17,250
+with initiative initiative another is show
+hyphen time ok
+
+195
+00:19:17,250 --> 00:19:23,400
+so now can you see that these two are different
+hyphens the first hyphen is not in general
+
+196
+00:19:23,400 --> 00:19:28,630
+that i will i will use in in my text ok second
+hyphen i can used in my text i can write show
+
+197
+00:19:28,630 --> 00:19:34,950
+time with an hyphen but how did this hyphen
+initiative came into the corpus ok so re so
+
+198
+00:19:34,950 --> 00:19:41,130
+we have given this a title end of line hyphen
+so what happens in research papers for example
+
+199
+00:19:41,130 --> 00:19:45,730
+whenever you write a sentence you might have
+to do some sort of justification and that's
+
+200
+00:19:45,730 --> 00:19:51,601
+where you end the line even if is not the
+end of this of of the word so you will you
+
+201
+00:19:51,601 --> 00:19:55,840
+will end up with an hyphen ok so now when
+you are trying to pre process and when you
+
+202
+00:19:55,840 --> 00:19:59,750
+are retrieving such kind of hyphens you might
+have to join these together and we should
+
+203
+00:19:59,750 --> 00:20:06,170
+we have to say that this is a single word
+initiative and not initial hyphen tive ok
+
+204
+00:20:06,170 --> 00:20:10,680
+but again this is this is not trivial because
+for show time you will not do the same show
+
+205
+00:20:10,680 --> 00:20:16,120
+time you might want to keep it as it is
+then there are some other kind of hyphens
+
+206
+00:20:16,120 --> 00:20:22,610
+like lexical hyphens so you might have these
+hyphens with ah various prefixes like co pre
+
+207
+00:20:22,610 --> 00:20:29,810
+meta multi etcetera sometimes they are sententially
+determined hyphen hyphens also that is they
+
+208
+00:20:29,810 --> 00:20:36,290
+put so that it becomes easier to interpret
+these angles like here case based hand delivered
+
+209
+00:20:36,290 --> 00:20:43,520
+etcetera are optional similarly if you see
+in the next sentence three to five year direct
+
+210
+00:20:43,520 --> 00:20:47,620
+mark marketing plan ok three to five year
+can be written perfectly without keeping the
+
+211
+00:20:47,620 --> 00:20:52,840
+hyphens but here you are putting it so that
+it becomes easier to interpret that particular
+
+212
+00:20:52,840 --> 00:20:55,830
+occurrence
+so again when you are doing tokenization your
+
+213
+00:20:55,830 --> 00:21:03,680
+problem that how do i handle all these hyphens
+further there are various issues that might
+
+214
+00:21:03,680 --> 00:21:09,260
+that you might face for certain languages
+but not others so for an example like in french
+
+215
+00:21:09,260 --> 00:21:16,300
+if you have a token like lensemble so you
+might want to match it with ensemble ok so
+
+216
+00:21:16,300 --> 00:21:20,990
+that might be a similar problem that we are
+facing in english but let us take something
+
+217
+00:21:20,990 --> 00:21:38,530
+in german ok so i have this i have this big
+sentence here 
+
+218
+00:21:38,530 --> 00:21:44,320
+ok but the problem is that this is not a single
+word this is a compound composed of four different
+
+219
+00:21:44,320 --> 00:21:50,070
+words and the corresponding english meaning
+is this one so your four words in in english
+
+220
+00:21:50,070 --> 00:21:53,590
+so when you are putting in in french they
+make a compound
+
+221
+00:21:53,590 --> 00:21:58,210
+so now what is the problem that you will face
+when you are processing the a german text
+
+222
+00:21:58,210 --> 00:22:04,210
+and you are trying to tokenize it so you might
+want to find out what are the individual ah
+
+223
+00:22:04,210 --> 00:22:09,040
+words in this particular compound so you need
+some sort of compound split up for example
+
+224
+00:22:09,040 --> 00:22:26,820
+ok so this problem is there for german not
+so much for english
+
+225
+00:22:26,820 --> 00:22:33,270
+ok so now what happens if i am making a language
+like chinese or japanese ok so here is a sentence
+
+226
+00:22:33,270 --> 00:22:38,450
+in chinese so what do you see in chinese words
+are written without any spaces in between
+
+227
+00:22:38,450 --> 00:22:44,910
+ok so now when you are doing the pre processing
+your task is to find out what are the individual
+
+228
+00:22:44,910 --> 00:22:51,530
+word tokens in these chinese sentence so this
+problem is also difficult because in general
+
+229
+00:22:51,530 --> 00:22:57,010
+for a given utterance of a sequence of characters
+there might be more than one possible ways
+
+230
+00:22:57,010 --> 00:23:03,460
+of breaking into sequence of words and both
+might be perfectly valid possibilities ok
+
+231
+00:23:03,460 --> 00:23:06,920
+so in chinese we will not have not have any
+space between words and i have to find out
+
+232
+00:23:06,920 --> 00:23:14,260
+what are the places where i have to break
+each ah words and this problem is called tokenization
+
+233
+00:23:14,260 --> 00:23:20,720
+word tokenization same problem happens with
+japenese and h[ere]- for the complications
+
+234
+00:23:20,720 --> 00:23:25,620
+because they are are using four different
+steps like katakana hiragana kanji and romaji
+
+235
+00:23:25,620 --> 00:23:34,150
+so these problems becomes a bit more serious
+now the same problem is there even for sanskrit
+
+236
+00:23:34,150 --> 00:23:41,350
+ok so if some of you have taken a sanskrit
+course in in your class eighth or tenth so
+
+237
+00:23:41,350 --> 00:23:47,420
+you might be familiar with the the rules of
+sandhians in sanskrit language ok
+
+238
+00:23:47,420 --> 00:23:53,200
+so that is it this is a simple single sentence
+in sanskrit but this is a huge this looks
+
+239
+00:23:53,200 --> 00:23:58,400
+like a sing single word it is not a single
+word it is composed of multiple words in sanskrit
+
+240
+00:23:58,400 --> 00:24:03,670
+and they are combined with a sandi relation
+ok in this is stands for pro proverb in nice
+
+241
+00:24:03,670 --> 00:24:08,770
+proverb in sanskrit that translates in english
+as one should tell the truth one should say
+
+242
+00:24:08,770 --> 00:24:14,230
+kind words one should neither tell harsh truths
+not flat flattering lies this is a rule for
+
+243
+00:24:14,230 --> 00:24:18,750
+all times this is a this is a proverb
+and this is a single sentence that talks about
+
+244
+00:24:18,750 --> 00:24:23,150
+this proverb but there all the words are combined
+with sandhi relation so if we try to undo
+
+245
+00:24:23,150 --> 00:24:28,780
+the sandhi this is what you will find at the
+segmented text ok so there are multiple words
+
+246
+00:24:28,780 --> 00:24:34,620
+in this in this sentence they are combined
+to make a si make a single it looks like a
+
+247
+00:24:34,620 --> 00:24:39,900
+single word
+now so this problem we saw in chinese japenese
+
+248
+00:24:39,900 --> 00:24:48,760
+and sanskrit but in sanskrit the problem is
+slightly more complicated and why is that
+
+249
+00:24:48,760 --> 00:24:54,310
+so in in japense and and in chinese when you
+try to combine various words together you
+
+250
+00:24:54,310 --> 00:25:00,370
+simply concatenate them you put them one after
+another without without making any changes
+
+251
+00:25:00,370 --> 00:25:05,310
+at the boundary it doesnt happen in sanskrit
+when you combine two words you also make certain
+
+252
+00:25:05,310 --> 00:25:08,880
+changes at the boundary and this is called
+the sandhi operation ok
+
+253
+00:25:08,880 --> 00:25:22,020
+so in this particular case since see here
+i have the word bruyat and the word na but
+
+254
+00:25:22,020 --> 00:25:29,030
+when i am combining i am i am writing it bruyanna
+so you see here the the the letter t gets
+
+255
+00:25:29,030 --> 00:25:39,770
+changed to n ok so that means when i am trying
+to analyze the sentence so this particular
+
+256
+00:25:39,770 --> 00:25:45,910
+sentence in sanskrit i need to find out not
+only what are the breaks but what is the corresponding
+
+257
+00:25:45,910 --> 00:25:51,890
+word from which this sentence you derived
+so from here to find out the the actual sen
+
+258
+00:25:51,890 --> 00:25:58,840
+words are bruyat lesna that gives give me
+this bruyat and this is very very common in
+
+259
+00:25:58,840 --> 00:26:03,600
+sanskrit that you are always combining words
+by doing a sandhi operation so this further
+
+260
+00:26:03,600 --> 00:26:13,630
+complicates my problem of word segments word
+tokenization or segmentation
+
+261
+00:26:13,630 --> 00:26:17,260
+ok so this is just a list from wikipedia what
+are the longest words in various languages
+
+262
+00:26:17,260 --> 00:26:21,790
+then note this sentence is about the words
+you see in sanskrit the longest word is composed
+
+263
+00:26:21,790 --> 00:26:26,870
+of four thirty one characters is a compound
+and then you have greek and afrikaans and
+
+264
+00:26:26,870 --> 00:26:32,010
+and other languages in english you will see
+that the longest word is of forty five characters
+
+265
+00:26:32,010 --> 00:26:38,080
+is non scientific
+so what is the the particular word in in sanskrit
+
+266
+00:26:38,080 --> 00:26:42,890
+that is composed of four thirty one letters
+so this was from the varadambika parinaya
+
+267
+00:26:42,890 --> 00:26:51,310
+campu by tirumalamba ok this is a single compound
+from his from his book
+
+268
+00:26:51,310 --> 00:26:58,770
+ok so now when i talk about this problem of
+tokenization in sanskrit or in english this
+
+269
+00:26:58,770 --> 00:27:04,020
+problem is also called word segmentation have
+a sequence of characters and you segment it
+
+270
+00:27:04,020 --> 00:27:08,770
+to find out individual words now what is the
+simplest algorithm that you can think of let
+
+271
+00:27:08,770 --> 00:27:13,550
+lets take as in the case of chinese ok so
+the simplest algorithm that works is a greedy
+
+272
+00:27:13,550 --> 00:27:18,900
+algorithm that is called maximum matching
+algorithm so whenever you are given a string
+
+273
+00:27:18,900 --> 00:27:23,290
+you start you point to it at the beginning
+of the string now suppose that you have the
+
+274
+00:27:23,290 --> 00:27:28,230
+dictionary and the words that you are that
+you are currently seeing all should be in
+
+275
+00:27:28,230 --> 00:27:31,340
+the in the dictionary
+so you will find out what is the maximum match
+
+276
+00:27:31,340 --> 00:27:36,480
+as per my dictionary in the string you break
+there and put the pointer from at the next
+
+277
+00:27:36,480 --> 00:27:42,870
+character and again do the same thing so so
+this greedily chooses what are actual words
+
+278
+00:27:42,870 --> 00:27:50,520
+by taking the maximum matches and this works
+nicely for most of the cases ok
+
+279
+00:27:50,520 --> 00:27:57,720
+now so so this related question now can you
+think of some cases where the segmentation
+
+280
+00:27:57,720 --> 00:28:02,270
+will also be required for the english text
+in english in general we do not combine words
+
+281
+00:28:02,270 --> 00:28:07,090
+to make a single single word ok we do not
+do that but what is the scenario where we
+
+282
+00:28:07,090 --> 00:28:13,680
+we are doing that right now ok so does do
+hash tags come into mind so for example suppose
+
+283
+00:28:13,680 --> 00:28:18,380
+i have hash tags like thank sachin and music
+monday so here different words are combined
+
+284
+00:28:18,380 --> 00:28:23,440
+together without putting a boundary in between
+so if you are given a hash tag and you have
+
+285
+00:28:23,440 --> 00:28:32,160
+to analyze that you have to actually segmented
+in into various words ok now so when i talk
+
+286
+00:28:32,160 --> 00:28:39,580
+about sanskrit so so so this we have a segment
+to available at the site sanksrit dot inria
+
+287
+00:28:39,580 --> 00:28:44,260
+dot fr so we will just briefly see what is
+the design principle of building a segmentor
+
+288
+00:28:44,260 --> 00:28:49,820
+in sanskrit so first we have a geometry model
+that says how do i generate a sentence in
+
+289
+00:28:49,820 --> 00:28:56,380
+sanskrit i have a finite alphabet sigma ok
+that means a set a set of various characters
+
+290
+00:28:56,380 --> 00:29:01,430
+in sanskrit now from this finite alphabet
+i can generate a lot words ok that are composed
+
+291
+00:29:01,430 --> 00:29:06,390
+of various number of ah phonemes or all letters
+from this alphabet
+
+292
+00:29:06,390 --> 00:29:11,590
+now when i have a set of words i can now combine
+them together with an operation of sandhi
+
+293
+00:29:11,590 --> 00:29:16,790
+thats what i mean by sigma star here here
+ok so w star here so i have a set of words
+
+294
+00:29:16,790 --> 00:29:21,550
+w and i will do a kleene closure that means
+i can combine any number of words together
+
+295
+00:29:21,550 --> 00:29:25,880
+but whenever i am combining words i am doing
+them by a sandhi operation this is the relation
+
+296
+00:29:25,880 --> 00:29:31,980
+between the words
+so so i have my set of inflected words also
+
+297
+00:29:31,980 --> 00:29:37,300
+called padas in sanskrit and i have the relation
+of sandhi between them and thats how i generate
+
+298
+00:29:37,300 --> 00:29:43,900
+sentences but the problem is how do i analyze
+them so that is the inverse problem that is
+
+299
+00:29:43,900 --> 00:29:48,890
+whenever i am given a sentence w i have to
+analyze it by inverting the relations of sandhi
+
+300
+00:29:48,890 --> 00:29:54,100
+so that i can produce a finite set of word
+forms w one to w n ok and i am saying together
+
+301
+00:29:54,100 --> 00:29:59,450
+with the proofs so that is a formal way of
+saying that but what i mean is that w one
+
+302
+00:29:59,450 --> 00:30:05,010
+to w n whenever they combine by sandhi operation
+they give me the actual sandhis the initial
+
+303
+00:30:05,010 --> 00:30:08,710
+sandhis ok
+so thats how the segment is segment is built
+
+304
+00:30:08,710 --> 00:30:16,120
+now this is a snapshot from from the segmentor
+so i gave the same sentence there and and
+
+305
+00:30:16,120 --> 00:30:20,490
+it gave me all the possible ways of analyzing
+the sandhis and it it says that there are
+
+306
+00:30:20,490 --> 00:30:25,870
+one twenty different solutions ok
+so here whenever i have bruyana so you see
+
+307
+00:30:25,870 --> 00:30:32,610
+there are two possibilities bruyat and bruyam
+thats ok like that it gives me all the possible
+
+308
+00:30:32,610 --> 00:30:38,320
+ways in which this sentence can be broken
+into individual word tokens now this is another
+
+309
+00:30:38,320 --> 00:30:43,570
+problem that i will have to find out what
+is the most likely word sequence among all
+
+310
+00:30:43,570 --> 00:30:48,080
+these one twenty possibilities but we can
+use many many different models that we will
+
+311
+00:30:48,080 --> 00:30:54,780
+not talk talk about in this lecture probably
+in some some other lectures
+
+312
+00:30:54,780 --> 00:31:02,750
+ok so coming back to normalization so so we
+talked about this problem that the same word
+
+313
+00:31:02,750 --> 00:31:07,970
+might be doing multiple different ways like
+u dot s dot a versus usa now i should be able
+
+314
+00:31:07,970 --> 00:31:14,630
+to match them together ok especially if you
+are doing information retrieval we are giving
+
+315
+00:31:14,630 --> 00:31:19,260
+a query and you are retrieving from some document
+suppose your query contains u dot s dot a
+
+316
+00:31:19,260 --> 00:31:24,130
+if the document contains usa if you are only
+doing the surface able match you will not
+
+317
+00:31:24,130 --> 00:31:29,260
+be able to map on to each other so that so
+so you will have to consider this problem
+
+318
+00:31:29,260 --> 00:31:34,890
+in advance and do the pre processing accordingly
+of either your documents or the query but
+
+319
+00:31:34,890 --> 00:31:43,500
+using the same sort same sentence
+so what i what we are doing by this we are
+
+320
+00:31:43,500 --> 00:31:48,460
+defining some sort of equivalence classes
+we are saying usa and u dot s dot a should
+
+321
+00:31:48,460 --> 00:31:56,860
+go to one class and the other same type we
+also do some sort of case folding that is
+
+322
+00:31:56,860 --> 00:32:05,430
+we can reduce all the letters to lower case
+so whenever i have the word like ah w o r
+
+323
+00:32:05,430 --> 00:32:11,840
+d i will always write small w o r d so that
+whenever even if it is starting the sentence
+
+324
+00:32:11,840 --> 00:32:16,480
+and it occurs in capitals because of that
+in general i know that this is a word word
+
+325
+00:32:16,480 --> 00:32:22,340
+w o r d but this is not a generic rule sometimes
+depending on application you might have certain
+
+326
+00:32:22,340 --> 00:32:27,750
+exceptions for example you might put treat
+the name and it is separately so if you have
+
+327
+00:32:27,750 --> 00:32:33,450
+a entity general motors you might want to
+keep it as it is without case folding
+
+328
+00:32:33,450 --> 00:32:39,930
+similarly you might want to keep us fortunate
+districts in upper case and not do the case
+
+329
+00:32:39,930 --> 00:32:44,630
+folding and this is important for the application
+of machine transition also because if you
+
+330
+00:32:44,630 --> 00:32:49,890
+do a case folding here you will know u s in
+lower case that means something else versus
+
+331
+00:32:49,890 --> 00:33:01,490
+u s that is in united states excuse me
+we also have the problem of lemmatization
+
+332
+00:33:01,490 --> 00:33:08,220
+that is you have individual individual words
+like am are is and you want to convert them
+
+333
+00:33:08,220 --> 00:33:12,250
+to their lemma that means what is the base
+form from which they are derived similarly
+
+334
+00:33:12,250 --> 00:33:18,240
+car cars cars cars so all these are derived
+from car so again this is some sort of normalization
+
+335
+00:33:18,240 --> 00:33:23,500
+we are saying all these are some sort of equivalence
+class because they come from the same word
+
+336
+00:33:23,500 --> 00:33:26,220
+from
+so in the the problem of lemmatization is
+
+337
+00:33:26,220 --> 00:33:31,590
+that you have to find out the actual dictionary
+head word from which they have derived ok
+
+338
+00:33:31,590 --> 00:33:38,960
+and for that we use morphology ok so what
+is morphology i am trying to find out the
+
+339
+00:33:38,960 --> 00:33:45,740
+structure of word by seeing what is the particular
+stem the headword and what is the affix that
+
+340
+00:33:45,740 --> 00:33:52,580
+is applied to it ok so these individual units
+are called various morphemes ok
+
+341
+00:33:52,580 --> 00:33:58,970
+so so you have a stems that are the hybrids
+and the affixes that are what are the different
+
+342
+00:33:58,970 --> 00:34:05,500
+units like s for plural etcetera you are applying
+to them to make the individual word ok so
+
+343
+00:34:05,500 --> 00:34:12,490
+my examples are like for prefix you have un
+anti etcetera for english and a ati pra etcetera
+
+344
+00:34:12,490 --> 00:34:22,839
+for hindi or sanskrit suffix like ity ation
+etcetera and taa ka ke etcetera for hindi
+
+345
+00:34:22,839 --> 00:34:27,470
+and in general you can also have some infix
+like you have the word like vid and you can
+
+346
+00:34:27,470 --> 00:34:33,690
+infix n in between this is in sanskrit so
+we will discuss in detail about it in morphology
+
+347
+00:34:33,690 --> 00:34:39,289
+later
+so so there is another concept you have lemmatization
+
+348
+00:34:39,289 --> 00:34:43,440
+where you are finding the actual dictionary
+headword so there is also a concept called
+
+349
+00:34:43,440 --> 00:34:47,820
+stemming where you do not try to find the
+actual dictionary headword but you just try
+
+350
+00:34:47,820 --> 00:34:54,899
+to remove certain ah suffixes ok and you opt
+whatever you obtain is called a stem so this
+
+351
+00:34:54,899 --> 00:35:02,599
+a crude chopping of various affixes in that
+in that word ok so this is again language
+
+352
+00:35:02,599 --> 00:35:08,289
+dependent so what we are doing here words
+like automate automatic automation all will
+
+353
+00:35:08,289 --> 00:35:13,400
+be reduced to a single ah lemma automatically
+so this is stemming so you know the actual
+
+354
+00:35:13,400 --> 00:35:22,380
+lemma is automate with an e but here so i
+am just chopping off the affixes at the end
+
+355
+00:35:22,380 --> 00:35:33,390
+so i am removing here this ic ion all and
+putting it to automate ok so this is one example
+
+356
+00:35:33,390 --> 00:35:38,910
+so if you try to do a stemming here see you
+will find from example e is removed from compressed
+
+357
+00:35:38,910 --> 00:35:45,339
+it is removed and so on so what is the algorithm
+that is used for for this stemming so we have
+
+358
+00:35:45,339 --> 00:35:52,570
+the porters algorithm that is very very famous
+and this is again some since set of if then
+
+359
+00:35:52,570 --> 00:35:59,319
+else rules ok so what are some examples here
+so what is the first step i take a word if
+
+360
+00:35:59,319 --> 00:36:07,730
+it ends with sses i remove es from there and
+i end with ss so example is caresses goes
+
+361
+00:36:07,730 --> 00:36:16,180
+to caress if not then i see whether the words
+end with ies i put it to i like ponies goes
+
+362
+00:36:16,180 --> 00:36:25,309
+to poni ok if not i see if the word ends with
+ss i keep it as ss if not i see if the word
+
+363
+00:36:25,309 --> 00:36:31,269
+ends with s i remove that s ok cats goes goes
+to cat but k caress does not go to caress
+
+364
+00:36:31,269 --> 00:36:36,640
+with with only one s because this is step
+comes before if there is a double s and in
+
+365
+00:36:36,640 --> 00:36:41,799
+the word i re written it otherwise if there
+is a single s i remove it that
+
+366
+00:36:41,799 --> 00:36:48,160
+like that there are some other steps so if
+there is a vowel in the sen in the in my word
+
+367
+00:36:48,160 --> 00:36:54,720
+and the word ends with ing i remove ing so
+walking goes to walk but what about king you
+
+368
+00:36:54,720 --> 00:37:01,749
+see in k there is no vowel so king will be
+writtened as it is same is a vowel and there
+
+369
+00:37:01,749 --> 00:37:08,700
+is an ed i remove this ed and i have this
+word played to play
+
+370
+00:37:08,700 --> 00:37:12,869
+so you can see that vo what is the use of
+this heuristic of having this vowel if you
+
+371
+00:37:12,869 --> 00:37:18,160
+didn't have this vowel you would have converted
+king to k ok and like that there are some
+
+372
+00:37:18,160 --> 00:37:24,579
+other ways like if the word ends with ational
+then i will put it put ate so rational so
+
+373
+00:37:24,579 --> 00:37:30,829
+relational to relate and if the words end
+with word ends with izer i convert i remove
+
+374
+00:37:30,829 --> 00:37:38,920
+that r digitizer to digitize ator to ate and
+if the word ends with al i remove that al
+
+375
+00:37:38,920 --> 00:37:44,999
+if the word ends with able i remove that able
+if the word ends with ate i remove that ate
+
+376
+00:37:44,999 --> 00:37:50,950
+ok so like that these are some steps that
+i take from my corpus from each word i I converted
+
+377
+00:37:50,950 --> 00:37:58,070
+to its step ok it does not give me the correct
+dictionary headword but still this this is
+
+378
+00:37:58,070 --> 00:38:03,170
+a good practice in principle for information
+retrieval ok if you want to match the query
+
+379
+00:38:03,170 --> 00:38:10,410
+with the documents
+so this is for this week so next week we will
+
+380
+00:38:10,410 --> 00:38:15,769
+start with another pre processing task that
+is a spelling correction ok
+
+381
+00:38:15,769 --> 00:38:16,739
+thank you
+

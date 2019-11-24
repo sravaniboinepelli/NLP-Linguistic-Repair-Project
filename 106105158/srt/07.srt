@@ -1,0 +1,1295 @@
+1
+00:00:18,260 --> 00:00:25,260
+so hello everyone and welcome to the second
+lecture of second week so ah in the last lecture
+
+2
+00:00:25,260 --> 00:00:32,660
+we talked about what is the basic edit distance
+concept given two strings as input what is
+
+3
+00:00:32,660 --> 00:00:36,890
+a dynamic programming algorithm that you can
+use find out what is the edit distance between
+
+4
+00:00:36,890 --> 00:00:42,790
+these two strings ok and remember we we we
+define certain operations certain edit operations
+
+5
+00:00:42,790 --> 00:00:50,879
+and we gave weights or cost for each of these
+operations but all these cost for equal ok
+
+6
+00:00:50,879 --> 00:00:58,410
+so the if you are substituting a a character
+by another character irrespective what is
+
+7
+00:00:58,410 --> 00:01:03,409
+the what are two what are the two characters
+the cost remains the same same goes for for
+
+8
+00:01:03,409 --> 00:01:08,280
+inserting a character it the cost remains
+same and also for deletion of a character
+
+9
+00:01:08,280 --> 00:01:15,070
+it remains same so in this lecture we will
+briefly discuss that is there any way in which
+
+10
+00:01:15,070 --> 00:01:21,140
+we can try to ah discriminate between various
+sorts of ah edit operations
+
+11
+00:01:21,140 --> 00:01:25,580
+firstly is this should we discriminate between
+various operation should there we assigned
+
+12
+00:01:25,580 --> 00:01:30,870
+the same cost or should be try to give different
+cost and different operations then we will
+
+13
+00:01:30,870 --> 00:01:38,610
+also talk about the practical problem that
+given a query so why query i mean a term that
+
+14
+00:01:38,610 --> 00:01:47,050
+might be incorrectly spelt how do i come up
+with list of terms that are actual that for
+
+15
+00:01:47,050 --> 00:01:52,430
+actual terms that should have been used instead
+of the the incorrect so what what should be
+
+16
+00:01:52,430 --> 00:01:57,740
+in what is a good or efficient algorithm to
+find out all the set of terms that are variation
+
+17
+00:01:57,740 --> 00:02:05,140
+of edit distance of safe edit distance of
+one or two of that query
+
+18
+00:02:05,140 --> 00:02:14,330
+so so starting with the concept of weighted
+edit distance so can we weight the the edit
+
+19
+00:02:14,330 --> 00:02:20,370
+distance cost depending on what are the characters
+that are involved in the in the operation
+
+20
+00:02:20,370 --> 00:02:27,829
+so firstly is it required so so do you think
+substituting a by e should have the same cost
+
+21
+00:02:27,829 --> 00:02:34,989
+substituting a by m so what should depend
+on ok what kind of so for example there are
+
+22
+00:02:34,989 --> 00:02:40,959
+certain errors that you make very very commonly
+and certain errors that you make very very
+
+23
+00:02:40,959 --> 00:02:46,989
+rarely ok so now suppose you co error is very
+very common should i assigned it a higher
+
+24
+00:02:46,989 --> 00:02:54,849
+cost or a lower cost so think about it what
+is what is it mean to a assign it a higher
+
+25
+00:02:54,849 --> 00:03:03,840
+cost assigning it a higher cost means that
+the edit distance between the two strings
+
+26
+00:03:03,840 --> 00:03:12,529
+will increase if that edit operation is present
+ok so that means the probability of obtaining
+
+27
+00:03:12,529 --> 00:03:19,380
+the other string as a candidate we will go
+down if the operation as a high cost but if
+
+28
+00:03:19,380 --> 00:03:25,549
+something is very very some some sort of edit
+operations are very very common some spelling
+
+29
+00:03:25,549 --> 00:03:32,290
+mistakes are very very common we want we would
+like to give them a lower cost so that i can
+
+30
+00:03:32,290 --> 00:03:37,749
+the actual candidate have a small edit distance
+with the incorrect word ok
+
+31
+00:03:37,749 --> 00:03:46,340
+so it is important to understand what kind
+of ah characters will have a lower edit distance
+
+32
+00:03:46,340 --> 00:03:51,889
+and what kind of character will have a higher
+edit distance can be somehow give a weight
+
+33
+00:03:51,889 --> 00:04:00,529
+so so so this is the basic idea so why do
+we need to add various weights to the computation
+
+34
+00:04:00,529 --> 00:04:06,650
+so the idea is that some letters in a language
+are more likely to be mistyped than others
+
+35
+00:04:06,650 --> 00:04:13,809
+ok so let us take some statistics so this
+is a confusion matrix for a spelling errors
+
+36
+00:04:13,809 --> 00:04:22,780
+that was found in a corpus so x is the incorrect
+character and y is the correct character ok
+
+37
+00:04:22,780 --> 00:04:29,449
+so what is what is this stability is going
+how often in that corpus they found an incorrect
+
+38
+00:04:29,449 --> 00:04:32,199
+x for a correct y
+
+39
+00:04:32,199 --> 00:04:39,970
+so for example if you try to read the table
+the the entry for the first row the anti corresponding
+
+40
+00:04:39,970 --> 00:04:48,100
+to a e that means how many times instead of
+the correct e and incorrect a bar substituted
+
+41
+00:04:48,100 --> 00:04:53,150
+and that number comes up to be three forty
+two ok so that means in the corpus three forty
+
+42
+00:04:53,150 --> 00:05:01,431
+times at an instead of e a was written similarly
+one hundred eighteen times instead of i a
+
+43
+00:05:01,431 --> 00:05:07,100
+was written similarly seventy six times instead
+of o a was written ok
+
+44
+00:05:07,100 --> 00:05:16,870
+on the other hand if you see b it never happened
+that a b was written as a so that means people
+
+45
+00:05:16,870 --> 00:05:23,540
+make the mistake of converting or instead
+of writing e writing a this is a very very
+
+46
+00:05:23,540 --> 00:05:30,900
+common mistake on the other hand b two a is
+not very common ok so so you can look at this
+
+47
+00:05:30,900 --> 00:05:35,320
+confusion matrix and you will find a lot of
+nice patterns so one thing you will see is
+
+48
+00:05:35,320 --> 00:05:41,480
+that the errors among the vowels are very
+very common so substituting i for e e for
+
+49
+00:05:41,480 --> 00:05:48,270
+i a for o they are very very common ok so
+there may be because the person is may be
+
+50
+00:05:48,270 --> 00:05:56,480
+not knowing the spelling or so is even if
+you knows the spelling by mistake is typing
+
+51
+00:05:56,480 --> 00:06:00,160
+the other verbal so this is ah this is also
+possible
+
+52
+00:06:00,160 --> 00:06:06,340
+now there are some other kind of errors that
+you can see here that come because of the
+
+53
+00:06:06,340 --> 00:06:12,610
+way keyboard also designed ok so the you will
+see the the characters that that come very
+
+54
+00:06:12,610 --> 00:06:17,300
+very close in the keyboard so sometimes you
+miss type them ok so this is again a common
+
+55
+00:06:17,300 --> 00:06:23,250
+source of a spelling error so for example
+m and n are very very close together and they
+
+56
+00:06:23,250 --> 00:06:30,120
+also sound very similar so it is very likely
+that you you mistake m for n or n for m so
+
+57
+00:06:30,120 --> 00:06:36,840
+that is this kind of errors are very very
+common so so some errors come come because
+
+58
+00:06:36,840 --> 00:06:43,910
+some of the characters sound very similar
+so like the all the vowels or certain characters
+
+59
+00:06:43,910 --> 00:06:48,090
+and also some characters are very very close
+in keyboards so so that is again another source
+
+60
+00:06:48,090 --> 00:06:50,330
+of errors
+
+61
+00:06:50,330 --> 00:06:57,500
+so now once we know that some errors are more
+likely than others can i use that this statistic
+
+62
+00:06:57,500 --> 00:07:06,310
+to design my weighting scheme so as i said
+earlier if some error is more likely the addict
+
+63
+00:07:06,310 --> 00:07:13,370
+cost from one character to another character
+should be low so that i can easily find what
+
+64
+00:07:13,370 --> 00:07:19,430
+should be the actual candidate given in the
+erroneous word ok so the smaller edit distance
+
+65
+00:07:19,430 --> 00:07:24,250
+means that is more likely to be the correct
+candidate that's why we will give a smaller
+
+66
+00:07:24,250 --> 00:07:30,750
+cost to those spelling mistakes that more
+likely and in larger cost or a higher cost
+
+67
+00:07:30,750 --> 00:07:37,251
+those spelling mistakes that are not so let
+that are very very rare see so keyboard design
+
+68
+00:07:37,251 --> 00:07:42,230
+is again again one thing that gives rise to
+many of the errors that we have seen in the
+
+69
+00:07:42,230 --> 00:07:48,170
+previous slide ok so again try to correlate
+among the characters that are coming very
+
+70
+00:07:48,170 --> 00:07:53,400
+close in the keyboard so we will see that
+many a times people make mistakes in typing
+
+71
+00:07:53,400 --> 00:07:57,530
+one character for another
+
+72
+00:07:57,530 --> 00:08:04,510
+so now suppose you have some data and by analyzing
+the data you can find out what kind of errors
+
+73
+00:08:04,510 --> 00:08:10,600
+are common what kind of errors are rear and
+accordingly you can design your weights for
+
+74
+00:08:10,600 --> 00:08:16,670
+different ah different ah edit operations
+so now once you have each weights that depend
+
+75
+00:08:16,670 --> 00:08:23,050
+on the actual characters you can modify your
+initial algorithm ok so how can you modify
+
+76
+00:08:23,050 --> 00:08:31,460
+your algorithm so for example here so i will
+so if you if you try to compare this with
+
+77
+00:08:31,460 --> 00:08:36,219
+a algorithm that we saw in the previous slide
+small reference here is that we should have
+
+78
+00:08:36,219 --> 00:08:39,839
+giving a uniform cost for deletion insertion
+substitution
+
+79
+00:08:39,839 --> 00:08:47,960
+what we are doing here so deletion is now
+ah conditioned on the actual character that
+
+80
+00:08:47,960 --> 00:08:54,140
+is been deleted ok so you see d i g zero is
+d i minus one zero plus a cost for deletion
+
+81
+00:08:54,140 --> 00:08:59,980
+of x i so what is the cost for deleting that
+particular character same goes for insertion
+
+82
+00:08:59,980 --> 00:09:06,950
+what is the cost for inserting that particular
+character even in substitution you might have
+
+83
+00:09:06,950 --> 00:09:11,330
+cost for so that separate cost for deletion
+insertion and substitution of one character
+
+84
+00:09:11,330 --> 00:09:16,710
+by another ok and everything else remains
+the same the only thing that changes is that
+
+85
+00:09:16,710 --> 00:09:23,330
+instead of using equivalent cost for each
+operation you are now giving cost that are
+
+86
+00:09:23,330 --> 00:09:30,370
+dependent on the actual characters that are
+inserted or substituted or ah deleted so that
+
+87
+00:09:30,370 --> 00:09:35,650
+is my weighted edit distance
+
+88
+00:09:35,650 --> 00:09:41,700
+so now so what to do you do with so how do
+you modify your algorithm for taking care
+
+89
+00:09:41,700 --> 00:09:49,250
+of transpose for instance ok so that is the
+algorithm were we had the we had three operations
+
+90
+00:09:49,250 --> 00:09:55,990
+we had insertion substitution and deletion
+they were three operations that we why we
+
+91
+00:09:55,990 --> 00:10:02,800
+are using in that ah in that previous operation
+so there is another very common edit distance
+
+92
+00:10:02,800 --> 00:10:11,810
+operation that is used and this is called
+transpose so that is if i am ah so if i am
+
+93
+00:10:11,810 --> 00:10:16,930
+transposing toward two characters and you
+will receive this is a common error that sometimes
+
+94
+00:10:16,930 --> 00:10:18,260
+you make ok
+
+95
+00:10:18,260 --> 00:10:28,430
+so for example so i am wanting two type a
+l and instead i typed it as l a so this is
+
+96
+00:10:28,430 --> 00:10:39,020
+called transpose so in general if i write
+x y as y x so this is called transpose another
+
+97
+00:10:39,020 --> 00:10:48,420
+name for this is metothesis so now how can
+i modify my algo algorithm to take care of
+
+98
+00:10:48,420 --> 00:10:54,060
+this case so till now we have three operations
+insertion deletion substitution in insertion
+
+99
+00:10:54,060 --> 00:10:59,880
+i see the the previous insertion deletion
+i see only till the previous word ok but what
+
+100
+00:10:59,880 --> 00:11:07,130
+do i do in the case of transposition so in
+the transposition i will have to so because
+
+101
+00:11:07,130 --> 00:11:17,400
+it is ah we have go to characters before so
+i need to go to d in my cos matrix d i minus
+
+102
+00:11:17,400 --> 00:11:33,070
+two j minus two yes and suppose i give a cost
+of one for transposition 
+
+103
+00:11:33,070 --> 00:11:34,070
+ok
+
+104
+00:11:34,070 --> 00:11:44,529
+so i will write ah d i j as so there are other
+cost that we had defined earlier but for transposition
+
+105
+00:11:44,529 --> 00:11:53,520
+i will say d i minus two d i minus j minus
+two plus one and what will be the condition
+
+106
+00:11:53,520 --> 00:12:10,240
+only if so the previous word in x so ok so
+i i had defined my strings as x and y here
+
+107
+00:12:10,240 --> 00:12:20,980
+ok so this is my string as x this is my string
+as y so what will happen here this is up to
+
+108
+00:12:20,980 --> 00:12:34,450
+i so this x i minus one will be same as the
+jth character in y so if x i minus one is
+
+109
+00:12:34,450 --> 00:12:51,140
+y j and x i is equal to y j minus one ok so
+if i find that so x is still i is and y it's
+
+110
+00:12:51,140 --> 00:12:57,510
+will j so if i find that the i minus oneth
+character of x is same as the jth character
+
+111
+00:12:57,510 --> 00:13:02,830
+of y and the ith character of the x is same
+as the j mines oneth character of of y then
+
+112
+00:13:02,830 --> 00:13:09,190
+i will say that this cost is d i minus d j
+minus two plus one
+
+113
+00:13:09,190 --> 00:13:18,940
+so again i will do a minimum of this this
+if this happens this is my transpose and then
+
+114
+00:13:18,940 --> 00:13:32,240
+they i have other conditions for insertion
+deletion and substitution and that's how i
+
+115
+00:13:32,240 --> 00:13:39,040
+can modify my algorithm by initial algorithm
+to also include transposition ok so with all
+
+116
+00:13:39,040 --> 00:13:46,160
+these operation this is the only other operation
+that is also commonly used in computing edit
+
+117
+00:13:46,160 --> 00:13:58,730
+distance so now so so we talk about edit distance
+and also about ah doing including another
+
+118
+00:13:58,730 --> 00:14:00,990
+edit operation like transpose
+
+119
+00:14:00,990 --> 00:14:07,480
+so as i said earlier so we will also discuss
+briefly so so what is the practical scenario
+
+120
+00:14:07,480 --> 00:14:14,080
+so the practical scenario here is your given
+an input word ok so remember in the introduction
+
+121
+00:14:14,080 --> 00:14:21,899
+slide we two are talking about this error
+ok say wold cup and by mistake i i have written
+
+122
+00:14:21,899 --> 00:14:28,420
+w o l d instead of writing w o r l d so now
+the practical problem here is once i know
+
+123
+00:14:28,420 --> 00:14:37,089
+that this is not the correct word in my vocabulary
+how do i find out what are the possible candidates
+
+124
+00:14:37,089 --> 00:14:48,529
+that might come in place of w o l d so that
+is what are the suitable candidates now as
+
+125
+00:14:48,529 --> 00:14:55,270
+per our definition so the suitable candidates
+are those that are having a small edit distance
+
+126
+00:14:55,270 --> 00:15:01,279
+from the actual error word ok so intern my
+problem is how go i find out words that are
+
+127
+00:15:01,279 --> 00:15:06,450
+within some a small error some small edit
+distance of word
+
+128
+00:15:06,450 --> 00:15:11,600
+so now how do i solve this problem given a
+word like w o l d find out all the words that
+
+129
+00:15:11,600 --> 00:15:18,110
+are within the additions of say one or two
+now one simple thing you might says that i
+
+130
+00:15:18,110 --> 00:15:23,450
+will list down all the words by vocabulary
+somewhere ok so i have all the words in my
+
+131
+00:15:23,450 --> 00:15:30,490
+vocabulary starting from w one to wn ok and
+i will find out what is edit edit distance
+
+132
+00:15:30,490 --> 00:15:42,660
+of w one with world w two with world and up
+to wn ok i will find out all the edit distances
+
+133
+00:15:42,660 --> 00:15:48,680
+and then i will among those i will choose
+all those that are coming up to the very very
+
+134
+00:15:48,680 --> 00:15:53,060
+small edit distance some some top entries
+that are coming out to be within a small edit
+
+135
+00:15:53,060 --> 00:16:01,150
+distance so i will find out this type of entries
+ok this is my candidate so but you but you
+
+136
+00:16:01,150 --> 00:16:09,060
+you can immediately see that this may not
+be a very very efficient solution ok because
+
+137
+00:16:09,060 --> 00:16:14,670
+my vocabulary size can be quite huge and i
+have to find out edit distance from this to
+
+138
+00:16:14,670 --> 00:16:19,430
+each of the words in my vocabulary so that
+will be really really time consuming ok so
+
+139
+00:16:19,430 --> 00:16:29,110
+instead can i so can i do something more efficient
+so one simple thing is i should try to search
+
+140
+00:16:29,110 --> 00:16:34,930
+in an efficient data structure for searching
+all the words in my in my dictionary ok
+
+141
+00:16:34,930 --> 00:16:40,600
+so so in case you do not know so so one of
+the very efficient edit structures that is
+
+142
+00:16:40,600 --> 00:16:45,769
+used for searching the strings is called the
+trie structure ok so using the trie structure
+
+143
+00:16:45,769 --> 00:16:50,850
+you can do search efficiently in the linear
+time so linear in the length of the input
+
+144
+00:16:50,850 --> 00:16:59,779
+string so i am giving you one example here
+so so i can use the trie structure so so idea
+
+145
+00:16:59,779 --> 00:17:07,130
+is that so you you take any word you can start
+from the initial root node of this trie structure
+
+146
+00:17:07,130 --> 00:17:13,959
+and keep on following the arcs and in the
+time linear to the length of your word you
+
+147
+00:17:13,959 --> 00:17:18,880
+will reach to a node and find out if the word
+is available in the vocabulary or not so by
+
+148
+00:17:18,880 --> 00:17:24,110
+that you will able to search all the words
+in the vocabulary and this trie structure
+
+149
+00:17:24,110 --> 00:17:31,200
+can be used efficiently for computing the
+distance of any any new word with a word in
+
+150
+00:17:31,200 --> 00:17:33,179
+this in this trie
+
+151
+00:17:33,179 --> 00:17:39,180
+so this is one possibility but this again
+it requires you to do a lot of computations
+
+152
+00:17:39,180 --> 00:17:46,670
+with respect to all the words in your vocabulary
+what can be other possibility so other possibility
+
+153
+00:17:46,670 --> 00:17:54,500
+if your thing would be so instead of trying
+out to find out the ah edit distance of this
+
+154
+00:17:54,500 --> 00:18:03,590
+error word to all the words in the dictionary
+can i start from my error word and try to
+
+155
+00:18:03,590 --> 00:18:21,000
+enumerate all possible words within some edit
+distance ok 
+
+156
+00:18:21,000 --> 00:18:24,990
+say one or two ok i am trying to enumerate
+all the possible words edit distance one or
+
+157
+00:18:24,990 --> 00:18:31,061
+two so i will find out the word like world
+and everything else and then i can have a
+
+158
+00:18:31,061 --> 00:18:36,500
+further check to see if these words there
+in my dictionary and all and there i can use
+
+159
+00:18:36,500 --> 00:18:43,090
+maybe a trie structure that whether these
+words are available in my dictionary or not
+
+160
+00:18:43,090 --> 00:18:50,280
+so this can of the possibility now what is
+do you see do think this will be efficient
+
+161
+00:18:50,280 --> 00:18:59,360
+this approach so let us see some some numbers
+ok so yes so i can possible generate all possible
+
+162
+00:18:59,360 --> 00:19:03,890
+terms is starting from the error word that
+are within edit distance of less than equal
+
+163
+00:19:03,890 --> 00:19:08,640
+to two and there i can take care of all the
+deletion substitution addition and transposition
+
+164
+00:19:08,640 --> 00:19:15,350
+i can try to take care of all the possible
+ah edit operations so starting where wold
+
+165
+00:19:15,350 --> 00:19:19,380
+i generate all the possibilities with the
+edit distance of two
+
+166
+00:19:19,380 --> 00:19:26,670
+now so if you just try to do it's a simple
+math try to compute how many different possibilities
+
+167
+00:19:26,670 --> 00:19:32,820
+you will have to explore so let us see so
+suppose if you take a word of length nine
+
+168
+00:19:32,820 --> 00:19:38,770
+that is nine characters and suppose in you
+are taking a language like english and alphabet
+
+169
+00:19:38,770 --> 00:19:49,190
+is thirty six so and so that twenty six plus
+other ah other characters and if you just
+
+170
+00:19:49,190 --> 00:19:56,670
+do that so this will give you roughly one
+hundred fourteen thousand three forty four
+
+171
+00:19:56,670 --> 00:20:02,340
+three twenty four different possibility to
+explore staring from the word of length nine
+
+172
+00:20:02,340 --> 00:20:08,440
+in which of the four you think will give you
+a lot of possibilities ok deletion will probably
+
+173
+00:20:08,440 --> 00:20:14,630
+not give you many possibilities but substitution
+will give you lot of possibilities and insertion
+
+174
+00:20:14,630 --> 00:20:16,160
+should also give you lot of possibilities
+
+175
+00:20:16,160 --> 00:20:20,580
+substitution you can substitute each character
+by and you have a thirty six characters so
+
+176
+00:20:20,580 --> 00:20:25,760
+that gives you a huge number of possibilities
+so this is again huge number so it's starting
+
+177
+00:20:25,760 --> 00:20:31,850
+from a word of length nine you you are going
+to explore hundred fourteen thousand three
+
+178
+00:20:31,850 --> 00:20:37,160
+hundred different possibilities ok but yeah
+english is still ok so you have thirty six
+
+179
+00:20:37,160 --> 00:20:41,870
+characters so think about a language like
+chinese where the alphabets size is seventy
+
+180
+00:20:41,870 --> 00:20:47,460
+thousand so you cant even think of applying
+an approach like that ok
+
+181
+00:20:47,460 --> 00:20:52,220
+so this is an approach is slightly better
+than then before but it is may not be very
+
+182
+00:20:52,220 --> 00:20:57,830
+very efficient again depending on the alphabet
+size so what can be the other possibilities
+
+183
+00:20:57,830 --> 00:21:04,640
+ok so other possible algorithm is that ah
+the idea that all this all ah all this edit
+
+184
+00:21:04,640 --> 00:21:12,570
+opp edit distances can be attained if you
+try to do a symmetric delete from the the
+
+185
+00:21:12,570 --> 00:21:18,580
+current word and the possible candidate words
+ok so all the edit distance of operation two
+
+186
+00:21:18,580 --> 00:21:23,360
+can be found out just by doing deletes in
+both the words ok
+
+187
+00:21:23,360 --> 00:21:29,260
+so what is the idea so this is called the
+symmetric delete a spelling correction so
+
+188
+00:21:29,260 --> 00:21:36,700
+idea is that from your query word and so from
+your query word you will try to find out all
+
+189
+00:21:36,700 --> 00:21:43,250
+the words that come up within delete of two
+from the query word and from your dictionary
+
+190
+00:21:43,250 --> 00:21:48,540
+for each of the word you will try to find
+out all possibility that come within and edit
+
+191
+00:21:48,540 --> 00:21:53,980
+distance two as per only the deletes and that
+this will cover all the possible variations
+
+192
+00:21:53,980 --> 00:21:57,040
+of edit distance of two ok
+
+193
+00:21:57,040 --> 00:22:03,750
+so you can we can take a simple example so
+suppose i so let's take the same example of
+
+194
+00:22:03,750 --> 00:22:19,280
+w o l d or so even or we can try to take a
+a different example say w o t l d instead
+
+195
+00:22:19,280 --> 00:22:25,590
+of w o r l d that is the correct word and
+this is the error word ok so what we will
+
+196
+00:22:25,590 --> 00:22:33,130
+do is symmetric delete operation so this is
+this i will do offline it's an offline a starting
+
+197
+00:22:33,130 --> 00:22:40,690
+from word i will store all the possibilities
+within edit distance of one and two so i will
+
+198
+00:22:40,690 --> 00:22:51,030
+store with world that there is word w o l
+d that comes up w o r d and so on and from
+
+199
+00:22:51,030 --> 00:22:55,809
+these again you will have this is delete one
+and you will also have again candidate for
+
+200
+00:22:55,809 --> 00:23:03,160
+delete two at run time when you get this query
+like w o t l d that is incorrect you will
+
+201
+00:23:03,160 --> 00:23:09,940
+do the same thing so this is at run time and
+you will again generate all the possibilities
+
+202
+00:23:09,940 --> 00:23:11,429
+with delete of one and two
+
+203
+00:23:11,429 --> 00:23:20,169
+so we are doing here one only to show the
+possible possible so you will find w o l d
+
+204
+00:23:20,169 --> 00:23:27,220
+w o t d and so on and now you will try to
+match if one of this is available in this
+
+205
+00:23:27,220 --> 00:23:33,540
+dictionary that is that is built by this symmetric
+delete operation and you will find w o l d
+
+206
+00:23:33,540 --> 00:23:40,770
+and w o l d is a match and once this is a
+match you will go back to the original word
+
+207
+00:23:40,770 --> 00:23:48,280
+and then confirm that this word and this word
+have a edit distance of less than or equal
+
+208
+00:23:48,280 --> 00:23:53,620
+to two ok and and that's how you can find
+out all the possible words within edit distance
+
+209
+00:23:53,620 --> 00:24:00,620
+of two without i am doing a lot at run time
+now can you tell why because you only doing
+
+210
+00:24:00,620 --> 00:24:04,890
+deletes at run time and deletes a not mind
+ok
+
+211
+00:24:04,890 --> 00:24:10,360
+so if you do one delete if you heard of nine
+characters you have only nine possible deletes
+
+212
+00:24:10,360 --> 00:24:18,210
+so this is not very ah inefficient at at at
+run time and this all is done at offline and
+
+213
+00:24:18,210 --> 00:24:23,450
+later you will have a further check to see
+that these two words have additions of two
+
+214
+00:24:23,450 --> 00:24:32,240
+if your two or three sort so yeah if you take
+ah number of deletes of two for a word of
+
+215
+00:24:32,240 --> 00:24:40,530
+length nine it will be at most forty five
+so this is not a very big number so this is
+
+216
+00:24:40,530 --> 00:24:45,840
+one approach that that you can that that you
+can use for finding out all the possible dictionary
+
+217
+00:24:45,840 --> 00:24:54,980
+terms within some edit distance efficiently
+at run time ok yeah
+
+218
+00:24:54,980 --> 00:25:03,179
+so now so when we talk about edit distance
+and some variations so we will not focus on
+
+219
+00:25:03,179 --> 00:25:09,871
+the task of spelling correction with which
+we had a started this module on edit distance
+
+220
+00:25:09,871 --> 00:25:17,540
+and all so so when we talk about spelling
+errors there are two kind of errors that you
+
+221
+00:25:17,540 --> 00:25:25,190
+might have to deal with so one that are easy
+to to handle errors so i will say slightly
+
+222
+00:25:25,190 --> 00:25:30,590
+easier they are called non word errors because
+they are at so the erroneous word is not in
+
+223
+00:25:30,590 --> 00:25:36,809
+my vocabulary so in this case so erroneous
+word is b e h a f that is not in my vocabulary
+
+224
+00:25:36,809 --> 00:25:40,960
+i can deduct decision erroneous word and my
+task is to correct it to the actual word b
+
+225
+00:25:40,960 --> 00:25:50,030
+e h a l f behalf and this is also called non
+word error ok what is slightly more difficult
+
+226
+00:25:50,030 --> 00:25:57,010
+is something called a real word error when
+the the word that is in error is also in my
+
+227
+00:25:57,010 --> 00:26:03,990
+dictionary but somehow the user has missed
+spelt to a word that is in my in my dictionary
+
+228
+00:26:03,990 --> 00:26:09,930
+so here some examples so like typographical
+error so instead of writing there somebody
+
+229
+00:26:09,930 --> 00:26:16,140
+has write a three now three in my vocabulary
+so it is not easy to that the this is in error
+
+230
+00:26:16,140 --> 00:26:20,580
+now correcting this is called a real word
+error correction
+
+231
+00:26:20,580 --> 00:26:25,580
+similarly they can be something for because
+of the homophones ok because of say piece
+
+232
+00:26:25,580 --> 00:26:31,250
+and peace the two different variations of
+pieces you might misses spell very very easy
+
+233
+00:26:31,250 --> 00:26:37,000
+and t o o and t w o is very very common error
+so they are also called real word errors now
+
+234
+00:26:37,000 --> 00:26:44,169
+to handle both both of the ah non word error
+and real word error you need to use various
+
+235
+00:26:44,169 --> 00:26:54,230
+probabilistic models ok and this is what we
+will be focusing so ah in non word spelling
+
+236
+00:26:54,230 --> 00:26:59,100
+errors so the non word means the word that
+is not in my ed edit dictionary so any word
+
+237
+00:26:59,100 --> 00:27:05,150
+that is not in the dictionary is called an
+error ok and so for handling this problem
+
+238
+00:27:05,150 --> 00:27:09,400
+it is better that you have a good very good
+lexicon tells you all the possible word in
+
+239
+00:27:09,400 --> 00:27:15,080
+you lexicon and this lexicon may also be dependent
+on the particular corpus that you are processing
+
+240
+00:27:15,080 --> 00:27:16,080
+ok
+
+241
+00:27:16,080 --> 00:27:19,900
+so for you if your processing scientific coppers
+you might have different corpus then if you
+
+242
+00:27:19,900 --> 00:27:24,660
+are processing use corpus so you should know
+what your words in the in the dictionary and
+
+243
+00:27:24,660 --> 00:27:30,520
+when you encounter word that is not in your
+dictionary you will tre treated as a errors
+
+244
+00:27:30,520 --> 00:27:37,230
+and try to correct it so what in general what
+you will do in non word spelling correction
+
+245
+00:27:37,230 --> 00:27:42,420
+so starting from the error word you will try
+to find out candidates that are similar to
+
+246
+00:27:42,420 --> 00:27:47,740
+the error word and how will you define the
+similarity with respect to the error word
+
+247
+00:27:47,740 --> 00:27:53,100
+so you will say the words that are within
+form a small at a distance ok that can be
+
+248
+00:27:53,100 --> 00:27:58,429
+that can be one possible criteria and if you
+are using noisy channel model that will be
+
+249
+00:27:58,429 --> 00:28:02,830
+the topic for the next module so you will
+see the one that is coming out to be as per
+
+250
+00:28:02,830 --> 00:28:07,970
+the highest noise and probability so this
+will be your candidate words so you will choose
+
+251
+00:28:07,970 --> 00:28:12,420
+some of the candidate words like that
+
+252
+00:28:12,420 --> 00:28:15,730
+on the other hand if you are dealing with
+the real word spelling error you will try
+
+253
+00:28:15,730 --> 00:28:21,880
+to find out so now you have the you did not
+know in the sentence which of the word is
+
+254
+00:28:21,880 --> 00:28:26,679
+actually erroneous so what you will do for
+each word you will find out other words that
+
+255
+00:28:26,679 --> 00:28:32,720
+are similar in edit distance or some other
+criteria but in the candidate you will also
+
+256
+00:28:32,720 --> 00:28:40,230
+include your actual word so so t w o is there
+so we include t double o also with two and
+
+257
+00:28:40,230 --> 00:28:45,260
+you say that the actual sentence might contain
+any of these two words ok and then finally
+
+258
+00:28:45,260 --> 00:28:50,330
+you will try to maximize the probability of
+the sentence using some noisy channel model
+
+259
+00:28:50,330 --> 00:28:57,419
+so this is what we will be discussing in the
+next next lecture so where we will talk about
+
+260
+00:28:57,419 --> 00:29:03,720
+noisy channel model in detail and how it can
+use for doing the task of spelling correction
+
+261
+00:29:03,720 --> 00:29:04,720
+so
+
+262
+00:29:04,720 --> 00:29:04,722
+thank you
+

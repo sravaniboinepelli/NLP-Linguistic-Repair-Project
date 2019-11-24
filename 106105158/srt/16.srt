@@ -1,0 +1,1305 @@
+1
+00:00:17,570 --> 00:00:27,419
+so hello everyone welcome back friend for
+this lecture five of week three so so in the
+
+2
+00:00:27,419 --> 00:00:32,510
+last lecture we we started with the problem
+on part of speech tagging ok we defined the
+
+3
+00:00:32,510 --> 00:00:40,670
+problem image ah given a text that can be
+a sentence ok so you need to find out what
+
+4
+00:00:40,670 --> 00:00:46,120
+is the actual ah part of speech category for
+each of the individual word so there may be
+
+5
+00:00:46,120 --> 00:00:50,739
+many various ambiguities but you need to resolve
+the ambiguities and find out the unique part
+
+6
+00:00:50,739 --> 00:00:57,170
+of each tag for each of the words
+and we said that you can solve it using rule
+
+7
+00:00:57,170 --> 00:01:04,059
+based methods or some probabilistic methods
+we also discuss that the the methods can be
+
+8
+00:01:04,059 --> 00:01:10,920
+ah generative or discriminative and then they
+they differ in the in the philosophy of the
+
+9
+00:01:10,920 --> 00:01:17,410
+model so in general generative model the class
+comes first and it is assumed that the words
+
+10
+00:01:17,410 --> 00:01:22,581
+are generated the the data is generated from
+the class and in the discriminative model
+
+11
+00:01:22,581 --> 00:01:27,159
+you directly find out the probability of the
+class given the data so we will in this lecture
+
+12
+00:01:27,159 --> 00:01:32,750
+we will start with the ah generative model
+that is hidden markov model and see how it
+
+13
+00:01:32,750 --> 00:01:39,570
+can be used for solving the pub task of part
+of speech tag so this a probabilistic model
+
+14
+00:01:39,570 --> 00:01:47,470
+so so starting with what is my problem so
+i have some n words w one two w n in my corpus
+
+15
+00:01:47,470 --> 00:01:54,350
+that i observed in and i need to find out
+the participation text for each of these words
+
+16
+00:01:54,350 --> 00:01:59,619
+so suppose that you have to find out the sequence
+capital t so that assigns t one to t n for
+
+17
+00:01:59,619 --> 00:02:06,540
+all of these n words now each of these t i's
+that a participant text can belong to ah the
+
+18
+00:02:06,540 --> 00:02:12,700
+my my actual say suppose i am using the university
+of when we tag set so it can take any of those
+
+19
+00:02:12,700 --> 00:02:16,840
+forty five value age so there are many many
+different values that these this sequence
+
+20
+00:02:16,840 --> 00:02:24,010
+can take i need to find out the actual ah
+and ambiguous tag sequence given this ah word
+
+21
+00:02:24,010 --> 00:02:30,100
+sequence as my input
+so now how do i start solving this problem
+
+22
+00:02:30,100 --> 00:02:38,670
+as per the ah as per this ah probabilistic
+model so so so the idea is that among all
+
+23
+00:02:38,670 --> 00:02:43,690
+the possible sequences of part of speech tags
+that this word sequence can take i need to
+
+24
+00:02:43,690 --> 00:02:50,510
+find the one that has the maximum probability
+so i can write it like that so this is i have
+
+25
+00:02:50,510 --> 00:02:59,590
+to find out t hat that gives you the maximum
+probability argmax overall possibility probability
+
+26
+00:02:59,590 --> 00:03:06,130
+t given w so i need to find out the purpose
+sequence that gives the highest probability
+
+27
+00:03:06,130 --> 00:03:12,239
+now so as we have already said t is nothing
+but t one to t n and w is nothing but w to
+
+28
+00:03:12,239 --> 00:03:29,370
+w i so i can write it as argmax t one to t
+n given w one two w n ok this is what i will
+
+29
+00:03:29,370 --> 00:03:39,049
+be doing so in generative model remember what
+is the idea idea is that the class or the
+
+30
+00:03:39,049 --> 00:03:46,169
+the tags come first and then my words are
+generated from there so i cannot find out
+
+31
+00:03:46,169 --> 00:03:50,940
+the probability of tag given the word but
+from the model i can find out the probability
+
+32
+00:03:50,940 --> 00:03:58,010
+of word given the tag so i need to invert
+this the direction of the probabilities here
+
+33
+00:03:58,010 --> 00:04:02,930
+so instead of finding t given w i need to
+find i need to use w going
+
+34
+00:04:02,930 --> 00:04:08,570
+so what is the theorem popular theorem that
+i can use i can apply bayes theorem so instead
+
+35
+00:04:08,570 --> 00:04:25,449
+of directly opening it here i can try same
+argmax t p w given t p t given divided by
+
+36
+00:04:25,449 --> 00:04:35,400
+p w ok and p w it's common for all these sequences
+the probability of the sequence so this is
+
+37
+00:04:35,400 --> 00:04:45,510
+again it does not matter so that will give
+me argmax over t p w given t and p t ok so
+
+38
+00:04:45,510 --> 00:04:52,850
+this because an using generating model so
+first my class that is my t comes and then
+
+39
+00:04:52,850 --> 00:04:59,970
+my sequence is generated w that's why i have
+to take it in this format probability w t
+
+40
+00:04:59,970 --> 00:05:05,460
+p t
+now i can try and open this so this will be
+
+41
+00:05:05,460 --> 00:05:10,211
+so let me just take this particular thing
+and this will be the probability w one to
+
+42
+00:05:10,211 --> 00:05:24,270
+w n given t one to t n probability t one to
+t n ok so now so i can again use chain rule
+
+43
+00:05:24,270 --> 00:05:39,290
+to write that ok so that we can see in the
+slide ok so so i can i can you write it as
+
+44
+00:05:39,290 --> 00:05:47,870
+using the chain rule so this will be nothing
+but probability so multiplication over all
+
+45
+00:05:47,870 --> 00:06:04,030
+i is equal to one to n w i given w one to
+w i minus one t one to t n and probability
+
+46
+00:06:04,030 --> 00:06:10,920
+t i given t one to t i minus one ok this is
+simply by using the chain rule i can write
+
+47
+00:06:10,920 --> 00:06:16,800
+it like that
+so now so it is very difficult to get the
+
+48
+00:06:16,800 --> 00:06:20,940
+estimates for all these probabilities that
+we are thinking it so that means i need to
+
+49
+00:06:20,940 --> 00:06:28,480
+do certain simplifications over this formula
+so what are the simplifications that we do
+
+50
+00:06:28,480 --> 00:06:35,780
+so so one simplification that we do here is
+that so in this formula we are saying that
+
+51
+00:06:35,780 --> 00:06:42,280
+the probability of the word the current word
+so you see we have a sequence of words w one
+
+52
+00:06:42,280 --> 00:06:51,590
+to w n and correspondingly we have a sequence
+of x t one to t n whatever w i what i am saying
+
+53
+00:06:51,590 --> 00:06:57,490
+the probability of this word depends on all
+the previous words and all the tags so instead
+
+54
+00:06:57,490 --> 00:07:05,530
+of that because the generative model i might
+say that this probably depends only on the
+
+55
+00:07:05,530 --> 00:07:15,300
+current deck ok this is simplification that
+i can make so this i can simplify as
+
+56
+00:07:15,300 --> 00:07:29,200
+probability w i given t i ok so this is one
+simplification then here we are saying that
+
+57
+00:07:29,200 --> 00:07:33,860
+the probability of t i the tag t i depends
+on all the previous tags so again i might
+
+58
+00:07:33,860 --> 00:07:38,050
+simplify it by using some markov assumption
+that it depends on either the only the previous
+
+59
+00:07:38,050 --> 00:07:43,800
+tag or previous to previous tag so if i take
+only the bigram assumption so i will set t
+
+60
+00:07:43,800 --> 00:07:51,010
+i depends on t i minus one so in terms of
+this model i will say that t i only depends
+
+61
+00:07:51,010 --> 00:08:00,169
+on t i minus one ok and here i will simplify
+it using probability t i k one t i minus one
+
+62
+00:08:00,169 --> 00:08:14,830
+and this is my bigram assumption 
+ok so now if i if i make the simplification
+
+63
+00:08:14,830 --> 00:08:21,430
+what is the model that we actually see
+so this is the formula that we came up with
+
+64
+00:08:21,430 --> 00:08:27,040
+so i want a a tag sequence that has that gives
+the highest probability for this particular
+
+65
+00:08:27,040 --> 00:08:32,399
+form and we make some simplification that
+is the probability of a word appearing depends
+
+66
+00:08:32,399 --> 00:08:38,300
+only on it's part of speech tag remember this
+is genetic model so the word is generated
+
+67
+00:08:38,300 --> 00:08:42,729
+from the part of speech tag so first the part
+of speech tags are generated and then the
+
+68
+00:08:42,729 --> 00:08:48,269
+tags are giving each an individual word so
+we are making this assumption that the word
+
+69
+00:08:48,269 --> 00:08:56,060
+is generated only from it's own part of speech
+tag ok then so this gives me the first ah
+
+70
+00:08:56,060 --> 00:08:59,800
+simplification second one i will say that
+the probability of attack depends only on
+
+71
+00:08:59,800 --> 00:09:04,210
+it's forward previous tags
+so if i make the bigram assumption it will
+
+72
+00:09:04,210 --> 00:09:11,140
+depend only on the previous tag ok so this
+will give me this function so together the
+
+73
+00:09:11,140 --> 00:09:16,080
+same the simplification will give me this
+formula so i want to find it tag sequence
+
+74
+00:09:16,080 --> 00:09:21,890
+that gives me the maximum probability for
+this particular formula ok so now once we
+
+75
+00:09:21,890 --> 00:09:30,580
+have come to this formula so what is this
+model actually ok
+
+76
+00:09:30,580 --> 00:09:35,430
+so first let us see that it can be easily
+compute these probabilities probability w
+
+77
+00:09:35,430 --> 00:09:40,610
+i given t i and probability t i given t i
+minus one so how will you actually compute
+
+78
+00:09:40,610 --> 00:09:47,050
+these probabilities so one way is that you
+are given a corpus where you know all the
+
+79
+00:09:47,050 --> 00:09:52,010
+words you also know what are their part of
+speech tags somebody has manually annotated
+
+80
+00:09:52,010 --> 00:09:58,111
+each this this data file now given this data
+can you compete this probabilities so for
+
+81
+00:09:58,111 --> 00:10:03,510
+example computing probability t i given t
+i minus one if you want to find out how many
+
+82
+00:10:03,510 --> 00:10:11,050
+times this tag t i comes after the tag t i
+minus one so you will compute it by using
+
+83
+00:10:11,050 --> 00:10:15,980
+the maximum likelihood estimate that is the
+number of times t i minus one and t i come
+
+84
+00:10:15,980 --> 00:10:21,610
+together in the corpus divided by the number
+of times the word t i minus one the tag t
+
+85
+00:10:21,610 --> 00:10:26,940
+i minus one comes ok so if you see here in
+the slide so p t i given t i minus one can
+
+86
+00:10:26,940 --> 00:10:32,250
+be found by this by using these counts count
+of the two texts together divided by the count
+
+87
+00:10:32,250 --> 00:10:37,310
+of the previous tag only
+so if i want to compute probability n n given
+
+88
+00:10:37,310 --> 00:10:44,450
+d t i will say number of times d t occurs
+followed by c n n n divided by number of times
+
+89
+00:10:44,450 --> 00:10:49,460
+d t occurs and this if i have the numbers
+i can compute this probability what is the
+
+90
+00:10:49,460 --> 00:10:55,430
+other probability of the compute i have to
+compute probability of word given the tag
+
+91
+00:10:55,430 --> 00:11:01,040
+ok so so the complete probability where i
+given the tag i will find out again how many
+
+92
+00:11:01,040 --> 00:11:06,620
+times this word occurs with this tag divided
+by how many rimes that tag occurs so this
+
+93
+00:11:06,620 --> 00:11:11,570
+again from my corpus so if i have the numbers
+i want to compute probability is given v w
+
+94
+00:11:11,570 --> 00:11:16,740
+z i will find out how many times the word
+each occurs with the direct v w z divided
+
+95
+00:11:16,740 --> 00:11:22,200
+by the number of times the tag v w z actually
+occurs in my corpus so here if i have the
+
+96
+00:11:22,200 --> 00:11:25,910
+numbers i can compute these probabilities
+so all the probabilities that are required
+
+97
+00:11:25,910 --> 00:11:32,510
+for this model can easily be computed if i
+have a data where i know the words and the
+
+98
+00:11:32,510 --> 00:11:34,680
+part of speech tags for each and individual
+words
+
+99
+00:11:34,680 --> 00:11:42,149
+so now let us see how we can use that for
+some disambiguation it's not the complete
+
+100
+00:11:42,149 --> 00:11:47,640
+model just to give you some idea so once we
+have this how we can use that for some disambiguation
+
+101
+00:11:47,640 --> 00:11:53,130
+so i have a sentence a part of a sentence
+here secretariat is expected to race tomorrow
+
+102
+00:11:53,130 --> 00:12:00,270
+ok and the ambiguity here is in the word race
+so whether the other word races in noun n
+
+103
+00:12:00,270 --> 00:12:07,480
+n or v b you see everything as the same here
+now what are the probabilities as from my
+
+104
+00:12:07,480 --> 00:12:17,970
+model that differ in the two interpretations
+so if you see the first interpretation 
+
+105
+00:12:17,970 --> 00:12:22,380
+what is the second interpretation what are
+the probabilities that are defined in the
+
+106
+00:12:22,380 --> 00:12:32,709
+first one you find if the probability of the
+tag v b given t o versus in the second you
+
+107
+00:12:32,709 --> 00:12:39,890
+find probability of n n given t o then in
+the first when you find probability of n r
+
+108
+00:12:39,890 --> 00:12:47,520
+given v b and second you find probability
+of n r given n n in the first when you find
+
+109
+00:12:47,520 --> 00:12:55,660
+probability of race given v b and second you
+find probability of race given n n and because
+
+110
+00:12:55,660 --> 00:12:59,440
+in your model you are multiplying all the
+probabilities that means you will multiply
+
+111
+00:12:59,440 --> 00:13:07,090
+all the prob all these three probabilities
+in the integration one and all three in the
+
+112
+00:13:07,090 --> 00:13:09,779
+interpretation two
+so whichever multiplication gives you the
+
+113
+00:13:09,779 --> 00:13:15,720
+highest value will decide what is the actual
+ah part of speech tag of race that should
+
+114
+00:13:15,720 --> 00:13:20,330
+be used here it should be v b or n n so if
+you have the corpus you know all the probabilities
+
+115
+00:13:20,330 --> 00:13:24,930
+you will multiply you will find the number
+and this will tell me whether i should prefer
+
+116
+00:13:24,930 --> 00:13:33,370
+interpretation one or interpretation two ok
+suppose i take some numbers so here so difference
+
+117
+00:13:33,370 --> 00:13:39,390
+is because of these probabilities suppose
+from my corpus i find some numbers so i will
+
+118
+00:13:39,390 --> 00:13:47,410
+i will see here is that ah the the um the
+possibility here is that the word race should
+
+119
+00:13:47,410 --> 00:13:52,810
+be a verb not as a noun and if you see the
+sentence to race tomorrow the race should
+
+120
+00:13:52,810 --> 00:13:59,730
+be race the word race should be used as a
+verb not as a noun although ah noun is a more
+
+121
+00:13:59,730 --> 00:14:04,620
+common category count part of speech tag for
+race then verb
+
+122
+00:14:04,620 --> 00:14:11,649
+but because if the context it is more likely
+to have race edge verb in this case ok so
+
+123
+00:14:11,649 --> 00:14:16,640
+that is how we can disambiguate in one part
+in this simplistic case but in general for
+
+124
+00:14:16,640 --> 00:14:22,350
+the whole sentence even if you do not know
+any of the tags we can try to use this model
+
+125
+00:14:22,350 --> 00:14:29,560
+to find out what is the actual sequence of
+tag that should be used
+
+126
+00:14:29,560 --> 00:14:36,209
+so now so coming back to this question what
+is this model ok so what are you seeing here
+
+127
+00:14:36,209 --> 00:14:43,930
+so you are seen so you have a sentence so
+that is the words that's what you are observing
+
+128
+00:14:43,930 --> 00:14:49,180
+and then there are certain tags that assigned
+to each of the individual words so in this
+
+129
+00:14:49,180 --> 00:14:55,560
+model you have a probability of of going from
+one tag to another tag and then from a tag
+
+130
+00:14:55,560 --> 00:15:00,610
+you get a word so can you find can you think
+of what is the model it corresponds to what
+
+131
+00:15:00,610 --> 00:15:07,640
+is the actual model so if you have come across
+hidden markov model where you have the states
+
+132
+00:15:07,640 --> 00:15:12,850
+and from one state you transit to another
+state and so on and in each state that is
+
+133
+00:15:12,850 --> 00:15:19,050
+hidden you can emit the observation ok so
+the word here is observation so this is nothing
+
+134
+00:15:19,050 --> 00:15:26,260
+but the hidden markov model
+so what are hidden markov models so just to
+
+135
+00:15:26,260 --> 00:15:32,260
+give the idea in brief so here you have the
+tag transition probabilities t i given t i
+
+136
+00:15:32,260 --> 00:15:37,480
+minus one you have the emission probabilities
+so that is word observation probabilities
+
+137
+00:15:37,480 --> 00:15:43,800
+probability w i given t i and so this is so
+using this whatever we are describing is a
+
+138
+00:15:43,800 --> 00:15:49,710
+hidden markov model ok now to to tell you
+what is hidden markvo model so let me just
+
+139
+00:15:49,710 --> 00:15:54,360
+quickly tell you what is a markov model and
+how a should markvo model different from a
+
+140
+00:15:54,360 --> 00:15:59,709
+markov model ok
+so what is a markov model ok so this markov
+
+141
+00:15:59,709 --> 00:16:04,700
+model is best explained using this simple
+example so in markov model what happens you
+
+142
+00:16:04,700 --> 00:16:10,370
+again have a states but the states are also
+your observations suppose you are studies
+
+143
+00:16:10,370 --> 00:16:15,279
+the weather the weather on the current day
+and the weather can be sunny rainy or foggy
+
+144
+00:16:15,279 --> 00:16:21,209
+these are the three different kinds of weathers
+that can happen on a given day now what what
+
+145
+00:16:21,209 --> 00:16:26,190
+you are you will get you will get you will
+have these three states you will know given
+
+146
+00:16:26,190 --> 00:16:31,589
+that today is sunny what is the probability
+that tomorrow will be sunny or foggy or rainy
+
+147
+00:16:31,589 --> 00:16:37,630
+so this is state transition probabilities
+you will obtain ok so so suppose q n is a
+
+148
+00:16:37,630 --> 00:16:43,420
+variable that denotes the variable on the
+n th day and using this model we can find
+
+149
+00:16:43,420 --> 00:16:50,279
+out the probability of q n the weather on
+the n th day given all the previous days back
+
+150
+00:16:50,279 --> 00:16:55,420
+and here if you use the first row mark markov
+model so so we say this will depend only on
+
+151
+00:16:55,420 --> 00:17:02,330
+the previous days back q n will depend on
+you n q n minus one so let's take one simple
+
+152
+00:17:02,330 --> 00:17:08,520
+example so here so the you are seeing the
+state transition so so that says that if today's
+
+153
+00:17:08,520 --> 00:17:14,419
+weather is ah sunny then tomorrow will be
+sunny with the probability of point eight
+
+154
+00:17:14,419 --> 00:17:18,850
+and if today is sunny tomorrow will be foggy
+with a probability point one five so you can
+
+155
+00:17:18,850 --> 00:17:23,309
+see that from the edges that go from one state
+to another state also from the table that
+
+156
+00:17:23,309 --> 00:17:28,409
+is shown in in this
+so now once you are given this probabilities
+
+157
+00:17:28,409 --> 00:17:36,139
+you can do certain you can do certain computations
+for example suppose you have to find out given
+
+158
+00:17:36,139 --> 00:17:40,869
+that today the weather is sunny what is the
+probability that tomorrow is sunny and day
+
+159
+00:17:40,869 --> 00:17:50,570
+after is rainy ok so let's use the variable
+and i want to find out probability q n plus
+
+160
+00:17:50,570 --> 00:18:00,740
+two day after is rainy q n plus two is to
+rainy and tomorrow is sunny q n plus one it's
+
+161
+00:18:00,740 --> 00:18:10,710
+sunny given q n sunny
+so how would you compute that so if you simply
+
+162
+00:18:10,710 --> 00:18:20,159
+is the channel you will say that is nothing
+but probability q n plus one is equal to sunny
+
+163
+00:18:20,159 --> 00:18:31,679
+given q n is equal to sunny times probability
+q n plus two is equal to rainy given q n is
+
+164
+00:18:31,679 --> 00:18:41,020
+equal to sunny q n plus one is equal to sunny
+ok and now because you are using a first row
+
+165
+00:18:41,020 --> 00:18:49,460
+markov assumption so this will be equivalent
+to so this you will compute using probability
+
+166
+00:18:49,460 --> 00:18:59,710
+q n plus two is equal to rainy given q n plus
+one is equal to sunny now so you have to compute
+
+167
+00:18:59,710 --> 00:19:03,850
+this probability and this probability and
+that you can obtain from the state transition
+
+168
+00:19:03,850 --> 00:19:10,769
+graph so if you go to the previous slide you
+will find out probability sunny given sunny
+
+169
+00:19:10,769 --> 00:19:18,429
+is point eight m probability rainy given sunny
+is zero point zero five ok so once you multiply
+
+170
+00:19:18,429 --> 00:19:24,340
+this you will get the answer is point zero
+four so here so you will get the answer is
+
+171
+00:19:24,340 --> 00:19:29,600
+zero point zero four so that gives you the
+probability that tomorrow will be rainy and
+
+172
+00:19:29,600 --> 00:19:34,609
+sorry tomorrow will be sunny day after tomorrow
+will be rainy given that today is sunny so
+
+173
+00:19:34,609 --> 00:19:39,960
+that is how you use the markov model
+now this is the markvo model so what you see
+
+174
+00:19:39,960 --> 00:19:46,610
+here you have the states so in this case the
+weather so on a days is a solidus state and
+
+175
+00:19:46,610 --> 00:19:50,129
+transitions are happening among the states
+but what is your observation that is also
+
+176
+00:19:50,129 --> 00:19:54,260
+state so you also observing the weather that
+is shear state you are observing that now
+
+177
+00:19:54,260 --> 00:20:00,309
+remember the example of participate text what
+are we observing we observing the words then
+
+178
+00:20:00,309 --> 00:20:05,629
+when i give you a text i you only observe
+the words but what is hidden that is the text
+
+179
+00:20:05,629 --> 00:20:09,919
+the text are hidden so that's where the hidden
+markov models are different from markov model
+
+180
+00:20:09,919 --> 00:20:17,029
+the states there are not observed they are
+hidden variables and what is observed is different
+
+181
+00:20:17,029 --> 00:20:20,759
+so you have the words are being objective
+and from the state you can emit the words
+
+182
+00:20:20,759 --> 00:20:26,759
+so this is the idea so the generative model
+would be so you are starting from some state
+
+183
+00:20:26,759 --> 00:20:32,869
+state one you keep on transiting to other
+states as three and so on and v is a state
+
+184
+00:20:32,869 --> 00:20:40,379
+you also emit a word emission one emission
+two and so on and these emissions are nothing
+
+185
+00:20:40,379 --> 00:20:49,090
+but your observations these are your observations
+so you need to find out the underline sequence
+
+186
+00:20:49,090 --> 00:20:56,419
+of a states given the sequence of observations
+so now so yeah so this is the difference we
+
+187
+00:20:56,419 --> 00:21:02,000
+have seen for markov mode chains the output
+symbols are the same as the states so the
+
+188
+00:21:02,000 --> 00:21:08,859
+word sunny is ah both a state and the observable
+so what happens in part of speech tagging
+
+189
+00:21:08,859 --> 00:21:16,840
+words are the output symbols but the hidden
+states are part of speech tag ok so so hidden
+
+190
+00:21:16,840 --> 00:21:21,239
+markov model is nothing but an extension of
+markov of chain so in which what happens that
+
+191
+00:21:21,239 --> 00:21:28,460
+ah the output symbols that you are having
+are not the same as the states so states are
+
+192
+00:21:28,460 --> 00:21:33,840
+different from the output and we actually
+do not know what should we are in until we
+
+193
+00:21:33,840 --> 00:21:39,450
+try to use our model
+so what are the elements of an hidden markov
+
+194
+00:21:39,450 --> 00:21:48,090
+model so so what do you need from hidden markov
+model so you need a set of states yes you
+
+195
+00:21:48,090 --> 00:21:54,050
+need the probability of transiting from one
+state to another state in your the probability
+
+196
+00:21:54,050 --> 00:22:01,570
+of emission given a state which words will
+be emitted with what probability ok and you
+
+197
+00:22:01,570 --> 00:22:08,320
+might also need what is the beginning of a
+state and ah and so on so if a if you try
+
+198
+00:22:08,320 --> 00:22:12,679
+to correspond a hidden markov model with the
+with part of speech is tagging so we need
+
+199
+00:22:12,679 --> 00:22:19,230
+set of a states in our part of speech taking
+case so the tags are the states we need an
+
+200
+00:22:19,230 --> 00:22:24,419
+output alphabet that is then what are emissions
+so the words are the emissions with the initial
+
+201
+00:22:24,419 --> 00:22:29,509
+state so in our case that is the beginning
+of the sentence we need the transition probabilities
+
+202
+00:22:29,509 --> 00:22:34,539
+that is given a previous tag what will be
+the next tag and we need the emission probabilities
+
+203
+00:22:34,539 --> 00:22:43,720
+that is given this tag what will be the word
+so now so once we have this we can also give
+
+204
+00:22:43,720 --> 00:22:49,840
+a graphical representation to our ah hidden
+markov model for part of speech tagging so
+
+205
+00:22:49,840 --> 00:22:55,039
+what is happening see here we start state
+so here by start steady shown from the start
+
+206
+00:22:55,039 --> 00:22:59,950
+state you have a probability of transiting
+to any of the other tags so what does that
+
+207
+00:22:59,950 --> 00:23:05,960
+mean you can start the sentence with some
+particular tags so this probably should depend
+
+208
+00:23:05,960 --> 00:23:10,299
+on what is the tag that is more likely to
+start the sentence and once you have this
+
+209
+00:23:10,299 --> 00:23:15,929
+tag what is the next likely tag and so on
+so this is your state transition graph so
+
+210
+00:23:15,929 --> 00:23:19,929
+this is what is shown in the slide so when
+we are tagging the sentence you are actually
+
+211
+00:23:19,929 --> 00:23:24,789
+walking on this a state graph from one state
+we are going to another state and so on and
+
+212
+00:23:24,789 --> 00:23:28,979
+they are very transition probabilities that
+you can have over this state graph and this
+
+213
+00:23:28,979 --> 00:23:32,559
+you can model by using probability of a state
+t n given t n minus one
+
+214
+00:23:32,559 --> 00:23:40,600
+now what does is missing here with each now
+within the hidden markov model with each a
+
+215
+00:23:40,600 --> 00:23:46,080
+state you also have the word emission so from
+history you also want to know what is the
+
+216
+00:23:46,080 --> 00:23:53,899
+probability that you will output or emit a
+particular word ok so this is what is additionally
+
+217
+00:23:53,899 --> 00:23:59,899
+at ah ah needed here so in the graphical representation
+now with these states like to i should also
+
+218
+00:23:59,899 --> 00:24:05,441
+the probability of different words emitting
+from that state so here all the words is in
+
+219
+00:24:05,441 --> 00:24:11,880
+the vocabulary are are written and given the
+the particular state what is the probability
+
+220
+00:24:11,880 --> 00:24:16,460
+of ah out putting or emitting that particular
+word in the vocabulary so that you need to
+
+221
+00:24:16,460 --> 00:24:22,070
+define for all the very possible ah states
+in your graph
+
+222
+00:24:22,070 --> 00:24:30,039
+so now once we have both these what is my
+problem so so i can define so if you remember
+
+223
+00:24:30,039 --> 00:24:33,889
+i can define all these probabilities once
+you give me a corpus that contains a set of
+
+224
+00:24:33,889 --> 00:24:40,269
+words and ah the their corresponding part
+of speech tags if you give me that i can find
+
+225
+00:24:40,269 --> 00:24:43,379
+out all these probabilities so i can define
+these graph once here once i have a corpus
+
+226
+00:24:43,379 --> 00:24:52,869
+what is my problem at runtime i am only given
+a an observation that is i am only given a
+
+227
+00:24:52,869 --> 00:24:58,629
+sentence that is sequence of words i have
+to find out what is the corresponding part
+
+228
+00:24:58,629 --> 00:25:07,169
+of speech tag sequence that should be ah that
+should be used for this word sequence ok so
+
+229
+00:25:07,169 --> 00:25:15,739
+that is suppose i am given a ah sentence like
+this is the part of the sentence promised
+
+230
+00:25:15,739 --> 00:25:22,879
+to back the bill ok there are five words here
+so my problem is to find out what is the sequence
+
+231
+00:25:22,879 --> 00:25:28,990
+of x that would be used for this sentence
+so how would i approach this problem given
+
+232
+00:25:28,990 --> 00:25:37,669
+the state transition graph that i already
+have now for each word so so one thing to
+
+233
+00:25:37,669 --> 00:25:43,539
+simplify this i will do is that for each for
+i will i will find out what are all the possible
+
+234
+00:25:43,539 --> 00:25:48,919
+part of speech text a word can take ok
+so we will be talked about this said that
+
+235
+00:25:48,919 --> 00:25:53,919
+some words can take multiple part of speech
+tags ok but but none of the words went beyond
+
+236
+00:25:53,919 --> 00:25:58,289
+seven part of speech tags ok and mostly the
+words were having if they were ambiguous they
+
+237
+00:25:58,289 --> 00:26:02,700
+were having two or three part of space tags
+so for a word if i can identify what are the
+
+238
+00:26:02,700 --> 00:26:09,259
+part of speech tags so i can only use that
+to have my set of possibilities so here for
+
+239
+00:26:09,259 --> 00:26:14,879
+example i will say the word promised can take
+only v b d or v b n past tense of participial
+
+240
+00:26:14,879 --> 00:26:19,110
+it can be only one of those i have to dis
+dis disambiguate among the two the word to
+
+241
+00:26:19,110 --> 00:26:24,230
+can have only one part of speech tag back
+can have four tags the can have two tags and
+
+242
+00:26:24,230 --> 00:26:30,389
+bill can have two tags ok these are all the
+possibilities now each four can take any of
+
+243
+00:26:30,389 --> 00:26:35,610
+these possibilities so now can you just quickly
+see how many possibilities are there so if
+
+244
+00:26:35,610 --> 00:26:40,779
+you see here i have two times four eight times
+two sixteen times two thirty two possibilities
+
+245
+00:26:40,779 --> 00:26:46,769
+of the part of speech tag sequences
+now i have to find out among these which is
+
+246
+00:26:46,769 --> 00:26:52,929
+the most likely sequence of participation
+tags that is being used so now so so how will
+
+247
+00:26:52,929 --> 00:26:59,039
+i solve this problem one neither might be
+i enumerate all the possibilities and for
+
+248
+00:26:59,039 --> 00:27:03,880
+each possibility i compute the probability
+separately so i have thirty two possibilities
+
+249
+00:27:03,880 --> 00:27:08,840
+and i compute thirty two different ah so for
+all the possibility i compute the full probability
+
+250
+00:27:08,840 --> 00:27:16,919
+that is one one possibility but firstly this
+is not very efficient and think of some sentences
+
+251
+00:27:16,919 --> 00:27:21,640
+which might have ah say fifteen twenty volts
+this this will just go exponentially with
+
+252
+00:27:21,640 --> 00:27:28,330
+the number of words ok so this is not a good
+solution so i need to have a solution where
+
+253
+00:27:28,330 --> 00:27:34,269
+ah it does not grow exponentially with the
+size of the sentence ok so so what will be
+
+254
+00:27:34,269 --> 00:27:39,389
+a good algorithm for for doing that so ideally
+i want to come up with the actual part of
+
+255
+00:27:39,389 --> 00:27:46,369
+speech tag sequence like here it will be v
+b d t o v b d t n n from all the possibilities
+
+256
+00:27:46,369 --> 00:27:53,739
+and how will i do that and that's what we
+will be discussing in the next lecture that
+
+257
+00:27:53,739 --> 00:27:57,779
+so this is the viterbi algorithm
+how do i apply in my hmm model this will be
+
+258
+00:27:57,779 --> 00:28:03,869
+algorithm to come up with this part of speech
+tags sequence in efficient manner ok instead
+
+259
+00:28:03,869 --> 00:28:08,860
+of doing something naive implementation that
+is ah exponential and that is actually not
+
+260
+00:28:08,860 --> 00:28:15,019
+feasible for for doing it at for for a large
+corpus so that will be the focus in the next
+
+261
+00:28:15,019 --> 00:28:15,309
+lecture
+thank you
+

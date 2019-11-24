@@ -1,0 +1,1140 @@
+1
+00:00:18,010 --> 00:00:22,050
+so welcome to the final lecture of this week
+so in the last lecture we had talked about
+
+2
+00:00:22,050 --> 00:00:27,560
+what is the approach of using maximum spanning
+tree for dependency parsing so there we only
+
+3
+00:00:27,560 --> 00:00:34,160
+covered that if we have a sentence and we
+have some way of constructing the original
+
+4
+00:00:34,160 --> 00:00:39,940
+graph multi diagram where there all possible
+connection we can usually algorithm to find
+
+5
+00:00:39,940 --> 00:00:45,540
+out the m s t ok in thats what we covered
+now important point is how do we find out
+
+6
+00:00:45,540 --> 00:00:51,629
+the aspects ok and thats what we will be covering
+here so how do we treated as a learning problem
+
+7
+00:00:51,629 --> 00:00:56,330
+where we given some data where we know these
+are sentences and they are corresponding dependency
+
+8
+00:00:56,330 --> 00:01:03,260
+graph how do we use that to establish the
+aspects for a new sentence and you understand
+
+9
+00:01:03,260 --> 00:01:09,390
+now that once you can do that part rest part
+is already defined by the algorithm so your
+
+10
+00:01:09,390 --> 00:01:13,250
+main task is how do you effectively construct
+the aspects
+
+11
+00:01:13,250 --> 00:01:21,780
+now now just one thing what do i mean by the
+aspect aspect is something that will depend
+
+12
+00:01:21,780 --> 00:01:25,820
+on the two nodes that you are connecting and
+what is the relation with which we are connecting
+
+13
+00:01:25,820 --> 00:01:34,460
+them so this has to be some sort of a feature
+representation vector over the nodes and the
+
+14
+00:01:34,460 --> 00:01:41,670
+label and you have to define what are your
+features and once you define for any possible
+
+15
+00:01:41,670 --> 00:01:48,980
+connection you can find out this vector find
+this vector is a separate task it does not
+
+16
+00:01:48,980 --> 00:01:54,310
+require any learning the way we will pick
+a learning involved each features will also
+
+17
+00:01:54,310 --> 00:02:00,570
+have a weight assigned that will help you
+to determine the aspects so feature vectors
+
+18
+00:02:00,570 --> 00:02:05,159
+when you multiple the weight you will get
+the aspects and this weight vector for the
+
+19
+00:02:05,159 --> 00:02:11,140
+feature is something you can learn from your
+data so that is what weight vector with this
+
+20
+00:02:11,140 --> 00:02:19,780
+feature set help me to choose the optimal
+or the best a spanning tree that corresponds
+
+21
+00:02:19,780 --> 00:02:23,879
+to dependency graph that i already have in
+my data if i have some weights that are not
+
+22
+00:02:23,879 --> 00:02:28,120
+allowing me to choose the best graph i should
+a bit my weight and this is the idea that
+
+23
+00:02:28,120 --> 00:02:32,859
+we will see in this lecture
+so we will talking about the learning part
+
+24
+00:02:32,859 --> 00:02:40,879
+here so the first thing that we should see
+here is the arc weights that we are defining
+
+25
+00:02:40,879 --> 00:02:48,819
+can be written as some feature vector over
+i j k yes the node i the node j and the relation
+
+26
+00:02:48,819 --> 00:02:57,230
+k and a weight vector and i multiply by weighted
+feature i get the arc weight now we have to
+
+27
+00:02:57,230 --> 00:03:03,730
+see how to define this feature weight features
+this is again analogues somehow to what we
+
+28
+00:03:03,730 --> 00:03:13,840
+did in some of the previous ah classes and
+how do we learn this weight vector so here
+
+29
+00:03:13,840 --> 00:03:18,400
+arc weights are nothing but a linear combinations
+of features of the arc and a corresponding
+
+30
+00:03:18,400 --> 00:03:23,209
+weight vector now what we are different arc
+features you can take ok so it will dependent
+
+31
+00:03:23,209 --> 00:03:30,249
+on again what are the words i am connecting
+so let us take a sentence like john saw mary
+
+32
+00:03:30,249 --> 00:03:34,909
+mcguire yesterday with his telescope and i
+want to find out the head weights between
+
+33
+00:03:34,909 --> 00:03:43,579
+first saw and with with the relation pp ok
+so this is my i this is my j and this is the
+
+34
+00:03:43,579 --> 00:03:50,569
+relation pp so here by the multi diagram arc
+means for k you can have many variations you
+
+35
+00:03:50,569 --> 00:03:56,629
+can have pp you can have n subject direct
+object indirect object and non modifier etcetera
+
+36
+00:03:56,629 --> 00:04:03,569
+we have the various possible variations so
+what what would this feature dependent on
+
+37
+00:04:03,569 --> 00:04:07,800
+so feature would dependent on probably what
+are my words themselves they are some of the
+
+38
+00:04:07,800 --> 00:04:13,329
+most important features if my word is saw
+and my word first word is saw second word
+
+39
+00:04:13,329 --> 00:04:22,240
+is with and the relation is whatever pp here
+ok so head is saw and dependent is with that
+
+40
+00:04:22,240 --> 00:04:27,190
+is taken in my one primarily feature so every
+case i will have this feature i will have
+
+41
+00:04:27,190 --> 00:04:33,699
+an answer one or zero
+then i can have a feature composed from the
+
+42
+00:04:33,699 --> 00:04:40,920
+part of speech tags of these words so i also
+know what are part of speech tags and so the
+
+43
+00:04:40,920 --> 00:04:45,790
+feature can be like what is the part of speech
+for the head part so head part of speech is
+
+44
+00:04:45,790 --> 00:04:50,500
+verb and what is the part of speech of dependent
+word that is preposition and that would be
+
+45
+00:04:50,500 --> 00:04:54,570
+one of the most important features that i
+can use because many a times the relations
+
+46
+00:04:54,570 --> 00:04:59,470
+are defined between various grammatical categories
+like for subject it will be between verb and
+
+47
+00:04:59,470 --> 00:05:05,010
+a noun so if you know that the first the head
+word is verb and the dependent is noun there
+
+48
+00:05:05,010 --> 00:05:10,610
+is a good chance they may have a subject relation
+although there are other relation possible
+
+49
+00:05:10,610 --> 00:05:17,970
+so part of speech is one very important feature
+then what else you can also use the part of
+
+50
+00:05:17,970 --> 00:05:25,200
+speech of the words that are coming around
+this head and dependent word in between like
+
+51
+00:05:25,200 --> 00:05:29,030
+in between part of speech is noun that means
+there is a noun that occurs in between these
+
+52
+00:05:29,030 --> 00:05:35,610
+two words yes in between part of speech is
+adverb there is adverb that is occurring dependent
+
+53
+00:05:35,610 --> 00:05:41,040
+pos right is pronoun for the dependent the
+right hand side the part of speech is pronoun
+
+54
+00:05:41,040 --> 00:05:47,320
+and head pos left is noun to the head to the
+left of the head the part of speech is noun
+
+55
+00:05:47,320 --> 00:05:50,970
+so like that you can have again have many
+different features on the neighboring words
+
+56
+00:05:50,970 --> 00:05:59,810
+and the words in between so you can use the
+identity of the words or the part of speech
+
+57
+00:05:59,810 --> 00:06:05,870
+and then you might also want to use the orientation
+whether the head is towards light left or
+
+58
+00:06:05,870 --> 00:06:10,900
+towards the right so that can be captured
+by arc direction this is to the right so arc
+
+59
+00:06:10,900 --> 00:06:15,680
+direction is right you can also see the distance
+how many words are intervening between the
+
+60
+00:06:15,680 --> 00:06:21,080
+head and dependent so in this case there are
+three words that are intervening ok so like
+
+61
+00:06:21,080 --> 00:06:28,170
+that you can you can take various different
+ah question or various different characteristic
+
+62
+00:06:28,170 --> 00:06:34,310
+of head and dependent surrounding words and
+the labels and construct all your features
+
+63
+00:06:34,310 --> 00:06:44,960
+so this gives you the set of arc features
+f i j k and now given any possible ah arc
+
+64
+00:06:44,960 --> 00:06:52,630
+in your graph you can construct this feature
+vector yes it will be answer to all these
+
+65
+00:06:52,630 --> 00:06:57,900
+questions is the arc distance three or not
+so answer will be one or zero so like that
+
+66
+00:06:57,900 --> 00:07:03,140
+you can construct this feature vector but
+what is your aspect that is the feature vector
+
+67
+00:07:03,140 --> 00:07:08,880
+multiplied by the weight vector so next thing
+is how do we use this weight vector or how
+
+68
+00:07:08,880 --> 00:07:17,290
+do we obtain this weight vector so as such
+you can use any features over the arc i j
+
+69
+00:07:17,290 --> 00:07:24,870
+k and input x
+so now how do you obtain my weights for that
+
+70
+00:07:24,870 --> 00:07:33,150
+i have to define what is my ah inference problem
+so this we have already seen for a graph the
+
+71
+00:07:33,150 --> 00:07:41,150
+weight of a graph will be defined by summation
+over the weights of all its edges and the
+
+72
+00:07:41,150 --> 00:07:47,020
+m s t problem is find out the graph with the
+maximum weight ok among all the possible spanning
+
+73
+00:07:47,020 --> 00:07:53,320
+trees that i can obtain from the starting
+graph take the one that is having the maximum
+
+74
+00:07:53,320 --> 00:08:03,800
+weight now this w i j k can be written as
+w times the feature vector f i j k and w can
+
+75
+00:08:03,800 --> 00:08:12,530
+go outside of this equation so this will be
+in other words w times summation over all
+
+76
+00:08:12,530 --> 00:08:18,151
+the feature vectors and take the arg max over
+that and suppose i call this as the feature
+
+77
+00:08:18,151 --> 00:08:22,611
+of my graph the feature vector for my graph
+is nothing but the summation over feature
+
+78
+00:08:22,611 --> 00:08:31,980
+vectors of all the edges and this is my problem
+arg max w times f g over all the possible
+
+79
+00:08:31,980 --> 00:08:39,209
+graphs or directed spanning tree g that i
+can construct from my initial graph now how
+
+80
+00:08:39,209 --> 00:08:44,140
+do use this inference problem to learn my
+bits
+
+81
+00:08:44,140 --> 00:08:55,950
+so this will be my learning criteria and this
+will be very similar to what we did in the
+
+82
+00:08:55,950 --> 00:09:03,010
+previous ah example that the previous method
+also so what is the idea you have a gold standard
+
+83
+00:09:03,010 --> 00:09:09,000
+training data ok so you are given a training
+data of a sentence and its gold standard dependency
+
+84
+00:09:09,000 --> 00:09:15,930
+graph so there are some capital t sentence
+that is now start with some initial weights
+
+85
+00:09:15,930 --> 00:09:22,300
+they can be zero or they can be some arbitrary
+weights ok and lets start with the ah the
+
+86
+00:09:22,300 --> 00:09:27,770
+first iteration now i am iterating over all
+the sentences some capital n number of times
+
+87
+00:09:27,770 --> 00:09:36,040
+like we did in the previous case in each iteration
+i go to each of the individual tree so one
+
+88
+00:09:36,040 --> 00:09:42,700
+to up to capital t
+each sentence instance now what do i do so
+
+89
+00:09:42,700 --> 00:09:48,680
+i am i am in the learning part i do not know
+what are my optimal weights so how does learning
+
+90
+00:09:48,680 --> 00:10:02,920
+work so i am given a sentence x t and its
+dependency graph g t i am already given this
+
+91
+00:10:02,920 --> 00:10:12,370
+i know what are my features yes i know what
+are my features i do not know what are my
+
+92
+00:10:12,370 --> 00:10:19,092
+weights so how do i proceed
+so lets take a particular instance for my
+
+93
+00:10:19,092 --> 00:10:25,800
+learning so what will happen i am given this
+sentence x t so i will apply my algorithm
+
+94
+00:10:25,800 --> 00:10:35,420
+as if i am doing it at run time so i will
+make the root node i will make all the possible
+
+95
+00:10:35,420 --> 00:10:47,450
+connections somehow ok we can have any possible
+connections thats not matter so now you start
+
+96
+00:10:47,450 --> 00:10:56,270
+by making all the possible 
+connections that we discussed this is my initial
+
+97
+00:10:56,270 --> 00:11:05,950
+graph you can that graph g x that has all
+the possible connections ok this also all
+
+98
+00:11:05,950 --> 00:11:11,810
+the possible connections
+now at this point how will you proceed for
+
+99
+00:11:11,810 --> 00:11:18,720
+proceeding you need to know what are the edge
+weights here so now how do you obtain the
+
+100
+00:11:18,720 --> 00:11:28,200
+edge weights so this edge it will be nothing
+but w times f i j k i is the ith word here
+
+101
+00:11:28,200 --> 00:11:35,420
+j is the jth word here and k is the relation
+now how do you obtain f i j k this already
+
+102
+00:11:35,420 --> 00:11:40,800
+given to you so you know what are the features
+so features will be some question like ith
+
+103
+00:11:40,800 --> 00:11:48,930
+words is root and jth word is something like
+saw it will be either one or zero yes so your
+
+104
+00:11:48,930 --> 00:11:54,720
+feature vector will be some zero some ones
+and this might be different for different
+
+105
+00:11:54,720 --> 00:12:00,570
+edges
+now what else you do not know your weight
+
+106
+00:12:00,570 --> 00:12:10,870
+but you will have initial weights or some
+intermediate weights you will use those weights
+
+107
+00:12:10,870 --> 00:12:18,630
+multiply by the feature vector and you will
+get some number and that is your w i j k yes
+
+108
+00:12:18,630 --> 00:12:23,840
+and you will put back this number it can be
+say ten or thirty whatever suppose you get
+
+109
+00:12:23,840 --> 00:12:31,180
+ten thirty twenty fifteen and so on you will
+filling all the values using the same method
+
+110
+00:12:31,180 --> 00:12:36,250
+now once you have filled in all these values
+what will be the next step so next step should
+
+111
+00:12:36,250 --> 00:12:53,440
+be apply chu liu edmonds algorithm yes and
+obtained a dependency graph and in other words
+
+112
+00:12:53,440 --> 00:13:03,710
+obtained a mst ok so suppose you obtain a
+graph like root here and so there are three
+
+113
+00:13:03,710 --> 00:13:09,500
+words so something like this suppose lets
+take a simple case and like this this a one
+
+114
+00:13:09,500 --> 00:13:14,870
+of the dependent one way of writing dependency
+graph ok and suppose this is what you obtain
+
+115
+00:13:14,870 --> 00:13:20,520
+from your algorithm
+now where is the learning here learning is
+
+116
+00:13:20,520 --> 00:13:28,779
+if the dependency graph that you obtain is
+if this is not the same as your gold standard
+
+117
+00:13:28,779 --> 00:13:33,920
+dependency graph that means your weights are
+not correct at this point you might have to
+
+118
+00:13:33,920 --> 00:13:39,210
+modify your weights and how do you modify
+your weights very simple like you did in the
+
+119
+00:13:39,210 --> 00:13:50,230
+previous method also you would say w new or
+w old plus you want to go towards the actual
+
+120
+00:13:50,230 --> 00:13:58,800
+graphs and away from the so call it g prime
+that you obtain from by your algorithm so
+
+121
+00:13:58,800 --> 00:14:04,800
+call it g prime that you obtain by your algorithm
+g t is the gold standard graph
+
+122
+00:14:04,800 --> 00:14:11,089
+so you want to go in this direction and away
+from here so it will be simply feature of
+
+123
+00:14:11,089 --> 00:14:20,640
+g t minus feature of g prime ok and what is
+f g t this is nothing but the summation over
+
+124
+00:14:20,640 --> 00:14:27,850
+features of all the edges of g t similarly
+here summation over features of all the edges
+
+125
+00:14:27,850 --> 00:14:32,870
+of my g prime and that will give you your
+new weight vector of course there can be some
+
+126
+00:14:32,870 --> 00:14:37,640
+learning weights and all but this is just
+to give you the intuition and thats all you
+
+127
+00:14:37,640 --> 00:14:42,520
+will have a new weight again you will start
+with this new weight for a new sentence see
+
+128
+00:14:42,520 --> 00:14:48,420
+whether you obtaining the g t like show graph
+by this algorithm if not you will keep on
+
+129
+00:14:48,420 --> 00:14:54,029
+updating your weights ok and this will sometime
+at some point converge and some of one of
+
+130
+00:14:54,029 --> 00:15:01,560
+your iteration you will have your weights
+roughly stabilized and thats where you stop
+
+131
+00:15:01,560 --> 00:15:07,620
+so now lets so hope this idea is clear lets
+take a simple example to further see that
+
+132
+00:15:07,620 --> 00:15:13,510
+how do you apply this algorithm for learning
+the weights
+
+133
+00:15:13,510 --> 00:15:18,970
+so let me just quickly go through this algorithm
+again so i am repeating it for some n number
+
+134
+00:15:18,970 --> 00:15:27,130
+of iterations for each tree let us find out
+g prime as the argmax over weight at the particular
+
+135
+00:15:27,130 --> 00:15:36,700
+instance and f g prime ok so that is i apply
+my ah chu liu edmonds algorithm find out the
+
+136
+00:15:36,700 --> 00:15:44,000
+tree with the maximum weight if g prime is
+not the same as my gold standard graph that
+
+137
+00:15:44,000 --> 00:15:49,480
+means i have to update my parameters and how
+do i do that at this i plus one th time my
+
+138
+00:15:49,480 --> 00:15:56,730
+weights are initial weights plus f g t minus
+f g prime this i am doing only if i am not
+
+139
+00:15:56,730 --> 00:16:03,760
+obtaining the correct graph i continue further
+and at some point it will converge and thats
+
+140
+00:16:03,760 --> 00:16:07,560
+where i will return the weights and i will
+assume at this point i have the ideal weights
+
+141
+00:16:07,560 --> 00:16:13,790
+so that whenever you give me a new sentence
+i can use these weights to compute all the
+
+142
+00:16:13,790 --> 00:16:20,980
+arc arc weights yes that arc weights are nothing
+but weights multiplied by the feature vector
+
+143
+00:16:20,980 --> 00:16:25,959
+and then i can i can apply chu liu edmonds
+algorithm to compute the dependency graph
+
+144
+00:16:25,959 --> 00:16:32,920
+so let us see some example for learning the
+weight vectors so we are using the same ah
+
+145
+00:16:32,920 --> 00:16:39,370
+sentence like the previous ah case so we are
+using the sentence john saw mary ok and suppose
+
+146
+00:16:39,370 --> 00:16:44,200
+that this occurs in the training set now for
+simplicity we are not worrying about what
+
+147
+00:16:44,200 --> 00:16:48,350
+are the relations between two words i am saying
+that there is only one relation rare so my
+
+148
+00:16:48,350 --> 00:16:53,420
+features will only dependent on the ith word
+and jth word that will make things easier
+
+149
+00:16:53,420 --> 00:16:58,660
+so here what i am showing let us take some
+seven different features and some weights
+
+150
+00:16:58,660 --> 00:17:05,480
+that have been initialized or some intermediate
+weights and suppose you are you are un counting
+
+151
+00:17:05,480 --> 00:17:11,160
+this sentence in your training data how will
+you do the weight update
+
+152
+00:17:11,160 --> 00:17:18,049
+so here let us see what are my seven features
+defined over any word i and j for a arc from
+
+153
+00:17:18,049 --> 00:17:24,280
+w i to w j so features are the ith word has
+a part of speech of noun and jth word has
+
+154
+00:17:24,280 --> 00:17:28,540
+a part of speech of noun ith word is part
+of speech of verb jth word is part of speech
+
+155
+00:17:28,540 --> 00:17:35,490
+of noun and so on ith word is root jth word
+is verb and for this simple sentence you already
+
+156
+00:17:35,490 --> 00:17:48,100
+know right
+so you will have [niose] root john ok let
+
+157
+00:17:48,100 --> 00:17:56,760
+me write it like that saw mary you know this
+is a noun this is a verb and this is a noun
+
+158
+00:17:56,760 --> 00:18:04,549
+and this is root so now your task is suppose
+you are given for these seven features the
+
+159
+00:18:04,549 --> 00:18:10,400
+weights are three twenty fifteen twelve one
+ten twenty before the start of the iteration
+
+160
+00:18:10,400 --> 00:18:15,550
+now you have to determine the weights after
+iteration over this example now what do i
+
+161
+00:18:15,550 --> 00:18:23,220
+mean by doing that same as i said in the in
+the last slide so what i will do now i will
+
+162
+00:18:23,220 --> 00:18:43,980
+first find out all the possible edge weights
+ok lets try to find some edge weights what
+
+163
+00:18:43,980 --> 00:18:54,870
+is the edge weight from root to john ok so
+what is this edge weight this is weight vector
+
+164
+00:18:54,870 --> 00:19:04,050
+multiplied by the feature vector between this
+root and john this might w i this might w
+
+165
+00:19:04,050 --> 00:19:10,950
+j now what is this f root to john this will
+be a vector of size seven each value to be
+
+166
+00:19:10,950 --> 00:19:14,010
+one and zero and this will dependent on the
+answer of my question
+
+167
+00:19:14,010 --> 00:19:19,450
+so let us see what are my features word w
+i has a part of speech of noun now w i is
+
+168
+00:19:19,450 --> 00:19:23,780
+a root so it does not have any part of speech
+this will be zero w i has part of speech of
+
+169
+00:19:23,780 --> 00:19:31,900
+verb again zero w i is root ok lets see the
+next one w j is verb so here w j is john that
+
+170
+00:19:31,900 --> 00:19:41,533
+is noun so this is also zero root and j is
+noun this will be one root and w j occurs
+
+171
+00:19:41,533 --> 00:19:46,929
+at the end of the sentence know john occurs
+in the john occurs in the start of the sentence
+
+172
+00:19:46,929 --> 00:19:52,170
+this is also zero w i occurs before w j in
+the sentence roots does not occurs in the
+
+173
+00:19:52,170 --> 00:19:57,250
+sentence so this will be zero also w i is
+the part of speech of noun so it is not true
+
+174
+00:19:57,250 --> 00:20:03,160
+for root so we see out of seven features only
+fourth one is one everything has a zero so
+
+175
+00:20:03,160 --> 00:20:11,080
+the feature vector here is zero zero zero
+one zero zero zero now how do i get the weight
+
+176
+00:20:11,080 --> 00:20:20,960
+the weight vector is already given to me that
+is three twenty fifteen twelve one ten twenty
+
+177
+00:20:20,960 --> 00:20:26,850
+so i multiple this weight vector to the feature
+vector and i obtain the weight of this arc
+
+178
+00:20:26,850 --> 00:20:33,780
+that is twelve
+similarly i compute the weight of the arc
+
+179
+00:20:33,780 --> 00:20:40,179
+of from root to saw so let us take some other
+case like john to mary how do i compute the
+
+180
+00:20:40,179 --> 00:20:51,230
+arc weight again this is lets find out the
+feature for john to mary ok so first one first
+
+181
+00:20:51,230 --> 00:20:57,760
+question again w i is the part of speech of
+noun w j is noun now john and mary both are
+
+182
+00:20:57,760 --> 00:21:07,430
+nouns so this should be one w i is verb and
+w j is noun should be zero w i root none of
+
+183
+00:21:07,430 --> 00:21:12,520
+the so none of these features will be one
+because all the required to be root so the
+
+184
+00:21:12,520 --> 00:21:19,930
+all three are zero so two three four five
+are zero six w i occurs before w j so john
+
+185
+00:21:19,930 --> 00:21:25,500
+occurs before mary in the sentence there should
+be one seventh feature w i had part of speech
+
+186
+00:21:25,500 --> 00:21:33,179
+of noun w j is verb that is zero so only one
+and six are one everything else are zero so
+
+187
+00:21:33,179 --> 00:21:41,430
+it will be one zero zero zero zero one zero
+and multiplied with the weight vector so similarly
+
+188
+00:21:41,430 --> 00:21:50,700
+first element and sixth element three plus
+ten so thirteen so here the weight will be
+
+189
+00:21:50,700 --> 00:21:54,500
+thirteen
+like that you have to find the feature vector
+
+190
+00:21:54,500 --> 00:22:02,120
+for each edge multiplied by the weight vector
+and obtain these values you will said get
+
+191
+00:22:02,120 --> 00:22:11,040
+some values here x y z etcetera now once you
+obtain all these values what you will do apply
+
+192
+00:22:11,040 --> 00:22:18,179
+chu liu edmonds so once you have all the weights
+you can very easily obtain chu liu edmonds
+
+193
+00:22:18,179 --> 00:22:22,940
+and you will obtain what is your dependency
+graph now what will happen suppose you find
+
+194
+00:22:22,940 --> 00:22:37,250
+a graph like this root john saw mary suppose
+this is your output after applying chu liu
+
+195
+00:22:37,250 --> 00:22:46,100
+edmonds now what you will do so you will this
+is your g prime by applying chu liu edmonds
+
+196
+00:22:46,100 --> 00:22:52,940
+so your first thing you will check is that
+what is your g t so your g t is root remember
+
+197
+00:22:52,940 --> 00:23:05,890
+you will first have connection from root to
+saw saw to john and mary this is my g t are
+
+198
+00:23:05,890 --> 00:23:09,480
+they same they are not the same so i will
+update my weights
+
+199
+00:23:09,480 --> 00:23:23,559
+and how do i update my weights should be w
+new is w old plus f g t minus f g prime now
+
+200
+00:23:23,559 --> 00:23:31,980
+what is f g t f g t is the feature of this
+graph that is this feature vector plus this
+
+201
+00:23:31,980 --> 00:23:37,530
+feature vector plus this feature vector three
+feature vectors combined and f g prime is
+
+202
+00:23:37,530 --> 00:23:45,059
+this feature vector plus this feature vector
+plus this feature vector and these are all
+
+203
+00:23:45,059 --> 00:23:52,710
+some ones and zeros so weights will be nothing
+but these weights plus summation over all
+
+204
+00:23:52,710 --> 00:23:58,799
+these three elements of features minus all
+these three elements ok and that will give
+
+205
+00:23:58,799 --> 00:24:04,880
+you the new set of weights and then you will
+continue with this new set of weights for
+
+206
+00:24:04,880 --> 00:24:10,840
+the next example if you have to do
+so so this is in a nutshell what we will be
+
+207
+00:24:10,840 --> 00:24:17,539
+doing but again i will encourage you to go
+through these example fully find out all the
+
+208
+00:24:17,539 --> 00:24:22,090
+weight vectors yourself see whether you are
+getting the same tree as the gold standard
+
+209
+00:24:22,090 --> 00:24:28,049
+if not how will you update your weights ok
+in this will be your next exercise so here
+
+210
+00:24:28,049 --> 00:24:33,570
+we are not going to very much detail in in
+how we are going to learn it by various learning
+
+211
+00:24:33,570 --> 00:24:41,539
+rates and all just an intuition that how do
+you post this as an learning problem ok so
+
+212
+00:24:41,539 --> 00:24:48,160
+in the in the last module of using parsing
+or transition parsing and this module of using
+
+213
+00:24:48,160 --> 00:24:55,360
+ah mst based parsing we have seen that how
+we can solve a problem dependency parsing
+
+214
+00:24:55,360 --> 00:25:00,500
+in a detailed different manner so we treated
+as a some sort of algorithmic way i was starting
+
+215
+00:25:00,500 --> 00:25:05,760
+from some initial configuration going to some
+final configuration that resembles a dependency
+
+216
+00:25:05,760 --> 00:25:10,410
+graph
+and in the in between for example how are
+
+217
+00:25:10,410 --> 00:25:16,490
+we taking transitions we will determining
+by using various training data or how are
+
+218
+00:25:16,490 --> 00:25:23,280
+we taking the edge weights we are learning
+by training data and this would help you to
+
+219
+00:25:23,280 --> 00:25:28,429
+also think about in terms of some other problems
+that how can i pose them in machine learning
+
+220
+00:25:28,429 --> 00:25:34,850
+way and i was also saying there are some other
+they are some other or i would say even many
+
+221
+00:25:34,850 --> 00:25:40,250
+other methods of for doing dependency parsing
+so we will not be covering everything in this
+
+222
+00:25:40,250 --> 00:25:45,990
+course but now whatever we have covered will
+help you to take any new approach and understand
+
+223
+00:25:45,990 --> 00:25:53,880
+that ok so this also ends our discussion on
+main discussion on syntax so we had talked
+
+224
+00:25:53,880 --> 00:25:59,080
+about starting from word order information
+language models to part of speech and morphological
+
+225
+00:25:59,080 --> 00:26:06,210
+information to various syntax in in the sense
+of constituency parsing and dependency parsing
+
+226
+00:26:06,210 --> 00:26:12,720
+so from the next week we will start our discussions
+on semantics so we will first see what is
+
+227
+00:26:12,720 --> 00:26:18,360
+called different methods by which being capture
+the meaning the semantics so we will have
+
+228
+00:26:18,360 --> 00:26:24,170
+distribution semantics and semantics for that
+so thank you i will see you in the next week
+

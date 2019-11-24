@@ -1,0 +1,1450 @@
+1
+00:00:18,440 --> 00:00:23,970
+so welcome back for the fourth model of this
+week so in the last model we had started talking
+
+2
+00:00:23,970 --> 00:00:29,030
+about the maximum entropy classifiers what
+is the basic principles for using this maximum
+
+3
+00:00:29,030 --> 00:00:34,020
+entropy classifiers ok and we saw that we
+can use any hidden new set of features that
+
+4
+00:00:34,020 --> 00:00:39,950
+were not allowed in the earlier model like
+h m m so today i will start by taking a simple
+
+5
+00:00:39,950 --> 00:00:45,360
+example that will give you some idea on what
+how maximum entropy classifier actually works
+
+6
+00:00:45,360 --> 00:00:49,660
+for a simple classification problem and then
+we will see how it can be used for a sequence
+
+7
+00:00:49,660 --> 00:00:55,540
+tagging problem that is i am given a sentence
+so this is by problem for part of speech tagging
+
+8
+00:00:55,540 --> 00:00:59,909
+and given the sentence for each of the words
+i have to find out what is the actual part
+
+9
+00:00:59,909 --> 00:01:02,610
+of speech tag for that
+
+10
+00:01:02,610 --> 00:01:08,780
+so right now what we had seen in maximum entropy
+classifier it gives me a probability on the
+
+11
+00:01:08,780 --> 00:01:15,100
+class y given a context ok so for each individual
+word for the context around that word i can
+
+12
+00:01:15,100 --> 00:01:20,760
+predict what is the appropriate part of speech
+category but once i am given the sequence
+
+13
+00:01:20,760 --> 00:01:26,030
+how how this model will be actually utilized
+so there it has a special name called ma m
+
+14
+00:01:26,030 --> 00:01:31,390
+e m m maximum entropy markov model and we
+will see what is the algorithm for ah using
+
+15
+00:01:31,390 --> 00:01:36,360
+the classifier that we have discussed for
+a sequence tagging problem
+
+16
+00:01:36,360 --> 00:01:41,780
+so now i starting with a simple problem on
+how to use maximum entropy classifier so the
+
+17
+00:01:41,780 --> 00:01:47,250
+practice problems so you can try it on your
+own but i will try to give you certain hints
+
+18
+00:01:47,250 --> 00:01:54,930
+so problem says so ah you want to use maximum
+entropy model for part of speech tagging and
+
+19
+00:01:54,930 --> 00:02:01,140
+you are trying to estimate probability tag
+given word and in this hypothetical setting
+
+20
+00:02:01,140 --> 00:02:09,250
+you can assume that there are only three possible
+tags determiner noun and verb and the word
+
+21
+00:02:09,250 --> 00:02:16,340
+can belong to any member of a set v that is
+your vocabulary and vocabulary contains the
+
+22
+00:02:16,340 --> 00:02:21,310
+words a man sleeps and some additional words
+so it in this problem it does not matter how
+
+23
+00:02:21,310 --> 00:02:24,640
+many words are there in new vocabulary
+
+24
+00:02:24,640 --> 00:02:30,660
+now the constraint given is as follows so
+the distribution that you will find probability
+
+25
+00:02:30,660 --> 00:02:36,910
+tag on word should give the following probabilities
+probability of determiner given the word a
+
+26
+00:02:36,910 --> 00:02:43,240
+is point nine probability of noun given the
+word man is point nine tag v given sleeps
+
+27
+00:02:43,240 --> 00:02:48,640
+is point nine d given any word other than
+a man or sleeps in the vocabulary is point
+
+28
+00:02:48,640 --> 00:02:53,990
+six and same for that to to constraints that
+are given here so remember that's what we
+
+29
+00:02:53,990 --> 00:02:59,050
+did in the case of maximum entropy classifier
+you are given the data and from the empirical
+
+30
+00:02:59,050 --> 00:03:04,270
+distribution you expert certain facts and
+now you want to find out a distribution that
+
+31
+00:03:04,270 --> 00:03:07,370
+resembles that empirical distribution ok
+
+32
+00:03:07,370 --> 00:03:12,440
+so now i want to find out probability i given
+word such that these constraints are followed
+
+33
+00:03:12,440 --> 00:03:18,990
+so now how do i go about building mu maximum
+entropy classifier this is the problem so
+
+34
+00:03:18,990 --> 00:03:23,130
+now it is said that all other probability
+that are not given suppose that take some
+
+35
+00:03:23,130 --> 00:03:29,020
+values such that probability i given word
+is one for all possible tags this is the normalization
+
+36
+00:03:29,020 --> 00:03:34,209
+constraint the probability for all the possible
+tags for a given words should added two one
+
+37
+00:03:34,209 --> 00:03:41,120
+ok now there are certain questions here so
+the first question says is that so you are
+
+38
+00:03:41,120 --> 00:03:47,730
+given this problem settings now try to define
+what will be the features option maximum entropy
+
+39
+00:03:47,730 --> 00:03:52,940
+model given the constraints ok and the problem
+says that markov features as some f one and
+
+40
+00:03:52,940 --> 00:03:59,300
+f two and each feature should have the same
+format as we explained in the last class ok
+
+41
+00:03:59,300 --> 00:04:04,660
+so that is each feature your function of x
+and y x is the context around the word and
+
+42
+00:04:04,660 --> 00:04:13,300
+why is the particular class or tag then the
+next questions is for each feature f i assume
+
+43
+00:04:13,300 --> 00:04:19,000
+a weight of lambda i now write down the expression
+of the following probabilities so what is
+
+44
+00:04:19,000 --> 00:04:23,460
+the probability of d given get cat in terms
+of your model parameters so the parameters
+
+45
+00:04:23,460 --> 00:04:29,120
+are mainly lambda one to lambda six similarly
+find out probability of n given laughs probability
+
+46
+00:04:29,120 --> 00:04:34,720
+of d given man finally the problems is what
+should be the values of the parameters in
+
+47
+00:04:34,720 --> 00:04:40,900
+your model lambda one to lambda six such that
+you have to the distribution as shown in the
+
+48
+00:04:40,900 --> 00:04:42,520
+question ok
+
+49
+00:04:42,520 --> 00:04:48,169
+so this is by problem so let me try to solve
+it ah in any steps so this is the first problem
+
+50
+00:04:48,169 --> 00:04:54,520
+what should be the features of five model
+such that they resemble this distribution
+
+51
+00:04:54,520 --> 00:04:58,880
+so ok so these are the actually certain facts
+from the data so let me write down the first
+
+52
+00:04:58,880 --> 00:05:10,960
+fact probability d given a is point nine ok
+so now i want to find out some features f
+
+53
+00:05:10,960 --> 00:05:24,680
+x y such that it can try to match this particular
+constraint so x is on my data so this was
+
+54
+00:05:24,680 --> 00:05:34,120
+my on by word and the context and y is the
+tag ok so now what am i observing in this
+
+55
+00:05:34,120 --> 00:05:40,870
+in this particular example i am observing
+that when the word is a then the tag that
+
+56
+00:05:40,870 --> 00:05:46,370
+i i i give it d with the probability of point
+nine so what kind of feature will will try
+
+57
+00:05:46,370 --> 00:05:57,520
+to model this so my feature should be effects
+y so i can use a feature word that is my x
+
+58
+00:05:57,520 --> 00:06:11,330
+is equal to a and tag that's my y is equal
+to d ok that encodes both a and d that are
+
+59
+00:06:11,330 --> 00:06:17,990
+that i am observing in this empirical data
+ok in this we can call as your f one what
+
+60
+00:06:17,990 --> 00:06:24,290
+is a and tag is d so this is a binary feature
+so whenever you will see word as a and tagged
+
+61
+00:06:24,290 --> 00:06:36,139
+d you will put it as one so to express it
+you can say f one is equal to one if this
+
+62
+00:06:36,139 --> 00:06:42,820
+happens is equal to zero if this does not
+happen ok i am not writing it in this in this
+
+63
+00:06:42,820 --> 00:06:44,360
+paper
+
+64
+00:06:44,360 --> 00:06:49,760
+so now i have to define some other features
+right and the hint is that six feature will
+
+65
+00:06:49,760 --> 00:06:54,889
+make my task easy so that is like sufficient
+hint you have six possible constraints and
+
+66
+00:06:54,889 --> 00:06:58,590
+you have to define six feature one for each
+for each constraint so lets take the second
+
+67
+00:06:58,590 --> 00:07:12,510
+constraint second constraint is probability
+and given man is point nine ok so for this
+
+68
+00:07:12,510 --> 00:07:22,690
+constraint what will my feature again so f
+two would be word is equal to man and tag
+
+69
+00:07:22,690 --> 00:07:30,750
+is equal to n noun same way you can do for
+you third third case so f three will come
+
+70
+00:07:30,750 --> 00:07:47,061
+out to be word is equal to v and sign word
+is equal to sleeps and tag is equal to v now
+
+71
+00:07:47,061 --> 00:07:57,550
+what would you do for your fourth observation
+what is that probability d given word is equal
+
+72
+00:07:57,550 --> 00:08:12,490
+to zero point six for word in vocabulary minus
+a man and sleeps ok for any word other than
+
+73
+00:08:12,490 --> 00:08:23,479
+a minus sleeps so what would your feature
+again you will have a similar feature f four
+
+74
+00:08:23,479 --> 00:08:32,280
+word is in so let me call this as v prime
+v minus a man sleeps let me call it as v prime
+
+75
+00:08:32,280 --> 00:08:43,360
+ok this is my v prime so what is in v prime
+and tag is equal to d ok similarly my f five
+
+76
+00:08:43,360 --> 00:09:02,600
+will become word in v prime and tag is n f
+six word in v prime and tag is v and these
+
+77
+00:09:02,600 --> 00:09:06,160
+become my six features that will try to model
+the distribution
+
+78
+00:09:06,160 --> 00:09:12,660
+now then so this is how you will select the
+features given certain facts about the data
+
+79
+00:09:12,660 --> 00:09:19,630
+so so see here i am not doing anything from
+matching this these numbers right now so that
+
+80
+00:09:19,630 --> 00:09:26,470
+i will try to do using my lambdas that the
+feature weights set that i have to choose
+
+81
+00:09:26,470 --> 00:09:30,851
+so the next part of the question says is that
+now give weights so suppose this is lambda
+
+82
+00:09:30,851 --> 00:09:35,570
+one it has a weight of lambda one lambda two
+lambda three and so on so each feature f i
+
+83
+00:09:35,570 --> 00:09:44,290
+has a weight of lambda i now try to find out
+some probabilities in terms of the model parameters
+
+84
+00:09:44,290 --> 00:09:50,610
+so let me take out the first question itself
+that is probability of d given cat i want
+
+85
+00:09:50,610 --> 00:10:10,600
+to write that in terms of model parameters
+so what will be this probability d given cat
+
+86
+00:10:10,600 --> 00:10:16,700
+so now in terms of my maximum entropy model
+how do i write this par[par/particular] particular
+
+87
+00:10:16,700 --> 00:10:27,740
+probability it should be e to the power sigma
+lambda i f i divide by a normalization constant
+
+88
+00:10:27,740 --> 00:10:34,060
+and z should be such that this will add up
+to one for all the three tags so probably
+
+89
+00:10:34,060 --> 00:10:39,060
+d given cat cat plus probability and given
+cat plus probability we given cat should be
+
+90
+00:10:39,060 --> 00:10:45,380
+one so let me take this particular y ok let
+me focus only on this and i will talk about
+
+91
+00:10:45,380 --> 00:11:02,450
+z later so now so this is sigma lambda i f
+i x y x here is cat and y is d
+
+92
+00:11:02,450 --> 00:11:08,000
+so now f x y so each of the six features are
+binary features so they will take either one
+
+93
+00:11:08,000 --> 00:11:13,230
+or zero and lambda one once are just given
+to me and then then um the values are not
+
+94
+00:11:13,230 --> 00:11:18,399
+given so i can just take lambda one lambda
+two and so on so now what will be this value
+
+95
+00:11:18,399 --> 00:11:28,300
+ok so let me take the first feature so first
+feature is here word is a and tag is d in
+
+96
+00:11:28,300 --> 00:11:35,480
+this case my word is cat ok so clearly this
+feature is not one so for f one x five it
+
+97
+00:11:35,480 --> 00:11:45,010
+will be zero so lambda one times zero plus
+lambda two times what is my second feature
+
+98
+00:11:45,010 --> 00:11:54,830
+second feature see is [sage/say] says that
+word is man and tag is n again this is zero
+
+99
+00:11:54,830 --> 00:12:06,770
+f three word is sleeps tag is v again zero
+f four so my feature f four is word is in
+
+100
+00:12:06,770 --> 00:12:13,970
+v prime is this word in v prime cat is not
+either a man and sleep so it is in v prime
+
+101
+00:12:13,970 --> 00:12:22,350
+and tag is d so this is actually one so word
+is in v prime and tag is d so lambda both
+
+102
+00:12:22,350 --> 00:12:30,040
+four times one is i will not write f four
+f four is one in this case plus lambda five
+
+103
+00:12:30,040 --> 00:12:33,620
+now you will see in feature five and feature
+six the tags are different they are n n v
+
+104
+00:12:33,620 --> 00:12:43,100
+so they will again be zero plus lambda six
+zero this comes out to be lambda four ok
+
+105
+00:12:43,100 --> 00:12:51,980
+so now what is my probability it will be e
+to the power lambda four divided by z now
+
+106
+00:12:51,980 --> 00:12:59,610
+how do you find out z now to find out z you
+have to actually compute the other two probabilities
+
+107
+00:12:59,610 --> 00:13:11,740
+also so you have to compute probability n
+given cat probability v given cat ok and then
+
+108
+00:13:11,740 --> 00:13:18,740
+you can make this plus this plus this is equal
+to one let me quickly do that so what will
+
+109
+00:13:18,740 --> 00:13:26,050
+happen for when you compute probability and
+given cat the first three features again use
+
+110
+00:13:26,050 --> 00:13:33,540
+a word a man on sleeps that is not here from
+fourth features they are using the words in
+
+111
+00:13:33,540 --> 00:13:40,630
+v prime so the word cat and n v prime so the
+features can be one from f four f five f six
+
+112
+00:13:40,630 --> 00:13:49,690
+but now i have to see the tag for f four the
+tag was d for f five the tag was n and for
+
+113
+00:13:49,690 --> 00:13:59,209
+f six the tag was v ok this was n and this
+was v so for n given cat f five will be one
+
+114
+00:13:59,209 --> 00:14:06,860
+and v given get f six will be one so can i
+write probability and given cat this will
+
+115
+00:14:06,860 --> 00:14:14,690
+be e to the power lambda five given z and
+this will be e to the power lambda six divided
+
+116
+00:14:14,690 --> 00:14:26,110
+by z ok now you can compute what is p d given
+cat because this c will add up to one so put
+
+117
+00:14:26,110 --> 00:14:34,320
+in the constraint e to the power lambda four
+plus e to the power lambda five plus e to
+
+118
+00:14:34,320 --> 00:14:39,151
+the power lambda six divided by z is equal
+to one so that gives you z is equal to e to
+
+119
+00:14:39,151 --> 00:14:42,990
+the power lambda four plus e to the power
+lambda five plus e to the power lambda six
+
+120
+00:14:42,990 --> 00:14:48,149
+so this we can write as e to the power lambda
+four divided by lambda four plus e to the
+
+121
+00:14:48,149 --> 00:14:53,130
+lambda five plus e to the power lambda six
+that is your probability of d given cat in
+
+122
+00:14:53,130 --> 00:14:55,360
+terms of your model parameters
+
+123
+00:14:55,360 --> 00:15:00,920
+now in a very similar manner i will suggest
+that you try out the other two cases what
+
+124
+00:15:00,920 --> 00:15:07,800
+is the probability of n given laughs and what
+is the probability of d given laugh so again
+
+125
+00:15:07,800 --> 00:15:11,720
+we have not use of the of the probabilities
+point nine and etcetera that were given in
+
+126
+00:15:11,720 --> 00:15:19,010
+the in the in the constraint of the of discussion
+so that i have to use in the last point what
+
+127
+00:15:19,010 --> 00:15:24,070
+values with the parameters in your model take
+to give the distribution as described above
+
+128
+00:15:24,070 --> 00:15:30,700
+so that is what values a should takes us that
+probability d given a is point nine so ok
+
+129
+00:15:30,700 --> 00:15:35,470
+need to you may leave your final answer in
+terms of equations so let me try to take only
+
+130
+00:15:35,470 --> 00:15:40,040
+the first try to satisfy only the first constraint
+what should be the constraint on my lambda
+
+131
+00:15:40,040 --> 00:15:46,320
+such that the first constraint of probability
+d given h point nine satisfied ok and the
+
+132
+00:15:46,320 --> 00:15:51,290
+idea is very very easy you will suggest night
+like we found out probability d given cat
+
+133
+00:15:51,290 --> 00:15:59,800
+we will now try to find out probability d
+given a ok and that will be e to the power
+
+134
+00:15:59,800 --> 00:16:13,220
+lambda one yes because first feature is one
+for this case divided by z ok now what is
+
+135
+00:16:13,220 --> 00:16:20,949
+z so for finding out z i have to find out
+probability v given a n probability n given
+
+136
+00:16:20,949 --> 00:16:31,079
+a now brought this probability v given a ok
+so again i will write one divide by z into
+
+137
+00:16:31,079 --> 00:16:46,120
+something e to the power lambda one times
+f one and so on now the word a is given only
+
+138
+00:16:46,120 --> 00:16:52,720
+in the first feature yes first feature says
+the word is a and tag is d so the word is
+
+139
+00:16:52,720 --> 00:16:55,870
+a is given it is not given in feature two
+feature three
+
+140
+00:16:55,870 --> 00:17:00,970
+now what about the other features f four f
+five f six they all talk about words in v
+
+141
+00:17:00,970 --> 00:17:06,139
+prime whether word is not there so the any
+of the feature cannot be one four for this
+
+142
+00:17:06,139 --> 00:17:13,709
+case this case so all of them will be zero
+so it will be simply it small zero ok all
+
+143
+00:17:13,709 --> 00:17:23,699
+the features are zero same happens with n
+given a ok so they are one by z one by z and
+
+144
+00:17:23,699 --> 00:17:30,029
+this tells me that probability d given a should
+be e to the power lambda one divided by e
+
+145
+00:17:30,029 --> 00:17:34,460
+to the power lambda one plus two and there
+should be point nine to satisfy the constraint
+
+146
+00:17:34,460 --> 00:17:40,100
+and that you give me the value of lambda one
+similarly you will do for all the six cases
+
+147
+00:17:40,100 --> 00:17:46,820
+and write down the questions ok so hope that
+gives you a good idea on how do we actually
+
+148
+00:17:46,820 --> 00:17:54,559
+start building a maximum entropy classifier
+in the data and how do we compute the probabilities
+
+149
+00:17:54,559 --> 00:18:00,159
+now i will i will take a very specific case
+so that is by the paper written in nineteen
+
+150
+00:18:00,159 --> 00:18:05,720
+ninety six by ratnaparakhi on using maximum
+entropy model for part of speech tagging so
+
+151
+00:18:05,720 --> 00:18:12,100
+what i will show is that what kind of features
+they use for part of speech tagging ok so
+
+152
+00:18:12,100 --> 00:18:17,269
+now this model is there now what is important
+to understand is that given a problem what
+
+153
+00:18:17,269 --> 00:18:24,350
+sort of features i should use to get a good
+performance ok model will work well if few
+
+154
+00:18:24,350 --> 00:18:28,820
+features the features that you have chosen
+you have chosen make sense for this particular
+
+155
+00:18:28,820 --> 00:18:33,269
+problem so for part of speech tagging problem
+what are the kind of features that he had
+
+156
+00:18:33,269 --> 00:18:36,899
+used now given a new problem again you have
+to go back and find out what should be the
+
+157
+00:18:36,899 --> 00:18:41,729
+interesting features you know now the format
+of features how you should define your features
+
+158
+00:18:41,729 --> 00:18:44,749
+but what are important features will always
+depend on the particular problem that you
+
+159
+00:18:44,749 --> 00:18:51,659
+are solving so as we had said so in in the
+maximum entropy model you choose a context
+
+160
+00:18:51,659 --> 00:18:55,649
+around the world from where you can choose
+your features so in this case what is the
+
+161
+00:18:55,649 --> 00:19:00,220
+context they have chosen they have chosen
+the current word the next two words the previous
+
+162
+00:19:00,220 --> 00:19:06,150
+to words and the tags given to the previous
+to words ok and that is interesting how do
+
+163
+00:19:06,150 --> 00:19:11,080
+you use this kind of features in the time
+in the time at the time of decoding when given
+
+164
+00:19:11,080 --> 00:19:14,659
+a sequence you are trying to find out the
+tags because you do not know what is the best
+
+165
+00:19:14,659 --> 00:19:21,830
+tag for the previous word ok so we will look
+at this ah this problem when we talk about
+
+166
+00:19:21,830 --> 00:19:26,720
+the such algorithm the beam such algorithm
+that how do we make use of previous tag and
+
+167
+00:19:26,720 --> 00:19:31,830
+previous previous tag there are to be assigned
+that are not yet assigned fully ok but here
+
+168
+00:19:31,830 --> 00:19:37,129
+use always features in in all this ah context
+for defining his features
+
+169
+00:19:37,129 --> 00:19:44,759
+now what are the form of features so yes just
+to give you another example features will
+
+170
+00:19:44,759 --> 00:19:52,229
+depend on the history or the context and the
+current tag so it can it is one if the current
+
+171
+00:19:52,229 --> 00:19:57,659
+word has a suffix of i n g and the tag is
+v b g that is one kind of feature the suffix
+
+172
+00:19:57,659 --> 00:20:04,629
+of the current word and the tag so what are
+the other other features ok so now so what
+
+173
+00:20:04,629 --> 00:20:10,799
+is one interesting thing here we divided it
+features into three parts some features are
+
+174
+00:20:10,799 --> 00:20:16,989
+only for those words that are not rare that
+a very very common second sort of features
+
+175
+00:20:16,989 --> 00:20:21,530
+are those words that are rare why do why does
+it define separate features for the words
+
+176
+00:20:21,530 --> 00:20:28,149
+that are rare because these words may not
+be seen again data but i might see some other
+
+177
+00:20:28,149 --> 00:20:35,700
+real words so can i use some some of the properties
+of these words instead of using the word directly
+
+178
+00:20:35,700 --> 00:20:42,609
+ok so further words that are not rare they
+occur many times uses a word directly w i
+
+179
+00:20:42,609 --> 00:20:48,019
+is equal to x and its current tag this is
+the form of feature but the if the word is
+
+180
+00:20:48,019 --> 00:20:54,590
+rare he does not use the word directly he
+says x is a prefix of w i length of x is less
+
+181
+00:20:54,590 --> 00:21:01,220
+than equal to four so he uses all the prefixes
+of the of the word is starting from one two
+
+182
+00:21:01,220 --> 00:21:09,129
+three and four same for suffix now how will
+that be helpful using the suffix so for example
+
+183
+00:21:09,129 --> 00:21:16,710
+i have e d but overall the word is rare so
+can i use the fact that the word and sanity
+
+184
+00:21:16,710 --> 00:21:23,190
+ok that's why we are using the suffix here
+similarly for prefix ok i can have something
+
+185
+00:21:23,190 --> 00:21:30,779
+like i n for making the up opposites for an
+adjectives and so on ok so this can be captured
+
+186
+00:21:30,779 --> 00:21:36,279
+by using this kind of features whether the
+word contains a number or in uppercase character
+
+187
+00:21:36,279 --> 00:21:40,690
+or in hyphen ok this for rare words
+
+188
+00:21:40,690 --> 00:21:45,960
+now he just some other features for all the
+words so what are the features the previous
+
+189
+00:21:45,960 --> 00:21:51,130
+tag is x and the current tag is t this is
+very very generic feature right the previous
+
+190
+00:21:51,130 --> 00:21:57,940
+two tags are x and y current tag is t previous
+word is x and current tag is t previous to
+
+191
+00:21:57,940 --> 00:22:05,359
+previous word is x current tag is t then similarly
+for the next for the next next words ok so
+
+192
+00:22:05,359 --> 00:22:11,679
+now let us see what will be the form these
+features will take so this is the generic
+
+193
+00:22:11,679 --> 00:22:17,179
+form of the features now let us take a simple
+context and see what are the forms these features
+
+194
+00:22:17,179 --> 00:22:24,169
+are going to take so this is one context ok
+i have a sentence the stories about well heeled
+
+195
+00:22:24,169 --> 00:22:29,850
+communities and developers and the tags are
+d t n n all the the part of speech tags are
+
+196
+00:22:29,850 --> 00:22:32,549
+given to me so this is for my label data
+
+197
+00:22:32,549 --> 00:22:38,509
+now what are the values these features will
+take so firstly i will differentiate between
+
+198
+00:22:38,509 --> 00:22:45,590
+the rare words and not so rare words ok so
+what can be the rare words here for example
+
+199
+00:22:45,590 --> 00:22:53,590
+the word well heeled here is a rare word ok
+and other words like stories committees developers
+
+200
+00:22:53,590 --> 00:23:00,669
+are not rare so for the words that are not
+rare what feature am i using the current word
+
+201
+00:23:00,669 --> 00:23:09,710
+and the tag so my feature could be the word
+is a stories and tag is n m s so for the word
+
+202
+00:23:09,710 --> 00:23:17,200
+well heeled i will use the suffix and prefix
+so w is a prefix of the word and tag is j
+
+203
+00:23:17,200 --> 00:23:24,669
+j w is a prefix and tag is j j similarly e
+d is a suffix and tag is j j so ok and then
+
+204
+00:23:24,669 --> 00:23:29,809
+there will be some features for all the words
+like for about and well heeled what would
+
+205
+00:23:29,809 --> 00:23:36,810
+be the feature the previous tag is i a i n
+and the current tag is j j the previous two
+
+206
+00:23:36,810 --> 00:23:44,799
+tags are nns and i n and the current is j
+j the previous words or the word stories and
+
+207
+00:23:44,799 --> 00:23:52,179
+well heeled about and well heeled so on so
+you can use all these features so here are
+
+208
+00:23:52,179 --> 00:23:56,690
+all these features right
+
+209
+00:23:56,690 --> 00:24:03,940
+so this is prefix and suffix for the real
+word well heeled and there are other things
+
+210
+00:24:03,940 --> 00:24:10,479
+like w i contains hyphen that is in the case
+of well heeled and tag is j j ok so now thats
+
+211
+00:24:10,479 --> 00:24:14,719
+how you will write down all your features
+from your data and you will learn your parameters
+
+212
+00:24:14,719 --> 00:24:20,450
+lambdas and all and at run time you will ah
+use again these features in the parameter
+
+213
+00:24:20,450 --> 00:24:26,129
+to finding the probability of the tags ok
+so hope this gives you some idea and how can
+
+214
+00:24:26,129 --> 00:24:34,039
+you choose your features for a given task
+now let me go to the search algorithm for
+
+215
+00:24:34,039 --> 00:24:40,639
+for this maximum model so so this we had discussed
+earlier also but we did not discuss in full
+
+216
+00:24:40,639 --> 00:24:46,129
+details some given a sentence w one two w
+n these are the words and i want to find out
+
+217
+00:24:46,129 --> 00:24:50,799
+the probability of tag sequence t i t one
+to t n ok
+
+218
+00:24:50,799 --> 00:24:54,659
+and we said that we can write it in this form
+multiplication of probability t i given x
+
+219
+00:24:54,659 --> 00:25:04,749
+i x i is the context for each individual word
+now the the problem here is so and you can
+
+220
+00:25:04,749 --> 00:25:09,039
+use some tag dictionary that says for each
+individual word what are the possible tags
+
+221
+00:25:09,039 --> 00:25:15,960
+similar to what we did in the case of viterbi
+decoding for h m m now what is one particular
+
+222
+00:25:15,960 --> 00:25:20,360
+problem in this case so as such it looks as
+if you can do it independently for each each
+
+223
+00:25:20,360 --> 00:25:24,549
+word right for the first word i can find out
+what is the best tag multiplied with best
+
+224
+00:25:24,549 --> 00:25:29,119
+tag for the second word and so on now what
+is one problem with this approach let me just
+
+225
+00:25:29,119 --> 00:25:36,519
+give you one simple example ok so this is
+a hypothetical example let us say that we
+
+226
+00:25:36,519 --> 00:25:47,460
+have word one word two word three ok and word
+two can take two tags i n and j j and word
+
+227
+00:25:47,460 --> 00:25:55,390
+three can take lets to keep it simple that
+it can take it take like v b z and maybe something
+
+228
+00:25:55,390 --> 00:26:00,940
+else like v b g ok maybe they may not be possible
+but just a hypothetical case
+
+229
+00:26:00,940 --> 00:26:10,460
+now suppose by using this algorithm or doing
+it independently we found out that for w two
+
+230
+00:26:10,460 --> 00:26:17,899
+i n give some probability and j j gives some
+probability now in w three what might what
+
+231
+00:26:17,899 --> 00:26:24,210
+could happen some of the features might depend
+on the previous assigned tag so how v b z
+
+232
+00:26:24,210 --> 00:26:32,499
+you might want to use what is the tag assigned
+in the previous word ok so that means choosing
+
+233
+00:26:32,499 --> 00:26:37,039
+the probabilities the best probability at
+this point may not be ah may not be the best
+
+234
+00:26:37,039 --> 00:26:42,659
+so choosing the tag at this point may not
+be the best because at at the next step you
+
+235
+00:26:42,659 --> 00:26:49,049
+are using the tags and the probabilities can
+change this can happen that i n in giving
+
+236
+00:26:49,049 --> 00:26:55,799
+the better probability at this point but when
+combined with v b z j j gets a better probability
+
+237
+00:26:55,799 --> 00:27:05,559
+this can happen ok that means i can find out
+the probabilities but i have to use the probabilities
+
+238
+00:27:05,559 --> 00:27:13,099
+and the tags in the next step also ok so this
+is not fully independent i cannot just choose
+
+239
+00:27:13,099 --> 00:27:18,320
+i n and forget about it i have to remember
+what is the probability next time i will choose
+
+240
+00:27:18,320 --> 00:27:25,289
+i n v b g j j v b z and try to compute the
+probability for v b z multiplied by the previous
+
+241
+00:27:25,289 --> 00:27:32,940
+probabilities and that's and how we do that
+I will show you in the beam search algorithm
+
+242
+00:27:32,940 --> 00:27:39,070
+so what is the bean search algorithm so so
+your test sentences containing words like
+
+243
+00:27:39,070 --> 00:27:48,510
+w one two w n ok and later say that for the
+i th word as i denotes the z highest probability
+
+244
+00:27:48,510 --> 00:27:59,580
+tag ok this is top tag sequence up to the
+word w i now how does the algorithm work so
+
+245
+00:27:59,580 --> 00:28:14,469
+you have the words w one to w n forward w
+one you have s one one s one two up to s one
+
+246
+00:28:14,469 --> 00:28:23,269
+n top n highest probability tags ok so will
+come to the probabilities and this is easy
+
+247
+00:28:23,269 --> 00:28:27,289
+again you will use the features here which
+feature is one which feature is zero then
+
+248
+00:28:27,289 --> 00:28:30,809
+you will do the normalization you will compute
+all these probabilities for the each of these
+
+249
+00:28:30,809 --> 00:28:39,799
+tags now the the important thing is how do
+you go to w two ok so one thing to to understand
+
+250
+00:28:39,799 --> 00:28:45,330
+is that you can probably not keep all the
+possible tag sequences because assume that
+
+251
+00:28:45,330 --> 00:28:52,529
+each word can take on an average k tags so
+if you have n words the tag would be of the
+
+252
+00:28:52,529 --> 00:28:58,830
+order of n to the power sorry k to the power
+n yes k to the power so
+
+253
+00:28:58,830 --> 00:29:02,309
+so this will be exponential in the length
+of the sentence so you cannot keep all the
+
+254
+00:29:02,309 --> 00:29:06,320
+tag sequence so you might have to make the
+choice of the best sequence is available at
+
+255
+00:29:06,320 --> 00:29:12,830
+this point that's what we do in bean search
+so at each point i will select what is the
+
+256
+00:29:12,830 --> 00:29:21,029
+top set up capital n sequences at this point
+and how do we how do we select that so that
+
+257
+00:29:21,029 --> 00:29:27,240
+is the next part of the algorithm so initialize
+i is equal to two ok so now you have to second
+
+258
+00:29:27,240 --> 00:29:34,019
+word generate tags for w i given s i minus
+one j as previous tag context and append each
+
+259
+00:29:34,019 --> 00:29:43,419
+tag to s i minus j to make a new sequence
+and then continue for all the tags now what
+
+260
+00:29:43,419 --> 00:29:50,320
+does that me [me/mean] initialize i is equal
+to two that is your second word now generic
+
+261
+00:29:50,320 --> 00:30:00,049
+tags for w i s given s i minus j as the previous
+tag context what is i minus j i minus one
+
+262
+00:30:00,049 --> 00:30:08,099
+is s one n j so let me take this as the previous
+context and suppose this has again some tags
+
+263
+00:30:08,099 --> 00:30:19,099
+like ah i will just write some tags t one
+t two t three so s one one and t one becomes
+
+264
+00:30:19,099 --> 00:30:28,130
+the first sequence s one one and t two becomes
+the second sequence and s one one t three
+
+265
+00:30:28,130 --> 00:30:34,919
+becomes the third sequence similarly s one
+two t one becomes forth sequence and so on
+
+266
+00:30:34,919 --> 00:30:41,149
+ok so is so in this case there will be three
+times n sequences so this you can take any
+
+267
+00:30:41,149 --> 00:30:45,509
+general case this may not be one tag this
+will be a sequence up to this point so we
+
+268
+00:30:45,509 --> 00:30:49,629
+all the first sequence at this point
+
+269
+00:30:49,629 --> 00:30:56,330
+now for each of the sequence you know what
+are the previous tags that have been assigned
+
+270
+00:30:56,330 --> 00:31:01,710
+yes so i know what are tags assigned at this
+point so i can use all the features so if
+
+271
+00:31:01,710 --> 00:31:13,480
+a feature says t i is equal to something and
+t i minus one is equal to something else so
+
+272
+00:31:13,480 --> 00:31:18,830
+i can check if t i matches this and the previous
+tag matches this then only it will do one
+
+273
+00:31:18,830 --> 00:31:24,869
+other wise zero because i'm choosing the context
+i can compute always feature i remembered
+
+274
+00:31:24,869 --> 00:31:30,119
+it features i can compute the probability
+for all the sequences and now what i will
+
+275
+00:31:30,119 --> 00:31:42,509
+do i will select at this point what are the
+s i one to s i n whatever top end sequences
+
+276
+00:31:42,509 --> 00:31:50,559
+at this point ok and again i will go to the
+third word again its tags combine with all
+
+277
+00:31:50,559 --> 00:31:57,219
+the sequences and choose top end from here
+so what will happen u [u/use] use your space
+
+278
+00:31:57,219 --> 00:32:02,869
+will not do exponentially you will always
+have have top end sequence is at any given
+
+279
+00:32:02,869 --> 00:32:08,839
+point so finally when you go to the the final
+word you will get the top end probabilities
+
+280
+00:32:08,839 --> 00:32:16,330
+or all the probabilities and you will select
+the best sequence and now because the sixth
+
+281
+00:32:16,330 --> 00:32:21,049
+is sequence contains the tag from by starting
+you will find out the part of speech tag just
+
+282
+00:32:21,049 --> 00:32:28,009
+from the choosing the best sequence at the
+last word and that is your algorithm so find
+
+283
+00:32:28,009 --> 00:32:35,859
+n highest probability sequences by above loop
+set this accordingly and repeat if i less
+
+284
+00:32:35,859 --> 00:32:41,220
+than equal to n and return to highest probability
+sequences x n one for the last word and this
+
+285
+00:32:41,220 --> 00:32:48,820
+is your maximum entropy this we markov model
+ok instead of maximum entropy model is generate
+
+286
+00:32:48,820 --> 00:32:54,080
+classifier that can do for each word individually
+but when you are trying to applied for a sequence
+
+287
+00:32:54,080 --> 00:32:59,169
+labeling problem for a sequel you use this
+maximum entropy markov model
+
+288
+00:32:59,169 --> 00:33:06,559
+ok so this was maximum entropy markov model
+for you now in the in the next lecture i will
+
+289
+00:33:06,559 --> 00:33:15,279
+take one simple example of this search and
+i will quickly cover the the model of conditional
+
+290
+00:33:15,279 --> 00:33:21,279
+in the fields that is one one of the state
+of the arts in sequence labeling task and
+
+291
+00:33:21,279 --> 00:33:26,359
+what we will sure there is some problem with
+the maximum trophy model that condition of
+
+292
+00:33:26,359 --> 00:33:32,460
+fields try to handle ok so thank you i will
+see you in the next class
+

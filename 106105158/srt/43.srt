@@ -1,0 +1,1705 @@
+1
+00:00:20,240 --> 00:00:24,710
+so welcome back for the second lecture of
+this week so we had a started a formulation
+
+2
+00:00:24,710 --> 00:00:31,540
+of topic models in the in the last lecture
+so but we mainly focused on ah the basic intuitions
+
+3
+00:00:31,540 --> 00:00:37,050
+so so today we will do the the so mathematical
+formulation of ah latent dirichlet allocation
+
+4
+00:00:37,050 --> 00:00:44,440
+so that is the main ah sort of topic models
+that i used also known as l d a so so we were
+
+5
+00:00:44,440 --> 00:00:50,140
+here and we were seeing that what is the central
+problem problem of l d a so problem we were
+
+6
+00:00:50,140 --> 00:00:56,989
+saying was that we we have observing only
+the documents but we know nothing about all
+
+7
+00:00:56,989 --> 00:01:01,850
+the parameters of my generative model so i
+do not know what are my topic ah what are
+
+8
+00:01:01,850 --> 00:01:05,670
+my topics what are the topic proportions of
+the document and i do not know what is the
+
+9
+00:01:05,670 --> 00:01:11,260
+per document or per per word topic assignment
+i do not know that
+
+10
+00:01:11,260 --> 00:01:17,520
+so my real problem is from my observation
+i want to reverse the gen gen ah generative
+
+11
+00:01:17,520 --> 00:01:26,850
+model and come up with all these probabilities
+so ah so yeah so this figure will ah will
+
+12
+00:01:26,850 --> 00:01:32,439
+help you in understanding this goal so remember
+we saw an earlier figure where we had all
+
+13
+00:01:32,439 --> 00:01:38,020
+these topics given to us we knew what are
+the proportion topic proportion for this document
+
+14
+00:01:38,020 --> 00:01:45,430
+and then we were drawing topic for each word
+in this document but now so in in reality
+
+15
+00:01:45,430 --> 00:01:50,189
+i will only have the or the documents so i
+know all these documents so i know what are
+
+16
+00:01:50,189 --> 00:01:56,159
+the words but i do not know anything about
+what are my topics what are these proportions
+
+17
+00:01:56,159 --> 00:02:00,990
+and what are these topics assigner for individual
+word
+
+18
+00:02:00,990 --> 00:02:08,450
+so i have to compute the distribution conditioned
+on all the documents that i am seeing in my
+
+19
+00:02:08,450 --> 00:02:15,360
+data so ah another simple example to listen
+the addition behind the generative model so
+
+20
+00:02:15,360 --> 00:02:21,890
+here you have some thirty seven thousand text
+passages from some educational material and
+
+21
+00:02:21,890 --> 00:02:26,350
+suppose you run l d a you found roughly three
+hundred topics so here in this slide what
+
+22
+00:02:26,350 --> 00:02:30,800
+you are seeing you are seeing four different
+topics so you are having the topic like two
+
+23
+00:02:30,800 --> 00:02:36,760
+forty seven which has what like drugs drug
+medicine effects body etcetera another topic
+
+24
+00:02:36,760 --> 00:02:42,580
+having words like red blue green yellow white
+another word about mind thought remember memory
+
+25
+00:02:42,580 --> 00:02:48,310
+thinking and another topic about doctor patient
+hospital care and so on
+
+26
+00:02:48,310 --> 00:02:52,520
+so therefore the topics that that are there
+in the corpus by running l d a over these
+
+27
+00:02:52,520 --> 00:02:58,280
+thirty seven thousand text passages now to
+to get intuition about the generative model
+
+28
+00:02:58,280 --> 00:03:03,070
+so what was in the generative model you have
+some topics now how to generate topics we
+
+29
+00:03:03,070 --> 00:03:11,100
+take some of these topics in a in some proportions
+and you start generating words for that now
+
+30
+00:03:11,100 --> 00:03:18,640
+so so suppose you try that so suppose you
+take topic two forty seven and five ok so
+
+31
+00:03:18,640 --> 00:03:22,540
+so suppose i give an equal probability of
+the first two topics so what can a document
+
+32
+00:03:22,540 --> 00:03:27,560
+you can generate ok this thing we will see
+these topics so first topic is about drugs
+
+33
+00:03:27,560 --> 00:03:35,930
+medicine person marijuana second and another
+topic is red blue green colors so suppose
+
+34
+00:03:35,930 --> 00:03:42,100
+i blind these two topics together so what
+kind of document can i generate ok so there
+
+35
+00:03:42,100 --> 00:03:45,960
+can be some different sort of documents you
+can think of so one could be that someone
+
+36
+00:03:45,960 --> 00:03:52,570
+who was taking a lot of alcohol marijuana
+and so on and it affected it's color perception
+
+37
+00:03:52,570 --> 00:03:57,490
+so suppose you want to document general document
+like that we will blend these two topics together
+
+38
+00:03:57,490 --> 00:04:05,950
+and and write that similarly suppose you want
+to blend these two topics together ok so this
+
+39
+00:04:05,950 --> 00:04:14,010
+topic is about mind thought remember memory
+forgotten ok and this is about doctor medical
+
+40
+00:04:14,010 --> 00:04:18,120
+nurse patients and so on so here if you blend
+these two topics together you may generate
+
+41
+00:04:18,120 --> 00:04:24,840
+the document that says ok someone who had
+suffered some sort of memory loss and it's
+
+42
+00:04:24,840 --> 00:04:29,789
+led to visit of the doctor so ok so like that
+you are having different topics you can blend
+
+43
+00:04:29,789 --> 00:04:36,220
+some of these topics and then generate doc
+document so this is the generative view ok
+
+44
+00:04:36,220 --> 00:04:40,659
+so we can give a equal probability to the
+first two topics that gives some sort of documents
+
+45
+00:04:40,659 --> 00:04:46,270
+and equal probability to the last two topics
+that give me another sort of document so now
+
+46
+00:04:46,270 --> 00:04:53,539
+this single this single picture explains both
+the the parts the generative part and the
+
+47
+00:04:53,539 --> 00:04:59,130
+inference part together so what you are seeing
+the left figure so this is the generative
+
+48
+00:04:59,130 --> 00:05:03,479
+model so you are generating some documents
+and how are you doing that so we are having
+
+49
+00:05:03,479 --> 00:05:08,250
+some topics suppose you are having two topics
+probably one topic to each topic is nothing
+
+50
+00:05:08,250 --> 00:05:15,909
+but a distribution over words so you are having
+some words like bank loan bank money loan
+
+51
+00:05:15,909 --> 00:05:20,889
+ok so these mean this words coming multiple
+times here so this words are having high probability
+
+52
+00:05:20,889 --> 00:05:30,560
+on the other hand second topic is river stream
+bank river so on so these are two topics
+
+53
+00:05:30,560 --> 00:05:35,710
+now using these two topics i am trying to
+generate my documents so how can i generate
+
+54
+00:05:35,710 --> 00:05:43,020
+the documents i will mix these topics so suppose
+i only take topic one and i can have a generate
+
+55
+00:05:43,020 --> 00:05:49,560
+document that contains words like money bank
+loan and so on i can just take topic two and
+
+56
+00:05:49,560 --> 00:05:56,779
+generate words like river bank stream and
+so on but i may also take both these topics
+
+57
+00:05:56,779 --> 00:06:02,680
+instead say equal proportion and generate
+document like money bank they were loan stream
+
+58
+00:06:02,680 --> 00:06:09,300
+bank money so what you seen here in this document
+to the words are labeled with topic one as
+
+59
+00:06:09,300 --> 00:06:12,259
+well as two because the words could have come
+from another topic
+
+60
+00:06:12,259 --> 00:06:16,750
+on the other hand in document one all the
+words are labeled with topic one doc three
+
+61
+00:06:16,750 --> 00:06:21,370
+also all the words are labeled with topic
+two because we have the only topics pre possible
+
+62
+00:06:21,370 --> 00:06:26,590
+in these documents so this is my generative
+model idea so here everything here you have
+
+63
+00:06:26,590 --> 00:06:34,300
+the topics you have per document proper proportions
+and you also have per document per word topic
+
+64
+00:06:34,300 --> 00:06:38,499
+assignment so you know the topics for each
+individual word also
+
+65
+00:06:38,499 --> 00:06:43,659
+now what is the statistical infe statistical
+inference part so inference part you only
+
+66
+00:06:43,659 --> 00:06:48,310
+know your three documents so you know my doc
+one contains these words doc two contains
+
+67
+00:06:48,310 --> 00:06:54,629
+these words doc three contains these words
+especially but you do not know what are your
+
+68
+00:06:54,629 --> 00:07:01,569
+topics and you do not know what are the ah
+proportion of various topics that are represent
+
+69
+00:07:01,569 --> 00:07:06,029
+in each document so all these numbers you
+do not know and you also do not know for each
+
+70
+00:07:06,029 --> 00:07:13,199
+word what is the topic assignment and all
+these you have to infer so i i hope with this
+
+71
+00:07:13,199 --> 00:07:18,770
+figure this clear what do i mean by my generative
+model and what is my problem that is to infer
+
+72
+00:07:18,770 --> 00:07:24,059
+all these probabilities of my generative models
+only from my observation
+
+73
+00:07:24,059 --> 00:07:30,580
+so now important points about l d a so first
+of all it uses a bag of words assumption so
+
+74
+00:07:30,580 --> 00:07:35,599
+i hope by now you understand what is a bag
+of words assumption that is i am not looking
+
+75
+00:07:35,599 --> 00:07:41,330
+at the order in which the words occur so this
+is like a bag forming so i am taking all the
+
+76
+00:07:41,330 --> 00:07:47,620
+words and putting them in in a set it's not
+like in list where some order is important
+
+77
+00:07:47,620 --> 00:07:53,930
+so l d a does not model the word order as
+it's so it takes only what are the words present
+
+78
+00:07:53,930 --> 00:07:59,090
+in any order
+second and i guess he would have also noticed
+
+79
+00:07:59,090 --> 00:08:07,050
+that in the previous ah example l d a s are
+also good at capturing polysemy so remember
+
+80
+00:08:07,050 --> 00:08:12,419
+what is polysemy polysemy is a given word
+might have multiple senses so in the case
+
+81
+00:08:12,419 --> 00:08:18,710
+of topic models what can i translate that
+that means the same word might correspond
+
+82
+00:08:18,710 --> 00:08:26,080
+to multiple topics and this is perfectly allowed
+because each topic can have it's own probability
+
+83
+00:08:26,080 --> 00:08:31,289
+distribution so that means the same word can
+come in two different topics also i remember
+
+84
+00:08:31,289 --> 00:08:35,540
+the previous slide we are having the word
+like bank that was coming in both the topics
+
+85
+00:08:35,540 --> 00:08:40,590
+and that is perfectly allowed so that way
+topic models can capture better this word
+
+86
+00:08:40,590 --> 00:08:45,480
+is coming from topic one and topic two in
+it's different senses
+
+87
+00:08:45,480 --> 00:08:50,800
+so the way the model is defined there is no
+notion of the words being mutually exclusive
+
+88
+00:08:50,800 --> 00:08:57,070
+to the topics ok so for example money and
+river can give high probability to the word
+
+89
+00:08:57,070 --> 00:09:00,380
+so both money and river topics can have high
+probability for the word bank you think that
+
+90
+00:09:00,380 --> 00:09:07,470
+is perfectly defined
+now to understand the l d a model so what
+
+91
+00:09:07,470 --> 00:09:12,560
+is the l d a model so you have to first see
+what is a graphical notation ok so if you
+
+92
+00:09:12,560 --> 00:09:16,860
+are not gone through some of this graphical
+notations so this slide tries to explain how
+
+93
+00:09:16,860 --> 00:09:21,759
+do we interpret the graphical notations so
+here what you are seeing i am having some
+
+94
+00:09:21,759 --> 00:09:29,570
+variables so having a variable y and some
+variables x one to x n so ah all these nodes
+
+95
+00:09:29,570 --> 00:09:35,100
+when that i see my graphical ah model these
+are random variables so i have random variable
+
+96
+00:09:35,100 --> 00:09:39,699
+x one to x n
+now what are these edges these edges will
+
+97
+00:09:39,699 --> 00:09:45,100
+denote the possible dependence so here i know
+that x one depends on y x two depends on y
+
+98
+00:09:45,100 --> 00:09:50,009
+and x n also sub two x and all these depend
+on the n y but there is not depend on each
+
+99
+00:09:50,009 --> 00:09:53,980
+other so that's why there is no edge from
+x two to x four and x one to x two so these
+
+100
+00:09:53,980 --> 00:10:00,279
+depend only on y then there is a difference
+that some are shaded some are not so what
+
+101
+00:10:00,279 --> 00:10:05,390
+is that so observes observed variables are
+shaded so that means these are the variables
+
+102
+00:10:05,390 --> 00:10:14,100
+that i am observing and this is a hidden variable
+that is not shaded and to simplify this notations
+
+103
+00:10:14,100 --> 00:10:20,670
+what we can use we can also group some variables
+together so some max instruction that is being
+
+104
+00:10:20,670 --> 00:10:25,880
+repeated you can put it in the plate notation
+so this is you are seen in the in the right
+
+105
+00:10:25,880 --> 00:10:30,800
+hand side so you are having these and different
+variables and you can group them together
+
+106
+00:10:30,800 --> 00:10:35,959
+by x n and you write here capital and that
+means x n is repeated capital n times
+
+107
+00:10:35,959 --> 00:10:42,320
+so this and these are equivalent and this
+further simplify these notation ok so once
+
+108
+00:10:42,320 --> 00:10:47,269
+we have seen this ah so how do we interpret
+graphical notations then we can look at look
+
+109
+00:10:47,269 --> 00:10:55,040
+at the graphical notation for l d a so what
+is the so ok so just one more thing that once
+
+110
+00:10:55,040 --> 00:11:02,079
+we have this notation we can also compute
+the the probability of this ah the whole graphical
+
+111
+00:11:02,079 --> 00:11:10,300
+structure so i have variables y x one to x
+n so probability would be i have the probability
+
+112
+00:11:10,300 --> 00:11:15,290
+of y and each of these depend only on y so
+the probability of this whole structure can
+
+113
+00:11:15,290 --> 00:11:20,490
+be probability of y times probability of x
+one given y x two given y up to x n given
+
+114
+00:11:20,490 --> 00:11:24,459
+y
+so so this graphical ah the the structure
+
+115
+00:11:24,459 --> 00:11:30,190
+of my graph also defines what are the conditional
+dependence between various variables and that
+
+116
+00:11:30,190 --> 00:11:36,670
+i can use to write my joint probability distribution
+ok so this is my joint probability distribution
+
+117
+00:11:36,670 --> 00:11:44,600
+over all these variables so now let us see
+what is the graphical model for l d a so now
+
+118
+00:11:44,600 --> 00:11:52,029
+so you know ah from the previous slide how
+do interpret graphical model so all these
+
+119
+00:11:52,029 --> 00:12:00,639
+nodes are random variables and observed variables
+are shaded ok so the only shaded part is ah
+
+120
+00:12:00,639 --> 00:12:04,870
+w d n these are my object words everything
+else is hidden
+
+121
+00:12:04,870 --> 00:12:11,260
+now what are everything else so there are
+some plates here so let us see this one capital
+
+122
+00:12:11,260 --> 00:12:19,660
+k and what are these topics so what i am saying
+here there are capital k different topics
+
+123
+00:12:19,660 --> 00:12:26,649
+and each topic is a probability distribution
+ok so this is the probability distribution
+
+124
+00:12:26,649 --> 00:12:32,730
+over top over different words for a given
+topic for a topic it's small k ok so beta
+
+125
+00:12:32,730 --> 00:12:37,420
+k is what is the probability of word one what
+is the probability of word two etcetera for
+
+126
+00:12:37,420 --> 00:12:42,220
+the topic k and this i am doing for all the
+capital k topics
+
+127
+00:12:42,220 --> 00:12:47,730
+then let us look at this part so i have capital
+d different documents in my collection so
+
+128
+00:12:47,730 --> 00:12:55,519
+for a given document small d i have figure
+d variable that denotes per document topic
+
+129
+00:12:55,519 --> 00:13:00,740
+proportions so for this document is small
+d what are the proportions in which you are
+
+130
+00:13:00,740 --> 00:13:05,220
+blending different topics together so this
+will be different for different topic different
+
+131
+00:13:05,220 --> 00:13:10,600
+documents so you are having capital d different
+documents and there is again a dirichlet parameter
+
+132
+00:13:10,600 --> 00:13:17,120
+here and a topic hyper parameter here so we
+will discuss what are these ah but right now
+
+133
+00:13:17,120 --> 00:13:22,820
+you can understand by simply these beta k
+is the distribution over words for a given
+
+134
+00:13:22,820 --> 00:13:29,240
+topic and theta d is a distribution over topics
+for a given document
+
+135
+00:13:29,240 --> 00:13:34,430
+now let us go inside so here now we are going
+to one particular document and this can have
+
+136
+00:13:34,430 --> 00:13:42,500
+capital n words and what are these so you
+are having per word topic assignment z n yes
+
+137
+00:13:42,500 --> 00:13:49,670
+ah each word will have only one topic and
+this is the actual word that you are observing
+
+138
+00:13:49,670 --> 00:13:54,240
+and these are all hidden so i do not know
+what my betas i do not know my theta i do
+
+139
+00:13:54,240 --> 00:14:00,800
+not my z n so this is only the explain what
+are my ah what is what are different nodes
+
+140
+00:14:00,800 --> 00:14:06,000
+here what are the different plates here so
+your plates corresponding to topics documents
+
+141
+00:14:06,000 --> 00:14:10,959
+as well as the words in a single document
+and you have all the variables that we were
+
+142
+00:14:10,959 --> 00:14:16,100
+ah using ah all the the notion that we were
+using earlier there are variables for each
+
+143
+00:14:16,100 --> 00:14:19,180
+of these
+now let us see how what is the actual generative
+
+144
+00:14:19,180 --> 00:14:27,759
+model how we generated the words using this
+structure so what is the generative model
+
+145
+00:14:27,759 --> 00:14:34,110
+so firstly you draw each topic beta i as for
+the dirichlet higher higher hyper parameter
+
+146
+00:14:34,110 --> 00:14:40,050
+eta ok and you do that for all the k topics
+so first of all we generate the model you
+
+147
+00:14:40,050 --> 00:14:50,279
+are drawing drawing your topics ok so fine
+i have my capital k topics now now you go
+
+148
+00:14:50,279 --> 00:14:57,600
+to your documents so for each document that
+is small d draw topic proportions so you find
+
+149
+00:14:57,600 --> 00:15:02,690
+out what are the topics that are involved
+in this document as dirichlet distribution
+
+150
+00:15:02,690 --> 00:15:07,800
+over alpha so we will talk about this dirichlet
+distributions what what do i mean this dirichlet
+
+151
+00:15:07,800 --> 00:15:12,709
+distributions
+so you draw a top topic proportion ok and
+
+152
+00:15:12,709 --> 00:15:17,680
+then for each word in my observation so far
+i am go now going to these document for each
+
+153
+00:15:17,680 --> 00:15:26,250
+word you draw z n as a multiple from a multinomial
+distribution over theta d and draw a word
+
+154
+00:15:26,250 --> 00:15:32,339
+from this ah so draw a topic and then draw
+a word from this multinomial distribution
+
+155
+00:15:32,339 --> 00:15:37,509
+over beta z n
+now yeah let's try to understand this a bit
+
+156
+00:15:37,509 --> 00:15:45,889
+more so let us go one by one draw is topic
+beta i is your dirichlet distribution over
+
+157
+00:15:45,889 --> 00:15:54,639
+eta so ah so what i am doing here i have k
+different topics so i am trying to draw the
+
+158
+00:15:54,639 --> 00:16:01,879
+proportion the the probability distributions
+from my ah vocabulary so what i am saying
+
+159
+00:16:01,879 --> 00:16:11,009
+so i have k different topics topic t one t
+two t three up to t k for these topic i am
+
+160
+00:16:11,009 --> 00:16:19,680
+drawing beta one beta two beta three and beta
+capital k and what are these they are nothing
+
+161
+00:16:19,680 --> 00:16:25,180
+but the probability distribution over my ah
+words in my vocabulary so it can be something
+
+162
+00:16:25,180 --> 00:16:34,100
+like yeah this is point zero one point zero
+two point zero five so on this can be zero
+
+163
+00:16:34,100 --> 00:16:43,130
+zero point one so these distributions are
+drawn by using a dirichlet over eta
+
+164
+00:16:43,130 --> 00:16:50,589
+so dirichlet it's a distribution over distributions
+so it helps you decide what kind of distribution
+
+165
+00:16:50,589 --> 00:16:55,389
+will be preferred over another so that we
+will again discuss so this we will discuss
+
+166
+00:16:55,389 --> 00:17:01,500
+later but the idea is which kind of distribution
+you will prefer and this helps you draw some
+
+167
+00:17:01,500 --> 00:17:07,970
+distributions for all the k topics ok
+now so this you have drawn now the next line
+
+168
+00:17:07,970 --> 00:17:14,640
+says for each document draw topic proportion
+of theta d using dirichlet over alpha so now
+
+169
+00:17:14,640 --> 00:17:21,910
+these are your topics but in your collection
+you have again capital e documents so document
+
+170
+00:17:21,910 --> 00:17:32,370
+ah one two ah small d capital d so they are
+capital d documents in your collection now
+
+171
+00:17:32,370 --> 00:17:40,390
+what is it what are your drawing for each
+document you are drawing theta d what is theta
+
+172
+00:17:40,390 --> 00:17:48,470
+d theta d is a probability distribution over
+the topics so it will be something like ok
+
+173
+00:17:48,470 --> 00:17:52,730
+what is the probability of topic one what
+is the probability of topic two what is the
+
+174
+00:17:52,730 --> 00:18:02,380
+probability up to topic capital d
+so for each document you are drawing these
+
+175
+00:18:02,380 --> 00:18:11,650
+distributions and what are theta d theta d
+are coming from the dirichlet over alpha so
+
+176
+00:18:11,650 --> 00:18:19,210
+again this alpha is telling me what kind of
+topic distributions will i prefer over others
+
+177
+00:18:19,210 --> 00:18:23,620
+so these are my so first drawing the topics
+then drawing the topic proportion for the
+
+178
+00:18:23,620 --> 00:18:30,740
+documents now what else now it says now suppose
+i am going to this document then for each
+
+179
+00:18:30,740 --> 00:18:48,480
+word how do you ab[out]- words draw z d n
+as in from a multinomial over theta d so theta
+
+180
+00:18:48,480 --> 00:18:52,940
+d is a probability distribution and it's a
+multinomial distribution from there sample
+
+181
+00:18:52,940 --> 00:19:00,132
+one topic ok so this distribution k topics
+suppose the z n is equal to five that is i
+
+182
+00:19:00,132 --> 00:19:05,830
+am taking topic five so for each what i will
+draw one so it can be whatever that that comes
+
+183
+00:19:05,830 --> 00:19:10,300
+according to this multinomial distribution
+suppose it is five now how do i generate the
+
+184
+00:19:10,300 --> 00:19:22,100
+word now i know the topic now i have to generate
+a word so i go to so it says draw w d n from
+
+185
+00:19:22,100 --> 00:19:33,669
+multinomial of beta z d n what is z d n now
+z d n knows my five that is the topic you
+
+186
+00:19:33,669 --> 00:19:39,440
+that you draw and now you take multinomial
+over beta five so that means for beta five
+
+187
+00:19:39,440 --> 00:19:44,690
+fifth topic i will find out what is the so
+i will have the distribution and from there
+
+188
+00:19:44,690 --> 00:19:52,500
+i will sample one word so i will sample about
+from this probability distribution and that
+
+189
+00:19:52,500 --> 00:19:57,460
+is what i am generating
+so this you will do for each of the capital
+
+190
+00:19:57,460 --> 00:20:04,570
+n words in my document and is the whole generative
+model first you are generating your topics
+
+191
+00:20:04,570 --> 00:20:08,590
+then for each document topic proportions then
+you are going to the individual topic going
+
+192
+00:20:08,590 --> 00:20:14,960
+to the individual word and generating that
+word ok fine so that's what we were saying
+
+193
+00:20:14,960 --> 00:20:23,039
+in this slide
+now so one interesting point here is why do
+
+194
+00:20:23,039 --> 00:20:27,409
+we name it at latent dirichlet allocation
+ok so we are doing some allocation what why
+
+195
+00:20:27,409 --> 00:20:37,360
+latent and dirichlet coming so ah so latent
+in this ah l d a say has a same sensing energy
+
+196
+00:20:37,360 --> 00:20:44,580
+latent semantic indexing so that is all these
+topics are some some sort of latent variables
+
+197
+00:20:44,580 --> 00:20:50,240
+ok so there are some sort of hidden topics
+some latent topics i do not know what are
+
+198
+00:20:50,240 --> 00:20:55,049
+these topics as such i cannot give them a
+good maybe good labels also but there are
+
+199
+00:20:55,049 --> 00:21:02,179
+some distributions some hidden distributions
+over my words and these are called latent
+
+200
+00:21:02,179 --> 00:21:06,870
+then what is dirichlet here so you you saw
+the dirichlet distribution at two places so
+
+201
+00:21:06,870 --> 00:21:10,919
+that is the distribution that is used to draw
+the per document topic distributions is a
+
+202
+00:21:10,919 --> 00:21:18,770
+dirichlet distribution ok so that is how am
+i sampling topics for a given doc document
+
+203
+00:21:18,770 --> 00:21:23,470
+that is coming from a dirichlet distribution
+and this result is used to allocate the words
+
+204
+00:21:23,470 --> 00:21:28,820
+of the documents to different topics and that's
+why the word allocation is also coming ok
+
+205
+00:21:28,820 --> 00:21:34,029
+so you are having latent dirichlet and allocation
+so now we will look at this dirichlet part
+
+206
+00:21:34,029 --> 00:21:41,909
+in bit more in bit more details so what are
+the dirichlet distributions so if you ah think
+
+207
+00:21:41,909 --> 00:21:49,460
+about it so so if you incredibly try to understand
+that this is a distribution over probability
+
+208
+00:21:49,460 --> 00:21:56,690
+distributions ok what do i mean by that so
+dirichlet distribution is an exponential family
+
+209
+00:21:56,690 --> 00:22:02,500
+distribution over the simplex that is the
+povasitive positive vectors that sum to one
+
+210
+00:22:02,500 --> 00:22:07,150
+ok
+so when i talk about simplex so you can talk
+
+211
+00:22:07,150 --> 00:22:22,610
+about say one simplex one simplex would be
+two elements say x one x two such that x one
+
+212
+00:22:22,610 --> 00:22:28,690
+plus x two is equal to one positive vectors
+that added to one this is one simplex so you
+
+213
+00:22:28,690 --> 00:22:35,429
+can see that they are infinite solutions here
+ok and you can read it as a line it's a line
+
+214
+00:22:35,429 --> 00:22:49,360
+and this might correspond to say zero one
+this might be ah one zero so that is topic
+
+215
+00:22:49,360 --> 00:22:57,990
+one has zero topic to each or yeah x one is
+zero x two is one here x one is one x two
+
+216
+00:22:57,990 --> 00:23:02,940
+is zero and any point you can accordingly
+give some definition what are the values of
+
+217
+00:23:02,940 --> 00:23:06,840
+x one x two ok
+so you can see that this will be a line simple
+
+218
+00:23:06,840 --> 00:23:15,419
+line x one plus x two is equal to one this
+is my one simplex then you can have two simplex
+
+219
+00:23:15,419 --> 00:23:22,160
+then you are having three things x one plus
+x two plus x three there are two one ok in
+
+220
+00:23:22,160 --> 00:23:29,490
+this would be some sort of triangle ok so
+this point might correspond to say x one is
+
+221
+00:23:29,490 --> 00:23:35,789
+one x two is zero x three is zero so this
+might be x one is zero x two is one x three
+
+222
+00:23:35,789 --> 00:23:42,289
+is zero this might be zero zero one and then
+each point we will have some proportion such
+
+223
+00:23:42,289 --> 00:23:47,030
+that all three add up to one this is my two
+simplex like that you can define of any and
+
+224
+00:23:47,030 --> 00:24:01,289
+simplex so if you are having k topics you
+can think of it as k minus one simplex ok
+
+225
+00:24:01,289 --> 00:24:07,990
+so now what is my dirichlet distribution so
+so now we are saying it's an exponential family
+
+226
+00:24:07,990 --> 00:24:13,620
+distribution over the simplex that is a positive
+vectors that up add up to one so again let
+
+227
+00:24:13,620 --> 00:24:18,309
+us try to understand that intuitively first
+so what i am i am saying here suppose i am
+
+228
+00:24:18,309 --> 00:24:26,791
+having a two simplex then lot of different
+value is my three ah x one x two x three they
+
+229
+00:24:26,791 --> 00:24:30,929
+can take they can take a lot of different
+values so i can take values like one zero
+
+230
+00:24:30,929 --> 00:24:38,950
+zero i can take values like point three three
+point three three point three four and things
+
+231
+00:24:38,950 --> 00:24:46,820
+like that they can take a different values
+like point five point two five point two five
+
+232
+00:24:46,820 --> 00:24:51,380
+etcetera
+so what my dirichlet distribution does it
+
+233
+00:24:51,380 --> 00:24:56,769
+gives me a probability of these probability
+distribution so what is the probability of
+
+234
+00:24:56,769 --> 00:25:03,640
+getting distribution like this what is the
+probability of getting a distribution like
+
+235
+00:25:03,640 --> 00:25:12,720
+this ok so that is what kind of distributions
+i will prefer so i can use that to say that
+
+236
+00:25:12,720 --> 00:25:18,760
+i will prefer distributions where one topic
+one of the topics as a high probability and
+
+237
+00:25:18,760 --> 00:25:24,130
+others have very low probability or i will
+like to have a distribution where all the
+
+238
+00:25:24,130 --> 00:25:27,940
+topics have a equal probability
+so these kind of constraints you can put by
+
+239
+00:25:27,940 --> 00:25:35,320
+using your alpha ok so that's where the formulation
+is so what is the probability of theta that
+
+240
+00:25:35,320 --> 00:25:42,220
+is a distribution over these ah topics given
+my alpha that is some -[d]rawn function so
+
+241
+00:25:42,220 --> 00:25:47,600
+even if we forget about this term so this
+is multiplication over theta i to the power
+
+242
+00:25:47,600 --> 00:26:00,730
+alpha i minus one ok so let's look at this
+term only so ah what is being said here 
+
+243
+00:26:00,730 --> 00:26:14,220
+so probability theta given alpha is multiplication
+over theta i to the power alpha i minus one
+
+244
+00:26:14,220 --> 00:26:26,350
+ok so let's try to understand that suppose
+my alpha i is say a point one versus alpha
+
+245
+00:26:26,350 --> 00:26:39,150
+i is equal to say two what would happen in
+the two cases and let us say i took look at
+
+246
+00:26:39,150 --> 00:26:48,630
+two different thetas so my theta one is zero
+point nine eight zero point zero one zero
+
+247
+00:26:48,630 --> 00:26:56,530
+point zero one ok one topic has a high probability
+others have roughly zero and theta two is
+
+248
+00:26:56,530 --> 00:27:07,679
+say point three three point three three point
+three four and now you can see what kind of
+
+249
+00:27:07,679 --> 00:27:17,580
+alpha will prefer one theta over another one
+so let us take the case with zero point one
+
+250
+00:27:17,580 --> 00:27:22,440
+alpha i zero point one so what would you is
+the probability of this getting this distribution
+
+251
+00:27:22,440 --> 00:27:33,289
+it will be ah zero point nine eight to the
+power minus point nine zero point zero one
+
+252
+00:27:33,289 --> 00:27:41,070
+to the power minus point nine zero point zero
+one to the power minus point nine ok and this
+
+253
+00:27:41,070 --> 00:27:48,220
+probability would be same point three to the
+power minus point nine point three three to
+
+254
+00:27:48,220 --> 00:27:53,610
+the power minus point nine and so on on the
+other hand if i take alpha i is equal to two
+
+255
+00:27:53,610 --> 00:28:01,230
+then this would be point nine eight times
+so alpha i minus one will become become one
+
+256
+00:28:01,230 --> 00:28:08,830
+the power is one point zero one times point
+zero one and this will become point three
+
+257
+00:28:08,830 --> 00:28:16,580
+three times point three three times point
+three three
+
+258
+00:28:16,580 --> 00:28:27,929
+now what is your observation here so one thing
+we see it that if you ah take alpha is equal
+
+259
+00:28:27,929 --> 00:28:38,950
+to two if you take alpha is equal to two then
+the the topics where so the distribution where
+
+260
+00:28:38,950 --> 00:28:45,750
+one topic is having very small probability
+we will get a over all very small probability
+
+261
+00:28:45,750 --> 00:28:50,620
+right your multiple point nine eight by point
+zero one times point zero one this will become
+
+262
+00:28:50,620 --> 00:28:55,750
+very small only when this will be ok this
+is like one by three times one by three times
+
+263
+00:28:55,750 --> 00:29:04,169
+one by three so as you increase alpha it will
+prefer to have topics or or the distributions
+
+264
+00:29:04,169 --> 00:29:08,309
+where each topic the word probability is roughly
+equal ok
+
+265
+00:29:08,309 --> 00:29:14,410
+so it will prefer this one but if you having
+a smaller alpha then what you are seeing so
+
+266
+00:29:14,410 --> 00:29:21,970
+now point zero one to the power point nine
+this will be now can written as ah hundred
+
+267
+00:29:21,970 --> 00:29:30,889
+to the power point nine ok this will become
+very large and this will be ah ah roughly
+
+268
+00:29:30,889 --> 00:29:37,769
+this will not be large ok so so what will
+happen as your alpha becomes small they will
+
+269
+00:29:37,769 --> 00:29:43,830
+prefer the probability distribution where
+one topic is having high probability and others
+
+270
+00:29:43,830 --> 00:29:47,950
+are having low probability
+so by tuning your alpha you can prefer one
+
+271
+00:29:47,950 --> 00:29:58,250
+topic probability one sort of distribution
+over the distribution ok so so this is my
+
+272
+00:29:58,250 --> 00:30:03,110
+dirichlet distribution so now again to give
+you some visualization so here are two different
+
+273
+00:30:03,110 --> 00:30:10,019
+sort of simplex ah so alphas as such you can
+interpret it as some prior observation count
+
+274
+00:30:10,019 --> 00:30:16,750
+on the number of times a topic j is sampled
+individual alpha j so that is how many times
+
+275
+00:30:16,750 --> 00:30:27,110
+this topic will be sampled but so so and you
+can also think as some forces and higher alpha
+
+276
+00:30:27,110 --> 00:30:31,960
+will move the topics away from the corner
+of the simplex so let me come back to this
+
+277
+00:30:31,960 --> 00:30:38,950
+point again so you are saying two different
+simplex one where ah the topics are moved
+
+278
+00:30:38,950 --> 00:30:44,679
+away from the the corners ok these are being
+moved away and here you are going towards
+
+279
+00:30:44,679 --> 00:30:51,940
+the corners and this is for because of higher
+values of alpha and we will come back to this
+
+280
+00:30:51,940 --> 00:30:55,370
+again
+so now when alpha is less than one there is
+
+281
+00:30:55,370 --> 00:31:00,080
+a bias to big topic distribution is favoring
+just a few topics and this is what we saw
+
+282
+00:31:00,080 --> 00:31:04,820
+just now on paper that when alpha is equal
+to is less than one it tends to prefer the
+
+283
+00:31:04,820 --> 00:31:17,289
+distributions where only a few topics as a
+high probability and others have lower probability
+
+284
+00:31:17,289 --> 00:31:24,750
+now while in general you can take different
+alphas for your different topics what is convenient
+
+285
+00:31:24,750 --> 00:31:29,669
+effect you take all help us to be rough to
+be the same so you have a singular hyper parameter
+
+286
+00:31:29,669 --> 00:31:36,009
+alpha so i will all alphas are same now what
+matters now is what is the value of this alpha
+
+287
+00:31:36,009 --> 00:31:41,429
+ok so the relatively they are the same all
+alpha one to alpha ah and alpha capital d
+
+288
+00:31:41,429 --> 00:31:46,050
+all for all the documents they are the same
+ah sorry alpha one to alpha call capital k
+
+289
+00:31:46,050 --> 00:31:53,730
+they are same but what is the relative number
+is it like what is the number is it like point
+
+290
+00:31:53,730 --> 00:32:00,570
+one two five there will be a matter
+so now if alpha is small what will happen
+
+291
+00:32:00,570 --> 00:32:07,179
+you will tend to prefer topics with ah way
+which sorry you will tend to prefer distribution
+
+292
+00:32:07,179 --> 00:32:13,210
+where one topics will have a higher probability
+so remember how do we define simplex so in
+
+293
+00:32:13,210 --> 00:32:21,230
+this case what this it is boundary means so
+this colors denote what is the probability
+
+294
+00:32:21,230 --> 00:32:27,240
+distributions ok so black means a high dist
+probability distribution and and so on and
+
+295
+00:32:27,240 --> 00:32:36,820
+as you as the ah as it diminishes so the the
+color becomes ah so faded then you are seeing
+
+296
+00:32:36,820 --> 00:32:42,789
+that the the probability is decreasing
+so in the left hand side figure the probability
+
+297
+00:32:42,789 --> 00:32:48,509
+is mostly centered for in the in the in the
+center of the simplex by in right hand side
+
+298
+00:32:48,509 --> 00:32:58,009
+it is moving towards the corners ok so that
+you can interpret it as if in this simplex
+
+299
+00:32:58,009 --> 00:33:05,889
+whenever all three topics have the same weight
+it is given a higher probability here even
+
+300
+00:33:05,889 --> 00:33:11,830
+if one topic is having in in more proportions
+than others it is getting a high probability
+
+301
+00:33:11,830 --> 00:33:16,179
+so this is not moving away from the center
+of this simplex
+
+302
+00:33:16,179 --> 00:33:20,080
+so it is going towards the corner so if you
+go to the corner that means one topic has
+
+303
+00:33:20,080 --> 00:33:26,590
+the high probability other two have the small
+probabilities ok so this is favoring also
+
+304
+00:33:26,590 --> 00:33:33,580
+to have topics where sorry also to have distributions
+where one topic has high probability than
+
+305
+00:33:33,580 --> 00:33:38,659
+others while this we favor the distributions
+where all three topics have roughly equal
+
+306
+00:33:38,659 --> 00:33:43,789
+probability ok so now you can easily tell
+which one is corresponding to higher alpha
+
+307
+00:33:43,789 --> 00:33:50,059
+lower alpha so the one that corresponds to
+lower alpha will be like that it will favor
+
+308
+00:33:50,059 --> 00:33:57,750
+distributions where one topic is having a
+high probability than others
+
+309
+00:33:57,750 --> 00:34:02,970
+now this is some some ah from simulation what
+happens if you take different values of alpha
+
+310
+00:34:02,970 --> 00:34:07,770
+so if you take alpha is equal to one what
+kind of distributions are preferred so there
+
+311
+00:34:07,770 --> 00:34:13,450
+are fifteen documents here that are being
+shown and there are ten different topics so
+
+312
+00:34:13,450 --> 00:34:18,720
+we see the distributions are ok so you are
+having some distribution for topic t two t
+
+313
+00:34:18,720 --> 00:34:24,130
+three and so on for these fifteen documents
+they are different different distributions
+
+314
+00:34:24,130 --> 00:34:29,879
+but suppose you try to now increase the value
+of alpha as you go to ten so as you increase
+
+315
+00:34:29,879 --> 00:34:38,069
+the value of alpha it will start favoring
+those distributions where all the topics are
+
+316
+00:34:38,069 --> 00:34:42,919
+roughly same probability you see now this
+is getting flattens so you are having you
+
+317
+00:34:42,919 --> 00:34:47,590
+are now seeing all the topics and if you try
+to increase ah alpha to hundred you will see
+
+318
+00:34:47,590 --> 00:34:52,659
+all the topics have same probability and it's
+not something that you will there
+
+319
+00:34:52,659 --> 00:34:58,910
+so it's not good that each document has all
+the topics in same probability then if the
+
+320
+00:34:58,910 --> 00:35:04,560
+topic model is does not put in any sense so
+ah is equal to one was looking ok so so this
+
+321
+00:35:04,560 --> 00:35:09,890
+kind of distribution we would like but now
+suppose i want to i want to decrease the value
+
+322
+00:35:09,890 --> 00:35:14,940
+of alpha if suppose i go from one to point
+one now what you are seeing it will start
+
+323
+00:35:14,940 --> 00:35:21,150
+favoring the distributions where one topic
+has a high probability or one or maybe two
+
+324
+00:35:21,150 --> 00:35:26,210
+ok but suppose i increase i decrease it further
+to point zero one
+
+325
+00:35:26,210 --> 00:35:30,380
+so most of the problems of probability zero
+only one topic comes as a probability one
+
+326
+00:35:30,380 --> 00:35:35,680
+or here two topics are coming if you further
+reduce this value to point zero one you get
+
+327
+00:35:35,680 --> 00:35:41,530
+only one topic in each document so that will
+give you some idea of how if you modify or
+
+328
+00:35:41,530 --> 00:35:47,320
+change this parameter alpha how does this
+effect the overall topic distribution in my
+
+329
+00:35:47,320 --> 00:35:53,700
+corpus ok certain kind of distribution we
+will get reference over others
+
+330
+00:35:53,700 --> 00:36:00,210
+now for l d a there are a lot of interventions
+that are available so ah and these are like
+
+331
+00:36:00,210 --> 00:36:09,290
+very very popular you can also use implementations
+that are available in gensim so now so we
+
+332
+00:36:09,290 --> 00:36:14,260
+are again so we have discussed all the in
+genetic part in but now i am full details
+
+333
+00:36:14,260 --> 00:36:19,589
+that how do we what is the generative model
+of l d a but remember what is your problem
+
+334
+00:36:19,589 --> 00:36:26,089
+how do we infer all these probabilities so
+that is i am given a correction of documents
+
+335
+00:36:26,089 --> 00:36:32,819
+and i want to infer per document topic assignment
+z d n per document topic topic distributions
+
+336
+00:36:32,819 --> 00:36:38,079
+theta d and per corpus topic distributions
+beta k i want to infer all this
+
+337
+00:36:38,079 --> 00:36:47,940
+now once i am able to infer all this i can
+use this to find out say to use to for information
+
+338
+00:36:47,940 --> 00:36:53,140
+retrieval document similarity and many other
+task but the question is once i am given these
+
+339
+00:36:53,140 --> 00:37:00,319
+observations of the of the words how do i
+infer all these ah probability values ah so
+
+340
+00:37:00,319 --> 00:37:05,230
+so there are different ways of doing that
+so we will discuss about one such method in
+
+341
+00:37:05,230 --> 00:37:07,580
+the next lecture
+thank you
+

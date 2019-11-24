@@ -1,0 +1,1555 @@
+1
+00:00:18,070 --> 00:00:23,980
+so hello everyone so welcome back for the
+second module of third week so in the last
+
+2
+00:00:23,980 --> 00:00:28,910
+week we had so in the last week in the last
+module we were discussing about language modeling
+
+3
+00:00:28,910 --> 00:00:34,230
+that is how we can effectively use the word
+ordering information for where is applications
+
+4
+00:00:34,230 --> 00:00:41,140
+we will go to the next topic we will talk
+about the morphology information that what
+
+5
+00:00:41,140 --> 00:00:46,900
+are the different modules that help us captures
+information [an/and] what are different linguistic
+
+6
+00:00:46,900 --> 00:00:51,820
+terms that are involved so today we will start
+with the linguistic terms and then we will
+
+7
+00:00:51,820 --> 00:00:59,020
+and with what the are possible modules that
+can help us capture this in a in an automatic
+
+8
+00:00:59,020 --> 00:01:05,830
+panel so what is so we are talking about computation
+morphology today so what is morphology in
+
+9
+00:01:05,830 --> 00:01:12,050
+morphology we study what is internal structure
+of words so that is given a particular word
+
+10
+00:01:12,050 --> 00:01:16,830
+in a language what are the [dif/different]
+meaningful units it is made up off and each
+
+11
+00:01:16,830 --> 00:01:24,170
+small unit is called a morphemes so let us
+take some examples so if i take the word dogs
+
+12
+00:01:24,170 --> 00:01:28,520
+so it is made up of two different units one
+is dog the actual root word and another is
+
+13
+00:01:28,520 --> 00:01:33,390
+affix that is applied to the word to make
+it a plural that is ok so there are two morphemes
+
+14
+00:01:33,390 --> 00:01:40,920
+in this single word dogs similarly if i take
+a word like un lady like so we are having
+
+15
+00:01:40,920 --> 00:01:45,110
+three different units here so these are three
+different morphemes so un that corresponds
+
+16
+00:01:45,110 --> 00:01:51,310
+to not irrigation or opposition then lady
+well behave women like that is having the
+
+17
+00:01:51,310 --> 00:01:56,090
+characteristic of so there are three different
+morphemes that together constitute this single
+
+18
+00:01:56,090 --> 00:02:02,430
+word (Refer Time:02:00)
+so now we will also see what are the various
+
+19
+00:02:02,430 --> 00:02:08,140
+linguistic notions that that you might be
+my want to be aware of and we are talking
+
+20
+00:02:08,140 --> 00:02:14,239
+about morphology so for example what are allomorphs
+so is given a word like happy if you are converting
+
+21
+00:02:14,239 --> 00:02:21,230
+to it is opposites we are making ah a word
+like unhappy but if i take ah another word
+
+22
+00:02:21,230 --> 00:02:27,919
+like rational i will i will use i r so i will
+make irrational so if they are different morphemes
+
+23
+00:02:27,919 --> 00:02:34,030
+that can be use for the same purpose they
+are called allomorphs ok so here is an example
+
+24
+00:02:34,030 --> 00:02:39,040
+so so allomorphs we are saying variants of
+the same morphemes but in general we cannot
+
+25
+00:02:39,040 --> 00:02:46,109
+replace by one another so so let us see here
+so if i have the word happy i can use u n
+
+26
+00:02:46,109 --> 00:02:51,269
+to make it unhappy comprehensible i can use
+i n incomprehensible if a possible i can use
+
+27
+00:02:51,269 --> 00:02:57,600
+i m impossible and rational i will say irrational
+ok but you can see that we cannot replace
+
+28
+00:02:57,600 --> 00:03:02,571
+i r by u n here so i cannot say unrational
+that is not a valid english word so there
+
+29
+00:03:02,571 --> 00:03:08,209
+are various ah reasoning for why a particular
+morpheme is used one of these is could be
+
+30
+00:03:08,209 --> 00:03:12,080
+because of the phonemes that are they are
+in the in the particular word so irrational
+
+31
+00:03:12,080 --> 00:03:17,250
+we have the irrational with happy we have
+unhappy so that is the for different words
+
+32
+00:03:17,250 --> 00:03:21,600
+we have different sort of morphemes that you
+apply to make opposites so that is for one
+
+33
+00:03:21,600 --> 00:03:28,010
+particular function but for different functions
+like and and ah person and all that you again
+
+34
+00:03:28,010 --> 00:03:31,470
+have various person and all that you again
+have various ah category morphemes that are
+
+35
+00:03:31,470 --> 00:03:38,230
+applied
+so again when we talk about morphemes there
+
+36
+00:03:38,230 --> 00:03:45,150
+is a distinction called bound morphemes verses
+free morphemes so what are those so bound
+
+37
+00:03:45,150 --> 00:03:50,560
+morphemes are those morphemes that cannot
+appear as a word by itself ok so for example
+
+38
+00:03:50,560 --> 00:03:56,169
+take the previous example unhappy so i cannot
+take the morpheme un here use it as a as a
+
+39
+00:03:56,169 --> 00:04:00,340
+unique single word itself so this is bound
+by another word that is applied with this
+
+40
+00:04:00,340 --> 00:04:06,030
+say unhappy so it is it is bound with happy
+or some other words with this you can be use
+
+41
+00:04:06,030 --> 00:04:11,040
+it on the other hand if i take the word happy
+it is [free/free morphemes] it can used on
+
+42
+00:04:11,040 --> 00:04:17,009
+it is soon ok that is how we divide the morphemes
+into these two categories bound verses free
+
+43
+00:04:17,009 --> 00:04:23,500
+so here are some examples so bound morphemes
+are like s so it can be used for making plural
+
+44
+00:04:23,500 --> 00:04:33,150
+so with dog we have dogs l y so quick to quickly
+and e d walk to walked so these are all bound
+
+45
+00:04:33,150 --> 00:04:39,500
+morphemes and then there are free morphemes
+when they can appear as a word by themselves
+
+46
+00:04:39,500 --> 00:04:44,220
+ok and they can also combine with other morphemes
+if needed so for example if i take the morphemes
+
+47
+00:04:44,220 --> 00:04:49,030
+like house it can appeared as a word by itself
+but can also be combine with other morphemes
+
+48
+00:04:49,030 --> 00:04:54,500
+like s to make plural houses similarly walk
+it can combine with e d to make a plu[ral]-
+
+49
+00:04:54,500 --> 00:05:01,260
+make a past tens of walked and so on some
+words like of ah in etcetera they are also
+
+50
+00:05:01,260 --> 00:05:10,220
+free morphemes they can appear on their own
+so then there is another distinction and this
+
+51
+00:05:10,220 --> 00:05:16,660
+is very very important when we talk about
+morphology so in general when i talk about
+
+52
+00:05:16,660 --> 00:05:22,260
+a word it can have two main parts one is the
+stem the main the root word and another is
+
+53
+00:05:22,260 --> 00:05:28,510
+the affix and it can have more than one of
+affixes as well so what are stem and affixes
+
+54
+00:05:28,510 --> 00:05:36,100
+ok so when we talk about a word so ah a stem
+is the core meaning bearing part ok so i take
+
+55
+00:05:36,100 --> 00:05:41,250
+i take a word like boys so the the the stem
+here will be boy so that is the meaning can
+
+56
+00:05:41,250 --> 00:05:46,850
+bearing part and then there are various ah
+bits and pieces that can be apply to it that
+
+57
+00:05:46,850 --> 00:05:52,980
+that can ultra certain grammatical functions
+so i can have i can apply and as at the end
+
+58
+00:05:52,980 --> 00:06:01,130
+of to make a plural of this so these are called
+affixes so in general you can make a correspondence
+
+59
+00:06:01,130 --> 00:06:06,850
+between ah stems and affixes and bound and
+free morphemes so you can say that the stems
+
+60
+00:06:06,850 --> 00:06:13,040
+are kind of free morphemes and the affixes
+are kind of bound morphemes so this kind of
+
+61
+00:06:13,040 --> 00:06:20,240
+correspondence you can you can make
+so now what are the different types of affixes
+
+62
+00:06:20,240 --> 00:06:25,020
+that you can apply with the given stem so
+this we just discuss about one simple example
+
+63
+00:06:25,020 --> 00:06:31,290
+of applying s so this s apply after the word
+boy are make a plural with boys so this is
+
+64
+00:06:31,290 --> 00:06:35,639
+called suffix that is applied at the end of
+the word but in general what are the different
+
+65
+00:06:35,639 --> 00:06:43,730
+types of affixes that can be applied so so
+we start with prefixes so prefixes are applied
+
+66
+00:06:43,730 --> 00:06:52,400
+before the word so some example in english
+are un so we make unhappy anti antinational
+
+67
+00:06:52,400 --> 00:06:58,560
+pre preexisting and so on we have these prefixes
+in other languages also for example in hindi
+
+68
+00:06:58,560 --> 00:07:03,610
+and sanskrit we have (Refer Time: 07: 00)
+the prefixes like ah [FL] that we can apply
+
+69
+00:07:03,610 --> 00:07:07,750
+with various words or verbs so these are of
+prefixes
+
+70
+00:07:07,750 --> 00:07:13,931
+then we have suffixes that are applied after
+the word so like with the word talk i can
+
+71
+00:07:13,931 --> 00:07:18,400
+make a new word talking by applying the suffix
+by i n g similarly the word quick i can make
+
+72
+00:07:18,400 --> 00:07:25,389
+a new word quickly by applying the suffix
+l l y at the end ok and in in the case of
+
+73
+00:07:25,389 --> 00:07:32,050
+hindi for example you can have this exercise
+like tha and k a ka etcetera that can apply
+
+74
+00:07:32,050 --> 00:07:40,419
+after the words
+then so the prefix and suffix are the major
+
+75
+00:07:40,419 --> 00:07:48,190
+major su[sufix]- major suffixes affixes that
+we have in language but certain language have
+
+76
+00:07:48,190 --> 00:07:54,070
+some other kind of exercise also so one is
+called infix that is it is applied in between
+
+77
+00:07:54,070 --> 00:08:00,120
+that stem not before or after that so ah so
+example is like in sanskrith we have the word
+
+78
+00:08:00,120 --> 00:08:07,199
+with to know and we make the present tense
+by putting vindati so the word the the character
+
+79
+00:08:07,199 --> 00:08:13,950
+n the phonin n is applied in between between
+v and the so you becom becomes vindati so
+
+80
+00:08:13,950 --> 00:08:19,330
+there are examples in other languages also
+like in the case of philippines here basa
+
+81
+00:08:19,330 --> 00:08:27,740
+b a s a is read and to make it the to converted
+to the past tense read the infix u m is applied
+
+82
+00:08:27,740 --> 00:08:34,700
+in between so we have b u m a s a so u m is
+applied in between is called infix now so
+
+83
+00:08:34,700 --> 00:08:41,770
+can we think of an infix in the case of english
+english it is not common in in common language
+
+84
+00:08:41,770 --> 00:08:47,290
+it is not infix is not used but in general
+can we make a word in english that that uses
+
+85
+00:08:47,290 --> 00:08:56,020
+infix so so here an example is if i take the
+word absolutely and put a word bloody inside
+
+86
+00:08:56,020 --> 00:09:00,250
+so you can have a word like [ab/absolute]
+bloodilutely so this is to put some emphasis
+
+87
+00:09:00,250 --> 00:09:03,750
+that is not used in common english (Refer
+Time:09:00) but in ah certain movie dialogues
+
+88
+00:09:03,750 --> 00:09:09,930
+and all you can find such kind of words
+finally so what can what you think can be
+
+89
+00:09:09,930 --> 00:09:14,500
+the fourth category we have prefix suffix
+infix what is the meaning is that a suffix
+
+90
+00:09:14,500 --> 00:09:20,339
+an affix comes before as well as after so
+this is called circumfix ok so this proceeds
+
+91
+00:09:20,339 --> 00:09:25,310
+as well as follows the same word so an example
+in dutch so you have a word for mountain b
+
+92
+00:09:25,310 --> 00:09:33,330
+e r g and to to converted to plural we have
+an affix that is applied before g e as well
+
+93
+00:09:33,330 --> 00:09:38,202
+as after so the the whole affix is g e t e
+half of that is applied before and half of
+
+94
+00:09:38,202 --> 00:09:43,730
+that is applied after so this is called circumfix
+so among this four kind of affixes the first
+
+95
+00:09:43,730 --> 00:09:48,960
+two are very very common prefix and suffix
+and the last two are expressive to certain
+
+96
+00:09:48,960 --> 00:09:57,230
+languages only
+now morphemes can also be divided into some
+
+97
+00:09:57,230 --> 00:10:02,850
+other categories like content verses (Refer
+Time:10:00) functional morphemes so what are
+
+98
+00:10:02,850 --> 00:10:07,880
+content morphemes that are those that will
+that will be a semantic meaning ok so for
+
+99
+00:10:07,880 --> 00:10:13,800
+example if even if i take any free morphemes
+like car a word it is always a content morphemes
+
+100
+00:10:13,800 --> 00:10:18,910
+it contents some semantic meaning similarly
+i can take a morpheme bound morpheme like
+
+101
+00:10:18,910 --> 00:10:24,339
+able also that is a semantic meaning that
+given a word it it it keeps a sense of being
+
+102
+00:10:24,339 --> 00:10:32,100
+able to do something so on the other hand
+there are certain morphemes that are functional
+
+103
+00:10:32,100 --> 00:10:37,310
+that do not take the semantic content they
+are only used for certain grammatical functions
+
+104
+00:10:37,310 --> 00:10:42,970
+like as for plural as for third singular they
+are both functional morphemes you apply it
+
+105
+00:10:42,970 --> 00:10:47,290
+after a word and it has a particular grammatical
+meaning but it may not be a syman[tic]- it
+
+106
+00:10:47,290 --> 00:10:57,860
+may not contain a semantic meaning as such
+now so based on whatever kind of affixes that
+
+107
+00:10:57,860 --> 00:11:04,820
+you that you apply to a word (Refer Time:11:00)
+you will generate a new word ok so for example
+
+108
+00:11:04,820 --> 00:11:19,250
+if i if i have a word walk and i apply a suffix
+i n g i get a new word like walking ok so
+
+109
+00:11:19,250 --> 00:11:26,490
+there is a process that converts a word walk
+to walking ok so by putting certain morphology
+
+110
+00:11:26,490 --> 00:11:37,920
+here now take another example i take a verb
+like drive and i i add some affix and make
+
+111
+00:11:37,920 --> 00:11:48,890
+a new word like driver so now what is the
+differences that you see in the two processes
+
+112
+00:11:48,890 --> 00:11:55,400
+ok so we can call it may be e r drive plus
+e r that gives you driver so from drive we
+
+113
+00:11:55,400 --> 00:11:59,021
+can creating driver verses from walk you are
+creating walking so what is the difference
+
+114
+00:11:59,021 --> 00:12:04,240
+that you see in the two processes (Refer Time:12:0)
+so if you think about it in the first case
+
+115
+00:12:04,240 --> 00:12:09,980
+we not changing the grammatical category of
+the word as such ok so this is a verb walk
+
+116
+00:12:09,980 --> 00:12:15,380
+it remains the verb here also walking but
+we add some grammatical information as a continuous
+
+117
+00:12:15,380 --> 00:12:22,800
+text on the continuance other hand here you
+start with the verb drive and we end up making
+
+118
+00:12:22,800 --> 00:12:28,941
+a noun you covert the category of of the verb
+itself by this process of morphology so there
+
+119
+00:12:28,941 --> 00:12:39,220
+are two different kind of morphological processes
+so this is called inflectional morphology
+
+120
+00:12:39,220 --> 00:12:47,029
+and this is called derivational morphology
+ok so so in this slide we are seeing the difference
+
+121
+00:12:47,029 --> 00:12:52,620
+between between these so so they they they
+give you the relation between two words that
+
+122
+00:12:52,620 --> 00:12:55,959
+you have you have created first case you have
+created from walk to walking so what is the
+
+123
+00:12:55,959 --> 00:12:59,830
+relation between these two words second case
+you created drive to driver what is the relation
+
+124
+00:12:59,830 --> 00:13:06,750
+between these two words (Refer Time:13:00)
+so in flectional morphology if makes changes
+
+125
+00:13:06,750 --> 00:13:11,750
+in the terms of numbers tens case and gender
+ok so for example if you start with the word
+
+126
+00:13:11,750 --> 00:13:19,360
+verb bring you can alter the case you can
+have brought you can have third person singular
+
+127
+00:13:19,360 --> 00:13:25,580
+brings and so on so they do not ah change
+the ah category of this word so but you add
+
+128
+00:13:25,580 --> 00:13:30,170
+some more grammatical information that is
+all so this is called inflectional morphology
+
+129
+00:13:30,170 --> 00:13:34,450
+you are adding certain inflectional information
+only in the grammatical sense that is not
+
+130
+00:13:34,450 --> 00:13:38,790
+change in the category of the word on the
+other hand you have derivational morphology
+
+131
+00:13:38,790 --> 00:13:44,870
+where you create some new words and you also
+change the change the category of the word
+
+132
+00:13:44,870 --> 00:13:50,089
+so this is called part of speech that we will
+take up in the same week in in the in the
+
+133
+00:13:50,089 --> 00:13:55,450
+fourth module so it changes the category of
+the word so for example from logic you can
+
+134
+00:13:55,450 --> 00:14:00,370
+make logical and illogical logicality logician
+and all that and there you can you can see
+
+135
+00:14:00,370 --> 00:14:03,570
+(Refer Time:14:00) the do not have the same
+category all these words they have they are
+
+136
+00:14:03,570 --> 00:14:10,680
+different categories one is noun adverb and
+and so on adjective
+
+137
+00:14:10,680 --> 00:14:15,770
+in general derivational morphology is also
+fairly systematic like inflectional morphology
+
+138
+00:14:15,770 --> 00:14:22,220
+but sometimes certain derivations will be
+missing ok so for example here is here is
+
+139
+00:14:22,220 --> 00:14:30,500
+some nice examples so if i take the word sincere
+i can make sincerity scarce scarcity curious
+
+140
+00:14:30,500 --> 00:14:35,980
+curiosity but from fierce you should not use
+like fiercity ok although it is very very
+
+141
+00:14:35,980 --> 00:14:40,350
+if it looks very very regular if you starts
+seen from the previous words so they are pretty
+
+142
+00:14:40,350 --> 00:14:46,000
+regular but some words do not have the corresponding
+derivational words
+
+143
+00:14:46,000 --> 00:14:52,430
+now so we are talked about whatever the various
+kind of morphemes ok and what are the process
+
+144
+00:14:52,430 --> 00:14:58,620
+what are the different types of affixes that
+you can apply but in general what are the
+
+145
+00:14:58,620 --> 00:15:02,720
+various morphological process that are involved
+(Refer Time:15:00) to convert one word into
+
+146
+00:15:02,720 --> 00:15:10,410
+another word ok so so we will talk about this
+so for so one simple process is called concatenation
+
+147
+00:15:10,410 --> 00:15:15,649
+so we will take various morphemes and concatenate
+together to make a new new morpheme ok so
+
+148
+00:15:15,649 --> 00:15:21,860
+for example happy un you make unhappy simple
+concatenation similarly here hope and less
+
+149
+00:15:21,860 --> 00:15:28,290
+together make hopeless and un happy make unhappy
+and anti capital i s t and s these four morphemes
+
+150
+00:15:28,290 --> 00:15:35,330
+if you concatenate together and then make
+a single word or singular morpheme
+
+151
+00:15:35,330 --> 00:15:43,529
+so now then we are combining the different
+morphemes together at the boundary or when
+
+152
+00:15:43,529 --> 00:15:50,870
+they are combined there may be certain changes
+ok the changes can be in in the way the final
+
+153
+00:15:50,870 --> 00:15:55,660
+word is pronounced or in the way the final
+word is writen so there is two are called
+
+154
+00:15:55,660 --> 00:16:01,260
+fundamic changes and graphemic changes graphemic
+in the terms how the word is written (Refer
+
+155
+00:16:01,260 --> 00:16:05,861
+Time:16:00) and phenomic in the way word is
+pronounced so here some examples so if i take
+
+156
+00:16:05,861 --> 00:16:14,579
+a word book and if morpheme book and a morpheme
+s if i combined together i get books so s
+
+157
+00:16:14,579 --> 00:16:21,220
+see the pronunciation if i take shoe and s
+i get shoes so here it is not s it is za it
+
+158
+00:16:21,220 --> 00:16:26,910
+is a different phonyms that terms so there
+are certain changes that happen at the boundary
+
+159
+00:16:26,910 --> 00:16:32,829
+in terms of how the word is pronounced similarly
+if i take word like happy and e r these change
+
+160
+00:16:32,829 --> 00:16:39,850
+at the graphic graphemiclable so where in
+the grapheme y changes to i so this is also
+
+161
+00:16:39,850 --> 00:16:47,470
+called simply spelling change at the at the
+morpheme boundary so this can happen there
+
+162
+00:16:47,470 --> 00:16:54,660
+are some morphological processes also like
+reduplication so then we adding in a suffix
+
+163
+00:16:54,660 --> 00:16:59,810
+you might do reduplication somewhere in the
+stem
+
+164
+00:16:59,810 --> 00:17:06,929
+so example is (Refer Time:17:00) like in number
+language if i take a word go or look if i
+
+165
+00:17:06,929 --> 00:17:13,480
+want to say examine with attention i will
+say i will just repeat the go go similarly
+
+166
+00:17:13,480 --> 00:17:19,870
+in tagalog you have basa for read and if i
+want to say will read i will i will read duplicate
+
+167
+00:17:19,870 --> 00:17:28,299
+ba ba ba sa so you reduplicating one part
+ok in sanskrit again this is very common phenomena
+
+168
+00:17:28,299 --> 00:17:35,759
+or reduplication i take the word like much
+that is to cook and if i if i want to converted
+
+169
+00:17:35,759 --> 00:17:42,749
+it to the perfect form cooked i will reduplicate
+the pa and i say papaca so you see the word
+
+170
+00:17:42,749 --> 00:17:49,529
+pa is reduplicated they can be reduplication
+also ah in in certain languages also ok example
+
+171
+00:17:49,529 --> 00:17:54,710
+in telugu so certain phrase is repeated again
+so for example i want to say the child fell
+
+172
+00:17:54,710 --> 00:18:03,720
+down while walking so here i say [FL] so here
+[FL] is being repeated twice for saying while
+
+173
+00:18:03,720 --> 00:18:14,679
+walking ok there are other morphological like
+suppletion where a word is completely ah replaced
+
+174
+00:18:14,679 --> 00:18:21,179
+by something that has no connection at the
+ah surface lavel so i have a word like go
+
+175
+00:18:21,179 --> 00:18:25,409
+and i am converting into the past tense and
+it becomes went so you cannot find any connection
+
+176
+00:18:25,409 --> 00:18:30,460
+go and went and this are surface label this
+is simple supplition similarly with good i
+
+177
+00:18:30,460 --> 00:18:38,039
+can make better ok and there are many examples
+in english for this sometimes there some internal
+
+178
+00:18:38,039 --> 00:18:44,340
+changes in the morpheme so from from sing
+you want convert the plural you will so from
+
+179
+00:18:44,340 --> 00:18:52,900
+sing you can get sang and sung for different
+ten tenses and from men to converted to plural
+
+180
+00:18:52,900 --> 00:19:00,679
+and you get m e n ok and from goose you get
+geese for converting to plural so you see
+
+181
+00:19:00,679 --> 00:19:11,789
+there are there are changes there are in internally
+in in the word you not adding any new suffix
+
+182
+00:19:11,789 --> 00:19:16,200
+then while we are talking about word formation
+they another process called compounding so
+
+183
+00:19:16,200 --> 00:19:22,440
+that is i can take two different words and
+make a compound out of that ok and this compounding
+
+184
+00:19:22,440 --> 00:19:28,960
+can be from various part of speech for example
+in english i can two take two adjectives so
+
+185
+00:19:28,960 --> 00:19:34,239
+bitter and sweet i can make adject single
+compound bitter sweet i can take two nouns
+
+186
+00:19:34,239 --> 00:19:40,710
+rain and bow i can make a noun rainbow i can
+take a noun and verb pick and pocket and this
+
+187
+00:19:40,710 --> 00:19:51,220
+becomes a verb pickpocket ok similarly over
+do what is interesting is that these compounds
+
+188
+00:19:51,220 --> 00:19:55,519
+are very very particular to languages ok
+so let us take an example like room temperature
+
+189
+00:19:55,519 --> 00:20:00,830
+that is a that is a compound in english but
+is there a corresponding compound in hindi
+
+190
+00:20:00,830 --> 00:20:08,110
+so you you never say [FL] as a single compound
+you will say [FL] so that means so finding
+
+191
+00:20:08,110 --> 00:20:12,799
+this compound is in interesting problem for
+going to application like machine translation
+
+192
+00:20:12,799 --> 00:20:19,860
+so where you you cannot just directly convert
+the words into the equivalent ah ah target
+
+193
+00:20:19,860 --> 00:20:24,090
+languages so you cannot say room with combined
+temperature with [FL] you need to find out
+
+194
+00:20:24,090 --> 00:20:27,249
+with there is a compound there is relation
+between the two words and according to the
+
+195
+00:20:27,249 --> 00:20:35,100
+translation 
+then there is another process that is called
+
+196
+00:20:35,100 --> 00:20:43,009
+acronyms ok for example the word laser is
+an acronyms then there is blending ok
+
+197
+00:20:43,009 --> 00:20:48,049
+so your take so this is again a very common
+process linguistic so were you take two words
+
+198
+00:20:48,049 --> 00:20:53,140
+and then you combine together blend them together
+to make a new word but the you are taking
+
+199
+00:20:53,140 --> 00:20:56,909
+from both the words but you not taking the
+full words so example is breakfast and lunch
+
+200
+00:20:56,909 --> 00:21:01,759
+you can take together and make a new word
+like brunch ok similarly smoke and fog you
+
+201
+00:21:01,759 --> 00:21:09,720
+make a new word a smog motor motor and hotel
+make a word like a motel ok and there is a
+
+202
+00:21:09,720 --> 00:21:18,019
+process of clipping ok so that used a lot
+for example i have doctor doctor becomes doc
+
+203
+00:21:18,019 --> 00:21:23,850
+laboratory becomes lab and advertising because
+becomes add dormitory becomes dom and examination
+
+204
+00:21:23,850 --> 00:21:29,580
+becomes exam bicycle becomes bike and refrigerator
+becomes fridge so this is clipping so long
+
+205
+00:21:29,580 --> 00:21:36,220
+words are shortened
+so now so this is all the different processes
+
+206
+00:21:36,220 --> 00:21:42,342
+that happens in happen in morphology now so
+from the n l p prospective so we will talk
+
+207
+00:21:42,342 --> 00:21:47,840
+about how do we process of morphology so what
+do a what does it and until what processing
+
+208
+00:21:47,840 --> 00:21:53,639
+of morphology so what are different things
+that that are done so one simple thing is
+
+209
+00:21:53,639 --> 00:22:01,169
+lemmatization that is given a word can identify
+what is the root word what is the lemma ok
+
+210
+00:22:01,169 --> 00:22:06,210
+an example is is if a give me a word like
+saw can i tell what is the root word is it
+
+211
+00:22:06,210 --> 00:22:11,351
+a if it is a verb the root word what will
+be see ah but if it is a noun the root word
+
+212
+00:22:11,351 --> 00:22:19,299
+will be saw itself so you can find a what
+is the root word silly it is lemma there is
+
+213
+00:22:19,299 --> 00:22:24,109
+there is a morphological analysis also so
+that is even a word can i find out what is
+
+214
+00:22:24,109 --> 00:22:31,919
+the corresponding lemma along with morphological
+category of that word ok so it is particular
+
+215
+00:22:31,919 --> 00:22:38,700
+tag so example is i take a verb word like
+saw can i tell the the lemma is see and this
+
+216
+00:22:38,700 --> 00:22:45,249
+a past tense of that verb or saw is the lemma
+and it is a noun singular noun so this is
+
+217
+00:22:45,249 --> 00:22:52,419
+morphological analysis of the given word
+then there is a process called tagging so
+
+218
+00:22:52,419 --> 00:23:01,609
+where i find out what is the actual ah so
+what is the actual category of this word so
+
+219
+00:23:01,609 --> 00:23:06,879
+the difference here is from the morphology
+analysis that i also have to disambiguate
+
+220
+00:23:06,879 --> 00:23:12,460
+so morphological analysis you saw i was giving
+two different possibilities in tagging i have
+
+221
+00:23:12,460 --> 00:23:18,210
+to further find out what is the actual correct
+grammatical category here so i have a sentence
+
+222
+00:23:18,210 --> 00:23:24,070
+is peter saw her i know the word saw can be
+either a noun or verb and we also so their
+
+223
+00:23:24,070 --> 00:23:31,080
+lemmas but can i say can i tell in this particular
+context the word saw will only be a verb and
+
+224
+00:23:31,080 --> 00:23:36,320
+not a noun so can i do the actual disambiguation
+also this is that is how tagging is different
+
+225
+00:23:36,320 --> 00:23:43,070
+from the morphological analysis and then we
+have a morphological segmentation where given
+
+226
+00:23:43,070 --> 00:23:48,769
+a word i can segment to with different morpheme
+that involved so i have a word like denationalization
+
+227
+00:23:48,769 --> 00:23:55,830
+i said de nation a l i z ation they are different
+morphemes that are in this word so in general
+
+228
+00:23:55,830 --> 00:24:01,340
+among all these processes so part of speech
+tagging is very very popular so will words
+
+229
+00:24:01,340 --> 00:24:06,820
+sometime for that and before that we will
+quickly see what is ah morphological analysis
+
+230
+00:24:06,820 --> 00:24:14,010
+lemmatization how it is done
+ok and finally there is also these process
+
+231
+00:24:14,010 --> 00:24:20,269
+of generalization where i can take a word
+a root word and a particular grammatical category
+
+232
+00:24:20,269 --> 00:24:25,700
+and i have to generate a a a new word from
+this so see ah and i want to generate past
+
+233
+00:24:25,700 --> 00:24:31,509
+tense i want to find out saw ok in n l p it
+is not very popular unless you are talking
+
+234
+00:24:31,509 --> 00:24:39,440
+about national language generation where you
+might want to use this ok so ya before going
+
+235
+00:24:39,440 --> 00:24:44,259
+into the process what might be the application
+for doing this why should we be interested
+
+236
+00:24:44,259 --> 00:24:50,409
+in doing morphological analysis for example
+text to speech synthesis ok so what is text
+
+237
+00:24:50,409 --> 00:24:56,429
+to speech synthesis you have seen something
+that is written and you have to find produce
+
+238
+00:24:56,429 --> 00:25:01,109
+the corresponding is speech speech for that
+so now if you have a word like lead written
+
+239
+00:25:01,109 --> 00:25:07,769
+somewhere now depending on whether it is a
+noun or a verb you will have a different pronunciation
+
+240
+00:25:07,769 --> 00:25:13,989
+for that ok lead verses led depending on noun
+or a verb so it is important of find out from
+
+241
+00:25:13,989 --> 00:25:22,559
+the text whether it is a noun or verb ok same
+thing goes with read ok read verses red in
+
+242
+00:25:22,559 --> 00:25:27,769
+general it is very important for other things
+likes search and information retrieval ok
+
+243
+00:25:27,769 --> 00:25:34,179
+so might want to use the a morphological category
+to reduce the certain space ok and also machine
+
+244
+00:25:34,179 --> 00:25:40,669
+translation we saw some example and especially
+because if you know the morphological category
+
+245
+00:25:40,669 --> 00:25:45,789
+you can find out the for the target languages
+what is corresponding affix is or different
+
+246
+00:25:45,789 --> 00:25:51,190
+words that is being used in that languages
+and grammatical error correction and and all
+
+247
+00:25:51,190 --> 00:25:56,159
+that so if you if you know what is the morphological
+category of this word in the whatever is written
+
+248
+00:25:56,159 --> 00:26:01,200
+if you can find out this is not the correct
+morphology that is use you can try to correct
+
+249
+00:26:01,200 --> 00:26:11,529
+it
+so now what is morphological analysis so this
+
+250
+00:26:11,529 --> 00:26:19,129
+is have seen earlier so as i input we have
+words like cats cat citizen so on and as an
+
+251
+00:26:19,129 --> 00:26:25,549
+output i want to find out given a word like
+cats what is the root verb here cat what is
+
+252
+00:26:25,549 --> 00:26:30,789
+category noun and it is a plural cat plus
+n plus p l something like that so in this
+
+253
+00:26:30,789 --> 00:26:36,599
+table so if i am a given input in the left
+as per the left column i want a output like
+
+254
+00:26:36,599 --> 00:26:44,479
+the right column ok so so the output that
+i will generate will contain additional information
+
+255
+00:26:44,479 --> 00:26:50,520
+like this i0073 noun this is singular for
+s g for singular p l for plural and v for
+
+256
+00:26:50,520 --> 00:26:55,940
+verb like that so this is all the information
+that i want to get from the from the given
+
+257
+00:26:55,940 --> 00:27:02,659
+word now what might be the issues involved
+while doing morphological analysis one particular
+
+258
+00:27:02,659 --> 00:27:09,220
+problem is that it is not very very regular
+for example from the word boy i can get plural
+
+259
+00:27:09,220 --> 00:27:16,830
+boys but what happens if i taken input like
+fly i get flies f l i e s ok so this you see
+
+260
+00:27:16,830 --> 00:27:23,700
+that they are following two different sort
+of tools for doing changes at the bounding
+
+261
+00:27:23,700 --> 00:27:28,720
+similarly if i take the word like toiling
+i can get toil but what happens if i give
+
+262
+00:27:28,720 --> 00:27:34,399
+an input like duckling should i used same
+sort of full to get duckl that is not correct
+
+263
+00:27:34,399 --> 00:27:39,159
+of english word ok so how do i know the duckling
+is not a correct english word when an input
+
+264
+00:27:39,159 --> 00:27:47,239
+like a duckling is provides to my system similarly
+from getter i get g e t plus e r from doer
+
+265
+00:27:47,239 --> 00:27:54,590
+d o plus e r but what happens if given input
+like beer do i output like b e plus e r so
+
+266
+00:27:54,590 --> 00:27:58,609
+these are some of the issues that involved
+in processing morphology now if i have to
+
+267
+00:27:58,609 --> 00:28:02,989
+solve these issues what is what are the different
+knowledge that i need to have
+
+268
+00:28:02,989 --> 00:28:09,969
+so so i need to have some knowledge on what
+are the different words or fruits in english
+
+269
+00:28:09,969 --> 00:28:15,570
+ok so for example i need to know that duck
+is a possible root but duckl is not a possible
+
+270
+00:28:15,570 --> 00:28:21,909
+root in english so we need some sort of dictionary
+or lexicon of english what are different nouns
+
+271
+00:28:21,909 --> 00:28:28,639
+and verbs etcetera in english what else i
+need to have some knowledge of morpho techniques
+
+272
+00:28:28,639 --> 00:28:34,269
+what is morpho techniques that is which kind
+of morphemes follow other kind of morphemes
+
+273
+00:28:34,269 --> 00:28:40,870
+for example if i have to convert a noun to
+plural i know plural morphems always follow
+
+274
+00:28:40,870 --> 00:28:50,869
+the noun so this is the morphotactics information
+which morpheme follows are the morphemes then
+
+275
+00:28:50,869 --> 00:28:54,639
+i also need to have this information that
+some endings go only on certain words not
+
+276
+00:28:54,639 --> 00:28:58,489
+on everything
+so on d o i can apply e r to get doer but
+
+277
+00:28:58,489 --> 00:29:05,389
+on b e on the verb b e i cannot apply e r
+to get a word like beer so this is again these
+
+278
+00:29:05,389 --> 00:29:12,210
+constraints also i need to have and then i
+need to some worry about spell spelling change
+
+279
+00:29:12,210 --> 00:29:18,229
+rules so then whenever i have word like get
+i apply e r it converts to getter so there
+
+280
+00:29:18,229 --> 00:29:25,490
+is just duplication on of duplication of the
+ending t
+
+281
+00:29:25,490 --> 00:29:30,789
+so now so one question you might have is that
+ok why cant i put everything together in a
+
+282
+00:29:30,789 --> 00:29:36,559
+big lexicon so that is all the root words
+all their morphological variants why cannot
+
+283
+00:29:36,559 --> 00:29:40,309
+they already put in a big lexicon and there
+i can search even new word i can search in
+
+284
+00:29:40,309 --> 00:29:46,099
+the lexicon find out what is the actual word
+and its category if they are finite by country
+
+285
+00:29:46,099 --> 00:29:53,190
+do that so there are two different reasons
+why this may not be very good solution so
+
+286
+00:29:53,190 --> 00:29:58,669
+one is if you take any language like english
+it is very easy so where for a given but they
+
+287
+00:29:58,669 --> 00:30:05,440
+are not many variations in terms of morphology
+so ah so this is some strategies from a data
+
+288
+00:30:05,440 --> 00:30:11,330
+set that in english there are roughly you
+take ninety thousand lexical entries and you
+
+289
+00:30:11,330 --> 00:30:15,669
+will find out all the possible morphological
+forms that you can generate then you find
+
+290
+00:30:15,669 --> 00:30:19,960
+a ratio of three point five two one that is
+from word you can generate roughly three point
+
+291
+00:30:19,960 --> 00:30:26,889
+five more very to variants including that
+word in english but this is not true for other
+
+292
+00:30:26,889 --> 00:30:32,289
+languages for example the same thing if you
+do for sanskrit you have a lexicon of one
+
+293
+00:30:32,289 --> 00:30:36,840
+seventy thousand entries but if you try to
+derive the forms so the ratio that you come
+
+294
+00:30:36,840 --> 00:30:41,370
+up with is something like sixty four point
+seven is to one ok so the eleven million forms
+
+295
+00:30:41,370 --> 00:30:46,289
+that are generate so these are huge in number
+ok so sixty four is a very big ratio in comparison
+
+296
+00:30:46,289 --> 00:30:53,259
+to three points five but again this may for
+now it may not be a very big number again
+
+297
+00:30:53,259 --> 00:30:58,539
+ok you can still argue that this might this
+will it be put in a big lexicon and and you
+
+298
+00:30:58,539 --> 00:31:04,840
+can search over that but there is another
+problem ok that is you can keep on coining
+
+299
+00:31:04,840 --> 00:31:09,729
+new words and apply the same morphological
+processes to generate its forms and you do
+
+300
+00:31:09,729 --> 00:31:14,679
+not know these words a prior so you cannot
+store their morphological variants in the
+
+301
+00:31:14,679 --> 00:31:20,009
+lexicon so on the other hand if you can store
+the what kind of rules in valued for mailing
+
+302
+00:31:20,009 --> 00:31:26,839
+from a word to its plural given a new plural
+form you can try to find out its original
+
+303
+00:31:26,839 --> 00:31:30,609
+root word ok
+so that is why we will be studying what kind
+
+304
+00:31:30,609 --> 00:31:38,109
+of methods are possibly used and the one of
+the most popular method in this field of computation
+
+305
+00:31:38,109 --> 00:31:44,851
+morphology finally state methods ok so this
+was very very popular earlier first the language
+
+306
+00:31:44,851 --> 00:31:50,070
+like english also and and later on for other
+languages like indian languages another european
+
+307
+00:31:50,070 --> 00:31:56,200
+language so even now if you talk about processing
+the morphology methods are one of the most
+
+308
+00:31:56,200 --> 00:32:02,739
+popular choices so fine so in this lecture
+we talked about composition morphology what
+
+309
+00:32:02,739 --> 00:32:07,881
+are the linguistics terminologies and and
+what is the process as such what is the n
+
+310
+00:32:07,881 --> 00:32:13,390
+l p perspective there and in the next lecture
+we will talk about how do i use final state
+
+311
+00:32:13,390 --> 00:32:15,210
+methods for this processing ok
+thank you
+

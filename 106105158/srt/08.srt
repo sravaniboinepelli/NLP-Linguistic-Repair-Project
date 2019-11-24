@@ -1,0 +1,1541 @@
+1
+00:00:15,830 --> 00:00:22,380
+ok so welcome back for the third lecture of
+this week so in the last lecture we talked
+
+2
+00:00:22,380 --> 00:00:29,060
+about what are the various variations of a
+edit distance that you might be using in general
+
+3
+00:00:29,060 --> 00:00:35,790
+ok so today we will now talk about very extended
+algorithm for doing a spelling correction
+
+4
+00:00:35,790 --> 00:00:42,570
+so in general when i talk about spelling correction
+i might be talking about isolated word reduction
+
+5
+00:00:42,570 --> 00:00:51,290
+or correction that is a word without the context
+even there it might be a word that is in my
+
+6
+00:00:51,290 --> 00:00:57,510
+vocabulary or not in my vocabulary ok so we
+will see examples for that or i might talk
+
+7
+00:00:57,510 --> 00:01:03,580
+about doing correction in the context there
+again a word might be in the vocabulary or
+
+8
+00:01:03,580 --> 00:01:09,290
+out of the vocabulary and and we will see
+how this this simple approach of noisy channel
+
+9
+00:01:09,290 --> 00:01:19,960
+model can be applied for doing a spelling
+correction ok
+
+10
+00:01:19,960 --> 00:01:29,600
+now what is my noisy channel model so if you
+if you think of the the model name what is
+
+11
+00:01:29,600 --> 00:01:35,290
+happening we having a observation x that is
+a word that is misspelled and you want to
+
+12
+00:01:35,290 --> 00:01:41,130
+correct it that is your observation but what
+what is the idea of this model so whenever
+
+13
+00:01:41,130 --> 00:01:46,840
+have a miss spelling you wanted to write a
+correct word ok and you went through a channel
+
+14
+00:01:46,840 --> 00:01:51,560
+that can be your keyboard or something else
+and that's how you mod your word got miss
+
+15
+00:01:51,560 --> 00:01:59,810
+spelled so that is what you are assuming you
+have a correct word w ok this is your correct
+
+16
+00:01:59,810 --> 00:02:14,090
+word and you have a incorrect word x that
+is your observation yes now you wanted to
+
+17
+00:02:14,090 --> 00:02:20,940
+type this correct word w but you went through
+a channel and this we are saying is a noisy
+
+18
+00:02:20,940 --> 00:02:24,421
+channel and you are making some mistake while
+going through this channel and the word that
+
+19
+00:02:24,421 --> 00:02:30,590
+you are observing is x but not w now your
+observation in x now given this observation
+
+20
+00:02:30,590 --> 00:02:38,300
+x how do i find out what is my mostly slightly
+candidate for w what is my w ok
+
+21
+00:02:38,300 --> 00:02:43,691
+so in general how can i try to up to this
+problem i am seeing a word x that i know it
+
+22
+00:02:43,691 --> 00:02:50,920
+is miss spelt now how do i know it is miss
+spelt one two way of doing that is i maintained
+
+23
+00:02:50,920 --> 00:02:56,370
+a dictionary that that is my set of all the
+words my vocabulary and if the word x does
+
+24
+00:02:56,370 --> 00:03:01,770
+not match with any of this word i say this
+might be in misspelled ok now once i know
+
+25
+00:03:01,770 --> 00:03:08,200
+x is a misspelled word that means i have to
+correct it now what are i have to first started
+
+26
+00:03:08,200 --> 00:03:13,730
+with ah what are all the possible candidates
+for correction so suppose possible there could
+
+27
+00:03:13,730 --> 00:03:19,680
+be i find out all the words within the added
+distance of something ok now among those which
+
+28
+00:03:19,680 --> 00:03:25,620
+one is the most slightly candidate ok so so
+in terms of noisy channel model what is the
+
+29
+00:03:25,620 --> 00:03:34,340
+w from which x has been written written so
+miss spelt and and we wrote x so in terms
+
+30
+00:03:34,340 --> 00:03:40,280
+of noisy channel model i want to find out
+w hat that gives me the maximum probability
+
+31
+00:03:40,280 --> 00:03:49,020
+p w given x among all the possible words in
+my vocabulary or it can be in my set of candidates
+
+32
+00:03:49,020 --> 00:03:51,989
+what is the what that gives me the maximum
+value for p w given x
+
+33
+00:03:51,989 --> 00:03:59,700
+now how do i compute this probability p w
+given x you see as for the noisy channel model
+
+34
+00:03:59,700 --> 00:04:05,970
+i first started with the word w and then i
+went through the channel and i ended up with
+
+35
+00:04:05,970 --> 00:04:14,300
+the word x so i can only find out using my
+channel what is the probability of x given
+
+36
+00:04:14,300 --> 00:04:23,300
+w ok i will have to somehow used to find out
+probability of w given x yes so what is a
+
+37
+00:04:23,300 --> 00:04:30,440
+particular theorem in probability that you
+can use for is so remember bayes theorem so
+
+38
+00:04:30,440 --> 00:04:35,660
+i i want to find out probably w given x but
+i already can find out from my channel probability
+
+39
+00:04:35,660 --> 00:04:48,839
+of x given w so how do i write p w x in this
+term so i say this will be p x given w p w
+
+40
+00:04:48,839 --> 00:04:56,789
+divide by p x yes so i will i can replace
+i by argmax of this
+
+41
+00:04:56,789 --> 00:05:09,249
+now what is your variable here the variable
+is w you can have multiple different words
+
+42
+00:05:09,249 --> 00:05:14,979
+but your x remains the same for each individual
+word so what in fact you are trying to do
+
+43
+00:05:14,979 --> 00:05:19,650
+for each word your completing this value and
+then you are seeing that is the maximum value
+
+44
+00:05:19,650 --> 00:05:25,060
+which word gives you the maximum value now
+among the three different probabilities that
+
+45
+00:05:25,060 --> 00:05:34,909
+you are using for this formula which one you
+might remove for this computation is it the
+
+46
+00:05:34,909 --> 00:05:40,759
+probability p x remains the consent across
+all the words so it will not matter to my
+
+47
+00:05:40,759 --> 00:05:45,220
+decision of which one is having the highest
+probability because this was the simply depend
+
+48
+00:05:45,220 --> 00:05:54,169
+on this particular multiplication so i can
+as well remove p x and keep my argument ok
+
+49
+00:05:54,169 --> 00:06:01,699
+and that's how we actually use
+
+50
+00:06:01,699 --> 00:06:07,930
+ok so i write it like that and i remove the
+probability p x and that's how that's so how
+
+51
+00:06:07,930 --> 00:06:13,199
+i will find out which one is the correct word
+w for x which give me the maximum probability
+
+52
+00:06:13,199 --> 00:06:21,259
+for probability x given w times probability
+w so now i will we will see how do we compute
+
+53
+00:06:21,259 --> 00:06:29,069
+these probabilities individually what are
+the various which we can compute this probabilities
+
+54
+00:06:29,069 --> 00:06:34,240
+ok so so we are taking about non word spelling
+errors
+
+55
+00:06:34,240 --> 00:06:40,099
+so again what do i mean by non word spelling
+errors a word that is not in the dictionary
+
+56
+00:06:40,099 --> 00:06:44,560
+or my vocabulary and i know ok this might
+by misspelled word suppose i have taken the
+
+57
+00:06:44,560 --> 00:06:50,780
+word here actress ok so actress is not in
+the dictionary it can be actress across or
+
+58
+00:06:50,780 --> 00:06:55,479
+whatever but we do not know so this is the
+observation that we made now using noisy channel
+
+59
+00:06:55,479 --> 00:07:01,409
+model i want to find out what should have
+been the correct word ok so now the first
+
+60
+00:07:01,409 --> 00:07:06,960
+thing i will needed to do i will need to find
+out what are the candidate words that might
+
+61
+00:07:06,960 --> 00:07:09,289
+be correct ok
+
+62
+00:07:09,289 --> 00:07:14,399
+so how do i find the candidate words i will
+try to find out words that are having similar
+
+63
+00:07:14,399 --> 00:07:21,719
+spellings that are having small edit distances
+ok or i might try to use the words that are
+
+64
+00:07:21,719 --> 00:07:28,729
+having similar pronunciation so both of these
+are possible so then i make some sort of candidate
+
+65
+00:07:28,729 --> 00:07:34,449
+set so suppose i have ten different words
+that might have given to actress so these
+
+66
+00:07:34,449 --> 00:07:38,089
+are my [var/various] various candidates for
+w and i need to use the noisy channel model
+
+67
+00:07:38,089 --> 00:07:44,460
+to find out which one is the most slightly
+candidate
+
+68
+00:07:44,460 --> 00:07:52,460
+so and suppose i am using might d l at a distance
+ok this is small variation of my levenshtein
+
+69
+00:07:52,460 --> 00:07:58,440
+distance remember levenshtein distance what
+were the operations we at insertion deletion
+
+70
+00:07:58,440 --> 00:08:06,919
+and substitution in this particular ah edit
+distance we also have the transposition ok
+
+71
+00:08:06,919 --> 00:08:13,119
+so insertion deletion substitution and transposition
+of two adjacent correct words so we discussed
+
+72
+00:08:13,119 --> 00:08:18,889
+about how to how to modify our dynamic problem
+algorithm to take into count of this transposition
+
+73
+00:08:18,889 --> 00:08:25,469
+in the in the last lecture so now so given
+to two strings i i can always find out what
+
+74
+00:08:25,469 --> 00:08:32,690
+is the ah word so given a string i can find
+out what are the other words that come within
+
+75
+00:08:32,690 --> 00:08:41,409
+additions of one or two ok so suppose i start
+with actress that is my observation in correct
+
+76
+00:08:41,409 --> 00:08:48,960
+word i try to find out that are the algo candidates
+are come with a additions of one ok
+
+77
+00:08:48,960 --> 00:09:00,100
+so here is i have here is the word acress
+now i find the words like actress cress caress
+
+78
+00:09:00,100 --> 00:09:07,960
+access across acres and acres occurs twice
+in this list why and we will see that let
+
+79
+00:09:07,960 --> 00:09:14,060
+us try to understand first candidate word
+actress so that does we written here so we
+
+80
+00:09:14,060 --> 00:09:20,840
+have written so this is my correct word this
+is my incorrect word so what change did i
+
+81
+00:09:20,840 --> 00:09:27,400
+make for going from correct word to incorrect
+word so i went i had a letter t in my correct
+
+82
+00:09:27,400 --> 00:09:35,300
+word but it repla i replace it with null so
+this is an deletion i delete it t from my
+
+83
+00:09:35,300 --> 00:09:38,890
+correct word so that's why this is deletion
+ok
+
+84
+00:09:38,890 --> 00:09:45,340
+similarly how would i go from cress to actress
+i have to have insert a so this is the again
+
+85
+00:09:45,340 --> 00:09:52,780
+insertion yes similarly how i go from caress
+to acress i am doing a transposition so c
+
+86
+00:09:52,780 --> 00:10:02,980
+a change to a c transposition acress access
+to acress c got change into r across to acress
+
+87
+00:10:02,980 --> 00:10:12,260
+o got change to e now so why there were two
+acres you see acres to [acr/acress] acress
+
+88
+00:10:12,260 --> 00:10:21,210
+i can go by doing one insertion but insertion
+can happen at two points it can happen either
+
+89
+00:10:21,210 --> 00:10:30,760
+here or it can happen here and these two will
+have different probabilities ok remember with
+
+90
+00:10:30,760 --> 00:10:36,310
+the probabilities of substitution will depend
+on what is the pervious word that what is
+
+91
+00:10:36,310 --> 00:10:41,220
+the pervious character in this word ok so
+they will different probabilities that's why
+
+92
+00:10:41,220 --> 00:10:46,480
+they are two different insertions ok
+
+93
+00:10:46,480 --> 00:10:54,460
+now so that means whenever i have a misspelled
+word i have to first generate all the possible
+
+94
+00:10:54,460 --> 00:11:00,460
+candidates ok so so there we try to use some
+sort of a statistics how many different candidates
+
+95
+00:11:00,460 --> 00:11:06,940
+should i be using so so the general statistics
+is that eighty percent of the errors are within
+
+96
+00:11:06,940 --> 00:11:13,270
+distance of one and nearly all the errors
+are within the additions of two so that means
+
+97
+00:11:13,270 --> 00:11:20,670
+i can mostly try to use the candidates within
+a additions of one or two ok may be one will
+
+98
+00:11:20,670 --> 00:11:25,480
+do for most of the cases so that's what we
+did in the pervious example starting from
+
+99
+00:11:25,480 --> 00:11:31,230
+acress we found out all the candidates with
+in a additions of one and while generating
+
+100
+00:11:31,230 --> 00:11:36,550
+the candidates i might also allow for deletion
+of space or hyphen so if i a word like this
+
+101
+00:11:36,550 --> 00:11:42,120
+idea without a space i might allow this idea
+with this space and similarly for hyphens
+
+102
+00:11:42,120 --> 00:11:52,130
+and not with a hyphen so now now when we are
+trying to compute the probabilities we had
+
+103
+00:11:52,130 --> 00:11:59,550
+two different terms probability of x given
+w and probability of w so you will first see
+
+104
+00:11:59,550 --> 00:12:04,590
+how do we compute probability of x given w
+now suppose we are taking the simple case
+
+105
+00:12:04,590 --> 00:12:12,550
+where there are ah only one this only one
+edit operation from the input string or the
+
+106
+00:12:12,550 --> 00:12:15,910
+correct word to the incorrect word
+
+107
+00:12:15,910 --> 00:12:21,240
+so what do i mean by probability of x given
+w i would mean what is the probability of
+
+108
+00:12:21,240 --> 00:12:26,760
+that edit operation being done so remember
+we had four operations insertion deletion
+
+109
+00:12:26,760 --> 00:12:31,530
+substitution and transposition so we need
+to define probabilities for each of these
+
+110
+00:12:31,530 --> 00:12:40,130
+so here that's what we are defining we are
+defining deletion over x y what do i mean
+
+111
+00:12:40,130 --> 00:12:50,610
+by that whenever in the input string a input
+word i had the sequence x y this is my correct
+
+112
+00:12:50,610 --> 00:12:59,990
+and it got typed as x this is my incorrect
+so x y got typed as x so this is i have deleted
+
+113
+00:12:59,990 --> 00:13:06,500
+y so this will depend on the pervious character
+x in the correction
+
+114
+00:13:06,500 --> 00:13:16,600
+similarly what about insertion i had x in
+the correct and i inserted y in the incorrect
+
+115
+00:13:16,600 --> 00:13:25,370
+so this is the case of insertion substitution
+x got typed as y so i had x in my correction
+
+116
+00:13:25,370 --> 00:13:34,230
+i got typed as y in my in correct decision
+what is transposition again x y here incorrect
+
+117
+00:13:34,230 --> 00:13:40,060
+got typed as y x in my incorrect so these
+are the four different possibilities if i
+
+118
+00:13:40,060 --> 00:13:46,470
+am having only one edit operation between
+the two strings so now the question is how
+
+119
+00:13:46,470 --> 00:13:53,190
+do i find out probability of a particular
+ah deletion or insertion operation so let
+
+120
+00:13:53,190 --> 00:13:57,510
+us take one of these and see how do how we
+will actually find out find out these probabilities
+
+121
+00:13:57,510 --> 00:14:04,660
+so let us take the simple case of deletion
+so how do i found probability that in a in
+
+122
+00:14:04,660 --> 00:14:11,420
+a string a charact a set of characters x y
+a character bigram i can also say it is a
+
+123
+00:14:11,420 --> 00:14:15,070
+hecta bigram got converted to only x
+
+124
+00:14:15,070 --> 00:14:20,830
+so how i will feel find out this probability
+so we will have to see in general in corpus
+
+125
+00:14:20,830 --> 00:14:28,500
+how likely is this error so now what kind
+of data do i need to count to find this probability
+
+126
+00:14:28,500 --> 00:14:34,190
+so i need some sort of data were you just
+have written some texts and they made some
+
+127
+00:14:34,190 --> 00:14:42,370
+mistakes not knowingly ok so they made some
+mistakes that if general people do and somebody
+
+128
+00:14:42,370 --> 00:14:49,779
+has then seen this corpus and tried to correct
+it ok so suppose i have a corpus that is ah
+
+129
+00:14:49,779 --> 00:15:01,570
+corpus is a real corpus and that contains
+various errors and then i also have a corrected
+
+130
+00:15:01,570 --> 00:15:08,110
+corpus
+
+131
+00:15:08,110 --> 00:15:12,820
+now how will i use these two different corpora
+to find out the probability of deletion x
+
+132
+00:15:12,820 --> 00:15:25,760
+y i will say how many times do i seen my corrected
+corpus a word containing the bigram x y for
+
+133
+00:15:25,760 --> 00:15:35,340
+which the corresponding word in my actual
+real corpus had only x that means actually
+
+134
+00:15:35,340 --> 00:15:43,130
+the word should have been have having x y
+but it was remains x so how will compute the
+
+135
+00:15:43,130 --> 00:15:50,180
+probability i will see in my real corpus how
+many times i have this corrected bigram x
+
+136
+00:15:50,180 --> 00:15:57,000
+y and out of those how many times y was deleted
+in my real corpus and that will give me the
+
+137
+00:15:57,000 --> 00:16:04,250
+probability that how after x what is the probability
+that y is deleted so whenever how many times
+
+138
+00:16:04,250 --> 00:16:10,710
+x y occurred together out those how many cases
+y was deleted as similarly i will find out
+
+139
+00:16:10,710 --> 00:16:15,730
+find it out for all cases of insertion substitution
+and transposition
+
+140
+00:16:15,730 --> 00:16:23,800
+so let us see the actual matrices ok so you
+are seeing again insertion deletion are conditioned
+
+141
+00:16:23,800 --> 00:16:31,930
+on the pervious character ok so that's how
+i find out the probability of x given w x
+
+142
+00:16:31,930 --> 00:16:38,010
+is my incorrect word and w is my possible
+candidate for correction so so remember how
+
+143
+00:16:38,010 --> 00:16:48,910
+we found out deletion we said how many times
+this correct a bigram w i minus one and w
+
+144
+00:16:48,910 --> 00:17:00,670
+i occur in my corrected corpus and among those
+how many times w i was deleted after w i minus
+
+145
+00:17:00,670 --> 00:17:08,220
+one ok similarly here insertion how many times
+the word w i minus one occurs in my corpus
+
+146
+00:17:08,220 --> 00:17:15,620
+and among those how many times i inserted
+x i in my real corpus were people made mistake
+
+147
+00:17:15,620 --> 00:17:25,299
+how many times they actually inserted x i
+after w i ok w i minus one
+
+148
+00:17:25,299 --> 00:17:31,090
+similar substitution how many times w i occurs
+in my corpus among those how many times it
+
+149
+00:17:31,090 --> 00:17:39,500
+was substituted with x i same thing you will
+do for transposition how many times these
+
+150
+00:17:39,500 --> 00:17:44,580
+two characters occurred together among those
+what fraction of times they were transposed
+
+151
+00:17:44,580 --> 00:17:49,259
+so that means we need two corpus one we we
+have made mistakes another the same corpus
+
+152
+00:17:49,259 --> 00:17:58,330
+that has been corrected ok and then you can
+compute all these probabilities now if we
+
+153
+00:17:58,330 --> 00:18:07,389
+go back to the pervious example of finding
+various candidates for actress so we had seven
+
+154
+00:18:07,389 --> 00:18:11,519
+different candidates here
+now we already saw what is the corrected error
+
+155
+00:18:11,519 --> 00:18:16,950
+word and and we are using the the model we
+saw saw in the previous slide to find out
+
+156
+00:18:16,950 --> 00:18:27,250
+probability of x given word ok this one so
+now first we are writing what is my x given
+
+157
+00:18:27,250 --> 00:18:35,840
+w so whenever this first my deletion from
+actress t got delete and we got actress so
+
+158
+00:18:35,840 --> 00:18:47,110
+how did you find the probability of deletion
+we said what is the probability that c t among
+
+159
+00:18:47,110 --> 00:18:53,129
+all the times that c t occurs what is the
+probability that t gets deleted so out of
+
+160
+00:18:53,129 --> 00:18:59,110
+ct i see only c in my corpus and this probability
+i find my corpus to be point zero zero zero
+
+161
+00:18:59,110 --> 00:19:08,659
+one one seven ok similarly insertion that
+means a got inserted in the beginning of the
+
+162
+00:19:08,659 --> 00:19:17,910
+string transposition a c in place of c a and
+so on in so here we have you see there are
+
+163
+00:19:17,910 --> 00:19:24,340
+two different ways you can do insertion after
+e or after s that's why you have two different
+
+164
+00:19:24,340 --> 00:19:28,309
+probability that is also ok
+
+165
+00:19:28,309 --> 00:19:32,561
+so so again from the corpus you will find
+all these probabilities values probability
+
+166
+00:19:32,561 --> 00:19:39,230
+of x given my word for different words what
+is probability x given now what is the other
+
+167
+00:19:39,230 --> 00:19:46,139
+probability of the compute probability of
+w itself so what is the intuition as such
+
+168
+00:19:46,139 --> 00:19:51,039
+you will try to give try to favor a word that
+is more likely to occur in the corpus then
+
+169
+00:19:51,039 --> 00:20:01,960
+a word that is not so likely in the corpus
+ok so suppose i use a corpus and i also find
+
+170
+00:20:01,960 --> 00:20:08,549
+out the probability of the word ok so now
+i have found out probability of x given word
+
+171
+00:20:08,549 --> 00:20:13,179
+and the probability of the word both of this
+so remember my noisy channel model i have
+
+172
+00:20:13,179 --> 00:20:17,090
+to multiply these probabilities and find out
+which of the candidates gives me the highest
+
+173
+00:20:17,090 --> 00:20:18,440
+probability value
+
+174
+00:20:18,440 --> 00:20:24,480
+so suppose i do the same so in this slide
+you will see so i am multiplying these two
+
+175
+00:20:24,480 --> 00:20:28,910
+probabilities and we are putting ten to the
+power nine just so that we are able to see
+
+176
+00:20:28,910 --> 00:20:34,200
+these numbers ok they were be a point zero
+zero zero to the point that we will not able
+
+177
+00:20:34,200 --> 00:20:39,320
+to compare so the first probability is two
+point seven times ten to the over nine minus
+
+178
+00:20:39,320 --> 00:20:45,980
+nine sorry so what are the two candidates
+that that have the highest probability you
+
+179
+00:20:45,980 --> 00:20:52,330
+see here i have actress and i have across
+so these are two words that i having the highest
+
+180
+00:20:52,330 --> 00:20:58,950
+probability and in general you might write
+across has the correct candidate ok
+
+181
+00:20:58,950 --> 00:21:03,970
+so now remember we were saying we can do it
+without with the context or with the context
+
+182
+00:21:03,970 --> 00:21:08,869
+so without using the context this is the best
+we can do and suppose they come up to be really
+
+183
+00:21:08,869 --> 00:21:14,119
+close two point seven two point seven one
+without using the context you cannot find
+
+184
+00:21:14,119 --> 00:21:18,809
+out which is the which is a better candidate
+than the other but supposed you are allowed
+
+185
+00:21:18,809 --> 00:21:25,259
+to use the contexts so can you do better ok
+so let us see for the same spelling correction
+
+186
+00:21:25,259 --> 00:21:34,239
+if i have the context what will i do so suppose
+my sentence says versatile acress whose ok
+
+187
+00:21:34,239 --> 00:21:38,869
+and i have to correct it and remember what
+were two candidates the two candidates are
+
+188
+00:21:38,869 --> 00:21:46,039
+actress and across so the two sentences are
+versatile across actress whose versatile across
+
+189
+00:21:46,039 --> 00:21:49,769
+whose now which one is more likely ok
+
+190
+00:21:49,769 --> 00:21:59,749
+now how do i find out how do i use the fact
+that probably versatile actress or actress
+
+191
+00:21:59,749 --> 00:22:08,450
+whose is more common than versatile across
+and across whose so on so for that what we
+
+192
+00:22:08,450 --> 00:22:14,029
+can do we take some corpus so this is some
+corpus of contemporary american english and
+
+193
+00:22:14,029 --> 00:22:17,760
+we use some smoothing so do not worry about
+what i mean by smoothing we will cover that
+
+194
+00:22:17,760 --> 00:22:22,261
+in detail in language modeling so suppose
+i do some smoothing so idea is that if were
+
+195
+00:22:22,261 --> 00:22:27,529
+we try to find out the probabilities of a
+word coming after another word that's what
+
+196
+00:22:27,529 --> 00:22:34,899
+we are doing and from there i find out these
+probabilities that the that the word actress
+
+197
+00:22:34,899 --> 00:22:39,789
+occurs after versatile is point zero zero
+zero zero two one and the probability that
+
+198
+00:22:39,789 --> 00:22:45,749
+the word across occurs after versatile is
+the same and that makes sense also versatile
+
+199
+00:22:45,749 --> 00:22:51,230
+across many different fields and versatile
+actress they might have the same sort of probability
+
+200
+00:22:51,230 --> 00:22:54,019
+of occurrence in the corpus
+
+201
+00:22:54,019 --> 00:23:00,710
+now what about the other bigram what about
+the other two word combination that is actress
+
+202
+00:23:00,710 --> 00:23:09,740
+whose and across whose so we see in the corpus
+we find actress whose has a much higher probability
+
+203
+00:23:09,740 --> 00:23:17,210
+than across whose ok and if you have this
+information we can use that to refine the
+
+204
+00:23:17,210 --> 00:23:22,080
+probabilities for that if suppose i simply
+multiply the probabilities with my earlier
+
+205
+00:23:22,080 --> 00:23:30,770
+corpus so what will i get so i will say probability
+of versatile actress whose is the initial
+
+206
+00:23:30,770 --> 00:23:38,590
+the two probabilities two hundred ten times
+ten to the minus ten and probability of versatile
+
+207
+00:23:38,590 --> 00:23:44,059
+across whose will be one times ten to the
+minus ten so this gives me that versatile
+
+208
+00:23:44,059 --> 00:23:49,139
+[ac/actress] actress whose is much more lightly
+than versatile actress whose as per my corpus
+
+209
+00:23:49,139 --> 00:23:54,879
+if i am using the context and this can further
+help me to find out what is the correct ah
+
+210
+00:23:54,879 --> 00:24:01,739
+correct word that should have been there in
+place of actress ok
+
+211
+00:24:01,739 --> 00:24:07,970
+so now the next concept is the real word spelling
+errors so so what they mean by that there
+
+212
+00:24:07,970 --> 00:24:14,299
+are there might be errors where the [mis/misspelled]
+misspelled word is actually in my dictionary
+
+213
+00:24:14,299 --> 00:24:20,510
+ok so like you see the sentence here the study
+was conducted mainly be john black and we
+
+214
+00:24:20,510 --> 00:24:27,220
+know the correct word should have been by
+but the user ended up typing be [no/now] now
+
+215
+00:24:27,220 --> 00:24:33,590
+just think for a moment can i solve this problem
+without using the context so without using
+
+216
+00:24:33,590 --> 00:24:41,019
+the context how can i even say that it should
+be by and not be ok i might use the individual
+
+217
+00:24:41,019 --> 00:24:45,549
+probability of a word occurrence but that
+is not a good method to say that so in that
+
+218
+00:24:45,549 --> 00:24:48,580
+case i might find errors everywhere in my
+corpus
+
+219
+00:24:48,580 --> 00:24:54,250
+so i should be try try to using my context
+in somewhere ok same in the next sentence
+
+220
+00:24:54,250 --> 00:24:59,039
+the design in construction of of the system
+and i know this should be and but the user
+
+221
+00:24:59,039 --> 00:25:04,249
+ended up typing an now these are real words
+in the vocabulary and now i want to correct
+
+222
+00:25:04,249 --> 00:25:09,869
+the spellings one thing is sure i should be
+using the context now how do i actually use
+
+223
+00:25:09,869 --> 00:25:20,679
+the context for trying to correct these errors
+ok and this is again some statistics that
+
+224
+00:25:20,679 --> 00:25:28,320
+twenty five to forty percent of the spelling
+errors that this here are real words ok
+
+225
+00:25:28,320 --> 00:25:35,509
+so now suppose i i have a sentence x that
+contains words w one to w one now we do not
+
+226
+00:25:35,509 --> 00:25:39,639
+know which of the which of these words is
+in error ok because all of these are real
+
+227
+00:25:39,639 --> 00:25:43,399
+words in my dictionary so how do i [e/ actually]
+actually start doing the spell correction
+
+228
+00:25:43,399 --> 00:25:49,789
+so what i will do for each of the individual
+word i will try to find out what are the [bes/best]
+
+229
+00:25:49,789 --> 00:25:55,809
+best possible candidates that might be the
+correct words ok and there i should not forget
+
+230
+00:25:55,809 --> 00:26:00,710
+to include this world itself because this
+might be a correct word also so here what
+
+231
+00:26:00,710 --> 00:26:06,239
+we are doing for the word w one we are saying
+ok candidates are w one or some word w one
+
+232
+00:26:06,239 --> 00:26:10,989
+prime w one double prime w one triple prime
+and so one they are possible candidates for
+
+233
+00:26:10,989 --> 00:26:17,830
+correction w two again that's what w two and
+other candidates same way w three now what
+
+234
+00:26:17,830 --> 00:26:23,240
+is my problem now i can have any sequence
+from the candidates of w one i can choose
+
+235
+00:26:23,240 --> 00:26:28,739
+any one w two i can choose any one and so
+on and among all these possible sequences
+
+236
+00:26:28,739 --> 00:26:40,100
+i have to find out which one is giving me
+the highest probability in somethings ok
+
+237
+00:26:40,100 --> 00:26:49,179
+so i want to find the sequence w that maximizes
+the probability of w given x ok that is whether
+
+238
+00:26:49,179 --> 00:26:55,669
+this would be a good sequence or this would
+be a [goo/good] good sequence or this would
+
+239
+00:26:55,669 --> 00:27:00,379
+be a good sequence as for all which of this
+sequence will be the best in this case so
+
+240
+00:27:00,379 --> 00:27:07,109
+again you have to find out w that maximizes
+probability of w given x so again can we try
+
+241
+00:27:07,109 --> 00:27:18,269
+to use the noisy channel model so we will
+see ok so now we are taking a real example
+
+242
+00:27:18,269 --> 00:27:24,159
+here two of w thew and probably it should
+have been two of the and we are not seeing
+
+243
+00:27:24,159 --> 00:27:30,399
+the other words right so as my the model what
+will i do i will take the word two i will
+
+244
+00:27:30,399 --> 00:27:33,109
+put this word along with all the other possible
+candidates
+
+245
+00:27:33,109 --> 00:27:39,379
+so i have put in put t w o t a o t u all are
+having a smaller distance similarly with off
+
+246
+00:27:39,379 --> 00:27:46,529
+i am putting o n o double f with the thew
+i put thew threw thaw the and so on and we
+
+247
+00:27:46,529 --> 00:27:55,019
+know the correct sequences two off the fine
+but in general suppose i had to find out the
+
+248
+00:27:55,019 --> 00:28:00,330
+probability for each sequence this might become
+exponential so you can do the simple math
+
+249
+00:28:00,330 --> 00:28:06,669
+suppose each word on an average has four possible
+candidates including itself and there are
+
+250
+00:28:06,669 --> 00:28:12,940
+five different words in my sentence so how
+many different sequences i will have four
+
+251
+00:28:12,940 --> 00:28:18,379
+to the power five ok and if the number of
+words increase in my sentence this will keep
+
+252
+00:28:18,379 --> 00:28:20,129
+on increasing
+
+253
+00:28:20,129 --> 00:28:26,639
+so now to avoid this problem we will try to
+use some sort of we make some assumptions
+
+254
+00:28:26,639 --> 00:28:36,080
+that it is also simplification to the model
+what is that we say ok [ll/let] let us assume
+
+255
+00:28:36,080 --> 00:28:42,249
+there will be a at most one [err/error] error
+in the sentence ok so how does it help it
+
+256
+00:28:42,249 --> 00:28:50,210
+helps in that whenever i am choosing the the
+candidates i will only choose a a different
+
+257
+00:28:50,210 --> 00:28:56,769
+word for one of the one of the words so so
+what do i mean by that suppose i had my sentence
+
+258
+00:28:56,769 --> 00:29:03,731
+w one w two w three and this has some other
+possible things like w two prime w two double
+
+259
+00:29:03,731 --> 00:29:10,420
+prime this has w one double prime w one double
+prime and this has w three prime w three double
+
+260
+00:29:10,420 --> 00:29:16,020
+prime so in the previous model we would have
+taken all the three cube that is twenty seven
+
+261
+00:29:16,020 --> 00:29:22,510
+different candidates in the previous one so
+with this assumption what we will do for w
+
+262
+00:29:22,510 --> 00:29:27,400
+one if i am choosing a candidate of w one
+prime i will assume w two two and w three
+
+263
+00:29:27,400 --> 00:29:32,100
+were correct ok so this is the assumption
+there might be at most one error per sentence
+
+264
+00:29:32,100 --> 00:29:37,210
+so how many candidates will be there i will
+have two possibilities here two possibilities
+
+265
+00:29:37,210 --> 00:29:45,279
+here and two possibilities here ok so there
+would be at most six plus one if you are taking
+
+266
+00:29:45,279 --> 00:29:52,149
+the one there the sentence might have been
+correct say w one w two w three as it is ok
+
+267
+00:29:52,149 --> 00:29:59,799
+so so the candidates are w one prime w two
+w three only one error per sentence w one
+
+268
+00:29:59,799 --> 00:30:06,479
+double prime w two w three and so on so this
+hugely reduces the number of candidates for
+
+269
+00:30:06,479 --> 00:30:11,299
+which i have to check and this is quite true
+also and that is why you do not make more
+
+270
+00:30:11,299 --> 00:30:16,919
+than one error per sentence in general in
+general ok
+
+271
+00:30:16,919 --> 00:30:24,899
+so now once we have this assumption we want
+to find this [sec/sequence] sequence w that
+
+272
+00:30:24,899 --> 00:30:32,789
+maximizes the probability of w given x so
+i can again try to use my noisy channel model
+
+273
+00:30:32,789 --> 00:30:42,100
+how find out the sequence w hat that maximizes
+the probability of p w given x x is my observed
+
+274
+00:30:42,100 --> 00:30:47,960
+sequence and w is one of my candidate sequences
+and we know how to find out the candidate
+
+275
+00:30:47,960 --> 00:30:52,419
+sequences so that is for each of these sequence
+is w i have to find out the probability w
+
+276
+00:30:52,419 --> 00:30:58,720
+given x now as for the noisy channel model
+how will i write it down so i will again use
+
+277
+00:30:58,720 --> 00:31:03,880
+the bayes theorem here because i am starting
+from w and going to x so i can only find out
+
+278
+00:31:03,880 --> 00:31:11,919
+the probability of x given w so this is what
+i will do ok now how do i write probability
+
+279
+00:31:11,919 --> 00:31:18,039
+x given w x is a sequence w is a sequence
+so suppose they have the same number of words
+
+280
+00:31:18,039 --> 00:31:23,720
+i can make a simplifying assumption that p
+x given w is simply multiplication of probability
+
+281
+00:31:23,720 --> 00:31:28,669
+of individual word given that in the sequence
+ok
+
+282
+00:31:28,669 --> 00:31:44,669
+so suppose my word is this is my w and this
+is my x so probability x given w i will write
+
+283
+00:31:44,669 --> 00:31:54,740
+x probability of w one prime given w one probability
+w two given w two probability w three given
+
+284
+00:31:54,740 --> 00:32:01,190
+w three ok so now there are two kind of probabilities
+here one is when the two words are not the
+
+285
+00:32:01,190 --> 00:32:09,330
+same probability of doing an error yes one
+they at the same now how do i find out the
+
+286
+00:32:09,330 --> 00:32:14,750
+individual probabilities this one we have
+already see in the previous case i will find
+
+287
+00:32:14,750 --> 00:32:17,440
+out what are the [audit/edit] edit operation
+and what is the corresponding probability
+
+288
+00:32:17,440 --> 00:32:25,779
+if it is deletion insertion and so on so this
+is same as the previous case same as in previous
+
+289
+00:32:25,779 --> 00:32:34,220
+but how do i find out the probability of w
+two given w two should it be one now it will
+
+290
+00:32:34,220 --> 00:32:40,690
+depend on what is the kind of errors that
+you are seeing in your corpus if you are seeing
+
+291
+00:32:40,690 --> 00:32:45,440
+that they are on an average one error per
+ten words you will say this probability is
+
+292
+00:32:45,440 --> 00:32:49,890
+point nine thus the this is what is correct
+these are probability of that the same the
+
+293
+00:32:49,890 --> 00:32:52,070
+word is correct
+
+294
+00:32:52,070 --> 00:32:54,820
+if there are one error in hundred words you
+will say that this probability is point nine
+
+295
+00:32:54,820 --> 00:33:06,519
+nine and that's how you will fix this probability
+ok so p x given w same as non word spelling
+
+296
+00:33:06,519 --> 00:33:11,869
+correction but we also need this probability
+w given w and that is the probability that
+
+297
+00:33:11,869 --> 00:33:18,210
+you have correctly typed a word and that you
+can find by the kind of the the amount of
+
+298
+00:33:18,210 --> 00:33:21,820
+errors you are seeing in your source if there
+is one error per ten words you will say this
+
+299
+00:33:21,820 --> 00:33:25,260
+probability is point nine if there is one
+error per hundred words you will say this
+
+300
+00:33:25,260 --> 00:33:29,419
+probability is point nine nine that's how
+you will set all these probabilities and you
+
+301
+00:33:29,419 --> 00:33:36,820
+will choose the candidate x that gives you
+the maximum probability ok candidate w sorry
+
+302
+00:33:36,820 --> 00:33:46,509
+now the other part is finding out probability
+w ok by w i mean the the sequence w one prime
+
+303
+00:33:46,509 --> 00:33:54,320
+w two w three how do i define the probability
+of the sequence w ok for that we will use
+
+304
+00:33:54,320 --> 00:34:03,849
+a technique called language modeling so that
+will give me the probability of n is the sequence
+
+305
+00:34:03,849 --> 00:34:08,389
+of words and we will use any of this unigram
+model bigram model or any other model for
+
+306
+00:34:08,389 --> 00:34:12,190
+for finding out this probability of
+
+307
+00:34:12,190 --> 00:34:17,929
+so so this here will be the topic for the
+next lecture so this in this lecture we discussed
+
+308
+00:34:17,929 --> 00:34:24,340
+what are non word errors re word errors how
+do we use noisy channel model to correct those
+
+309
+00:34:24,340 --> 00:34:29,290
+but there we also need something like probability
+of the sentence as such probability of the
+
+310
+00:34:29,290 --> 00:34:34,000
+sequence of words w how do we obtain that
+and that's why we will go to the idea of language
+
+311
+00:34:34,000 --> 00:34:35,950
+modeling in the next lecture ok
+

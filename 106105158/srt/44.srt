@@ -1,0 +1,1299 @@
+1
+00:00:17,869 --> 00:00:22,000
+so hello everyone welcome to the third lecture
+of this week so we are talking about topic
+
+2
+00:00:22,000 --> 00:00:28,320
+models and we have discussed what is the formulation
+of latent dirichlet allocation and we say
+
+3
+00:00:28,320 --> 00:00:32,940
+that what are the different parameter that
+we need to learn we need to learn ah mainly
+
+4
+00:00:32,940 --> 00:00:40,300
+three parameters that is what are my ah ah
+topic distributions given a topic what is
+
+5
+00:00:40,300 --> 00:00:47,489
+the probability of each word what are my per
+document topic proportion so that is my thetas
+
+6
+00:00:47,489 --> 00:00:53,710
+and then per document per word topic assignment
+that is by z so this i have to compute so
+
+7
+00:00:53,710 --> 00:00:58,530
+this i have to compute the posterior distribution
+of all this parameter given my observation
+
+8
+00:00:58,530 --> 00:01:04,750
+observation is all my corpus all the documents
+that i am seeing so so in this lecture we
+
+9
+00:01:04,750 --> 00:01:10,750
+will discuss one ah interesting method for
+doing that that is gibbs sampling and then
+
+10
+00:01:10,750 --> 00:01:14,550
+in the end we will also talk about some simple
+applications that once we had learnt topic
+
+11
+00:01:14,550 --> 00:01:21,810
+models over a corpus what are the some of
+the simple things that you can do ok so ah
+
+12
+00:01:21,810 --> 00:01:27,340
+so for approximating the posterior probabilities
+of all these parameters the algorithm generally
+
+13
+00:01:27,340 --> 00:01:31,649
+fall in two categories
+so one are sampling based algorithms so that
+
+14
+00:01:31,649 --> 00:01:39,979
+is from the posterior you try to collect the
+samples of the distributions and then ah approximate
+
+15
+00:01:39,979 --> 00:01:45,990
+it with the empirical distribution and that's
+what we will focus on in gibbs sampling and
+
+16
+00:01:45,990 --> 00:01:51,340
+there are also variational methods so where
+we convert the inference problem to some sort
+
+17
+00:01:51,340 --> 00:01:57,700
+of optimization problem and try to learn the
+parameters that we optimize that so so both
+
+18
+00:01:57,700 --> 00:02:02,520
+the methods are very ah very much used in
+in the literature so we will see we will see
+
+19
+00:02:02,520 --> 00:02:08,019
+gibbs sampling that is an easier to understand
+method that i will i will say
+
+20
+00:02:08,019 --> 00:02:14,790
+so ah so gibbs sampling are some sort of markov
+chain ah monte carlo methods so what is the
+
+21
+00:02:14,790 --> 00:02:19,900
+idea so having a high dimensional distribution
+so think about all the possible values that
+
+22
+00:02:19,900 --> 00:02:26,180
+that your parameter can take all your betas
+ah theta inject they can take so huge number
+
+23
+00:02:26,180 --> 00:02:33,749
+of values ok so idea here is you sample on
+an lower dimensional subset of variables and
+
+24
+00:02:33,749 --> 00:02:39,540
+each subset is conditioned on whatever as
+it known ok so you do not computing the joint
+
+25
+00:02:39,540 --> 00:02:42,730
+probability of everything you are assuming
+sum to be known and computing probability
+
+26
+00:02:42,730 --> 00:02:48,519
+for others and that you keep on doing in terms
+for all the all the variables so sampling
+
+27
+00:02:48,519 --> 00:02:55,939
+is done sequentially and proceeds until the
+sampled value is approximate my target distribution
+
+28
+00:02:55,939 --> 00:03:00,739
+and it directly estimates the posterior distribution
+over z and uses this to provide estimates
+
+29
+00:03:00,739 --> 00:03:04,379
+for beta and theta
+so will we will find out the distribution
+
+30
+00:03:04,379 --> 00:03:11,310
+over z and then use that to compute my theta
+and beta and we will see how do we do that
+
+31
+00:03:11,310 --> 00:03:17,650
+so so what is the idea so assume that you
+are you are having a corpus and in the corpus
+
+32
+00:03:17,650 --> 00:03:23,480
+you have some documents and words ok now take
+so you will ah assume that in a in one of
+
+33
+00:03:23,480 --> 00:03:30,379
+the iteration you are at a particular word
+that is ah the word token i and what you want
+
+34
+00:03:30,379 --> 00:03:35,209
+to find out what is the topic assignment probability
+what's the probability that is ith token will
+
+35
+00:03:35,209 --> 00:03:41,620
+be assigned to topic j probability z i is
+equal to j that's what you want to find out
+
+36
+00:03:41,620 --> 00:03:46,641
+so now how how do you do that now re you represent
+the collection of documents by a set of word
+
+37
+00:03:46,641 --> 00:03:52,650
+indices w i and document indices d i for this
+token i so it simply says that you has a lot
+
+38
+00:03:52,650 --> 00:03:58,799
+of words find out what is the corresponding
+word token for this i that may be called w
+
+39
+00:03:58,799 --> 00:04:04,319
+i w i will give you the particular index and
+similarly d i d i will be the particular document
+
+40
+00:04:04,319 --> 00:04:11,529
+where you are having this token
+so now so what gibbs sampling does it consider
+
+41
+00:04:11,529 --> 00:04:15,489
+each word token in turn and estimates the
+probability of assigning the current word
+
+42
+00:04:15,489 --> 00:04:21,010
+token to each topic conditioned on the topic
+assignment of all other word tokens so what
+
+43
+00:04:21,010 --> 00:04:26,280
+it is saying that in the particular iteration
+assume that given the topic assignment for
+
+44
+00:04:26,280 --> 00:04:33,060
+all the other words except this word now based
+on this you try assign a topic to this word
+
+45
+00:04:33,060 --> 00:04:42,870
+so what will happen we are having a set of
+documents ok so these are your documents and
+
+46
+00:04:42,870 --> 00:04:53,449
+suppose you know you unique words these are
+the your words and here at a i th here at
+
+47
+00:04:53,449 --> 00:05:00,960
+a ith token so the corresponding document
+will be called d i this is i token and the
+
+48
+00:05:00,960 --> 00:05:09,930
+corresponding word will be called w i ok so
+now what you have to find out probability
+
+49
+00:05:09,930 --> 00:05:16,720
+that the topic assignment for this word will
+be z that's what we have to find out and what
+
+50
+00:05:16,720 --> 00:05:23,919
+is assumed by is that in this iteration you
+know the topic assigned for everything else
+
+51
+00:05:23,919 --> 00:05:30,840
+so you know what are the topics that assigned
+for all different words involve that but you
+
+52
+00:05:30,840 --> 00:05:36,650
+want to estimate to find out the topic for
+this particular i th word so you have to so
+
+53
+00:05:36,650 --> 00:05:42,610
+how do you do that you first estimate this
+probability and this you do condition on everything
+
+54
+00:05:42,610 --> 00:05:49,130
+else so write it like this probability z i
+at j given the topic assignment for all the
+
+55
+00:05:49,130 --> 00:05:55,520
+words other words minus sign is everything
+other then this i and what is the word index
+
+56
+00:05:55,520 --> 00:06:01,050
+and what is the document index this is what
+we want to find out
+
+57
+00:06:01,050 --> 00:06:06,190
+now intuitively what should it depend on so
+what is the probability that this ith token
+
+58
+00:06:06,190 --> 00:06:12,840
+will be will be given assigned the topic j
+what should it depend on so we think in terms
+
+59
+00:06:12,840 --> 00:06:18,039
+of topic models this probability that the
+i th word should be assigned the topic z should
+
+60
+00:06:18,039 --> 00:06:30,020
+depend on two things one is so we say that
+document consist of certain topics ok so if
+
+61
+00:06:30,020 --> 00:06:34,389
+this topic is prevalent in the document there
+might be a high chance that this word is assigned
+
+62
+00:06:34,389 --> 00:06:53,139
+this topic j so that is how likely is topic
+j to be assigned to d i what is the next thing
+
+63
+00:06:53,139 --> 00:07:08,979
+how likely is that this word occurs in topic
+j ok is word w i for topic j so we have two
+
+64
+00:07:08,979 --> 00:07:14,759
+things i need to know now how do i know this
+one how likely is topic j to be assigned to
+
+65
+00:07:14,759 --> 00:07:21,520
+document d i you see i am given the topic
+assignment for all other words in this document
+
+66
+00:07:21,520 --> 00:07:29,600
+so i find out what section of words in this
+document are assigned this topic j ok divide
+
+67
+00:07:29,600 --> 00:07:33,960
+by the number of words
+so this i can computationally by this topic
+
+68
+00:07:33,960 --> 00:07:39,990
+assigned now how do you compute this how likely
+each word w i for topic j i I will again see
+
+69
+00:07:39,990 --> 00:07:46,740
+in topic j what are the different words that
+come and how many times word w i comes in
+
+70
+00:07:46,740 --> 00:07:51,800
+this topic j and this i can used to to compute
+this probability and then i can multiply these
+
+71
+00:07:51,800 --> 00:07:59,110
+two to find out what is the probability of
+a topic j been assigned to this word token
+
+72
+00:07:59,110 --> 00:08:09,610
+i and this i will do for all excuse me topics
+j is equal to one to k so this will give me
+
+73
+00:08:09,610 --> 00:08:21,800
+a multinomial distribution then to give a
+assignment to this word i will sample from
+
+74
+00:08:21,800 --> 00:08:28,409
+this multinomial distribution and then from
+sampling i will assign one topic and i will
+
+75
+00:08:28,409 --> 00:08:35,349
+i will assign the topic here so suppose the
+topic is five i will put this is five and
+
+76
+00:08:35,349 --> 00:08:38,760
+then i will move to the next word token and
+then i will assume that this is not given
+
+77
+00:08:38,760 --> 00:08:43,300
+and i will take everything as given do that
+find the topic assignment and that's what
+
+78
+00:08:43,300 --> 00:08:46,680
+i keep on doing
+so now once the intuition clear let us go
+
+79
+00:08:46,680 --> 00:08:55,260
+back to the formulation so yes from this conditional
+distribution we are sampling a topic and we
+
+80
+00:08:55,260 --> 00:09:00,639
+are storing it as the new topic assignment
+for the word and this is written as this assignment
+
+81
+00:09:00,639 --> 00:09:09,500
+probability that ith word has the has a topic
+j given everything else so so how do we achieve
+
+82
+00:09:09,500 --> 00:09:17,040
+this how do we compute all these values for
+that i need to ah keep two different matrices
+
+83
+00:09:17,040 --> 00:09:25,442
+so one is c w t of dimensions w times t another
+is c d t of dimensions d times t so ah so
+
+84
+00:09:25,442 --> 00:09:47,529
+what are these matrices so one is c w t w
+times t and next is c d t d times t t is the
+
+85
+00:09:47,529 --> 00:09:53,060
+number of topics w is the number of words
+and d is the number of documents so what do
+
+86
+00:09:53,060 --> 00:10:07,769
+they store so c w j w t that is i take the
+word w and topic j so w j w t so this element
+
+87
+00:10:07,769 --> 00:10:20,810
+is called c w j w t this contains the number
+of times word w is assigned to topic j not
+
+88
+00:10:20,810 --> 00:10:24,440
+including the current inst current instants
+so we are taking at the current instants except
+
+89
+00:10:24,440 --> 00:10:29,079
+that how many times this word is assigned
+this topic that you can find out from the
+
+90
+00:10:29,079 --> 00:10:34,360
+your whole ah data you will actually keep
+this stable so we will just update the values
+
+91
+00:10:34,360 --> 00:10:38,420
+ok so let me give an point point you know
+how many times this word is assigned topic
+
+92
+00:10:38,420 --> 00:10:44,240
+j so we will do that for all the values in
+this matrix how many times this word is assigned
+
+93
+00:10:44,240 --> 00:10:58,491
+this topic yes similarly a volume at c d t
+small d j this will contain for the document
+
+94
+00:10:58,491 --> 00:11:12,180
+d topic j number of times topic j is assigned
+to some word token in document d that is how
+
+95
+00:11:12,180 --> 00:11:18,010
+many words in the document d are assigned
+to topic j in that again you can you can have
+
+96
+00:11:18,010 --> 00:11:21,130
+all the values
+so this will again be not included in the
+
+97
+00:11:21,130 --> 00:11:26,459
+current distance we will find out how many
+times ah any word in document d is assigned
+
+98
+00:11:26,459 --> 00:11:31,640
+this topic and we will do it for all the documents
+so this you will have these two matrices c
+
+99
+00:11:31,640 --> 00:11:36,970
+w t c d t and you are missing now what is
+element missing now once you have these two
+
+100
+00:11:36,970 --> 00:11:48,459
+matrices how do i compute probability z i
+is equal to j given z minus i w i d i and
+
+101
+00:11:48,459 --> 00:11:59,709
+research may depend on two different things
+so let us see that so depends on two parts
+
+102
+00:11:59,709 --> 00:12:10,060
+one is ah what is the probability of word
+w under topic j remember we are talking about
+
+103
+00:12:10,060 --> 00:12:15,649
+two parts so how what will depend on so we
+are saying that it will depend on how likely
+
+104
+00:12:15,649 --> 00:12:25,639
+is this word to come under topic j second
+is how likely is this topic to be assigned
+
+105
+00:12:25,639 --> 00:12:33,070
+to document d two thing's how likely is this
+word to come on to topic j how likely is this
+
+106
+00:12:33,070 --> 00:12:38,720
+topic to come under document d now how do
+i write this probabilities in terms of this
+
+107
+00:12:38,720 --> 00:12:50,540
+matrix ah elements how likely is word w w
+to come under topic d j so that will be c
+
+108
+00:12:50,540 --> 00:12:59,820
+i th word topic j w t summation over all the
+words so this will give p probability for
+
+109
+00:12:59,820 --> 00:13:11,320
+this word
+summation over all words c w j w t ok similarly
+
+110
+00:13:11,320 --> 00:13:21,300
+for how likely is topic z to come on the document
+d this would be c d i ok for the current ins
+
+111
+00:13:21,300 --> 00:13:32,529
+instance j d t summation over now for all
+the topic that are assigned in this document
+
+112
+00:13:32,529 --> 00:13:53,980
+so this will be summation over all my topics
+c d t c d t capital d t ok so this will be
+
+113
+00:13:53,980 --> 00:14:03,610
+the simple formulation now ah so there are
+certain priors that you take here so you will
+
+114
+00:14:03,610 --> 00:14:08,940
+have some sort you can can these are some
+sort of smoothing so here you have some smoothing
+
+115
+00:14:08,940 --> 00:14:18,970
+parameter eta similarly it will be plus w
+times eta here alpha plus t times alpha so
+
+116
+00:14:18,970 --> 00:14:22,389
+smoothing parameters
+and this will again to make it a probability
+
+117
+00:14:22,389 --> 00:14:27,410
+it is normalized so instead of calling it
+equal to we will say proportional to this
+
+118
+00:14:27,410 --> 00:14:31,610
+so now this gives you the formulation probability
+that the i th word token will be assigned
+
+119
+00:14:31,610 --> 00:14:37,350
+topic j given all this so now you can say
+that what are these eta and alpha so this
+
+120
+00:14:37,350 --> 00:14:46,060
+is my digital parameters that that we were
+seeing earlier and and you can also ah correlate
+
+121
+00:14:46,060 --> 00:14:54,899
+this with their values so suppose your alpha
+is high if your alpha is high what would happen
+
+122
+00:14:54,899 --> 00:15:01,459
+this value will not matter and all the topics
+will be assigned roughly equal probability
+
+123
+00:15:01,459 --> 00:15:04,470
+and that's what was happening if you keep
+on increasing alpha you are going towards
+
+124
+00:15:04,470 --> 00:15:08,829
+a distribution where all topics have some
+probabilities but if you alpha is very very
+
+125
+00:15:08,829 --> 00:15:14,030
+small then what will matter is only discount
+and that's why you're going towards only a
+
+126
+00:15:14,030 --> 00:15:19,910
+few topics so these are some so these are
+the intuitions same thing you can do with
+
+127
+00:15:19,910 --> 00:15:24,959
+eta
+so if eta is high all the words will have
+
+128
+00:15:24,959 --> 00:15:29,639
+equal probability of coming into topic if
+it is low then certain distributions will
+
+129
+00:15:29,639 --> 00:15:36,230
+be preferred so now so this is the formulation
+for probability that z i is equal to j so
+
+130
+00:15:36,230 --> 00:15:40,630
+left part here is the probability of w word
+w under the topic j so that is how likely
+
+131
+00:15:40,630 --> 00:15:47,270
+the word is for a topic and the right part
+is the probability of topic j under the current
+
+132
+00:15:47,270 --> 00:15:53,649
+topic distribution for the topic and this
+what we had seen also in the previous ah so
+
+133
+00:15:53,649 --> 00:15:58,650
+when we are doing it on the paper in in the
+previous lecture now this will give you the
+
+134
+00:15:58,650 --> 00:16:04,550
+probability distribution over all the topics
+given this stroke now what is the next thing
+
+135
+00:16:04,550 --> 00:16:11,310
+you have this multinomial distribution you
+sample a topic from here
+
+136
+00:16:11,310 --> 00:16:19,230
+so these the whole algorithm in a nutshell
+so is how do you start so each word token
+
+137
+00:16:19,230 --> 00:16:25,510
+is assigned to a pre defined so random topic
+so a random topic in one to two so we have
+
+138
+00:16:25,510 --> 00:16:31,860
+this whole collection and you assign some
+random topic random topic to each word now
+
+139
+00:16:31,860 --> 00:16:39,839
+you you compute your two matrices c d t and
+c w t from that assignment now for each word
+
+140
+00:16:39,839 --> 00:16:44,450
+token so in this situation what you will do
+for each word token you sample a new topic
+
+141
+00:16:44,450 --> 00:16:49,069
+as per this distribution and you have seen
+that once you have the matrices formulated
+
+142
+00:16:49,069 --> 00:16:53,269
+you can find out this probability distribution
+and you can sample a topic for sampling for
+
+143
+00:16:53,269 --> 00:16:58,529
+a multinomial distribution and when you will
+sample a topic and put that topic in that
+
+144
+00:16:58,529 --> 00:17:03,610
+in that ah for that word accordingly adjust
+your two matrices
+
+145
+00:17:03,610 --> 00:17:08,450
+so now then you make complete single pass
+through all your words in your corpus that
+
+146
+00:17:08,450 --> 00:17:13,660
+is called one gibb sample so this is your
+one gibb sample ok and then you will do it
+
+147
+00:17:13,660 --> 00:17:18,650
+again and again and again so what happens
+is that initially for certain iterations you
+
+148
+00:17:18,650 --> 00:17:24,280
+can call it as a burnin period initially burnin
+period so where you will not store those samples
+
+149
+00:17:24,280 --> 00:17:29,340
+u use them to update the values but you will
+not store but after some word burnin period
+
+150
+00:17:29,340 --> 00:17:37,890
+you will start storing this values now you
+will not store every conjugative values so
+
+151
+00:17:37,890 --> 00:17:42,870
+what might happen because you are just using
+a previous values to compute the next one
+
+152
+00:17:42,870 --> 00:17:48,420
+they may be very very correlated so we will
+have some regularly spaced at some regularly
+
+153
+00:17:48,420 --> 00:17:55,669
+expressed interval you will store this samples
+so something like ah so you are doing this
+
+154
+00:17:55,669 --> 00:18:05,700
+iterations over the full ah corpus so there
+will be some initial burinin period so you
+
+155
+00:18:05,700 --> 00:18:12,200
+are computing gibb sample ok after burnin
+in period you will you will have reliable
+
+156
+00:18:12,200 --> 00:18:18,110
+gibb sample but what will happen those that
+are very very close they will be highly correlated
+
+157
+00:18:18,110 --> 00:18:24,030
+so will say i will store some regularly space
+intervals so say i'll store it up every hundred
+
+158
+00:18:24,030 --> 00:18:30,790
+after every hundred relations i will store
+this so we have we will have cube multiple
+
+159
+00:18:30,790 --> 00:18:37,430
+gibb samples now so each sample contains all
+your z ok all your z all your assignment is
+
+160
+00:18:37,430 --> 00:18:47,080
+consist con contain and then and from here
+you can compute your beta and ah theta and
+
+161
+00:18:47,080 --> 00:18:53,880
+then finally you can take an ah expectation
+over all these values and this will give your
+
+162
+00:18:53,880 --> 00:19:02,030
+ah one particular ah approximation of a parameters
+if we take a expectation over various ah samples
+
+163
+00:19:02,030 --> 00:19:09,390
+that you are getting from from gibb sample
+so once you have this z how do you compute
+
+164
+00:19:09,390 --> 00:19:15,730
+your ah betas and theta that is very easy
+we were actually using that to compute z so
+
+165
+00:19:15,730 --> 00:19:21,620
+betas are the probability that a topic j is
+assigned to the i th word so this will be
+
+166
+00:19:21,620 --> 00:19:29,270
+from the matrix c w t so i will take c i j
+w t plus eta divide over all ah words c k
+
+167
+00:19:29,270 --> 00:19:36,070
+j w t where is w eta similarly what is theta
+j d that is what is probability of topic j
+
+168
+00:19:36,070 --> 00:19:41,700
+under document d it will be c d j d t plus
+alpha divide by summation over all topics
+
+169
+00:19:41,700 --> 00:19:49,970
+c d k d t plus t alpha so once we have the
+z then we can compute here ah beta and theta
+
+170
+00:19:49,970 --> 00:19:52,659
+also
+so yeah this values will correspond to the
+
+171
+00:19:52,659 --> 00:19:57,540
+distribution of sampling a new token of word
+i from topic j and sampling a new token in
+
+172
+00:19:57,540 --> 00:20:07,160
+document d from topic j now o it's just an
+example to explain what what it means to use
+
+173
+00:20:07,160 --> 00:20:15,350
+gibb sampling so what is an example so this
+is like so we are taking in a artificial data
+
+174
+00:20:15,350 --> 00:20:20,179
+and for a known topic model and applying the
+algorithm will check if we can come back to
+
+175
+00:20:20,179 --> 00:20:28,120
+the same topic ah same ah topic distribution
+that we started with so what is done here
+
+176
+00:20:28,120 --> 00:20:33,990
+let us say we have two topics so we are doing
+a generation now and then we will see whether
+
+177
+00:20:33,990 --> 00:20:41,440
+gibbs sampling can infer back the original
+ah topic distributions so what is done in
+
+178
+00:20:41,440 --> 00:20:46,900
+in genetic part let us say i have two topics
+topic one topic two and simply we are saying
+
+179
+00:20:46,900 --> 00:20:52,100
+topic one assigns equal probability to three
+words money loan and bank and topic two assigns
+
+180
+00:20:52,100 --> 00:20:56,659
+equal probability word river steam and bank
+so all these three are assigned the probability
+
+181
+00:20:56,659 --> 00:21:01,450
+of one by three each fine so these are topic
+distributions
+
+182
+00:21:01,450 --> 00:21:08,600
+now by arbitrary mixture of these two topics
+we are generating sixteen documents so thats
+
+183
+00:21:08,600 --> 00:21:16,860
+how these sixteen documents look like so black
+means topic one and white means topic ah two
+
+184
+00:21:16,860 --> 00:21:25,059
+ok so there are two topics so each document
+has some number of words from different topics
+
+185
+00:21:25,059 --> 00:21:30,240
+so i am sorry you should initial look at only
+the number of ah number of balls that is how
+
+186
+00:21:30,240 --> 00:21:37,350
+many words are there in the document
+now to apply gibb sampling so that is why
+
+187
+00:21:37,350 --> 00:21:41,500
+you generated all these documents so this
+makes sense that you are generating documents
+
+188
+00:21:41,500 --> 00:21:46,560
+that are having bank money loan lot of documents
+there is some document that contain only river
+
+189
+00:21:46,560 --> 00:21:52,380
+stream bank so this are documents from only
+one topic these are document only from another
+
+190
+00:21:52,380 --> 00:21:56,250
+topic and there are some documents that are
+mix in these two topics so that's how you're
+
+191
+00:21:56,250 --> 00:22:00,770
+doing generating sixteen documents
+now your task is can you use gibbs sampling
+
+192
+00:22:00,770 --> 00:22:08,370
+to find out what are the two topic distributions
+here so what is done for that initialize all
+
+193
+00:22:08,370 --> 00:22:13,120
+the words to some topic so randomly that's
+why you're seeing the random assignments so
+
+194
+00:22:13,120 --> 00:22:18,510
+black is topic one and white is topic two
+some random assignment from this random assignment
+
+195
+00:22:18,510 --> 00:22:23,900
+you can have the two matrices c w t c d t
+and then what you will do in each iteration
+
+196
+00:22:23,900 --> 00:22:27,840
+you will go to each word find out what is
+the probability that this word will be assigned
+
+197
+00:22:27,840 --> 00:22:35,280
+to topics j sample from the distribution update
+a matrices and you get some gibb samples
+
+198
+00:22:35,280 --> 00:22:39,880
+so once you do that so this is what you see
+after sixty four iterations of gibbs sampling
+
+199
+00:22:39,880 --> 00:22:47,450
+can you see that it it actually ah ah looks
+very very in ah close to what we had initially
+
+200
+00:22:47,450 --> 00:22:51,600
+so all this words are assigned to topic one
+and all these words are assigned to the next
+
+201
+00:22:51,600 --> 00:22:57,570
+topic ok and you can see that bank money loan
+are been assigned the same topic in you say
+
+202
+00:22:57,570 --> 00:23:04,640
+in a in a given document and that makes co
+ah lot of sense and from this ah particular
+
+203
+00:23:04,640 --> 00:23:10,100
+sample you can also compute your betas and
+if you compute the betas they come out to
+
+204
+00:23:10,100 --> 00:23:16,310
+be very very close to what you started with
+so started with each ah word having a probability
+
+205
+00:23:16,310 --> 00:23:20,960
+of one by three and that's what is roughly
+what we obtain and this is just an explanation
+
+206
+00:23:20,960 --> 00:23:26,410
+that how gibbs sampling can help you to recover
+what is a original topic distribution this
+
+207
+00:23:26,410 --> 00:23:31,090
+is from artificial data but now you can do
+that for any real corpus we have the real
+
+208
+00:23:31,090 --> 00:23:35,220
+corpus and we want to find out what is the
+topic distributions apply gibbs sampling and
+
+209
+00:23:35,220 --> 00:23:41,559
+find out that so there are various tool kits
+available that i also disused in last lecture
+
+210
+00:23:41,559 --> 00:23:45,799
+so where you can give a corpus you can define
+the number of topics and they can give you
+
+211
+00:23:45,799 --> 00:23:51,670
+the the all this values what are theta what
+are betas what are vapor topic per per document
+
+212
+00:23:51,670 --> 00:23:57,100
+per word topic distribution
+now once you have that what are sort of simple
+
+213
+00:23:57,100 --> 00:24:03,480
+ah tasks that you can do with this so for
+example one very important task is can you
+
+214
+00:24:03,480 --> 00:24:10,570
+compute similarity between two documents and
+how will you do that so suppose i have two
+
+215
+00:24:10,570 --> 00:24:16,140
+document given in d two to compute the similarity
+between that i will see what is the topic
+
+216
+00:24:16,140 --> 00:24:22,560
+distributions for d one and d two so so how
+if they are similar i will say that the two
+
+217
+00:24:22,560 --> 00:24:27,649
+documents are similar but if their topic distributions
+are different i will say they are different
+
+218
+00:24:27,649 --> 00:24:34,899
+plus so i have two documents d one and t two
+i find out what is theta for d one what is
+
+219
+00:24:34,899 --> 00:24:49,230
+theta for d two now i can say distance between
+ah two distribution p q i can use the k l
+
+220
+00:24:49,230 --> 00:24:59,510
+divergence summation p i log p i by q i so
+now i compute the k l divergence between the
+
+221
+00:24:59,510 --> 00:25:04,340
+two topic distributions for d one and d two
+and that will get me how what is the distance
+
+222
+00:25:04,340 --> 00:25:10,090
+between the two documents that is one every
+standard measure for finding out how how similar
+
+223
+00:25:10,090 --> 00:25:14,510
+two documents are
+because this is asymmetric you can also do
+
+224
+00:25:14,510 --> 00:25:24,280
+something like one by two d p q plus d q p
+so we can also use that as some sort of distance
+
+225
+00:25:24,280 --> 00:25:29,020
+symmetric so that is you have now the corpus
+you find know the topic distributions now
+
+226
+00:25:29,020 --> 00:25:33,510
+you can use that to compare the similarity
+between any pair of documents so that is one
+
+227
+00:25:33,510 --> 00:25:44,490
+very very important application of topic models
+then you can find out what is similarity of
+
+228
+00:25:44,490 --> 00:25:49,050
+ah the document with reciprocal query ah what
+is the probability that query is generated
+
+229
+00:25:49,050 --> 00:25:55,260
+from a document that is what we study in information
+three rate that you have a lot of documents
+
+230
+00:25:55,260 --> 00:26:03,230
+you want to find out given a query which document
+should be ah ranked higher this will be ah
+
+231
+00:26:03,230 --> 00:26:08,950
+computed using what is the probability that
+the query is generated from this document
+
+232
+00:26:08,950 --> 00:26:13,190
+so whichever document give the highest probability
+of generating the query is given the highest
+
+233
+00:26:13,190 --> 00:26:22,779
+ah score now whats the formulation you want
+to find out probability of query given the
+
+234
+00:26:22,779 --> 00:26:29,230
+document the query is nothing but a set of
+words so if we take it simply easily multiplication
+
+235
+00:26:29,230 --> 00:26:37,850
+over all the words in my query probability
+w k given d i now how do i compute probability
+
+236
+00:26:37,850 --> 00:26:44,799
+of word given d i there i am using the l d
+a ah the l d a model so i will say so i will
+
+237
+00:26:44,799 --> 00:26:51,700
+marginalize it over all the topics so this
+will be covered all words in query summation
+
+238
+00:26:51,700 --> 00:27:08,250
+over all topics probability w t given topic
+is j probability topic is j given document
+
+239
+00:27:08,250 --> 00:27:13,970
+d ok this is nothing that comes from your
+beta directly that comes here from your theta
+
+240
+00:27:13,970 --> 00:27:15,870
+directly
+and use that to find out what is the probability
+
+241
+00:27:15,870 --> 00:27:21,190
+of this query given this document this is
+again a very interesting use then you can
+
+242
+00:27:21,190 --> 00:27:26,500
+also use it to find out these two words are
+similar what is the probability of word w
+
+243
+00:27:26,500 --> 00:27:31,419
+two given w one that is nothing but again
+you marginalize over all the topics and this
+
+244
+00:27:31,419 --> 00:27:39,100
+you will-- compute from ah either your beta
+or by agent based here so this will give me
+
+245
+00:27:39,100 --> 00:27:45,039
+given a word w one what are some of the likely
+words in my vocabulary
+
+246
+00:27:45,039 --> 00:27:48,289
+and this you can find from computing words
+similarity and all that you have to using
+
+247
+00:27:48,289 --> 00:27:52,990
+doing using distributional similarity and
+and other stuff so this is that's thy this
+
+248
+00:27:52,990 --> 00:28:01,620
+is i given a nice method for capturing ah
+semantics between words documents even sentences
+
+249
+00:28:01,620 --> 00:28:06,240
+so ah how do you validate at this words so
+that's we saw a simple experiment see at the
+
+250
+00:28:06,240 --> 00:28:13,360
+word play by using topic model find out which
+words have the highest probability given the
+
+251
+00:28:13,360 --> 00:28:21,179
+word play so probability of x given play find
+out some top top words then you ask some humans
+
+252
+00:28:21,179 --> 00:28:27,130
+who say that when you hear the word play what
+words come into your mind that is humans so
+
+253
+00:28:27,130 --> 00:28:32,240
+words like fun ball game work ground mate
+child etcetera they come to their mind then
+
+254
+00:28:32,240 --> 00:28:36,890
+you try to see whether these two lists are
+similar and you find that many words are similar
+
+255
+00:28:36,890 --> 00:28:41,149
+like ball game they come on top even in topic
+model so this is the interest interesting
+
+256
+00:28:41,149 --> 00:28:49,360
+way of ah evaluating whether a model is doing
+well for capturing words in that so ok so
+
+257
+00:28:49,360 --> 00:28:53,809
+we we discussed how do we use gibbs sampling
+to to estimate these parameters and some simple
+
+258
+00:28:53,809 --> 00:28:59,400
+applications next we will also talk about
+some non para parametric base model and what
+
+259
+00:28:59,400 --> 00:29:01,580
+are the different applications they can be
+used for
+
+260
+00:29:01,580 --> 00:29:02,360
+thank you
+

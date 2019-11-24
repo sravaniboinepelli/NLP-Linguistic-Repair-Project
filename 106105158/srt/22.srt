@@ -1,0 +1,1209 @@
+1
+00:00:18,699 --> 00:00:25,579
+so welcome to the fifth week of this course
+so we have so in this week we are going we
+
+2
+00:00:25,579 --> 00:00:32,079
+will be moving up the hierarchy of ah solving
+this language processing tasks ok so we had
+
+3
+00:00:32,079 --> 00:00:38,250
+started with discussing about how do we handle
+individual words how do we use how do we make
+
+4
+00:00:38,250 --> 00:00:45,130
+use of the word or information using language
+models and then how do we assign various grammatical
+
+5
+00:00:45,130 --> 00:00:50,130
+categories a part of speech categories to
+the words ok that is why what we are doing
+
+6
+00:00:50,130 --> 00:00:51,130
+till now
+
+7
+00:00:51,130 --> 00:00:57,239
+now we will go to next level where we will
+try to see can we arrange these words in certain
+
+8
+00:00:57,239 --> 00:01:03,799
+groups ok so this is this is what we study
+in this topic of syntax so how are the words
+
+9
+00:01:03,799 --> 00:01:10,939
+being arranged together ok and what can be
+how we can automatically find out this arrangement
+
+10
+00:01:10,939 --> 00:01:16,079
+given a new sentence this will be the topic
+of parsing that we will discuss in this week
+
+11
+00:01:16,079 --> 00:01:21,909
+ok
+so what is syntax so in general syntax refers
+
+12
+00:01:21,909 --> 00:01:29,390
+to the way the words are arranged together
+ok and also you will see what is the relationship
+
+13
+00:01:29,390 --> 00:01:35,950
+between various words and the word groups
+that is what we will talk about in syntax
+
+14
+00:01:35,950 --> 00:01:39,759
+so when we were talking about language models
+we had discussed what is the importance of
+
+15
+00:01:39,759 --> 00:01:45,549
+modeling word order so which words occur after
+what are the words how we can make use of
+
+16
+00:01:45,549 --> 00:01:50,469
+that in assigning probability for a sentence
+all finding out the next word in completion
+
+17
+00:01:50,469 --> 00:01:56,049
+task or in spelling correction task ok similarly
+when we were talking about part of speech
+
+18
+00:01:56,049 --> 00:02:00,859
+task we saw what are the grammatical categories
+part of speech categories so this defines
+
+19
+00:02:00,859 --> 00:02:09,060
+in one sort of equivalence class for words
+that is all these words behave like they are
+
+20
+00:02:09,060 --> 00:02:15,760
+verbs behave in some some equivalent manner
+ok similarly all these words are nouns they
+
+21
+00:02:15,760 --> 00:02:20,459
+behaving in some equivalent manner similarly
+all these are adjectives so you are define
+
+22
+00:02:20,459 --> 00:02:26,220
+some equivalent classes
+now in syntax we will find out some more complex
+
+23
+00:02:26,220 --> 00:02:31,959
+notions like word is constituency what are
+different grammatical relations among the
+
+24
+00:02:31,959 --> 00:02:39,230
+words what what groups or what words are group
+together in constituency ok and subcategorization
+
+25
+00:02:39,230 --> 00:02:47,710
+etcetera also included in this in this topic
+ok and yeah just to make you understand what
+
+26
+00:02:47,710 --> 00:02:53,879
+is this notion of syntax so you can relate
+to that if you see this particular meme so
+
+27
+00:02:53,879 --> 00:03:00,599
+i hope you remember this particular character
+from a statics this syntax the only part of
+
+28
+00:03:00,599 --> 00:03:06,299
+the language it is not but important is it
+is right so you can see the way words are
+
+29
+00:03:06,299 --> 00:03:11,459
+arranged normally in the way we speak and
+how they arranged in this particular sentence
+
+30
+00:03:11,459 --> 00:03:16,879
+ok that was the special characteristics of
+this character ok
+
+31
+00:03:16,879 --> 00:03:23,739
+so now so what are we are going to study in
+syntax so let me give you a simple example
+
+32
+00:03:23,739 --> 00:03:30,810
+so i have the sentence the man read this book
+ok so by syntax we are trying we are trying
+
+33
+00:03:30,810 --> 00:03:36,930
+to find out what are the various groups of
+word ok that are coming together for example
+
+34
+00:03:36,930 --> 00:03:42,420
+in part of speech text we found out that the
+word the as part of speech of determiner man
+
+35
+00:03:42,420 --> 00:03:47,709
+as the part of speech of noun read as verb
+and so on ok now we are going one level up
+
+36
+00:03:47,709 --> 00:03:53,799
+so now we are saying this is determiner this
+is noun this is kind of nominal but they both
+
+37
+00:03:53,799 --> 00:04:00,819
+together make a phrase noun phrase so i am
+saying the man is a noun phrase similarly
+
+38
+00:04:00,819 --> 00:04:05,159
+this book is also a noun phrase so the there
+are two noun phrases here the man and this
+
+39
+00:04:05,159 --> 00:04:15,079
+book but when the verb read or any verb comes
+before the noun phrase it makes a verb phrase
+
+40
+00:04:15,079 --> 00:04:21,239
+ok so all these three words act as a single
+unit of a verb phrase ok there is a no such
+
+41
+00:04:21,239 --> 00:04:29,050
+unit for man and read right there is a unit
+for read this book and the man and then i
+
+42
+00:04:29,050 --> 00:04:34,650
+go up saying that a noun phrase and verb phrase
+are making the sentence and this gives me
+
+43
+00:04:34,650 --> 00:04:40,800
+complete hierarchy structure of how the words
+arranged in the sentence the sentence is nothing
+
+44
+00:04:40,800 --> 00:04:45,070
+but a noun phrase and the verb phrase this
+noun phrase contains a determiner and noun
+
+45
+00:04:45,070 --> 00:04:50,130
+verb phrase contains a verb and noun phrase
+which contains and so on so this is the complete
+
+46
+00:04:50,130 --> 00:04:55,330
+hierarchy of the sentence that i come to know
+by this syntax tree and that is the what is
+
+47
+00:04:55,330 --> 00:05:01,020
+the topic of this week how do we come up with
+such syntax tree for a for some sentences
+
+48
+00:05:01,020 --> 00:05:07,310
+what is the particular formulation that we
+will use ok
+
+49
+00:05:07,310 --> 00:05:13,320
+let me start by defining some basic notions
+like what is constituency so in the last example
+
+50
+00:05:13,320 --> 00:05:18,700
+we saw that a group of words right they act
+they acting as some single unit and you can
+
+51
+00:05:18,700 --> 00:05:25,790
+call them as phrases clauses etcetera so in
+part of speech we could have done this substitution
+
+52
+00:05:25,790 --> 00:05:32,600
+test so i have this sentence the there is
+a fill in the blank one in the room ok and
+
+53
+00:05:32,600 --> 00:05:38,860
+i can i can filling any adjective the green
+one the fat one and intelligent one sad one
+
+54
+00:05:38,860 --> 00:05:44,280
+all that can be filled in so i can fill in
+any word that belongs to that particular part
+
+55
+00:05:44,280 --> 00:05:50,670
+of speech category now here it will be a particular
+constituent it will be a particular group
+
+56
+00:05:50,670 --> 00:06:00,250
+of words that can behave similarly ok like
+here so all these four things kermit the frog
+
+57
+00:06:00,250 --> 00:06:06,180
+they december twenty sixth the reason he running
+for president all these are noun phrases ok
+
+58
+00:06:06,180 --> 00:06:11,830
+and they can occur in a given context so now
+for substitution test you can substitute any
+
+59
+00:06:11,830 --> 00:06:19,460
+of this these four noun phrases and yeah we
+will see an example where all these can come
+
+60
+00:06:19,460 --> 00:06:27,810
+in the same in a very very similar context
+so how do we name these constituent phrases
+
+61
+00:06:27,810 --> 00:06:33,220
+so last slide i was showing some noun phrases
+so why do we call them noun phrases or something
+
+62
+00:06:33,220 --> 00:06:39,580
+else so usually the names are given based
+on the words that are heading these constituent
+
+63
+00:06:39,580 --> 00:06:46,210
+what is the head and usually speaking you
+can find the head by the word that can substituted
+
+64
+00:06:46,210 --> 00:06:54,060
+for the whole thing ok let me take the first
+example the man from amherst ok this is the
+
+65
+00:06:54,060 --> 00:06:58,490
+this is the phrase they are four words now
+which of the four word do you think can substitute
+
+66
+00:06:58,490 --> 00:07:07,820
+the whole thing now that can that can be used
+in the grammatical ah function of the of the
+
+67
+00:07:07,820 --> 00:07:13,640
+complete unit and that will be man where the
+man from amherst the word man can be used
+
+68
+00:07:13,640 --> 00:07:20,520
+to denote the grammatical function of the
+whole unit so the head here is a noun man
+
+69
+00:07:20,520 --> 00:07:26,050
+so this will be called a noun phrase ok because
+the head man is a noun
+
+70
+00:07:26,050 --> 00:07:32,650
+similarly extremely clever the head here is
+clever this is the adjective so this is called
+
+71
+00:07:32,650 --> 00:07:39,530
+in adjective phrase down the river here head
+is down preposition so this will called in
+
+72
+00:07:39,530 --> 00:07:43,872
+prepositional phrase killed the rabbit the
+head is killed the word killed which is a
+
+73
+00:07:43,872 --> 00:07:50,930
+verb so this is called verb phrase so like
+that we are we defined what are the constituent
+
+74
+00:07:50,930 --> 00:08:01,310
+by taking what is the head of that phrase
+now in general words can also act as phrases
+
+75
+00:08:01,310 --> 00:08:07,140
+so a phrase need not have always multiple
+heads a single word can also be a phrase so
+
+76
+00:08:07,140 --> 00:08:16,420
+let us take the simple example joe grew potatoes
+so joe itself it is a noun phrase ok potato
+
+77
+00:08:16,420 --> 00:08:22,830
+also a noun phrase they are nouns but also
+a noun phrases in this case now compare the
+
+78
+00:08:22,830 --> 00:08:32,339
+sentence with the man from amherst grew beautiful
+russet potatoes so what do you seeing so instead
+
+79
+00:08:32,339 --> 00:08:37,330
+of joe i have substituted the man from amhrest
+a complete a four word unit that is again
+
+80
+00:08:37,330 --> 00:08:43,310
+a noun phrase and beautiful russet potatoes
+instead of potatoes they are still noun phrases
+
+81
+00:08:43,310 --> 00:08:48,779
+ok so what happen in the sentence joe appears
+in a place where you could a probably put
+
+82
+00:08:48,779 --> 00:08:54,910
+a larger noun phrase now this gives a very
+nice idea about the structure of the sentence
+
+83
+00:08:54,910 --> 00:09:00,390
+ok in this sentence i am having a noun phrase
+and a verb phrase verb phrase contains a verb
+
+84
+00:09:00,390 --> 00:09:05,340
+and noun phrase and noun phrase you can you
+can either put a single word like joe or you
+
+85
+00:09:05,340 --> 00:09:10,520
+can put multiple words like the man from amhrest
+similarly in that noun phrase you can put
+
+86
+00:09:10,520 --> 00:09:17,550
+potatoes or it become noun phrase like beautiful
+russet potatoes so this gives me lots of idea
+
+87
+00:09:17,550 --> 00:09:24,530
+about how words are grouped in arrange together
+now there is some evidence that questions
+
+88
+00:09:24,530 --> 00:09:33,260
+actually exist in language yes they are two
+different evidences one is that this phrase
+
+89
+00:09:33,260 --> 00:09:38,240
+is appear in very very similar environment
+so far i have talk about the four phrases
+
+90
+00:09:38,240 --> 00:09:44,040
+that noun phrases that discussed in one of
+the various phrases like let we see this examples
+
+91
+00:09:44,040 --> 00:09:51,520
+kermit the frog comes on stage note it they
+come to massachusetts every summer december
+
+92
+00:09:51,520 --> 00:09:56,860
+twenty sixth comes after christmas the reason
+he is running for president comes out only
+
+93
+00:09:56,860 --> 00:10:05,550
+now so all these four nouns phrases are coming
+in a very similar context of the word say
+
+94
+00:10:05,550 --> 00:10:11,080
+comes yes but i cannot take any individual
+word from here and put that in the context
+
+95
+00:10:11,080 --> 00:10:20,430
+so i cannot take the word the and say the
+comes our out or i cannot say is comes out
+
+96
+00:10:20,430 --> 00:10:25,960
+and i cannot say for comes out in this sentence
+ok i can only say the reason he is running
+
+97
+00:10:25,960 --> 00:10:32,460
+for president comes out only now ok not an
+individual word so this whole thing behaves
+
+98
+00:10:32,460 --> 00:10:37,830
+as a single unit and they occur in similar
+context all the noun phrase occurring in similar
+
+99
+00:10:37,830 --> 00:10:43,940
+context this is got evidence to constituency
+what is the other evidence so the evidence
+
+100
+00:10:43,940 --> 00:10:51,000
+is that this whole phrase is together can
+locate many locations in the same center ok
+
+101
+00:10:51,000 --> 00:10:58,120
+so for example if i take on december twenty
+six that is the prepositional phrase and i
+
+102
+00:10:58,120 --> 00:11:01,779
+can put it in many different phrases in the
+sentence on december twenty six i would like
+
+103
+00:11:01,779 --> 00:11:07,920
+to fly to florida i would like to fly on december
+twenty six to florida or i would like to fly
+
+104
+00:11:07,920 --> 00:11:13,460
+to florida on december twenty six all three
+are valid sentences where this complete phrase
+
+105
+00:11:13,460 --> 00:11:21,480
+on december twenty six has we put in multiple
+location but you cannot break this into two
+
+106
+00:11:21,480 --> 00:11:27,740
+parts and put it in phrases ok so you cannot
+say on december i would like to fly twenty
+
+107
+00:11:27,740 --> 00:11:31,900
+sixth to florida or on i would like to fly
+december twenty sixth to florida you cannot
+
+108
+00:11:31,900 --> 00:11:39,000
+say that so this will as a single group it
+cannot be split of part ok so these are some
+
+109
+00:11:39,000 --> 00:11:44,500
+evidence that constituency actually exists
+in the language
+
+110
+00:11:44,500 --> 00:11:52,190
+now what is the formal tool by which we can
+model this constituency that is how words
+
+111
+00:11:52,190 --> 00:11:58,830
+are arranged together which words come together
+which was do not come together ok and what
+
+112
+00:11:58,830 --> 00:12:03,831
+groups make a sentence and what groups make
+a verb phrase what group make a noun phrase
+
+113
+00:12:03,831 --> 00:12:10,070
+how can i model all that what is the formulation
+ok and if you have take any course on formal
+
+114
+00:12:10,070 --> 00:12:15,700
+language in automated theory all theory computation
+you might already know that the formulate
+
+115
+00:12:15,700 --> 00:12:21,710
+that we can use that in context free grammar
+ok this is the most common way of modeling
+
+116
+00:12:21,710 --> 00:12:29,860
+constituency so in one of the earlier lectures
+we talked about the ah languages by using
+
+117
+00:12:29,860 --> 00:12:36,520
+deterministic finite automata of finite automata
+ok so this is context for context free languages
+
+118
+00:12:36,520 --> 00:12:43,330
+by using by the context free grammar
+now so i will not going in very very basics
+
+119
+00:12:43,330 --> 00:12:47,990
+i will just talk briefly how do we use context
+free grammar i will also defined the notions
+
+120
+00:12:47,990 --> 00:12:56,490
+for the context free grammar so in the case
+of context free grammar what you will have
+
+121
+00:12:56,490 --> 00:13:01,520
+you will have some sort of production rules
+that is what we mostly interested in so what
+
+122
+00:13:01,520 --> 00:13:07,490
+they do the production rules will try to express
+what are the way in which various symbols
+
+123
+00:13:07,490 --> 00:13:13,310
+of the language of group together ok and that
+is our main interest in using context free
+
+124
+00:13:13,310 --> 00:13:18,210
+grammar which symbols are being group together
+that i can use that i can find out using or
+
+125
+00:13:18,210 --> 00:13:23,980
+i can express using the production rules in
+context free grammars
+
+126
+00:13:23,980 --> 00:13:30,160
+so let us see one simple example so i want
+to model this language that is noun phrase
+
+127
+00:13:30,160 --> 00:13:37,670
+can be composed to either a proper noun or
+a determiner followed by a nominal where a
+
+128
+00:13:37,670 --> 00:13:41,830
+nominal can be more than one nouns that is
+something i want to express about language
+
+129
+00:13:41,830 --> 00:13:51,710
+so how do i use the context free grammar so
+i will say noun phrases proper noun or determiner
+
+130
+00:13:51,710 --> 00:14:03,750
+nominal ok the nominal is noun or many nouns
+so how i write in context free grammar i will
+
+131
+00:14:03,750 --> 00:14:24,631
+say noun phrase is proper noun or determiner
+nominal and what is a nominal it is one noun
+
+132
+00:14:24,631 --> 00:14:31,660
+or more than one noun so noun or noun by a
+nominal ok this is the regression here so
+
+133
+00:14:31,660 --> 00:14:40,130
+i can allow as many numbers of nouns as i
+want by using this ok and that is my ah context
+
+134
+00:14:40,130 --> 00:14:46,170
+free grammar for for denoting the symbol ok
+that is the idea i can express all these facts
+
+135
+00:14:46,170 --> 00:14:50,730
+about language how words are groups together
+which groups come together by using this production
+
+136
+00:14:50,730 --> 00:14:55,980
+rules
+so once we know that what is the ah formulation
+
+137
+00:14:55,980 --> 00:15:00,750
+of context free grammar very briefly said
+so in context free grammar when we study when
+
+138
+00:15:00,750 --> 00:15:08,600
+we talk about a quadruple ok so therefore
+four four important variable set of variables
+
+139
+00:15:08,600 --> 00:15:15,290
+so firstly i have set of terminals we have
+the leaf notes in my tree whenever we see
+
+140
+00:15:15,290 --> 00:15:20,580
+so they will always come at the end and whenever
+i get a terminal i cannot derive anything
+
+141
+00:15:20,580 --> 00:15:25,710
+from there so i have set of terminals so we
+will see what in the case of language what
+
+142
+00:15:25,710 --> 00:15:33,200
+do they mean then we have set of non terminals
+that help me to do the derivations ok these
+
+143
+00:15:33,200 --> 00:15:37,980
+are the variable from which you can further
+derive in more
+
+144
+00:15:37,980 --> 00:15:45,430
+now so what is different in the case of n
+l p what is some distinguish will make in
+
+145
+00:15:45,430 --> 00:15:52,050
+the set of non terminals we will also distinguish
+the set p that are pre terminals ok so pre
+
+146
+00:15:52,050 --> 00:15:56,170
+terminals are those non terminals that will
+always derive terminals so they will always
+
+147
+00:15:56,170 --> 00:16:00,640
+give me leaf nodes ok and with the example
+that will be clear what are what are they
+
+148
+00:16:00,640 --> 00:16:06,470
+in the case of language
+then i have start symbol from which i am starting
+
+149
+00:16:06,470 --> 00:16:11,020
+my derivation ok so if i have to model the
+sentence i should be starting with s that
+
+150
+00:16:11,020 --> 00:16:20,330
+is the sentence and then i have the rules
+and they always of form x going to gamma ok
+
+151
+00:16:20,330 --> 00:16:24,779
+and x has to be a non terminal a single non
+terminal and gamma can be any sequence of
+
+152
+00:16:24,779 --> 00:16:28,350
+terminals and non terminals and that is the
+constraint that we see in case of context
+
+153
+00:16:28,350 --> 00:16:33,410
+free grammar ok so this is the quadruple and
+we also seeing a pre terminal that is that
+
+154
+00:16:33,410 --> 00:16:43,430
+is the set of non terminals in the language
+what are terminals and pre terminals terminals
+
+155
+00:16:43,430 --> 00:16:49,320
+in the language will mainly with the final
+words that i will see in the lexicon and pre
+
+156
+00:16:49,320 --> 00:16:53,520
+terminals will be part of speech categories
+from the pre because from the pre terminals
+
+157
+00:16:53,520 --> 00:17:00,050
+you can derive only terminals ok
+so let us see one example and then we can
+
+158
+00:17:00,050 --> 00:17:05,250
+point out what are terminals pre terminals
+and non terminals so this is what we are modeling
+
+159
+00:17:05,250 --> 00:17:11,409
+earlier ok what is the noun phrase determiner
+for the nominal or a proper noun and where
+
+160
+00:17:11,409 --> 00:17:17,220
+a nominal is a noun or a set of nouns which
+i model using a noun followed by a nominal
+
+161
+00:17:17,220 --> 00:17:23,689
+now are you see some terminals here so there
+are no words so there is no terminals so i
+
+162
+00:17:23,689 --> 00:17:30,059
+cannot use that to derive a phrase or a sentence
+it can only give me a set of grammatical categories
+
+163
+00:17:30,059 --> 00:17:36,179
+so i have to include some facts on the lexicon
+to make it a complete grammar ok
+
+164
+00:17:36,179 --> 00:17:44,039
+so so for example i can includes some determiners
+some nouns and some proper nouns so here i
+
+165
+00:17:44,039 --> 00:17:52,529
+am including a and the has to determiners
+and flight as a noun now here can you identify
+
+166
+00:17:52,529 --> 00:17:57,351
+what are the terminal non terminals and pre
+terminals so terminals are the words in my
+
+167
+00:17:57,351 --> 00:18:03,690
+lexicon so a the and flight are my terminals
+pre terminals are the grammatical categories
+
+168
+00:18:03,690 --> 00:18:09,980
+or parse category that will always give me
+terminals can you see that determiner noun
+
+169
+00:18:09,980 --> 00:18:14,630
+are only giving me terminals so these are
+my pre terminals and apart from that all the
+
+170
+00:18:14,630 --> 00:18:26,720
+variables like n p nominal they are my non
+terminals so proper noun no example is given
+
+171
+00:18:26,720 --> 00:18:32,341
+but proper noun is also a pre terminal ok
+it is part of speech category it will give
+
+172
+00:18:32,341 --> 00:18:39,220
+you some words to the lexicon so these are
+my terminals non terminals and pre terminals
+
+173
+00:18:39,220 --> 00:18:51,470
+so now once you have the c f g you can use
+that to generate various phrases or sentences
+
+174
+00:18:51,470 --> 00:18:59,720
+in language so for example i here this is
+the c f g for non phrases so can i can i generate
+
+175
+00:18:59,720 --> 00:19:05,649
+a flight the phrase a flight is in this context
+free grammar ok so i will have to start with
+
+176
+00:19:05,649 --> 00:19:11,110
+n p and i have to generate a flight so what
+is the first derivation i will to do from
+
+177
+00:19:11,110 --> 00:19:18,470
+n p i will take this rule determiner followed
+by a nominal yes now determiner will give
+
+178
+00:19:18,470 --> 00:19:24,450
+me a now from nominal i cannot go to flight
+directly so for nominal i will have to first
+
+179
+00:19:24,450 --> 00:19:31,480
+get a noun and from noun i will get a i get
+the word flight so n p gives me determine
+
+180
+00:19:31,480 --> 00:19:40,029
+nominal nominal gives me noun determiner gives
+me a a a noun and a flight thats how it generate
+
+181
+00:19:40,029 --> 00:19:46,649
+a sequence of words using this grammar and
+now you can do it for any sentence you can
+
+182
+00:19:46,649 --> 00:19:53,610
+define a grammar for a sentence and generate
+a sentences from that ok
+
+183
+00:19:53,610 --> 00:19:58,899
+so what we are seeing here so there is a context
+free grammar is generate a series of strings
+
+184
+00:19:58,899 --> 00:20:06,779
+ok and this sequence of rule expansions so
+the sequence that ah that you are using starting
+
+185
+00:20:06,779 --> 00:20:12,470
+from n p going to determiner nominal then
+determiner noun then a noun then a flight
+
+186
+00:20:12,470 --> 00:20:19,919
+this is called the derivation of the string
+using this grammar and we use it is tree structure
+
+187
+00:20:19,919 --> 00:20:24,340
+to represent this derivation ok remember one
+of the very first tree that we had shown as
+
+188
+00:20:24,340 --> 00:20:29,030
+a motivation so we will try to come up with
+such trees using this derivations and when
+
+189
+00:20:29,030 --> 00:20:36,139
+we will be call the past tense ok
+now what is the notion of grammaticality using
+
+190
+00:20:36,139 --> 00:20:42,549
+context free grammars the idea is that you
+defined one grammar for your language ok you
+
+191
+00:20:42,549 --> 00:20:46,739
+have to assume that this is the this is the
+only grammar so any tool that is not expressed
+
+192
+00:20:46,739 --> 00:20:54,460
+in the in the grammar is not allowed in the
+language so now when you are given a new sentence
+
+193
+00:20:54,460 --> 00:20:59,649
+if you can see that there is a way to generate
+this sentence using my grammar the sentence
+
+194
+00:20:59,649 --> 00:21:05,259
+is grammatical as per my grammar if the sentence
+cannot be generated in the grammar this is
+
+195
+00:21:05,259 --> 00:21:10,330
+not grammatical this is a simple notion or
+using this grammar whatever sentence i can
+
+196
+00:21:10,330 --> 00:21:15,230
+generate is grammatical and whatever i cannot
+is not grammatical so it depends on the grammar
+
+197
+00:21:15,230 --> 00:21:23,220
+that you have designed the context free grammar
+that you have designed so yes so whatever
+
+198
+00:21:23,220 --> 00:21:26,779
+can be derived are grammatical and others
+are ungrammatical
+
+199
+00:21:26,779 --> 00:21:34,139
+now c f gs are interesting because they can
+also model some very interesting phenomena
+
+200
+00:21:34,139 --> 00:21:41,450
+in in language syntax like recursion ok so
+in language you make lot of big big sentences
+
+201
+00:21:41,450 --> 00:21:49,149
+by ah doing recursion so for example a preposition
+phrase can be written as a preposition followed
+
+202
+00:21:49,149 --> 00:21:55,759
+by a noun phrase ok and noun phrase can be
+written as a noun phrase followed by a preposition
+
+203
+00:21:55,759 --> 00:22:04,909
+phrase so you see there is a recursion here
+yes so i can encode the noun phrase noun and
+
+204
+00:22:04,909 --> 00:22:09,139
+prepositional phrase is here preposition phase
+can again encode a noun phrase which can encode
+
+205
+00:22:09,139 --> 00:22:13,769
+a proportion phrase so this is the recursion
+is very very common in language ok
+
+206
+00:22:13,769 --> 00:22:22,330
+so let's see one example so the set example
+is the mailman ate his and this is the complete
+
+207
+00:22:22,330 --> 00:22:30,210
+noun phrase is starting from lunch till the
+end of the sentence lunch and noun phrase
+
+208
+00:22:30,210 --> 00:22:37,039
+is a noun preposition phrase with and this
+is not shown here but this is again starts
+
+209
+00:22:37,039 --> 00:22:42,129
+a noun phrase preposition phrase is a preposition
+followed by a noun phrase with his friend
+
+210
+00:22:42,129 --> 00:22:49,009
+from the cleaning staff and all this is a
+noun phrase and what is this noun phrase noun
+
+211
+00:22:49,009 --> 00:22:55,340
+ok his friend followed by a preposition phrase
+and so on the recursion is very nicely captured
+
+212
+00:22:55,340 --> 00:23:06,779
+by using context free grammar ok
+now shall end this lecture by just saying
+
+213
+00:23:06,779 --> 00:23:13,350
+what is the context denotes in context free
+grammar what is the meaning of context so
+
+214
+00:23:13,350 --> 00:23:19,330
+language we talk about context as such ok
+so we say context is given a word find out
+
+215
+00:23:19,330 --> 00:23:25,200
+what is the context what are the previous
+words and what is the ah topic and all that
+
+216
+00:23:25,200 --> 00:23:29,739
+so these are all define the context but this
+context is nothing to do with what is context
+
+217
+00:23:29,739 --> 00:23:34,019
+in the case of context free grammar this is
+very very formal notion ok
+
+218
+00:23:34,019 --> 00:23:42,379
+so ah so this is nothing do with the ordinary
+meaning of word context in language so all
+
+219
+00:23:42,379 --> 00:23:48,700
+this means is that in context free grammar
+whenever i am doing a derivation ok so whenever
+
+220
+00:23:48,700 --> 00:23:57,320
+i am writing a gives the b c ok or say noun
+phrase give me determiner nominal whenever
+
+221
+00:23:57,320 --> 00:24:04,470
+i am writing a rule like that it means is
+that the noun terminal left it all in its
+
+222
+00:24:04,470 --> 00:24:11,879
+own by itself ok it does not need any context
+around it so i can always write a goes to
+
+223
+00:24:11,879 --> 00:24:22,919
+b c irrespective of whatever is around my
+word a ok so even if i have x a earlier i
+
+224
+00:24:22,919 --> 00:24:31,840
+can use a to derive x b c and if i have irrespective
+of what is x or any y i can always write like
+
+225
+00:24:31,840 --> 00:24:38,899
+this and this x and y are immaterial they
+do not matter it can be null it can be whatever
+
+226
+00:24:38,899 --> 00:24:45,669
+similarly if i inferring whenever i see a
+b c i can always infer a so this it might
+
+227
+00:24:45,669 --> 00:24:53,629
+have come from a independent of the context
+of b c and this is what context free grammar
+
+228
+00:24:53,629 --> 00:24:59,390
+so if you go would go the next label of context
+sensitive grammars there are you need the
+
+229
+00:24:59,390 --> 00:25:05,450
+context this word a can derive b c in this
+particular left context in a particular right
+
+230
+00:25:05,450 --> 00:25:11,509
+context we do not need this left and right
+context in the case of context free grammars
+
+231
+00:25:11,509 --> 00:25:14,740
+ok this what the context the word context
+means in this case
+
+232
+00:25:14,740 --> 00:25:24,070
+so so whenever i have a rule a goes b c it
+means that i can write a i can always write
+
+233
+00:25:24,070 --> 00:25:30,989
+from a b followed by c regardless of the context
+in which a is found or whenever i find and
+
+234
+00:25:30,989 --> 00:25:39,789
+b followed by a c i can infer a regardless
+of the context in which b and c is found so
+
+235
+00:25:39,789 --> 00:25:47,379
+so this is c f g for for us ah i am not going
+to lot of basics of context free grammars
+
+236
+00:25:47,379 --> 00:25:51,690
+and i suggest that you can quickly look at
+any of the chapters in the basic books of
+
+237
+00:25:51,690 --> 00:25:58,830
+ah formal languages and automated theory so
+but whatever is required for our ah tasks
+
+238
+00:25:58,830 --> 00:26:03,869
+of doing parsing i have covered in this lecture
+i will and i will cover the necessary things
+
+239
+00:26:03,869 --> 00:26:09,960
+in the next lecture so in the next lecture
+what we will do we will start from c f gs
+
+240
+00:26:09,960 --> 00:26:16,230
+and we will see how we can use that for actually
+doing the parsing for a given sentence in
+
+241
+00:26:16,230 --> 00:26:20,669
+the in the language ok so we will take a various
+approaches for parsing ok so that will be
+
+242
+00:26:20,669 --> 00:26:23,129
+the next topic for the next lecture
+thank you
+

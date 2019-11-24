@@ -1,0 +1,1387 @@
+1
+00:00:18,510 --> 00:00:24,530
+ok so welcome back to the second week of this
+course so last week we handed with the with
+
+2
+00:00:24,530 --> 00:00:30,570
+some the concept in pre processing of the
+text ok so so what are the concept that we
+
+3
+00:00:30,570 --> 00:00:37,730
+covered we covered given is is sentence or
+document in general a text document how do
+
+4
+00:00:37,730 --> 00:00:43,190
+i cyber into into a sentences how do a segment
+into words we saw what are the spec specific
+
+5
+00:00:43,190 --> 00:00:48,540
+issues that might arise because of various
+languages and we talked about normalization
+
+6
+00:00:48,540 --> 00:00:55,949
+case folding and other aspects like lamentation
+stability ok so these are some very very standard
+
+7
+00:00:55,949 --> 00:01:02,360
+pre processing tasks that you might have to
+do on on a given text in in a given language
+
+8
+00:01:02,360 --> 00:01:08,549
+ok but there is another task that you might
+have to do certain in in certain cases if
+
+9
+00:01:08,549 --> 00:01:13,890
+the the data that you are obtaining is a bit
+noisy what i mean noisy there are certain
+
+10
+00:01:13,890 --> 00:01:20,229
+spelling errors and you want to correct them
+for doing your ana analysis so this task is
+
+11
+00:01:20,229 --> 00:01:25,540
+called spelling correction so what are the
+various ah problems that i involve in spelling
+
+12
+00:01:25,540 --> 00:01:28,930
+correction and what are the different algorism
+that we will be using so we will be start
+
+13
+00:01:28,930 --> 00:01:34,900
+with the very very simple algorithm of how
+do use at the distance for spelling correction
+
+14
+00:01:34,900 --> 00:01:43,980
+in this particular lecture ok
+
+15
+00:01:43,980 --> 00:01:48,420
+so what is the problem of start a spelling
+correction suppose you are you are reading
+
+16
+00:01:48,420 --> 00:01:53,960
+or you are seeing the text in your data and
+the sentence is i am writing on behalf of
+
+17
+00:01:53,960 --> 00:02:00,120
+but in behalf you see only b e h a f and the
+l is l is missing so now you want to correct
+
+18
+00:02:00,120 --> 00:02:05,480
+this particular word to the actual word behalf
+now what is the auto what is the algorithm
+
+19
+00:02:05,480 --> 00:02:12,500
+approach of of solving this problem ok so
+in general if you see this word like behalf
+
+20
+00:02:12,500 --> 00:02:16,370
+so ideally we want want to find out what are
+the closest words in english that might come
+
+21
+00:02:16,370 --> 00:02:21,720
+in place of this ok so what are the words
+you can think of i can think of probably behalf
+
+22
+00:02:21,720 --> 00:02:27,829
+and i can think of probably behave yes and
+they might be some other words
+
+23
+00:02:27,829 --> 00:02:34,739
+now so when i will talk we talking about spelling
+correction i will talk about two different
+
+24
+00:02:34,739 --> 00:02:40,770
+scenarios one is isolated word error correction
+that is i am trying to correct a word that
+
+25
+00:02:40,770 --> 00:02:45,650
+is incorrect but i am not trying to use the
+context around it so given the word b e h
+
+26
+00:02:45,650 --> 00:02:50,030
+a f i want to correct it without choosing
+what is there before and after this word and
+
+27
+00:02:50,030 --> 00:02:57,709
+this is call isolated word error detection
+so now so in this approach i will try to fin
+
+28
+00:02:57,709 --> 00:03:02,799
+find the word that are closest to behalf ok
+you see maybe behalf and behave to will be
+
+29
+00:03:02,799 --> 00:03:13,129
+two words now so immediately i have a i have
+a problem so how do i define what what is
+
+30
+00:03:13,129 --> 00:03:20,139
+what do i mean by closest ok so ideally we
+say ok where you haven some sort of match
+
+31
+00:03:20,139 --> 00:03:28,220
+between this word and that word but how do
+i further define it so i need some sort of
+
+32
+00:03:28,220 --> 00:03:33,790
+distance metric how do i major distance between
+one word to another word and as per this metric
+
+33
+00:03:33,790 --> 00:03:38,489
+whichever two words are coming out to be closer
+will be called as closest if there are coming
+
+34
+00:03:38,489 --> 00:03:43,220
+to far i will not even consider that as a
+cand candidate for the correction so i really
+
+35
+00:03:43,220 --> 00:03:48,599
+want a distance matter that that can give
+me the b e h a f and b e h a l l f are very
+
+36
+00:03:48,599 --> 00:03:57,359
+very closed together so so we will start and
+we will actually use this the the metric called
+
+37
+00:03:57,359 --> 00:04:02,489
+edit distance and this one of the simplest
+metric that we can think of in this case now
+
+38
+00:04:02,489 --> 00:04:10,799
+what is edit distance ok so what is my problem
+i am given two strings ok in general i am
+
+39
+00:04:10,799 --> 00:04:15,150
+given two strings one that is incorrect another
+might be correct and i have to find out what
+
+40
+00:04:15,150 --> 00:04:19,970
+is the minimum distance between these two
+strings ok so ah
+
+41
+00:04:19,970 --> 00:04:27,390
+so thats what i want to define by my concept
+of edit distance now how is defined so minimum
+
+42
+00:04:27,390 --> 00:04:33,910
+edit distance is defined as the minimum number
+of edit operations that i have to do for going
+
+43
+00:04:33,910 --> 00:04:39,540
+from one strings to another ok as a name say
+edit distance how many edits your making to
+
+44
+00:04:39,540 --> 00:04:44,770
+go from one string to another string thats
+how it is defined now immediately i i will
+
+45
+00:04:44,770 --> 00:04:49,530
+have the next question what are all the various
+edit operations i can make for going from
+
+46
+00:04:49,530 --> 00:04:56,070
+one strings to another strings so we will
+start with three basic operations that are
+
+47
+00:04:56,070 --> 00:05:03,230
+insertion that means i i insert a character
+in the first string deletion that means i
+
+48
+00:05:03,230 --> 00:05:08,440
+i delete a character in the first string or
+substitution i delete or i substitute one
+
+49
+00:05:08,440 --> 00:05:13,340
+charter in the first string by another one
+by another character so these are three different
+
+50
+00:05:13,340 --> 00:05:20,570
+operations that we will considering so now
+my question would be how many of these operations
+
+51
+00:05:20,570 --> 00:05:28,690
+are needed to go from one string to another
+string that is my edit distance between two
+
+52
+00:05:28,690 --> 00:05:30,400
+strings ok
+
+53
+00:05:30,400 --> 00:05:36,200
+so lets take a simple example so i have the
+initial word is intention and the final word
+
+54
+00:05:36,200 --> 00:05:42,090
+is execution and i want to find out how many
+of these operations are required to go from
+
+55
+00:05:42,090 --> 00:05:51,050
+intention to execution ok so now if i try
+try to see that so what is what am i doing
+
+56
+00:05:51,050 --> 00:06:09,640
+to go from intention to execution i am first
+doing a deletion i deleted i ok now i substituted
+
+57
+00:06:09,640 --> 00:06:29,680
+n with e again i substituted t with x i kept
+e as it is then i inserted c ok so here star
+
+58
+00:06:29,680 --> 00:06:36,960
+means i went to null that is the deletion
+here null went to c that is insertion ok then
+
+59
+00:06:36,960 --> 00:06:47,000
+again i did a substitution and with u and
+t i o n re remain as it is so how many operations
+
+60
+00:06:47,000 --> 00:06:54,760
+i need i needed i needed five different operations
+one was deletion one insertion and three substitutions
+
+61
+00:06:54,760 --> 00:07:05,930
+ok 
+so here the various operations that i did
+
+62
+00:07:05,930 --> 00:07:15,820
+now i need to define for these operations
+what will be the edit distance ok so there
+
+63
+00:07:15,820 --> 00:07:21,950
+are two different variations that i can i
+can use in one variation i might say that
+
+64
+00:07:21,950 --> 00:07:27,520
+each operation has cost of one so whether
+i am doing deletion insertion or substitution
+
+65
+00:07:27,520 --> 00:07:33,010
+each has a cost of one so in this case what
+will be the edit distance between the two
+
+66
+00:07:33,010 --> 00:07:38,150
+strings because i have done five operations
+each has a cost of one so distance will be
+
+67
+00:07:38,150 --> 00:07:47,170
+five ok so this is called levenshtein distance
+now i may also use another variant where the
+
+68
+00:07:47,170 --> 00:07:53,580
+substitution has a cost of two because this
+is one insertion and one deletion so if i
+
+69
+00:07:53,580 --> 00:07:57,810
+takes substitution cost as two what will be
+the edit distance between the two strings
+
+70
+00:07:57,810 --> 00:08:02,220
+so when i have one plus one for one insertion
+one deletion plus three times two four three
+
+71
+00:08:02,220 --> 00:08:04,950
+substitutions that will be eight ok
+
+72
+00:08:04,950 --> 00:08:13,370
+so now my question is that how go we find
+the minimum edit distance between two strings
+
+73
+00:08:13,370 --> 00:08:18,700
+so what will be an approach for doing that
+so let us define it formally what are we trying
+
+74
+00:08:18,700 --> 00:08:26,790
+to achieve so i am trying to search for a
+path by a path i mean what are the sequence
+
+75
+00:08:26,790 --> 00:08:32,149
+of edit operations that i have to make for
+going from the start string to my final string
+
+76
+00:08:32,149 --> 00:08:38,729
+ok so now i can define what is my initial
+state that is what is the word that i am trying
+
+77
+00:08:38,729 --> 00:08:47,210
+to transform so in the previous example intention
+ok so this is my initial state then what are
+
+78
+00:08:47,210 --> 00:08:52,130
+the various operators that i am allowed what
+various operators that i am allowed to use
+
+79
+00:08:52,130 --> 00:08:56,300
+over my over any of the strings i am allowed
+to use insertion deletion or substitution
+
+80
+00:08:56,300 --> 00:09:02,900
+these are my three opre operators and there
+is a one goal state that is the final string
+
+81
+00:09:02,900 --> 00:09:10,760
+that i am trying to get so it will be execution
+the previous case and i want to minimize the
+
+82
+00:09:10,760 --> 00:09:15,800
+path cost number of edits i want to find out
+what is the minimum number of operations or
+
+83
+00:09:15,800 --> 00:09:22,760
+minimum path cost by which i can go from initial
+strings to final string ok so now if you think
+
+84
+00:09:22,760 --> 00:09:29,550
+of it in a very naive manner what what will
+be an approach that you might try so i am
+
+85
+00:09:29,550 --> 00:09:35,860
+starting with intention and i have to reach
+execution so one very naive method might be
+
+86
+00:09:35,860 --> 00:09:43,080
+in intention and try out all possible edit
+operations until unless you reach execution
+
+87
+00:09:43,080 --> 00:09:47,020
+ok
+so that is i shall int intention i see ok
+
+88
+00:09:47,020 --> 00:09:54,180
+if i delete one character i can go go i can
+delete i i go to n intention similarly you
+
+89
+00:09:54,180 --> 00:09:59,790
+might delete other characters ok you might
+insert one character in the beginning say
+
+90
+00:09:59,790 --> 00:10:05,390
+e or you can insert in any of the places or
+you might try to substitute one character
+
+91
+00:10:05,390 --> 00:10:11,750
+like e can be substitute by i can be substitute
+with e and that gives you another word and
+
+92
+00:10:11,750 --> 00:10:16,990
+you might keep on trying all this operations
+until there is a point when you when you are
+
+93
+00:10:16,990 --> 00:10:22,360
+at the goal state so this might be one a possible
+approach now what is even problem that you
+
+94
+00:10:22,360 --> 00:10:28,320
+see where is approach ok so do not dont you
+think you might have to to travel a lot of
+
+95
+00:10:28,320 --> 00:10:34,380
+paths that are not at all relevant for my
+problem ok why should i keep keep deleting
+
+96
+00:10:34,380 --> 00:10:43,920
+i n t e n t i o n all together in one path
+when this will never give me execution ok
+
+97
+00:10:43,920 --> 00:10:53,150
+so so so here i am trying to navigate all
+the possible edit operations to achieve the
+
+98
+00:10:53,150 --> 00:10:59,610
+goal state ok but this is discuss me huge
+space ok we will try to work out one simple
+
+99
+00:10:59,610 --> 00:11:04,850
+example that how many even if i if i try to
+find words with the addition one or two it
+
+100
+00:11:04,850 --> 00:11:09,540
+might be the number of operation the the number
+of possibility might be huge so how can i
+
+101
+00:11:09,540 --> 00:11:18,720
+make in optimal how can i optimise this ok
+so in this case what would also happen lot
+
+102
+00:11:18,720 --> 00:11:24,190
+of paths might end up with the same state
+ok so i might end up with doing some insertion
+
+103
+00:11:24,190 --> 00:11:28,940
+and another deletion that might end up in
+the same instead i was starting with or it
+
+104
+00:11:28,940 --> 00:11:33,860
+might have a with one insertion deletion an
+another substitution so again this is unavoidable
+
+105
+00:11:33,860 --> 00:11:42,710
+in that kind of approach but we will like
+to avoid it further do i really need to keep
+
+106
+00:11:42,710 --> 00:11:48,120
+track of all of them i need only those paths
+that will come between intention to execution
+
+107
+00:11:48,120 --> 00:11:57,190
+ok so so the idea would be i define some sort
+of a states and keep track what are the shortest
+
+108
+00:11:57,190 --> 00:12:01,100
+paths to each state because ideally i want
+to find it what is the shortest distance between
+
+109
+00:12:01,100 --> 00:12:08,400
+two strings so there is no reason that i should
+store all possible strings that all possible
+
+110
+00:12:08,400 --> 00:12:14,180
+ah wage of arriving from one string to another
+that are having a higher distance ok because
+
+111
+00:12:14,180 --> 00:12:20,580
+i want to keep the minimum distance path so
+so what is an approach that i will use so
+
+112
+00:12:20,580 --> 00:12:28,399
+for that let us try to define it more formally
+so i have two strings x and y x is of length
+
+113
+00:12:28,399 --> 00:12:35,230
+n and y is of length m and i am trying to
+find out the edit distance from x to n x to
+
+114
+00:12:35,230 --> 00:12:40,980
+y so in general i can define some edit distance
+matrix
+
+115
+00:12:40,980 --> 00:12:50,300
+so how will i define it so let us see my definition
+d i j where an element d i j denotes the edit
+
+116
+00:12:50,300 --> 00:12:57,080
+distance between the first i characters of
+x and first j characters of y ok so how many
+
+117
+00:12:57,080 --> 00:13:03,940
+operations i need to to make to go from i
+i characters of x to j characters of y ok
+
+118
+00:13:03,940 --> 00:13:08,510
+so now as for this definition what will be
+the edit distance between x and y this will
+
+119
+00:13:08,510 --> 00:13:19,330
+be simply d and m ok that means the n characters
+of x and m characters of y yes so now question
+
+120
+00:13:19,330 --> 00:13:26,710
+is what kind of algorithm i should use for
+obtaining this particular the element of this
+
+121
+00:13:26,710 --> 00:13:35,730
+matrix ok so there we will try to see this
+problem as a dynamic programming approach
+
+122
+00:13:35,730 --> 00:13:42,410
+ok so so we will compute d n m in a tabular
+manner in general what do we do in dynamic
+
+123
+00:13:42,410 --> 00:13:48,190
+programming so whenever we have to solve a
+problem we try to divided in such a manner
+
+124
+00:13:48,190 --> 00:13:53,530
+that i first solve the smaller problems and
+try to use their solutions to solve the bigger
+
+125
+00:13:53,530 --> 00:13:59,690
+problem so that i will i can avoid certain
+habitations in my computations ok so i will
+
+126
+00:13:59,690 --> 00:14:07,050
+first start by solving d i j for small values
+of i n j and i will implemently use that to
+
+127
+00:14:07,050 --> 00:14:11,510
+find out finally my d n m by using the the
+smaller values that i have already compute
+
+128
+00:14:11,510 --> 00:14:19,540
+it ok so so this is the bottom of approach
+i first solve the very smalls of problems
+
+129
+00:14:19,540 --> 00:14:28,000
+and then i use it to solve the bigger problems
+so i compute d i j for small i j and based
+
+130
+00:14:28,000 --> 00:14:36,630
+on the smaller values that i have computed
+i will compute larger values of d i j ok and
+
+131
+00:14:36,630 --> 00:14:42,699
+i keep on doing that until i get d n m so
+this will be our basic idea
+
+132
+00:14:42,699 --> 00:14:49,920
+so now what we will need to see that how should
+i will be using the the smaller computations
+
+133
+00:14:49,920 --> 00:15:00,860
+to get the value for the large amounts ok
+so i can define so here i am i can define
+
+134
+00:15:00,860 --> 00:15:05,990
+my dynamic programming algorithm for finding
+out the edit distance between two strings
+
+135
+00:15:05,990 --> 00:15:13,490
+ok so now so first we are doing the initialization
+so there we are saying d i zero is i and d
+
+136
+00:15:13,490 --> 00:15:21,030
+zero j is j now does that make sense what
+is d i zero that is the distance between the
+
+137
+00:15:21,030 --> 00:15:27,959
+i characters of x and zero characters of y
+now what will be the distance how many operations
+
+138
+00:15:27,959 --> 00:15:32,209
+i have to make for going from i characters
+of x to zero characters of y and how can i
+
+139
+00:15:32,209 --> 00:15:39,459
+do that the only possible way of doing it
+efficiently is i keep on deleting each of
+
+140
+00:15:39,459 --> 00:15:44,589
+the characters so there will be i operations
+of deletions so the cost will be i similarly
+
+141
+00:15:44,589 --> 00:15:51,780
+how we go from zero characters of x to j characters
+of y i can do j different insertion so thats
+
+142
+00:15:51,780 --> 00:16:00,269
+why i can in initialized as d i zero is i
+and d zero j is j ok that is fine
+
+143
+00:16:00,269 --> 00:16:06,990
+now in general how do i define d i j in terms
+of the previous the other sho short elements
+
+144
+00:16:06,990 --> 00:16:17,360
+that i have already filled up ok so here are
+three by in which d i j might be filled so
+
+145
+00:16:17,360 --> 00:16:30,029
+so suppose i am trying to find out the edit
+distance between x that is having right now
+
+146
+00:16:30,029 --> 00:16:40,310
+i characters of x and y that is having j characters
+now the idea is that how go i compute d i
+
+147
+00:16:40,310 --> 00:16:47,490
+j using the smaller values of i n j so that
+is how go use d i minus one j d i j minus
+
+148
+00:16:47,490 --> 00:16:52,930
+one and d i minus one and j one so let us
+seen this example so i want to use d i minus
+
+149
+00:16:52,930 --> 00:16:58,450
+one j so what is d i minus one j so this is
+suppose one character so this is my i minus
+
+150
+00:16:58,450 --> 00:17:05,850
+one distance between x i minus one to y j
+and suppose we have already compute it that
+
+151
+00:17:05,850 --> 00:17:12,240
+what is the minimum cost between x i minus
+one characters and y j characters now how
+
+152
+00:17:12,240 --> 00:17:17,850
+do i use to find out what might be the minimum
+possible way of minimum possible edit distance
+
+153
+00:17:17,850 --> 00:17:33,410
+between x and y j so for the i characters
+in x i can do a deletion i go to x i minus
+
+154
+00:17:33,410 --> 00:17:40,640
+one and then i use the distance between x
+i minus one y j ok so how can i write the
+
+155
+00:17:40,640 --> 00:17:47,059
+distance i can say that same distance that
+much would be d i minus one j ok plus one
+
+156
+00:17:47,059 --> 00:17:54,270
+because i deleted one character from x is
+that clear in x i i delete one character i
+
+157
+00:17:54,270 --> 00:17:58,370
+i went to x i minus one and i have already
+completed distance between x i minus one and
+
+158
+00:17:58,370 --> 00:18:05,230
+y j ok so that is one for deletion and and
+this cost we already have similarly how do
+
+159
+00:18:05,230 --> 00:18:18,960
+you use the use d i j minus one same idea
+
+160
+00:18:18,960 --> 00:18:31,540
+so here i have x and y x is i y as j and suppose
+i have already computed i j minus one so how
+
+161
+00:18:31,540 --> 00:18:35,740
+will i compute the distance between i and
+j i is the same distance that i computed between
+
+162
+00:18:35,740 --> 00:18:42,260
+i and j minus one plus i inserted the jth
+character ok so this you can think of it a
+
+163
+00:18:42,260 --> 00:18:51,600
+has insertion so distance will be i j minus
+one and one ok and what might be the the third
+
+164
+00:18:51,600 --> 00:18:59,309
+possibility third possibility would be that
+i know what is the distance between i minus
+
+165
+00:18:59,309 --> 00:19:08,730
+one j minus one and i am seeing whether i
+am substituting i with j ok so so there might
+
+166
+00:19:08,730 --> 00:19:17,230
+be two ways if these characters are the same
+that means i am not having any cost but if
+
+167
+00:19:17,230 --> 00:19:21,980
+there are different characters i will have
+a cost corresponding to the substitution so
+
+168
+00:19:21,980 --> 00:19:28,360
+d i minus one j minus one plus two if the
+characters are not same and zero if they are
+
+169
+00:19:28,360 --> 00:19:35,410
+same ok so there are three ways in which i
+can i can write d i j it can by the d i minus
+
+170
+00:19:35,410 --> 00:19:43,130
+one j j plus one d i j minus one plus one
+or d i minus one j minus one plus two if the
+
+171
+00:19:43,130 --> 00:19:46,030
+characters are different or zero if the characters
+are the same so there are three different
+
+172
+00:19:46,030 --> 00:19:52,429
+ways i can define these cost now the cost
+we are only store in the minimum cost i will
+
+173
+00:19:52,429 --> 00:19:57,840
+see what is the minimum of all three cost
+and thats what i will storage d i j and that
+
+174
+00:19:57,840 --> 00:20:04,240
+i keep on doing this until i arrive it d n
+m so that is the simple dynamic programming
+
+175
+00:20:04,240 --> 00:20:06,710
+approach for solving this ok
+
+176
+00:20:06,710 --> 00:20:19,730
+so let us see once one example now so same
+example intention and execution ok so now
+
+177
+00:20:19,730 --> 00:20:27,330
+so we have already filled up some entries
+here now can you relate to this what are what
+
+178
+00:20:27,330 --> 00:20:41,790
+is this entry this is my d one zero so initialization
+we saw that d one zero will be simply one
+
+179
+00:20:41,790 --> 00:20:46,850
+because that mean i can simply delete i can
+delete this character and i a achieve arrive
+
+180
+00:20:46,850 --> 00:20:52,720
+at the final sub history it starting from
+i how do i go to null i delete i so this is
+
+181
+00:20:52,720 --> 00:20:59,419
+one similarly this will be two i can delete
+i and n one at a time this will be three i
+
+182
+00:20:59,419 --> 00:21:07,210
+n t and all so on similarly why this is one
+from null to e that means i am inserting one
+
+183
+00:21:07,210 --> 00:21:16,049
+character ok null two e x i am inserting two
+characters so this will one two and so on
+
+184
+00:21:16,049 --> 00:21:23,630
+so that explains all these initial levenshtein
+distance in this step now my my problem is
+
+185
+00:21:23,630 --> 00:21:33,520
+how do i fill up the other this stable so
+for example how i fill this this particular
+
+186
+00:21:33,520 --> 00:21:41,010
+ok so now how did we define my dynamic programming
+approach i said i will filled d i j based
+
+187
+00:21:41,010 --> 00:21:50,710
+on d i minus one j d i j minus one and d i
+minus one j and j minus one now in this case
+
+188
+00:21:50,710 --> 00:21:55,160
+what is d i minus one j suppose i want to
+fill this element this my d i j what is d
+
+189
+00:21:55,160 --> 00:22:10,429
+i minus one j this is my my i minus one j
+what is my d i j minus one this is my i j
+
+190
+00:22:10,429 --> 00:22:21,790
+minus one and what is my i minus one j minus
+one this is my i minus one j minus one now
+
+191
+00:22:21,790 --> 00:22:27,360
+what will be the cost here it will be minimum
+of all this three operations so let us find
+
+192
+00:22:27,360 --> 00:22:37,590
+out for individual d i minus one j is one
+plus one so this gives me two d i j minus
+
+193
+00:22:37,590 --> 00:22:49,470
+one cost between null and i am sorry i think
+i i i wrote it incorrectly it should be d
+
+194
+00:22:49,470 --> 00:23:00,419
+i j minus one and there should be the d i
+minus one j ok fine
+
+195
+00:23:00,419 --> 00:23:08,350
+so what is d i minus one j that is from null
+to e ok what is the cost one plus one that
+
+196
+00:23:08,350 --> 00:23:17,440
+will be two d i j minus one is i to null that
+is one plus one this will again give me two
+
+197
+00:23:17,440 --> 00:23:23,480
+and d i minus one j minus one is j zero yes
+plus two if the if the two characters are
+
+198
+00:23:23,480 --> 00:23:27,100
+not the same so here the two characters i
+and e there are not the same so this will
+
+199
+00:23:27,100 --> 00:23:35,210
+be two so that is i can go from any of these
+paths and i have a cost of two so minimum
+
+200
+00:23:35,210 --> 00:23:44,450
+will again we two so i enter here ok so now
+suppose you want to use that to find out the
+
+201
+00:23:44,450 --> 00:23:54,130
+value here so now one think we can see i need
+three different entries this this and this
+
+202
+00:23:54,130 --> 00:24:05,900
+ok so what will be the cost minimum of three
+three three again this will be three so like
+
+203
+00:24:05,900 --> 00:24:11,370
+that i will keep on filling up all the table
+until i arrive at this element that is my
+
+204
+00:24:11,370 --> 00:24:19,110
+d n m ok so in general there might be more
+than one ways of arriving at the minimum cost
+
+205
+00:24:19,110 --> 00:24:28,190
+so we will see how do we store that but right
+now we can just put that cost as it is
+
+206
+00:24:28,190 --> 00:24:33,930
+so where fill up this complete matrix this
+is what i will get ok and you see the distance
+
+207
+00:24:33,930 --> 00:24:47,870
+between intention execution in this case is
+eight ok so but but you also see in this slide
+
+208
+00:24:47,870 --> 00:24:53,260
+that for certain strings the edit distance
+might go up to twelve ok that is possible
+
+209
+00:24:53,260 --> 00:24:59,730
+but finally the edit distance between intention
+execution comes up to be eight ok so this
+
+210
+00:24:59,730 --> 00:25:04,700
+up this approach gives me very very efficiently
+what is the edit distance between one string
+
+211
+00:25:04,700 --> 00:25:11,040
+and another string and we know how to use
+this now so there is one further thing that
+
+212
+00:25:11,040 --> 00:25:16,490
+we can do with this algorithm so that is again
+depending on my algorithm my particular task
+
+213
+00:25:16,490 --> 00:25:23,220
+that is about computing alignments ok so for
+some applications we just want to know what
+
+214
+00:25:23,220 --> 00:25:28,570
+is the edit distance between two strings but
+for other applications you might also want
+
+215
+00:25:28,570 --> 00:25:34,840
+to find out what are all the places where
+the edit took place so what is the alignment
+
+216
+00:25:34,840 --> 00:25:39,670
+remember the way we did the case of intention
+versus execution we found out what are the
+
+217
+00:25:39,670 --> 00:25:44,740
+actual places where where insertion deletion
+substitution are taking place so this is what
+
+218
+00:25:44,740 --> 00:25:49,991
+i mean by alignment which parts are line to
+the other part in the string so now the question
+
+219
+00:25:49,991 --> 00:25:56,530
+is can i modify the same algorithm to also
+find out what will be the various alignments
+
+220
+00:25:56,530 --> 00:26:00,900
+in the string ok an you will see it is very
+very easy by using the previous algorithm
+
+221
+00:26:00,900 --> 00:26:06,059
+that we have seen ok for some application
+we might need to align characters of the two
+
+222
+00:26:06,059 --> 00:26:14,660
+strings to each other now we do this by keeping
+a sort of backtrace so what do you mean by
+
+223
+00:26:14,660 --> 00:26:19,870
+backtrace so whenever i am filling out the
+value of d i j i can come of from either d
+
+224
+00:26:19,870 --> 00:26:25,840
+i minus one j d i j minus one or d i minus
+one j minus one so whichever gives me the
+
+225
+00:26:25,840 --> 00:26:33,179
+minimum cost i will put a pointer that i came
+from either form left from bottom or diagonal
+
+226
+00:26:33,179 --> 00:26:40,340
+diagonal element ok so whenever i i i am at
+d n m i will again start doing a backtrace
+
+227
+00:26:40,340 --> 00:26:45,880
+from there which element i came here from
+and i keep on doing it from started from there
+
+228
+00:26:45,880 --> 00:26:55,429
+until i arrive at the null characters ok so
+every time we enter a cell we remember where
+
+229
+00:26:55,429 --> 00:27:03,580
+we came from and when we reach the end we
+trace back the path from the upper right corner
+
+230
+00:27:03,580 --> 00:27:08,480
+to read read all the alignment ok
+
+231
+00:27:08,480 --> 00:27:17,280
+so let us see how we will do that in this
+case so suppose i was filling up this element
+
+232
+00:27:17,280 --> 00:27:25,559
+and i know i can come from either here or
+here or here all three are equally likely
+
+233
+00:27:25,559 --> 00:27:33,020
+so i will put all i might put all three points
+but suppose when i was here the the best possible
+
+234
+00:27:33,020 --> 00:27:38,230
+we was this one so i should have come from
+the diagonal to this element so this is what
+
+235
+00:27:38,230 --> 00:27:46,300
+i will store similarly here i will store another
+back point and so on so now once my edit operation
+
+236
+00:27:46,300 --> 00:27:52,370
+is over i all all you have these back point
+is each and every cell i start from d n m
+
+237
+00:27:52,370 --> 00:27:56,580
+and keep on following by back point so suppose
+i follow this one i reach this cell again
+
+238
+00:27:56,580 --> 00:28:02,110
+i follow point i reach this cell this one
+and so on until i reach the null characters
+
+239
+00:28:02,110 --> 00:28:16,220
+and that will give me the alignment of two
+strings ok so here so you will have alignment
+
+240
+00:28:16,220 --> 00:28:20,980
+starting from d n m so we will see from here
+i can go to the this element this element
+
+241
+00:28:20,980 --> 00:28:28,610
+this element now when i am here it quick have
+come from either of the three elements so
+
+242
+00:28:28,610 --> 00:28:33,340
+you might have some sort of preference you
+might say ok i whenever there equal to equal
+
+243
+00:28:33,340 --> 00:28:38,500
+possibility among all three i will always
+diagonal ok this you might say so you come
+
+244
+00:28:38,500 --> 00:28:44,290
+to this element then you go to left then again
+you go down based on preference down based
+
+245
+00:28:44,290 --> 00:28:49,340
+on preference down based on preference and
+then thats where you get your alignment so
+
+246
+00:28:49,340 --> 00:28:56,590
+this is the this is some way you you can compute
+which characters in intention are align to
+
+247
+00:28:56,590 --> 00:29:03,400
+which character in executions ok
+
+248
+00:29:03,400 --> 00:29:12,630
+so simple idea whenever so you can say these
+are deletion insertion and substitution so
+
+249
+00:29:12,630 --> 00:29:17,140
+whichever gives you the minimum cost you will
+add that pointer if all three are giving you
+
+250
+00:29:17,140 --> 00:29:27,830
+the same cost you might have all the three
+point ok ok so in general suppose i start
+
+251
+00:29:27,830 --> 00:29:37,520
+with a with a word x zero to x n so zero means
+null x n is the complete word x and i have
+
+252
+00:29:37,520 --> 00:29:49,000
+the output string y zero to y m so if i see
+this matrix of size n cross m so every possible
+
+253
+00:29:49,000 --> 00:29:55,610
+ah path from zero to zero zero to m n is a
+possible alignment ok so what i am trying
+
+254
+00:29:55,610 --> 00:30:03,720
+to find out which path gives me the minimum
+possible edit distance ok and this in in as
+
+255
+00:30:03,720 --> 00:30:08,880
+per dynamic programming approach and optimal
+alignment should be composed optimal sub alignments
+
+256
+00:30:08,880 --> 00:30:15,600
+so that means whenever i am going from i to
+j i can use always the optimal sub align alignment
+
+257
+00:30:15,600 --> 00:30:24,530
+would be i minus one j and so on ok so thats
+how this problem algorithm is designed ok
+
+258
+00:30:24,530 --> 00:30:29,210
+so if you do the victories you can find out
+from the intention you go to executions and
+
+259
+00:30:29,210 --> 00:30:34,630
+what are all the places where you did insertion
+deletion and substitutions ok and which words
+
+260
+00:30:34,630 --> 00:30:43,440
+you did not have to change at all ok now what
+is the complexity of this algorithm
+
+261
+00:30:43,440 --> 00:30:48,480
+so lets talk about the time complexity how
+much time we took so you see you have to fill
+
+262
+00:30:48,480 --> 00:30:56,060
+all the n cross m entries of the matrix so
+there are n cross m different ah think you
+
+263
+00:30:56,060 --> 00:31:01,830
+have to do and for each entry you need a question
+number of operation you will find out minimum
+
+264
+00:31:01,830 --> 00:31:08,120
+of three different distances so there are
+n cross m times some constant so the time
+
+265
+00:31:08,120 --> 00:31:16,520
+complexity can be simply order of n m ok yes
+what would the space complicity again the
+
+266
+00:31:16,520 --> 00:31:22,600
+space complexity also the same you are using
+only n cross m different element that must
+
+267
+00:31:22,600 --> 00:31:26,610
+the space that you need you are not using
+any other space remember for each element
+
+268
+00:31:26,610 --> 00:31:31,470
+you are using some other elements from the
+same matrix so you not an any edit distance
+
+269
+00:31:31,470 --> 00:31:39,250
+space so again a space complexity is n cross
+m now what about the backtrace so that is
+
+270
+00:31:39,250 --> 00:31:45,010
+i am i am at d n m and i want to find backtrace
+the worst case can be i find i have to go
+
+271
+00:31:45,010 --> 00:31:51,710
+through all the n elements in my column n
+elements sorry n elements in my top and m
+
+272
+00:31:51,710 --> 00:31:59,940
+elements in my ah first column ok so in the
+worst case i might have to do n plus m different
+
+273
+00:31:59,940 --> 00:32:08,110
+operations so this complexity is again n plus
+m ok so you will see this is very very efficient
+
+274
+00:32:08,110 --> 00:32:11,940
+in compare to the approach that fever the
+naive approach that you have seen earlier
+
+275
+00:32:11,940 --> 00:32:16,350
+you start with the input strings try out all
+possibility this will be become explanation
+
+276
+00:32:16,350 --> 00:32:18,710
+very very soon
+
+277
+00:32:18,710 --> 00:32:25,679
+so fine so this for this first lecture for
+for this week and in the next lecture we will
+
+278
+00:32:25,679 --> 00:32:32,190
+start talking about certain variation of edit
+distance ok why why do i actually why should
+
+279
+00:32:32,190 --> 00:32:38,100
+i even think of some variations and how do
+we use that for finding edit distance ok
+

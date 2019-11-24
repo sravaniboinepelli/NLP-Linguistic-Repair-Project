@@ -1,0 +1,1750 @@
+1
+00:00:18,250 --> 00:00:22,250
+so welcome back for the fourth lecture of
+this week so we have been talking about topic
+
+2
+00:00:22,250 --> 00:00:27,820
+models and in the last lecture we had covered
+what is generative modo model of lda and how
+
+3
+00:00:27,820 --> 00:00:33,230
+do you gibbs sampling to estimate the parameters
+of lda by using the observations as a various
+
+4
+00:00:33,230 --> 00:00:37,960
+documents and whatever works regarding the
+documents so in in this lecture in the next
+
+5
+00:00:37,960 --> 00:00:43,120
+we will be talking about different variants
+of lda and how do we use that for different
+
+6
+00:00:43,120 --> 00:00:47,600
+applications so you may not cover many of
+these topics in detail but once you get the
+
+7
+00:00:47,600 --> 00:00:52,890
+idea of what these variants are given application
+you can go and look and look more into these
+
+8
+00:00:52,890 --> 00:01:00,270
+topics so this lecture i will be starting
+with ah some sort of classes size (Refer Tim:
+
+9
+00:01:00,270 --> 00:01:05,489
+01:00) on gibbs sampling that how do you estimate
+parameters from a given gibbs sample and then
+
+10
+00:01:05,489 --> 00:01:14,240
+we will go forward for the variants of lda
+so let's take this example problem so what
+
+11
+00:01:14,240 --> 00:01:19,630
+we are given here so you are you are you are
+saying that there is a corpus that has five
+
+12
+00:01:19,630 --> 00:01:26,040
+documents so one two three four five a document
+i d is here and five words river stream bank
+
+13
+00:01:26,040 --> 00:01:33,590
+money and loan and there are only two topics
+that you want to estimate now this is when
+
+14
+00:01:33,590 --> 00:01:38,430
+you are doing gibbs sampling at certain point
+of time you are given what are the different
+
+15
+00:01:38,430 --> 00:01:44,150
+assignments of topics to different words in
+the document so what do you see here document
+
+16
+00:01:44,150 --> 00:01:52,119
+one has four words bank one two three four
+five six six times money and six times loan
+
+17
+00:01:52,119 --> 00:01:57,020
+and at that point of time all these sixteen
+words have been assigned to topic one
+
+18
+00:01:57,020 --> 00:02:04,130
+so black is topic t one document two has most
+of the words assigned to topic t one and one
+
+19
+00:02:04,130 --> 00:02:08,649
+word to topic t two and so on you are given
+the topic of assignment at a given point of
+
+20
+00:02:08,649 --> 00:02:15,700
+time ok so so you can see that the first show
+indicates that the document one contains four
+
+21
+00:02:15,700 --> 00:02:21,450
+words for instances of the word bank six of
+word money and six of word loan and black
+
+22
+00:02:21,450 --> 00:02:26,510
+and white circles are topic t one and t two
+now your task is that you want to use the
+
+23
+00:02:26,510 --> 00:02:30,930
+system share to estimate different parameters
+of your mountain so so remember what are the
+
+24
+00:02:30,930 --> 00:02:37,260
+two main parameters one was your theta another
+virtual beta be beta is what is the probability
+
+25
+00:02:37,260 --> 00:02:42,480
+of a word given a topic and theta is what
+is the probability of a topic given this document
+
+26
+00:02:42,480 --> 00:02:47,250
+so in this example we will try to estimate
+two different beta values that is what is
+
+27
+00:02:47,250 --> 00:02:53,450
+beta money to probability of money in topic
+two and beta bank one probability of bank
+
+28
+00:02:53,450 --> 00:02:58,900
+in topic t one and you are given that eta
+and alpha are point one
+
+29
+00:02:58,900 --> 00:03:08,870
+now if you remember the formula how do you
+compute beta money 
+
+30
+00:03:08,870 --> 00:03:18,850
+to for that you will need to use your matrices
+ok remember you consider two matrices c w
+
+31
+00:03:18,850 --> 00:03:26,310
+t and c d t see w t this word assigned to
+what topic d t this document what are topics
+
+32
+00:03:26,310 --> 00:03:32,560
+that are sent for this problem for beta money
+integrally what is that what is the probability
+
+33
+00:03:32,560 --> 00:03:39,440
+of the word money for the topic t two ok so
+we will need only this matrix this word assigned
+
+34
+00:03:39,440 --> 00:03:45,590
+to what topic in terms of this matrix how
+do you write this ah for two parameter you
+
+35
+00:03:45,590 --> 00:03:57,989
+say c w t so if you have to write i j i th
+word j th topic so let us say this is my ah
+
+36
+00:03:57,989 --> 00:04:07,400
+i and this is my j so this is i j plus you
+have used the hyper parameter eta divided
+
+37
+00:04:07,400 --> 00:04:11,819
+by now you see all the different words that
+are assigned to this topic summation over
+
+38
+00:04:11,819 --> 00:04:26,820
+k c w t w j sorry it should be k j for all
+k plus w times eta so this summation k for
+
+39
+00:04:26,820 --> 00:04:32,400
+all w and that's why you have w eta here that's
+why you estimate this parameter beta money
+
+40
+00:04:32,400 --> 00:04:35,060
+too
+so let us see how do we estimate this parameter
+
+41
+00:04:35,060 --> 00:04:40,340
+from this matrix so one thing is that you
+will have to first construct this matrix so
+
+42
+00:04:40,340 --> 00:04:53,590
+let us see what does this matrix look like
+w t will have five words right river stream
+
+43
+00:04:53,590 --> 00:05:02,960
+bank money and loan and you have to find out
+how many times this word has been assigned
+
+44
+00:05:02,960 --> 00:05:12,630
+to topic t one and t two and not including
+this instance ok fine so that we cannot do
+
+45
+00:05:12,630 --> 00:05:18,800
+at this time so we will take all the instances
+so let us see river river is not assigned
+
+46
+00:05:18,800 --> 00:05:27,900
+to only topic t one black so river sorry river
+is not assigned to topic ah t one at all only
+
+47
+00:05:27,900 --> 00:05:36,300
+the topic t two so i have one two three four
+one two three four five six seven eight nine
+
+48
+00:05:36,300 --> 00:05:43,150
+rivers is send to topic t two nine times
+ok a string again three three six and six
+
+49
+00:05:43,150 --> 00:05:50,050
+twelve zero twelve bank one two three four
+five six seven eight nine ten eleven eleven
+
+50
+00:05:50,050 --> 00:05:56,210
+times topic t one and one two three four five
+six seven eight nine ten eleven twelve thirteen
+
+51
+00:05:56,210 --> 00:06:03,380
+fourteen to sixteen topic t two money only
+topic t one one two three four five six one
+
+52
+00:06:03,380 --> 00:06:11,210
+two three four five six seven thirteen and
+for seventeen and loan one two three six ten
+
+53
+00:06:11,210 --> 00:06:18,940
+thirteen that is your mad matrix c w t
+now let us see how do we come to beta money
+
+54
+00:06:18,940 --> 00:06:33,270
+for two you have to compute c w t i j i is
+money yes and j is t two ok so this is zero
+
+55
+00:06:33,270 --> 00:06:39,259
+it is not a second topic t to any number of
+times i write zero plus eta h point one now
+
+56
+00:06:39,259 --> 00:06:44,860
+divided by summation over k all the words
+any all the words that when you have been
+
+57
+00:06:44,860 --> 00:06:53,280
+assigned to topic ah to here so i will just
+add ah this column nine plus twelve plus sixteen
+
+58
+00:06:53,280 --> 00:06:59,500
+so that will give me thirty seven plus w number
+of words is five times eta this ones point
+
+59
+00:06:59,500 --> 00:07:05,350
+five so this comes out to be point one divided
+by thirty seven point five similarly can i
+
+60
+00:07:05,350 --> 00:07:13,139
+come to beta bank one for that i will find
+out how many times bank has been assigned
+
+61
+00:07:13,139 --> 00:07:25,060
+to topic t one eleven plus eta point one divided
+by summation over k c k j w t so that will
+
+62
+00:07:25,060 --> 00:07:33,300
+be how many words that have been assigned
+to topic t t one so it will be eleven plus
+
+63
+00:07:33,300 --> 00:07:38,849
+seventeen twenty eight plus thirteen forty
+one so forty one plus point five so this comes
+
+64
+00:07:38,849 --> 00:07:42,169
+out be one point one divided by forty one
+point five
+
+65
+00:07:42,169 --> 00:07:48,340
+so like that you can compute all there your
+different betas at this given time point so
+
+66
+00:07:48,340 --> 00:07:54,169
+well you can compute here thetas so this can
+this you can take as an exercise find out
+
+67
+00:07:54,169 --> 00:08:01,130
+what is theta for document ah one or two for
+different topics ok this is something that
+
+68
+00:08:01,130 --> 00:08:07,740
+you can do now one more thing that that might
+be interesting suppose i ask you a question
+
+69
+00:08:07,740 --> 00:08:14,479
+that find out in this iteration what is the
+topic that will be assigned or what will be
+
+70
+00:08:14,479 --> 00:08:19,080
+the multinomial distribution from which you
+will sample a topic for a given work like
+
+71
+00:08:19,080 --> 00:08:25,360
+the first bank in this document ok first they
+are for instance is your bank for the first
+
+72
+00:08:25,360 --> 00:08:31,539
+national bank you have to assign a new topic
+that's what you doing iterations so for that
+
+73
+00:08:31,539 --> 00:08:36,810
+you will have to again compute different betas
+and thetas but what you have to keep in mind
+
+74
+00:08:36,810 --> 00:08:41,360
+you have to exclude the current instance so
+when you are computing this you will remove
+
+75
+00:08:41,360 --> 00:08:44,980
+the current instance
+so suppose this is eleven so you are removed
+
+76
+00:08:44,980 --> 00:08:51,089
+then one from here and so on you will compute
+each values and from by by removing the conditions
+
+77
+00:08:51,089 --> 00:08:55,960
+you will compute the betas and thetas and
+use your formula for find out what is the
+
+78
+00:08:55,960 --> 00:09:00,140
+probability for topic t one quality to from
+this distribution you will sample a topic
+
+79
+00:09:00,140 --> 00:09:05,420
+there is something that you would keep in
+mind so this was a simple example for how
+
+80
+00:09:05,420 --> 00:09:10,080
+do you use ah gibbs sampling to estimate your
+parameters
+
+81
+00:09:10,080 --> 00:09:15,440
+now we talked about certain applications of
+lda in the last lecture so we saw that we
+
+82
+00:09:15,440 --> 00:09:19,830
+can use it for computing similarity between
+words to complete similarity between documents
+
+83
+00:09:19,830 --> 00:09:24,399
+that are one of some of them very promising
+applications but what are some other different
+
+84
+00:09:24,399 --> 00:09:28,230
+tasks where you can use these topic models
+for
+
+85
+00:09:28,230 --> 00:09:33,320
+first let us see the simplest task that is
+can we model the documents using the topics
+
+86
+00:09:33,320 --> 00:09:38,620
+that is the straightforward thing that you
+can do using this lda so here is something
+
+87
+00:09:38,620 --> 00:09:44,529
+the collection that was also one of the motivation
+with which we started these topic models so
+
+88
+00:09:44,529 --> 00:09:49,350
+we are taking collection of science papers
+from nineteen ninety to two thousand so there
+
+89
+00:09:49,350 --> 00:09:54,850
+are seventeen thousand documents and eleven
+million words there and there are twenty k
+
+90
+00:09:54,850 --> 00:10:00,680
+unit terms twenty thousand different terms
+after removing the stock words and real words
+
+91
+00:10:00,680 --> 00:10:06,100
+now on this collection suppose you run your
+lda model so for running the lda model you
+
+92
+00:10:06,100 --> 00:10:11,560
+need to a tell what is the number of topics
+suppose you see it hundred topics so once
+
+93
+00:10:11,560 --> 00:10:16,040
+you have earn your model using your hundred
+topic models and you can use either gibbs
+
+94
+00:10:16,040 --> 00:10:19,580
+sampling or variational inference so these
+are two different possibilities for estimating
+
+95
+00:10:19,580 --> 00:10:25,700
+your parameters now once you have done that
+try to see what are what do your documents
+
+96
+00:10:25,700 --> 00:10:30,130
+look like what are the topic distributions
+there so when we do that so remember this
+
+97
+00:10:30,130 --> 00:10:35,269
+was the article that we were looking at seeking
+lifes bare necessities and this for genetic
+
+98
+00:10:35,269 --> 00:10:40,640
+in the in the ah parentheses so we found three
+four topics there right compositional some
+
+99
+00:10:40,640 --> 00:10:45,029
+data analysis some genetics evolutionary biology
+and so on
+
+100
+00:10:45,029 --> 00:10:50,850
+now suppose we run this topic model over this
+whole corpus we find out what happens to this
+
+101
+00:10:50,850 --> 00:10:55,630
+document so this document gets a probability
+assignment like that so there are hundred
+
+102
+00:10:55,630 --> 00:10:59,034
+topics and some topics get high probability
+so they are few topics that are getting high
+
+103
+00:10:59,034 --> 00:11:04,490
+probability and then we go back and look at
+these four topics what are the most common
+
+104
+00:11:04,490 --> 00:11:10,160
+words in these four topics so we see something
+that we were looking for so we saw from first
+
+105
+00:11:10,160 --> 00:11:15,410
+topic contains words like human genome d n
+a genetic so it's about genetics then the
+
+106
+00:11:15,410 --> 00:11:20,269
+second topic is evolution in biology third
+about different disease and bacteria and forth
+
+107
+00:11:20,269 --> 00:11:25,550
+about the data analysis so these are the four
+topics that come on top and this looks very
+
+108
+00:11:25,550 --> 00:11:31,671
+interesting that from by you do not give any
+information to this model that this document
+
+109
+00:11:31,671 --> 00:11:36,120
+contains these topics or which document contains
+this topics is still by learning from a large
+
+110
+00:11:36,120 --> 00:11:41,920
+corpus it was le able to learn different topics
+and the topic assignment for a given document
+
+111
+00:11:41,920 --> 00:11:50,510
+so this is very interesting aspect of lda
+so now apart from modeling a simple ah topics
+
+112
+00:11:50,510 --> 00:11:55,550
+that are there in the document what else can
+be modeled using these topic models so we
+
+113
+00:11:55,550 --> 00:12:00,050
+will see how do we model different different
+other junctions in the data it so till now
+
+114
+00:12:00,050 --> 00:12:05,170
+what we are saying so we have a static data
+so we have a static data or whatever time
+
+115
+00:12:05,170 --> 00:12:10,680
+it it spends so there are fix set of topics
+and the topics are also kind of independent
+
+116
+00:12:10,680 --> 00:12:14,709
+of each other you do not say ok if in the
+document our t one occurs then t two should
+
+117
+00:12:14,709 --> 00:12:19,430
+also occur we do not say that but can we also
+model these assumptions so for that we have
+
+118
+00:12:19,430 --> 00:12:26,540
+different model models like correlated topic
+models dynamic topic models and measure measuring
+
+119
+00:12:26,540 --> 00:12:29,950
+scholarly impact
+so we will see how do we go from lda to any
+
+120
+00:12:29,950 --> 00:12:38,339
+of these variance so let us see the correlated
+topic models so so what so right now what
+
+121
+00:12:38,339 --> 00:12:43,540
+we are doing you are having additional distribution
+that helps me sample the probability distribution
+
+122
+00:12:43,540 --> 00:12:50,360
+of topics for a given document so so this
+is what this is some simplex where there are
+
+123
+00:12:50,360 --> 00:12:58,040
+positive vectors not in the probability that
+i add up to one however in this digital distribution
+
+124
+00:12:58,040 --> 00:13:02,839
+the components of the probability distribution
+are quite independent of each other so that
+
+125
+00:13:02,839 --> 00:13:07,519
+means they do not model various ah dependence
+between the topics
+
+126
+00:13:07,519 --> 00:13:13,000
+so suppose i want to say that these are article
+about fossil fuels and if i know the topic
+
+127
+00:13:13,000 --> 00:13:18,860
+fossil fuels occurs in the article probably
+the topic about geology may also occur rather
+
+128
+00:13:18,860 --> 00:13:23,680
+than genetics ok there is something that i
+might know that these two topics are quite
+
+129
+00:13:23,680 --> 00:13:29,250
+correlated and these two topics are not correlated
+so can i use this intuition to battle on my
+
+130
+00:13:29,250 --> 00:13:34,959
+topics and ah distributions within the documents
+that certain topics are co related they will
+
+131
+00:13:34,959 --> 00:13:40,170
+occur together certain topics are not correlated
+they will probably not occur together so this
+
+132
+00:13:40,170 --> 00:13:44,139
+cannot be modeled by using the distribution
+vision so we use a different distribution
+
+133
+00:13:44,139 --> 00:13:49,160
+to mod model the topics in in a document and
+that's where we use the multivariate ah normal
+
+134
+00:13:49,160 --> 00:13:52,850
+distribution
+so something like this so you are having k
+
+135
+00:13:52,850 --> 00:14:00,490
+topics so you will have a multivariate normal
+distribution where you are having ah in your
+
+136
+00:14:00,490 --> 00:14:06,490
+your sampling this k dimensional distribution
+but now from this normal distribution with
+
+137
+00:14:06,490 --> 00:14:11,800
+a mean and covariance so mean will be what
+is the ah private information that we have
+
+138
+00:14:11,800 --> 00:14:16,110
+about different topics what will be the mean
+of the different topics and sigma will be
+
+139
+00:14:16,110 --> 00:14:21,470
+how are these different topics co related
+with each other that's what you will ah try
+
+140
+00:14:21,470 --> 00:14:27,139
+to give us in in your model
+so how does your model change so everything
+
+141
+00:14:27,139 --> 00:14:31,840
+remains the same except that instead of sampling
+from a additional distribution you are now
+
+142
+00:14:31,840 --> 00:14:37,279
+starting a sample from a multivariate logistic
+normal distribution with a mu and sigma so
+
+143
+00:14:37,279 --> 00:14:43,970
+eta these are samples from this distribution
+and so so that's where the topics can exhibit
+
+144
+00:14:43,970 --> 00:14:47,649
+various correlations that these two topics
+are correlate with each other while these
+
+145
+00:14:47,649 --> 00:14:54,339
+two are not correlated so once you have done
+that finally what you will get you will again
+
+146
+00:14:54,339 --> 00:14:59,050
+get your k topics right like hundred topics
+you are doing in the case of science plus
+
+147
+00:14:59,050 --> 00:15:03,740
+you will also know which two topics or which
+pair of topics are correlated with each other
+
+148
+00:15:03,740 --> 00:15:09,459
+and this can be very nicely used to give a
+map that these topics are make a make a single
+
+149
+00:15:09,459 --> 00:15:14,190
+cluster a single ah group they are correlated
+to each other these topics are against other
+
+150
+00:15:14,190 --> 00:15:19,850
+no group that are correlated with each other
+so for example if it is ah and and how do
+
+151
+00:15:19,850 --> 00:15:25,100
+you know that this works better than lda so
+one good method of evaluation is that you
+
+152
+00:15:25,100 --> 00:15:30,760
+try to find out what is the log likelihood
+that this providing to a held out data held
+
+153
+00:15:30,760 --> 00:15:37,209
+out deta is some data that you did not use
+for training of your ah our topic model ok
+
+154
+00:15:37,209 --> 00:15:43,639
+so you do not give it as an input for gibbs
+sampling and or variational inference so once
+
+155
+00:15:43,639 --> 00:15:49,709
+you have learnt the topics try to see what
+probability it get to a held out data some
+
+156
+00:15:49,709 --> 00:15:55,709
+separate data again from a same domain so
+whatever topic model gives you a better ah
+
+157
+00:15:55,709 --> 00:16:00,380
+log likelihood that is probably better that
+is a better model this is sim similar to what
+
+158
+00:16:00,380 --> 00:16:04,660
+we did in the case of language modeling
+we found out what is the perplexity that it
+
+159
+00:16:04,660 --> 00:16:08,589
+assigns to a held out data similarly here
+what is the log likelihood that is essentially
+
+160
+00:16:08,589 --> 00:16:15,019
+different ah held out data so we see if the
+colder top model gives a better likelihood
+
+161
+00:16:15,019 --> 00:16:21,589
+then the ah lda simple lda and that's what
+you see here so this is on the held out likelihood
+
+162
+00:16:21,589 --> 00:16:27,600
+you want a number of topics so so if he so
+interestingly if the number of public is small
+
+163
+00:16:27,600 --> 00:16:33,139
+say thirty to forty both models give the same
+log likelihood but as you increase the number
+
+164
+00:16:33,139 --> 00:16:39,840
+of topics the lda model the likelihood given
+lda model is starts decreasing but this does
+
+165
+00:16:39,840 --> 00:16:45,730
+not happen with c t m model so that means
+if you want to have more topics then c t m
+
+166
+00:16:45,730 --> 00:16:51,030
+is a better choice than lda c t m can model
+reach your assumption in the data then lda
+
+167
+00:16:51,030 --> 00:16:55,389
+if you have more number of topics
+so that you can see here also likelihood difference
+
+168
+00:16:55,389 --> 00:17:02,060
+between c t m and lda it keeps on increasing
+as you increase number of topics so this is
+
+169
+00:17:02,060 --> 00:17:06,829
+how the map will look like so you will see
+here this topic talks about united states
+
+170
+00:17:06,829 --> 00:17:12,630
+women universities students in education and
+it's about research funding support sciences
+
+171
+00:17:12,630 --> 00:17:17,880
+scientists and research people so these are
+correlated topics but they are not so correlated
+
+172
+00:17:17,880 --> 00:17:22,780
+to the topics like here a stars astronomers
+universe galaxies and galaxy so which again
+
+173
+00:17:22,780 --> 00:17:28,600
+make different sort of clusters for topics
+and this which model simply by using the covariance
+
+174
+00:17:28,600 --> 00:17:35,860
+matrix these topics are connected together
+now so this was one assumption that we can
+
+175
+00:17:35,860 --> 00:17:38,470
+model
+now suppose just take another assumption that
+
+176
+00:17:38,470 --> 00:17:44,669
+is which topics are correlated to each other
+and which topic sorry how do topics change
+
+177
+00:17:44,669 --> 00:17:50,440
+over thing so right now what we are assuming
+so you have a static corpus and in which there
+
+178
+00:17:50,440 --> 00:17:55,100
+are the same topics over time ok the same
+set of topics over time working and by by
+
+179
+00:17:55,100 --> 00:17:59,890
+topic i mean the distribution of words in
+the topic are also same over time but this
+
+180
+00:17:59,890 --> 00:18:04,990
+is not true in general suppose you have a
+collection that it spends on multiple decades
+
+181
+00:18:04,990 --> 00:18:08,260
+or even centuries say two hundred years of
+data
+
+182
+00:18:08,260 --> 00:18:13,780
+so what you will see the the give the same
+topic the number of work the the type of words
+
+183
+00:18:13,780 --> 00:18:17,710
+that you are seeing over the time are changing
+initially you will see some different sort
+
+184
+00:18:17,710 --> 00:18:21,690
+of words and later on you will see some different
+sort of words topic might be the same but
+
+185
+00:18:21,690 --> 00:18:26,580
+then the kind of words will keep on change
+changing also the probabilities of words will
+
+186
+00:18:26,580 --> 00:18:33,280
+keep on changing now this you cannot model
+by a simple lda model so so how do you ah
+
+187
+00:18:33,280 --> 00:18:36,760
+actually specify this and that's where a dynamic
+topic model is used
+
+188
+00:18:36,760 --> 00:18:43,679
+ok so what is the problem with lda so it assumes
+that the order of document does not matter
+
+189
+00:18:43,679 --> 00:18:49,870
+and this is not appropriate for the corpus
+that are spending for hundreds of years so
+
+190
+00:18:49,870 --> 00:18:55,120
+we might want to track how the language with
+within the topics are changing over time and
+
+191
+00:18:55,120 --> 00:19:00,600
+for that we use dynamic topic models so it
+is very interesting this is just diet extension
+
+192
+00:19:00,600 --> 00:19:06,330
+of lda but now when you model that ok how
+the topics are changing over time so how do
+
+193
+00:19:06,330 --> 00:19:12,480
+you do that so when you have a large collection
+we will divide you into multiple ah multiple
+
+194
+00:19:12,480 --> 00:19:16,440
+different time points so you say this is your
+corpus one corpus two corpus three corpus
+
+195
+00:19:16,440 --> 00:19:20,590
+four and so on over time
+so you are starting from one up to the last
+
+196
+00:19:20,590 --> 00:19:27,059
+corpus now when you see when you define your
+ah topic distributions you say that let us
+
+197
+00:19:27,059 --> 00:19:33,560
+say the initial corpus had distribution beta
+k one ok beta k for time step one so what
+
+198
+00:19:33,560 --> 00:19:39,200
+you will say as you go from time stamp one
+to time stamp two the next beta will not be
+
+199
+00:19:39,200 --> 00:19:46,440
+the same as the beta two will not be the same
+as beta one but will be will be again a distribution
+
+200
+00:19:46,440 --> 00:19:50,419
+is starting from with the mean of beta k one
+with the some variance so that is you are
+
+201
+00:19:50,419 --> 00:19:56,240
+allowing to change the probabilities of words
+within the topic model and that you can do
+
+202
+00:19:56,240 --> 00:20:01,890
+over time so that is the previous topic topics
+influence the next topics but the next topics
+
+203
+00:20:01,890 --> 00:20:07,480
+can also change with certain variance and
+this is how the model looks like so we are
+
+204
+00:20:07,480 --> 00:20:14,730
+having time stamps from one to t so this is
+same as if you are having t capital t different
+
+205
+00:20:14,730 --> 00:20:19,200
+different ah copies and you are running topic
+model for each corpus
+
+206
+00:20:19,200 --> 00:20:23,640
+but now you are not doing it independently
+because your betas are connected so you are
+
+207
+00:20:23,640 --> 00:20:29,419
+saying beta k one is an input to beta k two
+so this is like a normal distribution beta
+
+208
+00:20:29,419 --> 00:20:34,169
+k two is like a normal distribution with a
+mean of beta k one but with some variance
+
+209
+00:20:34,169 --> 00:20:40,770
+so you you are biased to take same words with
+same probability but with certain variance
+
+210
+00:20:40,770 --> 00:20:45,290
+so that will allow changing the probability
+distribution of words and also having new
+
+211
+00:20:45,290 --> 00:20:49,830
+words in the topic model ok
+so that is the only things that happens so
+
+212
+00:20:49,830 --> 00:20:53,360
+you are having different betas over time but
+they are connected it's starting from the
+
+213
+00:20:53,360 --> 00:20:58,210
+first thing up to last time so what you are
+seeing the previous time point topic models
+
+214
+00:20:58,210 --> 00:21:03,610
+will influence the top model at the next time
+point now once you have this dynamic topic
+
+215
+00:21:03,610 --> 00:21:10,159
+model how it can help so suppose you are modeling
+how in science a particular topic is changing
+
+216
+00:21:10,159 --> 00:21:13,030
+over time
+so let us say this is modeling of science
+
+217
+00:21:13,030 --> 00:21:17,780
+is starting from at eighteen eighty one to
+two thousand and the topic is atomic physics
+
+218
+00:21:17,780 --> 00:21:21,520
+so what you see the kind of words that are
+there in the in the topic keeps on changing
+
+219
+00:21:21,520 --> 00:21:28,040
+the over time so here you have words like
+force energy motion differ light major magnet
+
+220
+00:21:28,040 --> 00:21:36,159
+direct matter and result ok but as you go
+over time the words here are energy electron
+
+221
+00:21:36,159 --> 00:21:42,910
+magnet field atom system to quantum physics
+so you see the word quantum comes up and the
+
+222
+00:21:42,910 --> 00:21:48,179
+word electron comes up that are not there
+in the initial time point so this you can
+
+223
+00:21:48,179 --> 00:21:53,940
+see also over the time and this is a nice
+plot that shows how this three words vary
+
+224
+00:21:53,940 --> 00:21:59,289
+over the decades in this ah in this topic
+so see you initially start with matter having
+
+225
+00:21:59,289 --> 00:22:04,390
+a very high probability but then we starts
+decreasing over the decades the word electrons
+
+226
+00:22:04,390 --> 00:22:10,660
+comes up ok at certain time point ah this
+is around nineteen hundred with this cathode
+
+227
+00:22:10,660 --> 00:22:16,280
+rays experiment and is start this is like
+a stable like on each stable over over time
+
+228
+00:22:16,280 --> 00:22:22,520
+but then the new topic on quantum also comes
+up ok and that is having a very high probability
+
+229
+00:22:22,520 --> 00:22:27,419
+so this gives you a nice visualization that
+within this given topic how the words are
+
+230
+00:22:27,419 --> 00:22:31,590
+evolving over time how is topic evolving over
+time
+
+231
+00:22:31,590 --> 00:22:36,740
+similarly if you see the topic of neuroscience
+you can similarly observe that initially the
+
+232
+00:22:36,740 --> 00:22:41,530
+word nerve was having a very high probability
+but over the time you get the word like neuron
+
+233
+00:22:41,530 --> 00:22:47,280
+coming into picture and then the c a two that
+is like in area where you will ah the the
+
+234
+00:22:47,280 --> 00:22:53,750
+particular area c a two and this you can also
+correlate with what the difference sort of
+
+235
+00:22:53,750 --> 00:22:58,110
+papers say seminal papers that are published
+that might have given rise to these terms
+
+236
+00:22:58,110 --> 00:23:03,480
+coming up into these topics ok so so so this
+was interesting that in science in the same
+
+237
+00:23:03,480 --> 00:23:07,790
+topic how the different words keep on coming
+over time
+
+238
+00:23:07,790 --> 00:23:14,120
+now this also gives rise to a nice application
+that is can you model what are the most influential
+
+239
+00:23:14,120 --> 00:23:19,549
+articles in science influential papers in
+science so what will be the idea influential
+
+240
+00:23:19,549 --> 00:23:24,190
+paper is the one that will affect the topic
+model ok that will affect the change in the
+
+241
+00:23:24,190 --> 00:23:30,409
+topic model so with each document you might
+have an influence variable and the idea is
+
+242
+00:23:30,409 --> 00:23:36,510
+that the change in topics are more affected
+by the influential vapors than the non influential
+
+243
+00:23:36,510 --> 00:23:41,640
+papers and that way we can model which article
+is more influential in another so how will
+
+244
+00:23:41,640 --> 00:23:48,049
+this model look like so so that is influential
+articles reflect the future change in the
+
+245
+00:23:48,049 --> 00:23:52,900
+language usage in the topic and the influence
+of the article can be thought of as a latent
+
+246
+00:23:52,900 --> 00:23:59,980
+variable and what we will do influential influential
+articles will affect the drift of the topics
+
+247
+00:23:59,980 --> 00:24:05,720
+that they discuss ok so that way we can model
+it as a variable and the posterior that will
+
+248
+00:24:05,720 --> 00:24:10,779
+be read for this variable will tell me how
+influential this article was
+
+249
+00:24:10,779 --> 00:24:16,970
+so again i make a very small change to the
+model that is now now beta k two instead of
+
+250
+00:24:16,970 --> 00:24:23,299
+depending only on beta k one it also depends
+on this id ok in influence variable so how
+
+251
+00:24:23,299 --> 00:24:29,140
+influential this article was again depending
+on the topic of this article ok so now this
+
+252
+00:24:29,140 --> 00:24:33,950
+i d is there with each document and finally
+while i compute the posterior i find out which
+
+253
+00:24:33,950 --> 00:24:40,210
+documents get the highest influence ok so
+so which ever get um um document will get
+
+254
+00:24:40,210 --> 00:24:47,020
+the high higher i d will be the influential
+article so so this this will remain the same
+
+255
+00:24:47,020 --> 00:24:55,980
+as the dynamical models only now it is also
+estimated by this i d parameter so each document
+
+256
+00:24:55,980 --> 00:25:01,720
+you see here as an influence score i d and
+each topic drifts in a way that it's biased
+
+257
+00:25:01,720 --> 00:25:06,289
+towards the documents that are having a high
+influence ok this is a posterior that i will
+
+258
+00:25:06,289 --> 00:25:14,900
+estimate from the from the data and yeah you
+can explain the changes in the future
+
+259
+00:25:14,900 --> 00:25:20,549
+now let us see another very interesting variant
+of lda that is can be used in the supervised
+
+260
+00:25:20,549 --> 00:25:24,970
+setting what do you mean by a supervised setting
+so till now we are saying i have a set of
+
+261
+00:25:24,970 --> 00:25:31,630
+documents in the document certain data occurs
+and i give it to my model and by using gibbs
+
+262
+00:25:31,630 --> 00:25:35,279
+sampling evaluation influence i can find out
+what are different document which different
+
+263
+00:25:35,279 --> 00:25:39,860
+topics occur in different documents that's
+what we can do and we can model certain assumptions
+
+264
+00:25:39,860 --> 00:25:45,660
+like how topic change over timings and which
+are correlated etcetera
+
+265
+00:25:45,660 --> 00:25:51,090
+what you are saying now in the supervise settings
+can we also use it to do certain prediction
+
+266
+00:25:51,090 --> 00:25:57,159
+like think about the movie reviews with certain
+ratings so can i use this model to say ok
+
+267
+00:25:57,159 --> 00:26:02,480
+this this review will get that many ratings
+suppose in the text can i predict the ratings
+
+268
+00:26:02,480 --> 00:26:07,640
+ok or web pages link paired with a number
+of likes how many likes this web page will
+
+269
+00:26:07,640 --> 00:26:11,531
+get and the document pay with the link of
+other documents or individual with pair with
+
+270
+00:26:11,531 --> 00:26:16,790
+the category so lot of examples where the
+data points have some sort of ah class or
+
+271
+00:26:16,790 --> 00:26:23,940
+a category can you also model it using ah
+topic models so this is we are two two different
+
+272
+00:26:23,940 --> 00:26:28,169
+ways in which it can be done we will talk
+about supervised topic models and see the
+
+273
+00:26:28,169 --> 00:26:36,890
+what is the other variation
+so what is the idea so here so you are modeling
+
+274
+00:26:36,890 --> 00:26:43,490
+the documents along with the responses or
+the categories and the responses are those
+
+275
+00:26:43,490 --> 00:26:48,950
+they are fit they are fitted to find topics
+that are predictive of the response that is
+
+276
+00:26:48,950 --> 00:26:54,990
+how do the topics tell about the response
+so how do the topics coded with the responses
+
+277
+00:26:54,990 --> 00:27:01,800
+so how is it done see see you this is the
+the plate notation for the ah lda model so
+
+278
+00:27:01,800 --> 00:27:07,600
+this is what we had seen earlier so your beta
+k alpha and all that and what is additional
+
+279
+00:27:07,600 --> 00:27:13,330
+here so ah the draw topic proportional in
+each word what is the topic assignment plus
+
+280
+00:27:13,330 --> 00:27:19,659
+for a given document that is your data point
+so you are also finding out so you are seeing
+
+281
+00:27:19,659 --> 00:27:25,210
+what is the topic ah distributions for the
+document from there you are sampling what
+
+282
+00:27:25,210 --> 00:27:31,410
+is your response so from your z d n you are
+sampling your response that is ah like a normal
+
+283
+00:27:31,410 --> 00:27:39,159
+distribution over eta transpose z bar and
+a variance sigma square so what we are seeing
+
+284
+00:27:39,159 --> 00:27:45,590
+this response variable depends on the topic
+distributions with the variance ok so so let
+
+285
+00:27:45,590 --> 00:27:53,570
+us just quickly see what it means is that
+so y d it's sampled from a normal distribution
+
+286
+00:27:53,570 --> 00:28:02,270
+over eta transpose z bar and sigma square
+now what is z bar z bar as a topic proportions
+
+287
+00:28:02,270 --> 00:28:07,120
+of this documents so i know ok this topic
+ah t one occurs point one times t two occurs
+
+288
+00:28:07,120 --> 00:28:11,820
+point three times and so on eta like the weights
+given to different topics so however will
+
+289
+00:28:11,820 --> 00:28:18,100
+be like if if this topic is coded with the
+higher response and it can be negative also
+
+290
+00:28:18,100 --> 00:28:21,850
+if there is a negative response eta can be
+negative so these are like the weights given
+
+291
+00:28:21,850 --> 00:28:27,669
+to different ah different topics so what ah
+whether this top topic will go to a higher
+
+292
+00:28:27,669 --> 00:28:32,840
+response or lower response and sigma square
+is this will give you the mean and then you
+
+293
+00:28:32,840 --> 00:28:39,419
+will sample the actual ah response with this
+p n certain variation
+
+294
+00:28:39,419 --> 00:28:45,240
+so this will give you a scalar wait eta transpose
+z plane will give you a scalar eta one z one
+
+295
+00:28:45,240 --> 00:28:50,360
+plus eta two z two and so on this will be
+a scalar so this will be a link and with this
+
+296
+00:28:50,360 --> 00:28:55,940
+way with this variance you will sample your
+response ok so what you need to do you need
+
+297
+00:28:55,940 --> 00:28:59,200
+to find out what are your z prime and you
+need to estimate what are your etas so you
+
+298
+00:28:59,200 --> 00:29:08,690
+have to estimate both z prime and eta from
+your model so so now we were saying there
+
+299
+00:29:08,690 --> 00:29:12,799
+are there is also an alternative to using
+the supervising lda so you can say ok why
+
+300
+00:29:12,799 --> 00:29:16,850
+do we here why are we doing taking this complicated
+model where we are have to having to estimate
+
+301
+00:29:16,850 --> 00:29:24,320
+eta or using the model why can't we run our
+topic model get my theta for each document
+
+302
+00:29:24,320 --> 00:29:31,370
+theta d ok that means again we have a distribution
+over topics and then then there are something
+
+303
+00:29:31,370 --> 00:29:39,169
+like a regression so how does this theta gives
+me certain is course if liking of five another
+
+304
+00:29:39,169 --> 00:29:44,390
+theta gives me minus five and so on ok that
+is another possibility so i have different
+
+305
+00:29:44,390 --> 00:29:49,840
+thetas for different documents and i run a
+regression from this theta to actually score
+
+306
+00:29:49,840 --> 00:29:55,850
+and this is called lda plus regression model
+and what we are doing right now is a supervised
+
+307
+00:29:55,850 --> 00:30:08,260
+lda where we are sampling this inside my model
+during the ah ah estimation time
+
+308
+00:30:08,260 --> 00:30:18,690
+so so what will happen here in this case you
+are not using the response as an observed
+
+309
+00:30:18,690 --> 00:30:26,730
+variable it is remains unobserved in this
+case where wherever whereas here response
+
+310
+00:30:26,730 --> 00:30:33,299
+is also observed so what is the intuition
+is it if you take your response also as an
+
+311
+00:30:33,299 --> 00:30:39,210
+observed variable then your topics can be
+much more aligned to the actual responses
+
+312
+00:30:39,210 --> 00:30:43,710
+whereas here the responses are not aligned
+to the the topic topics are not aligned to
+
+313
+00:30:43,710 --> 00:30:50,070
+the actual responses and you have to later
+fit on later ah find out a mapping from the
+
+314
+00:30:50,070 --> 00:30:53,870
+topics to the actual response so this can
+be done here in the model itself that's why
+
+315
+00:30:53,870 --> 00:31:02,090
+supervised lda works better for taking rating
+the responses then in lda model plus regression
+
+316
+00:31:02,090 --> 00:31:07,850
+so this is where you are taking the topic
+proportions theta and building your regression
+
+317
+00:31:07,850 --> 00:31:14,510
+to find out y another model so here response
+variable can be taken as an important observations
+
+318
+00:31:14,510 --> 00:31:19,809
+to infer the topics in this lowest manner
+so that's an the interesting thing here so
+
+319
+00:31:19,809 --> 00:31:24,840
+what will happen so we fit the so a lda parameters
+to document responses and you will get the
+
+320
+00:31:24,840 --> 00:31:30,159
+topics and the coefficients topics from the
+coefficients so right and using these together
+
+321
+00:31:30,159 --> 00:31:36,480
+given a new document you can estimate what
+is the response eta transpose times expected
+
+322
+00:31:36,480 --> 00:31:42,730
+value of z bar given the words in the document
+this we can estimate from your ah a s lda
+
+323
+00:31:42,730 --> 00:31:46,330
+model the same way you are doing from your
+lda so what is the topic topic distributions
+
+324
+00:31:46,330 --> 00:31:52,580
+for a new document and this is what you get
+ok this is from the pang and lee paper two
+
+325
+00:31:52,580 --> 00:31:56,169
+thousand five
+so what there is they they they took ten topic
+
+326
+00:31:56,169 --> 00:32:02,270
+lda mod s lda model and put it on movie reviews
+so you see here that ten topics the the most
+
+327
+00:32:02,270 --> 00:32:09,549
+important words and they are plotted with
+their etas corresponding etas so a high eta
+
+328
+00:32:09,549 --> 00:32:16,600
+mean this topic corresponds to a high ah score
+or a high rating and in negative value of
+
+329
+00:32:16,600 --> 00:32:20,952
+eta means this is called corresponding to
+a negative score negative rating so what do
+
+330
+00:32:20,952 --> 00:32:26,970
+you see here on the higher side you have words
+like both motion simple perfect fascinating
+
+331
+00:32:26,970 --> 00:32:31,080
+powering complex so perfect in presenting
+a nice words that are coming with on the higher
+
+332
+00:32:31,080 --> 00:32:37,549
+side and here you have least problem unfortunately
+supposed was flagged up and you will immediately
+
+333
+00:32:37,549 --> 00:32:42,250
+see they are like a negative image so they
+are coming with the with a very low negative
+
+334
+00:32:42,250 --> 00:32:49,260
+value and this very nicely ah also puts your
+topics in a scale of minus two point plus
+
+335
+00:32:49,260 --> 00:32:54,410
+that this was not ah available earlier
+earlier you have different topics but you
+
+336
+00:32:54,410 --> 00:32:57,160
+did not know whether this topic is for a positive
+or negative rating
+
+337
+00:32:57,160 --> 00:33:04,779
+now you can also find out from your model
+itself and it gives a very good held out correlation
+
+338
+00:33:04,779 --> 00:33:09,290
+also so this is from number of topics even
+if you increase the number of topics it gives
+
+339
+00:33:09,290 --> 00:33:16,890
+you a much better correlation and the lda
+model so what did you see here so it enables
+
+340
+00:33:16,890 --> 00:33:21,051
+model based regression where the predictor
+variable is a text document so you did not
+
+341
+00:33:21,051 --> 00:33:25,409
+have to run regression separately that is
+run inside the model ok inside the model itself
+
+342
+00:33:25,409 --> 00:33:30,200
+pure sampling your response by using a regression
+model
+
+343
+00:33:30,200 --> 00:33:34,590
+now it can be used wherever lda is used in
+an unsupervised fashion so you can use it
+
+344
+00:33:34,590 --> 00:33:42,480
+with images music etcetera wherever the data
+is paired with a ah some sort of response
+
+345
+00:33:42,480 --> 00:33:48,600
+variable so you can also say that s lda is
+some sort of supervised dimension reduction
+
+346
+00:33:48,600 --> 00:33:53,850
+technique wherever is a lda is a unsupervised
+technique right you are seeing the response
+
+347
+00:33:53,850 --> 00:34:01,279
+and by seeing that you are modeling your dimensional
+direction so that is about using ah so as
+
+348
+00:34:01,279 --> 00:34:07,309
+lda so so there are some other variants also
+for topic models so we will see some of those
+
+349
+00:34:07,309 --> 00:34:13,810
+like the relation topic models and some simple
+intuition about the nonparametric basic models
+
+350
+00:34:13,810 --> 00:34:14,570
+in the next lecture
+thank you
+

@@ -1,0 +1,1033 @@
+1
+00:00:17,449 --> 00:00:24,279
+welcome back so so we talking about distributions
+semantics so in in this fourth lecture in
+
+2
+00:00:24,279 --> 00:00:29,730
+the fifth lecture of this week we will talk
+about another very interesting idea that is
+
+3
+00:00:29,730 --> 00:00:38,149
+word embeddings that come from distribution
+semantics ok so what are word embeddings ok
+
+4
+00:00:38,149 --> 00:00:44,070
+so when i am talking about word embeddings
+so they are like word vectors so ah so the
+
+5
+00:00:44,070 --> 00:00:49,769
+word vectors are nothing but simple vectors
+of vectors of weight ok so you are so we talked
+
+6
+00:00:49,769 --> 00:00:53,580
+about these factors so its so you are having
+some dimensions and they are representation
+
+7
+00:00:53,580 --> 00:00:58,210
+words in this set of dimensions on their various
+weights
+
+8
+00:00:58,210 --> 00:01:05,100
+so now we also talked about this one hot encoding
+that is among the n dimensions only one dimension
+
+9
+00:01:05,100 --> 00:01:09,630
+is one everything as a zero and these dimension
+might correspond to the index of the particular
+
+10
+00:01:09,630 --> 00:01:16,850
+word that i wanted to be set
+now and we saw that if i if we are using one
+
+11
+00:01:16,850 --> 00:01:23,200
+hot encoding i cannot ca ca compute the similarity
+among words so if i motel and hotel there
+
+12
+00:01:23,200 --> 00:01:28,999
+will have one at different places and if I
+compute similarity if i do and it will be
+
+13
+00:01:28,999 --> 00:01:33,270
+zero
+so this is not ah conducive to for ah semantic
+
+14
+00:01:33,270 --> 00:01:41,010
+similarity between words so no let's take
+a simple example so have a vocabulary that
+
+15
+00:01:41,010 --> 00:01:48,600
+contains only five words king queen man woman
+and child so the so i have a I have vectors
+
+16
+00:01:48,600 --> 00:01:55,969
+in five dimension so i can encode queen like
+this so queen has a weight of one in the second
+
+17
+00:01:55,969 --> 00:02:02,380
+dimension that correspond to the index of
+queen and it has weight zero and other dimensions
+
+18
+00:02:02,380 --> 00:02:08,130
+and i cannot compute the how similar king
+and queen are how similar queen and child
+
+19
+00:02:08,130 --> 00:02:15,090
+are by using this method
+so we cannot make any ah meaningful comparison
+
+20
+00:02:15,090 --> 00:02:22,730
+we can only find if these two words are same
+so that is not very interesting so what happens
+
+21
+00:02:22,730 --> 00:02:29,540
+in the distributional representation or so
+we also called it word embeddings that any
+
+22
+00:02:29,540 --> 00:02:39,159
+word w i in the corpus is given a distributed
+representation ok by in embeddings so i have
+
+23
+00:02:39,159 --> 00:02:45,950
+a fix dimension like d dimensional vector
+and I represent each word in these d dimensions
+
+24
+00:02:45,950 --> 00:02:51,200
+and i have give them various weights and these
+weights are to be learnt by some method and
+
+25
+00:02:51,200 --> 00:02:54,680
+we will talk about what will be the method
+by which i will learn this weights so idea
+
+26
+00:02:54,680 --> 00:03:00,510
+is that each word in my vocabulary i will
+try to represent them in some fix dimensions
+
+27
+00:03:00,510 --> 00:03:06,989
+d
+so now so so this is one idea so like i have
+
+28
+00:03:06,989 --> 00:03:12,840
+the word linguistics and i can denote this
+word in some fix dimension here d is eight
+
+29
+00:03:12,840 --> 00:03:17,650
+so there are eight dimension so they it has
+different weights in different dimensions
+
+30
+00:03:17,650 --> 00:03:23,200
+and similarly all the words will be represented
+similarly they have so different weights in
+
+31
+00:03:23,200 --> 00:03:30,559
+these a dimensions
+so so what is my distributional representation
+
+32
+00:03:30,559 --> 00:03:38,599
+so take a vector with several hundred dimensions
+so it can be hundred fifty three hundred thousand
+
+33
+00:03:38,599 --> 00:03:43,349
+now each word is represented by a distribution
+of weights across these elements so each vector
+
+34
+00:03:43,349 --> 00:03:49,900
+is nothing but a distribution of weights across
+these dimensions so what will happen so instead
+
+35
+00:03:49,900 --> 00:03:56,099
+of a one to one mapping between an element
+in the vector and a word you have a ah distributed
+
+36
+00:03:56,099 --> 00:04:00,069
+representation of each words and by using
+that you can cap capture similarity so whether
+
+37
+00:04:00,069 --> 00:04:04,900
+two words are ah similar or not if they have
+similar weights in ah many dimensions then
+
+38
+00:04:04,900 --> 00:04:13,459
+they will be similar and that's how i can
+capture similarity between words ok
+
+39
+00:04:13,459 --> 00:04:18,810
+and yeah so we we can say that each elements
+in my vector or each dimension might contributes
+
+40
+00:04:18,810 --> 00:04:26,370
+to the definition of multiple words so what
+the dimensions might indicate ok this is just
+
+41
+00:04:26,370 --> 00:04:34,410
+in illustration ah this is not ah a literal
+meaning ok so thats what you can ah thats
+
+42
+00:04:34,410 --> 00:04:41,350
+what can you can help you to understand what
+are these dimensions so suppose all the dimensions
+
+43
+00:04:41,350 --> 00:04:48,730
+in my distributional representation i can
+label by some hypothetical ah labels ok so
+
+44
+00:04:48,730 --> 00:04:55,140
+my algorithm may not have some labels some
+very ah good labels like that it may not be
+
+45
+00:04:55,140 --> 00:04:59,700
+possible to do that even manually but this
+is simply for understanding that assume that
+
+46
+00:04:59,700 --> 00:05:04,700
+so there are d dimensions assumed that you
+can assign a label to these some topic some
+
+47
+00:05:04,700 --> 00:05:12,290
+concept ok like here my dimensions can be
+like royalty masculering famining age so on
+
+48
+00:05:12,290 --> 00:05:18,080
+these are my dimensions and assume that the
+weights that each for is have in this dimensions
+
+49
+00:05:18,080 --> 00:05:25,390
+correspond to how much that word is closer
+to that concept so for example the word king
+
+50
+00:05:25,390 --> 00:05:31,240
+word how much it is closer concept of royalty
+so this king is very close to concept of royalty
+
+51
+00:05:31,240 --> 00:05:35,660
+it has a high weight in this dimension point
+nine nine it is very close to masculering
+
+52
+00:05:35,660 --> 00:05:41,910
+so it is has a high weight point nine nine
+but very small weight in famining age suppose
+
+53
+00:05:41,910 --> 00:05:46,160
+that a high weight means a ah it's elder so
+it's point seven
+
+54
+00:05:46,160 --> 00:05:51,590
+similarly for queen what will happen royalty
+will get a high weight yes but masculering
+
+55
+00:05:51,590 --> 00:05:59,180
+and famining will be just opposite and age
+can be again ah three point six now take women
+
+56
+00:05:59,180 --> 00:06:03,830
+and princes women will have very low weight
+in the in the case of royalty high weight
+
+57
+00:06:03,830 --> 00:06:10,620
+in the case so famining and princes will have
+a high weight in the case of royalty and high
+
+58
+00:06:10,620 --> 00:06:16,280
+weight in the case of famining and very low
+weight in the case of age and this is simple
+
+59
+00:06:16,280 --> 00:06:21,590
+simply for illustration so idea is that i
+am trying to represent all my words instead
+
+60
+00:06:21,590 --> 00:06:27,070
+of fixed dimensions and these dimensions are
+latent they met correspond to certain concepts
+
+61
+00:06:27,070 --> 00:06:33,690
+a combination of concepts and so on that may
+not no that the algorithm also does not assign
+
+62
+00:06:33,690 --> 00:06:39,250
+but we would assume that that these dimensions
+correspond to some concepts and now each word
+
+63
+00:06:39,250 --> 00:06:45,410
+can be return as a distribution among these
+concepts ok and then i can measure to words
+
+64
+00:06:45,410 --> 00:06:51,690
+based on how much similar they are on various
+concepts this is the idea ah main question
+
+65
+00:06:51,690 --> 00:06:56,550
+is how do i capture this representation that
+how do i represent different words in this
+
+66
+00:06:56,550 --> 00:07:02,860
+fixed dimensions
+so now we can see that so such a vector is
+
+67
+00:07:02,860 --> 00:07:11,680
+representing the meaning in some abstract
+manor so now what is my ah dimension size
+
+68
+00:07:11,680 --> 00:07:18,300
+so my dimension d can be if we starting from
+fifty up to thousand ok and the by ah focus
+
+69
+00:07:18,300 --> 00:07:24,340
+is that the word that are similar in meaning
+they should have similar embeddings or similar
+
+70
+00:07:24,340 --> 00:07:29,210
+representation
+now if you know about ah s v d singularly
+
+71
+00:07:29,210 --> 00:07:34,520
+de decomposition that is also some sort of
+embedding method that converts the vectors
+
+72
+00:07:34,520 --> 00:07:38,870
+in some low dimensions so i will i will i
+will encourage that you read about singular
+
+73
+00:07:38,870 --> 00:07:44,890
+that valid decompression also another another
+name for that is latest symmetry indexing
+
+74
+00:07:44,890 --> 00:07:50,190
+but i will just give you very briefly what
+is the idea of s v d so we talked about ah
+
+75
+00:07:50,190 --> 00:07:57,300
+this co occurrence matrices ok so this is
+my matrix a so these are the target words
+
+76
+00:07:57,300 --> 00:08:03,110
+these are contest words ok and this matrix
+has certain entries now what is one problem
+
+77
+00:08:03,110 --> 00:08:12,060
+is matrix this might be very high dimensional
+so each word might have a say five hundred
+
+78
+00:08:12,060 --> 00:08:15,610
+k dimensional representation so so what did
+what this is co occurrence with different
+
+79
+00:08:15,610 --> 00:08:20,990
+words and this words can be age number of
+words can be age age five hundred k and even
+
+80
+00:08:20,990 --> 00:08:28,430
+more in some cases so now i want to give a
+low dimension representation a distribution
+
+81
+00:08:28,430 --> 00:08:33,870
+representation so what will the idea so i
+will use the theorem that any matrix say can
+
+82
+00:08:33,870 --> 00:08:41,469
+be written as u sigma v transport ok and there
+are certain properties of these u sigma and
+
+83
+00:08:41,469 --> 00:08:59,260
+v but this sigma is a diagonal matrix and
+the n this are singular values ok second here
+
+84
+00:08:59,260 --> 00:09:05,060
+about it what is this matrix particular decomposition
+for singular values now once you have this
+
+85
+00:09:05,060 --> 00:09:15,150
+matrix in this format this is same matrix
+so idea is that you take a k rank approximation
+
+86
+00:09:15,150 --> 00:09:20,060
+so that means you have singular values they
+are is in the decreasing order and you take
+
+87
+00:09:20,060 --> 00:09:25,420
+only the top case singular values and you
+do that for all this u sigma and v so we have
+
+88
+00:09:25,420 --> 00:09:30,980
+taking only top k and t so only the first
+k entries of you corresponding to top k singular
+
+89
+00:09:30,980 --> 00:09:45,340
+values that is u k sigma k v k transports
+ok and this is my k rank approximation of
+
+90
+00:09:45,340 --> 00:09:52,850
+my matrix a ok
+so now this u will denote my low dimensional
+
+91
+00:09:52,850 --> 00:09:58,750
+representation so earlier you might be in
+the same ah dimensions you can be again in
+
+92
+00:09:58,750 --> 00:10:04,890
+ah five hundred k dimension ok five hundred
+thousand but suppose you you you are trying
+
+93
+00:10:04,890 --> 00:10:11,580
+to pick only hundred you will take only ah
+first hundred dimensions from here ok and
+
+94
+00:10:11,580 --> 00:10:17,430
+this will be a low dimensional representation
+for u v and so on so s v d is also one sort
+
+95
+00:10:17,430 --> 00:10:26,400
+of ah embedding so each word you can embedding
+some ah k dimensions by taking the top case
+
+96
+00:10:26,400 --> 00:10:32,750
+singular values only so but we are not talking
+about s v d here we will talk about the word
+
+97
+00:10:32,750 --> 00:10:40,390
+vector method for computing this representation
+so now before i discuses what are the different
+
+98
+00:10:40,390 --> 00:10:45,360
+task sequence do with these word vectors oh
+ah sorry how do you compute these word vectors
+
+99
+00:10:45,360 --> 00:10:50,090
+let us see what why they are found to a very
+interested in in in this domain and what are
+
+100
+00:10:50,090 --> 00:10:56,200
+the different task they have been used in
+so what is we found that these representations
+
+101
+00:10:56,200 --> 00:11:01,310
+are capturing some meaningful syntactic and
+semantic regularities in a very very simple
+
+102
+00:11:01,310 --> 00:11:08,980
+manor so what is that so that is we can use
+the vector offsets to talk about ah relation
+
+103
+00:11:08,980 --> 00:11:17,270
+between words and how how much two words ah
+are similar compare to the other pair of words
+
+104
+00:11:17,270 --> 00:11:22,670
+so for example i want to capture the singular
+plural relationship between word like car
+
+105
+00:11:22,670 --> 00:11:29,000
+and cars boy and boys bag and bags and so
+on and suppose i do not know what are singular
+
+106
+00:11:29,000 --> 00:11:32,970
+and plural words so can i capture that using
+word representation
+
+107
+00:11:32,970 --> 00:11:39,810
+so what does we will found suppose that for
+each vector x i u ah for each word i you are
+
+108
+00:11:39,810 --> 00:11:44,870
+vector x i so we can take the vector offsets
+and they will be coming out to be similar
+
+109
+00:11:44,870 --> 00:11:54,440
+for ah singular to plural pair so that is
+if i try to compute x apple minus x apples
+
+110
+00:11:54,440 --> 00:11:59,779
+that is coming out to be very close to x car
+minus x cars similarly to x family minus x
+
+111
+00:11:59,779 --> 00:12:06,790
+families and so on that is i compute the vectors
+of these and if i take the vector offset apple
+
+112
+00:12:06,790 --> 00:12:12,490
+minus apples has similar offsets as car minus
+cars as family minus families and this is
+
+113
+00:12:12,490 --> 00:12:18,180
+very very interesting this is not something
+for which this vectors for trained for but
+
+114
+00:12:18,180 --> 00:12:23,940
+they are capturing this ah regularity very
+ah nicely so this would be like and and and
+
+115
+00:12:23,940 --> 00:12:29,610
+because they capturing such regularities they
+can be used for various reasoning task like
+
+116
+00:12:29,610 --> 00:12:37,410
+enology task a is to b as c is to what so
+like man is to woman as uncle is to and you
+
+117
+00:12:37,410 --> 00:12:43,940
+will answer aunt but can my model answer that
+man i have given man woman pair and for the
+
+118
+00:12:43,940 --> 00:12:49,410
+next pair the first word is uncle what be
+the next word can you find out aunt and that
+
+119
+00:12:49,410 --> 00:12:54,870
+is what the word vectors have you found to
+be very useful in they can predict these ah
+
+120
+00:12:54,870 --> 00:13:02,900
+enology sort of task and how do we do that
+this just use the simple vector offset method
+
+121
+00:13:02,900 --> 00:13:08,800
+so let us see one example so here so this
+is the idea so i have my vectors denoted in
+
+122
+00:13:08,800 --> 00:13:13,800
+a two dimensional plane so how do you come
+convert any say hundred dimensional vectors
+
+123
+00:13:13,800 --> 00:13:19,400
+to it two dimension representation you can
+use principle component analysis p c a or
+
+124
+00:13:19,400 --> 00:13:24,860
+some other methods to project them into some
+lower dimension so that is been done here
+
+125
+00:13:24,860 --> 00:13:29,180
+so two dimension representation so what you
+are seeing here so that outside would be woman
+
+126
+00:13:29,180 --> 00:13:35,620
+and man that is similar to what has been observed
+in uncle and aunt and king and queen and this
+
+127
+00:13:35,620 --> 00:13:41,880
+is a very nice regularity
+similarly here for singular plural king to
+
+128
+00:13:41,880 --> 00:13:51,360
+kings and queen to queens they having similar
+offsets so we can use that for enology testing
+
+129
+00:13:51,360 --> 00:13:57,350
+so what is the enology testing task you are
+given a pair with a with a certain relation
+
+130
+00:13:57,350 --> 00:14:03,280
+like france and paris what is the relation
+so paris is the capital of france now we are
+
+131
+00:14:03,280 --> 00:14:08,330
+given various examples and we have to find
+out which of this examples attribute the same
+
+132
+00:14:08,330 --> 00:14:14,710
+relation so that is whether itally rome has
+its relation of capital and country japan
+
+133
+00:14:14,710 --> 00:14:21,300
+tokiyo and florida tallai tallahassee which
+of these has the same relation so can my vectol
+
+134
+00:14:21,300 --> 00:14:27,510
+vector representation ah capture this so a
+given one example can you find out the other
+
+135
+00:14:27,510 --> 00:14:32,050
+example and so so similarly for big bigger
+can you find out this small ah smaller cold
+
+136
+00:14:32,050 --> 00:14:42,230
+colder quick quicker and miami florida can
+you find out other examples so on
+
+137
+00:14:42,230 --> 00:14:48,920
+and how do they do that so i have this task
+a is to b as c to what so example is man is
+
+138
+00:14:48,920 --> 00:14:57,680
+to woman x king is to sorry ah man is to woman
+as king is to what and how will they do that
+
+139
+00:14:57,680 --> 00:15:04,220
+so simple idea is take the vector offsets
+between woman and man and add it to king ok
+
+140
+00:15:04,220 --> 00:15:11,940
+so find out woman minus man add it to king
+but how do you find out the word queen in
+
+141
+00:15:11,940 --> 00:15:17,420
+generate may not be then exact match so how
+do you find out what words are coming closer
+
+142
+00:15:17,420 --> 00:15:28,630
+so this the idea so i have a is to b as c
+to what ok so so what will happen in my vector
+
+143
+00:15:28,630 --> 00:15:37,899
+representation a b and c i want to find out
+what is the word d so what will i do i have
+
+144
+00:15:37,899 --> 00:15:48,930
+the vectors of each of the words so find out
+the offsets w b minus w a added to see now
+
+145
+00:15:48,930 --> 00:15:55,790
+i am trying to find out which vectors or similar
+to this ok i write it this and were what are
+
+146
+00:15:55,790 --> 00:16:02,700
+the vectors are similar to this one and so
+i will just find out ah similarity of that
+
+147
+00:16:02,700 --> 00:16:13,970
+to all the words w i in my corpus and i can
+also normalize it w b minus w a plus w c ok
+
+148
+00:16:13,970 --> 00:16:20,070
+so that is a normalize all this is not very
+important and we take the argmax over all
+
+149
+00:16:20,070 --> 00:16:27,310
+w i in my corpus so all words are vectors
+so i find out which words are coming closer
+
+150
+00:16:27,310 --> 00:16:32,149
+in this is space so what is the closer words
+to by when i add this offsets to this word
+
+151
+00:16:32,149 --> 00:16:38,170
+and that is my answer ok so so for example
+if you do this here so will find that the
+
+152
+00:16:38,170 --> 00:16:45,700
+word queen comes up
+and this has we shown in many different cases
+
+153
+00:16:45,700 --> 00:16:54,130
+like country and capital vectors china beijing
+russia moscow japan tokyo and the what you
+
+154
+00:16:54,130 --> 00:17:00,160
+are seeing here the offsets between the vectors
+are very very regular in all this cases and
+
+155
+00:17:00,160 --> 00:17:09,429
+this is just coming out from the word vectors
+and more questions like news papers so new
+
+156
+00:17:09,429 --> 00:17:17,250
+york new york times baltimore and balitmore
+sun san jose san joshe mercur mercury news
+
+157
+00:17:17,250 --> 00:17:24,259
+and so on various n b a teams detroit detroit
+pistons an and so on airlines austria austrian
+
+158
+00:17:24,259 --> 00:17:31,929
+airlines belgium brussels airlines and company
+executives what do you seeing it is capturing
+
+159
+00:17:31,929 --> 00:17:38,679
+a generic relation also in journal any relation
+that that that can hold between two words
+
+160
+00:17:38,679 --> 00:17:44,600
+so if if you are finding out two words with
+one relation you can find out some many other
+
+161
+00:17:44,600 --> 00:17:49,679
+words that i having the same relation by simple
+this vector offsets method so find out vector
+
+162
+00:17:49,679 --> 00:17:55,809
+offset between pairs is it similar to the
+vecs vector offsets of my initial example
+
+163
+00:17:55,809 --> 00:18:02,120
+so this is the problem we also tackled in
+the case of ah instruction models of distribution
+
+164
+00:18:02,120 --> 00:18:08,820
+semantics that is we have making the pier
+pattern matrix and then capturing the co occurrences
+
+165
+00:18:08,820 --> 00:18:13,559
+in the in the case of word vectors even you
+even though you did not is start by piers
+
+166
+00:18:13,559 --> 00:18:18,139
+and battles even the though you you found
+out only with the word embeddings word vectors
+
+167
+00:18:18,139 --> 00:18:23,139
+this helped further in doing this task also
+and this was very ah one of the very interesting
+
+168
+00:18:23,139 --> 00:18:29,169
+aspects
+similarly here we can do element element wise
+
+169
+00:18:29,169 --> 00:18:35,400
+addition so suppose you have the embedding
+for a german you have embedding for airlines
+
+170
+00:18:35,400 --> 00:18:39,980
+and if you add these two embeddings and find
+out words that are coming closer to to the
+
+171
+00:18:39,980 --> 00:18:44,860
+new vector now and you find out some very
+interesting words coming up like here check
+
+172
+00:18:44,860 --> 00:18:51,740
+plus currency and you find out word that very
+close vietnam plus capital again words setup
+
+173
+00:18:51,740 --> 00:18:57,879
+very close german plus airlines you find lufthansa
+airline and lufthansa a carrier so on russian
+
+174
+00:18:57,879 --> 00:19:03,470
+plus river you find words like moscow french
+plus actress and you find some transact message
+
+175
+00:19:03,470 --> 00:19:07,980
+and this was again some interesting accept
+so you can have embedding of two words and
+
+176
+00:19:07,980 --> 00:19:12,360
+you add these gather if find something that
+is some sort of composition of these term
+
+177
+00:19:12,360 --> 00:19:17,210
+so not a generic method so this was coming
+out in some cases may not be true for all
+
+178
+00:19:17,210 --> 00:19:23,840
+the cases but even coming out in some cases
+for what in interesting observation
+
+179
+00:19:23,840 --> 00:19:28,899
+so now how do we capture these word vectors
+how do we compute this word vectors now basic
+
+180
+00:19:28,899 --> 00:19:35,700
+idea is we will again go back to the co occurrences
+we will trying to use co occurrences but instead
+
+181
+00:19:35,700 --> 00:19:43,549
+of counting the co occurrences from a coppers
+what we will say i am given a sentence a word
+
+182
+00:19:43,549 --> 00:19:49,799
+is there and the contest is there try to predict
+the contest from the word or the word from
+
+183
+00:19:49,799 --> 00:19:56,379
+the contest and if you not able to predict
+try to update your weights and this will be
+
+184
+00:19:56,379 --> 00:20:02,580
+the idea ok it start with some initial vectors
+using those vectors try to predict from the
+
+185
+00:20:02,580 --> 00:20:07,289
+contest what to do the targets of on the target
+what will be the contest if it is not machines
+
+186
+00:20:07,289 --> 00:20:13,480
+update your vectors
+and so all the codes ah as well as the learned
+
+187
+00:20:13,480 --> 00:20:18,570
+vectors are available here so we can actually
+download these and and and try to use them
+
+188
+00:20:18,570 --> 00:20:26,009
+for many of your task also but you will discuss
+how what are this word vectors in how to they
+
+189
+00:20:26,009 --> 00:20:32,460
+so in general there are two different variation
+of this models so that tried to capture these
+
+190
+00:20:32,460 --> 00:20:38,620
+word embeddings and they are called c b o
+w for continues back of words model and ah
+
+191
+00:20:38,620 --> 00:20:43,831
+skip gram models and let me just quickly explain
+what are these and we will discuss in little
+
+192
+00:20:43,831 --> 00:20:49,341
+in the next lecture so in continuous back
+of words model what you are doing so you're
+
+193
+00:20:49,341 --> 00:20:54,570
+taking the contest so you are focusing on
+the current word w t we taking the previous
+
+194
+00:20:54,570 --> 00:21:00,869
+words so it can be actually any number of
+previous words and to next words and your
+
+195
+00:21:00,869 --> 00:21:07,299
+trying to use those to predict the center
+word so using the contest pred predict the
+
+196
+00:21:07,299 --> 00:21:12,549
+target word or the center word
+in the skip gram model what you are doing
+
+197
+00:21:12,549 --> 00:21:17,140
+you are using the center word and trying to
+the context words so there are two different
+
+198
+00:21:17,140 --> 00:21:22,480
+ways of learning is embeddings so idea would
+be i will start with some initial vectors
+
+199
+00:21:22,480 --> 00:21:29,549
+now trying using the context vectors i will
+try to predict what is my center vector if
+
+200
+00:21:29,549 --> 00:21:34,940
+i am not finding the match i will update my
+r different vectors send for send the as well
+
+201
+00:21:34,940 --> 00:21:39,320
+as the context and I will keep on doing that
+until i am able to predict this some high
+
+202
+00:21:39,320 --> 00:21:44,730
+confident or i am i am converging at certain
+point my vectors are not changing and these
+
+203
+00:21:44,730 --> 00:21:50,770
+vectors that I am learning by this method
+will be my word vectors ok and i do that slightly
+
+204
+00:21:50,770 --> 00:21:55,720
+different in both continuous back of words
+model and scripts come model
+
+205
+00:21:55,720 --> 00:22:01,230
+so in the next lecture what we will do we
+will discuss in detail how do we learn this
+
+206
+00:22:01,230 --> 00:22:02,610
+vectors ok
+
+207
+00:22:02,610 --> 00:22:03,879
+thank you
+

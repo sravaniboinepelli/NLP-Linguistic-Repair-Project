@@ -1,0 +1,1347 @@
+1
+00:00:18,240 --> 00:00:24,860
+ok so so welcome ro the forth lecture of second
+week so in the last lecture so we dis we were
+
+2
+00:00:24,860 --> 00:00:30,430
+discussing about a spelling correction and
+also seeing how do we do that it using the
+
+3
+00:00:30,430 --> 00:00:36,180
+contexts and remember the last ah problem
+that we are facing is how do you find the
+
+4
+00:00:36,180 --> 00:00:40,960
+probability of sequence of words ok so I have
+sequence of words in in my sentence that might
+
+5
+00:00:40,960 --> 00:00:45,870
+be candidate what the probability of that
+sequence and thats why we will we said we
+
+6
+00:00:45,870 --> 00:00:52,110
+will be using language models for it so today
+the talk that the topic of this lecture is
+
+7
+00:00:52,110 --> 00:00:57,450
+to see what are my n gram language models
+and we will start with some motivation of
+
+8
+00:00:57,450 --> 00:01:02,770
+what are the different applications were we
+might need them so n gram language modeling
+
+9
+00:01:02,770 --> 00:01:09,550
+is a very very ah nice technique in n n l
+p and its applied in many different applications
+
+10
+00:01:09,550 --> 00:01:15,821
+it is very very one of the very basic concepts
+in n l p ok let us see what are my n gram
+
+11
+00:01:15,821 --> 00:01:21,619
+language models ok
+
+12
+00:01:21,619 --> 00:01:25,670
+so i will start with the motivation of context
+sensitive spelling correction that was a topic
+
+13
+00:01:25,670 --> 00:01:33,810
+of just the previous lecture suppose i am
+having the sentence the office is about fifteen
+
+14
+00:01:33,810 --> 00:01:41,670
+minutes from my house ok so here you can clearly
+see that this is just a spelling error minutes
+
+15
+00:01:41,670 --> 00:01:49,780
+has been typed as minuets but suppose the
+word in minutes is also in my vocabulary ok
+
+16
+00:01:49,780 --> 00:01:56,350
+suppose i see my vocabulary and i find that
+minuet is a some sort of slow graceful dance
+
+17
+00:01:56,350 --> 00:02:01,560
+ok that was popular in seventeenth and eighteenth
+cen centuries so this word in my vocabulary
+
+18
+00:02:01,560 --> 00:02:08,670
+so now that means i cannot easily detect that
+this is the incorrect word by using some isolated
+
+19
+00:02:08,670 --> 00:02:15,100
+word as correction so i should be using the
+context for that so what is the probability
+
+20
+00:02:15,100 --> 00:02:22,950
+that so i will try to use some sort of language
+model to say with a probability of this a
+
+21
+00:02:22,950 --> 00:02:28,530
+trends about fifteen minutes from its higher
+than the probability of a trends about fifteen
+
+22
+00:02:28,530 --> 00:02:30,260
+minutes from ok
+
+23
+00:02:30,260 --> 00:02:34,420
+if you observe these two a trends you can
+you can yourself see that for it will should
+
+24
+00:02:34,420 --> 00:02:39,580
+be more probable but how do you formally defined
+these probabilities and what is the model
+
+25
+00:02:39,580 --> 00:02:45,780
+that we use for it and thats what we will
+be seeing in this language model ok now so
+
+26
+00:02:45,780 --> 00:02:50,200
+what are some of the other applications for
+this is helpful remember one of the earlier
+
+27
+00:02:50,200 --> 00:02:56,470
+slides in a ourlast week you were saying in
+this case of speech recognition you face this
+
+28
+00:02:56,470 --> 00:03:01,720
+problem that when you are uttering something
+you have to trans you have to transcribe that
+
+29
+00:03:01,720 --> 00:03:09,090
+ok so whenever I am saying i saw a van it
+might also sound like eyes awe of an ok so
+
+30
+00:03:09,090 --> 00:03:13,970
+among the two a trends is which one is more
+likely so again can i give some sort of probability
+
+31
+00:03:13,970 --> 00:03:19,150
+value to each of these sequence in the say
+that probabilities i saw a van is more probable
+
+32
+00:03:19,150 --> 00:03:22,770
+than the other
+
+33
+00:03:22,770 --> 00:03:28,670
+similarly in machine translation there is
+a problem of collocations that certain words
+
+34
+00:03:28,670 --> 00:03:34,091
+even if they are correct translations do not
+occur much in the language with a in the context
+
+35
+00:03:34,091 --> 00:03:42,370
+of others like if i say if i have the word
+winds and before that as an adjective i can
+
+36
+00:03:42,370 --> 00:03:51,090
+put either high or large because so for example
+i have an hindi actress tej and i want to
+
+37
+00:03:51,090 --> 00:03:56,650
+translate that into english how i we will
+winds now for tej it might happened that both
+
+38
+00:03:56,650 --> 00:04:01,820
+translations high and larger possible in in
+english now among those which one should i
+
+39
+00:04:01,820 --> 00:04:08,230
+choose and suppose from my corpus again find
+this language knowledge that high winds occur
+
+40
+00:04:08,230 --> 00:04:14,240
+with more probability then large winds then
+i would say that high is a more probability
+
+41
+00:04:14,240 --> 00:04:17,470
+translation than large
+
+42
+00:04:17,470 --> 00:04:21,900
+and there are other applications is spelling
+correction we have seen and you might have
+
+43
+00:04:21,900 --> 00:04:26,570
+to use that for generation whenever you have
+to generate sentences again which particular
+
+44
+00:04:26,570 --> 00:04:35,289
+generation has the higher probability ok another
+possible application that you might be using
+
+45
+00:04:35,289 --> 00:04:40,490
+it in say google search or ah other places
+whenever you are trying to type something
+
+46
+00:04:40,490 --> 00:04:45,020
+that they will be predict what will be the
+next word so whenever i am saying please turn
+
+47
+00:04:45,020 --> 00:04:48,729
+off your cell what will be the next one you
+can bit probably phone please turn off your
+
+48
+00:04:48,729 --> 00:04:55,400
+cell phone and your program does not probably
+compared or something ok so given is a in
+
+49
+00:04:55,400 --> 00:04:59,650
+a sequence of words how they predict what
+is the next for that is that is going to come
+
+50
+00:04:59,650 --> 00:05:05,580
+in this sentence so that is my auto completion
+task that is huge a lot in a coyote completion
+
+51
+00:05:05,580 --> 00:05:10,860
+or even when you are typing something in your
+s m s or you might have certain softwares
+
+52
+00:05:10,860 --> 00:05:19,069
+that that do that so so they also use the
+concept of language modeling ok
+
+53
+00:05:19,069 --> 00:05:24,499
+so these are also called the predictive text
+input systems so given whatever you are typing
+
+54
+00:05:24,499 --> 00:05:28,800
+they will give you choices in how do you complete
+it what does the various possibilities were
+
+55
+00:05:28,800 --> 00:05:36,610
+which will complete ok so now so given these
+applications in background let us see what
+
+56
+00:05:36,610 --> 00:05:43,289
+is my language model what is the goal what
+do we gone to achieve so we talked about this
+
+57
+00:05:43,289 --> 00:05:46,979
+in the previous lecture we said we i want
+to complete probability of w that is what
+
+58
+00:05:46,979 --> 00:05:51,289
+is the probability of the sequence w one to
+w one this is the sequence of words what is
+
+59
+00:05:51,289 --> 00:05:55,620
+the probability of the sequence so this is
+one of the gold compute the probability of
+
+60
+00:05:55,620 --> 00:06:03,310
+a sentence or a sequence of words ok pro p
+w what is the other related task that we saw
+
+61
+00:06:03,310 --> 00:06:09,249
+in prediction system that given three words
+w one w two w three what you might w four
+
+62
+00:06:09,249 --> 00:06:17,150
+so probability of w four given the three previous
+words probability of an upcoming words
+
+63
+00:06:17,150 --> 00:06:23,389
+now in general any model that computes either
+of these probability of the sequence or probability
+
+64
+00:06:23,389 --> 00:06:30,080
+of the word given the previous a trend is
+is called a language model ok we were see
+
+65
+00:06:30,080 --> 00:06:34,800
+language model using these definitions ok
+
+66
+00:06:34,800 --> 00:06:42,069
+so now how do i actually compute probability
+of the sequence w means sequence of words
+
+67
+00:06:42,069 --> 00:06:48,069
+here so suppose from the examples that we
+were taking initially i have the sequence
+
+68
+00:06:48,069 --> 00:06:54,090
+about fifteen minutes from i want to compute
+the probability of the sequence now suppose
+
+69
+00:06:54,090 --> 00:06:58,919
+i do not tell you anything else what is the
+simplest model that you will applied to compute
+
+70
+00:06:58,919 --> 00:07:07,099
+this probability so you will probably apply
+the chain rule of probability yes ok so remember
+
+71
+00:07:07,099 --> 00:07:16,339
+chain rule of probability so it derives from
+conditional probabilities ok so you conditional
+
+72
+00:07:16,339 --> 00:07:22,279
+probabilities you might remember so that is
+what is the probability of b given a that
+
+73
+00:07:22,279 --> 00:07:29,439
+is probability of the joint the joint probability
+p a b divided by probability a now you can
+
+74
+00:07:29,439 --> 00:07:36,669
+also use that to writing in some other way
+so you can say probability a b which probability
+
+75
+00:07:36,669 --> 00:07:46,199
+b given a times probability a ok and if you
+you can do that for any number of words in
+
+76
+00:07:46,199 --> 00:07:53,050
+my sentence or in general any number of evens
+in probability so you can say probability
+
+77
+00:07:53,050 --> 00:08:04,270
+a b c which probability a probability b given
+a probability c given a b and you can keep
+
+78
+00:08:04,270 --> 00:08:12,830
+on doing that finite numbers and that is my
+chain rule of probability ok i can write p
+
+79
+00:08:12,830 --> 00:08:22,110
+a b a p a times p b given a in general even
+if i am more variables i can do the same same
+
+80
+00:08:22,110 --> 00:08:27,910
+chain rule of probabilities idea and this
+is the general formulation probability x one
+
+81
+00:08:27,910 --> 00:08:32,210
+given x one is probability x one probability
+x two given x one and so on and probability
+
+82
+00:08:32,210 --> 00:08:34,909
+x one given x one to x n minus one
+
+83
+00:08:34,909 --> 00:08:40,940
+so now given this chain rule now go back to
+a initial ah problem probability of about
+
+84
+00:08:40,940 --> 00:08:49,420
+fifteen minutes from so how do i write it
+using the chain rule of probabilities so how
+
+85
+00:08:49,420 --> 00:08:53,759
+will you you right this probability you will
+say this is same as probability of about times
+
+86
+00:08:53,759 --> 00:08:59,670
+probability of fifteen given about times probability
+minutes given about fifteen probability from
+
+87
+00:08:59,670 --> 00:09:08,360
+given about fifteen minutes so you can right
+it like that yes ok now suppose i even increase
+
+88
+00:09:08,360 --> 00:09:16,899
+this to about fifteen minutes from office
+what will you do ok and you will write it
+
+89
+00:09:16,899 --> 00:09:23,350
+in terms of this probability also probability
+of this given about fifteen minutes from
+
+90
+00:09:23,350 --> 00:09:28,540
+so now how the question that comes is find
+i can write it in terms of chain probability
+
+91
+00:09:28,540 --> 00:09:34,470
+chain rules chain rules how do i actually
+compute this probabilities now what is probability
+
+92
+00:09:34,470 --> 00:09:40,400
+of office given about fifteen fifteen minutes
+from that would be in my corpus how many times
+
+93
+00:09:40,400 --> 00:09:45,899
+do i observe about fifteen minutes from among
+those how many times i observe office after
+
+94
+00:09:45,899 --> 00:09:53,370
+that now what is one particular proper you
+will face in doing it in this work you might
+
+95
+00:09:53,370 --> 00:09:58,120
+not have seen sufficient number of about fifteen
+minutes from in the corpus suppose it occurred
+
+96
+00:09:58,120 --> 00:10:03,450
+only once it occur with the office this probability
+will be one but does not mean that only office
+
+97
+00:10:03,450 --> 00:10:08,149
+can occur this about this occurrence and this
+problem becomes savior as you keep on going
+
+98
+00:10:08,149 --> 00:10:15,149
+to the higher and higher number of words in
+the conditional ok
+
+99
+00:10:15,149 --> 00:10:20,279
+so so we will never see enough data for estimating
+these so i cannot estimate easily what is
+
+100
+00:10:20,279 --> 00:10:25,230
+the probability of office given about fifteen
+minutes from so that means this will not work
+
+101
+00:10:25,230 --> 00:10:34,300
+as as it is so we we will need to do certain
+simplifications ok now so what is the simplifying
+
+102
+00:10:34,300 --> 00:10:40,560
+assumptions that we make we say ok we can
+probably use only the previous word and forget
+
+103
+00:10:40,560 --> 00:10:45,850
+about everything else so I have to compute
+the probability of office given about fifteen
+
+104
+00:10:45,850 --> 00:10:51,420
+minutes from and its a that is approximated
+by probability of office given from i forget
+
+105
+00:10:51,420 --> 00:11:01,029
+the other terms ok so or i can use the previous
+two words so this can be written as the probability
+
+106
+00:11:01,029 --> 00:11:09,610
+of office given minutes in from ok so this
+is simplification that we are making why we
+
+107
+00:11:09,610 --> 00:11:14,050
+are doing that because now it is easy to find
+complete the probabilities what are the words
+
+108
+00:11:14,050 --> 00:11:19,820
+that come of that from and how what session
+of times office comes after from but this
+
+109
+00:11:19,820 --> 00:11:23,810
+was not possible when i was taking condition
+on four previous words because information
+
+110
+00:11:23,810 --> 00:11:28,370
+was probably not seeing them enough in my
+data so this helps us giving a better estimate
+
+111
+00:11:28,370 --> 00:11:40,259
+of these probabilities ok more formally we
+can use kth order markov model ok
+
+112
+00:11:40,259 --> 00:11:44,350
+so i have this information have to compute
+the probability of the sequence of w one to
+
+113
+00:11:44,350 --> 00:11:50,790
+w n by using chain rule i write it as as this
+w i given the previous i minus one words multiply
+
+114
+00:11:50,790 --> 00:11:58,829
+for all the words now in kth order markov
+model assumption what i will do i conditioned
+
+115
+00:11:58,829 --> 00:12:06,139
+it only on the previous k words so i will
+write probability w i given w one w i minus
+
+116
+00:12:06,139 --> 00:12:14,930
+one as w i given only the previous k words
+ok so here you are using only one up to k
+
+117
+00:12:14,930 --> 00:12:28,220
+three previous words not all the i minus one
+words so this is kth order morkov model assumption
+
+118
+00:12:28,220 --> 00:12:31,180
+ok
+so we can do that for all the come all the
+
+119
+00:12:31,180 --> 00:12:41,010
+components in this product ok now and that
+thats how we will define ever n gram models
+
+120
+00:12:41,010 --> 00:12:46,560
+ok so if i take this particular probability
+probability office given about fifteen minutes
+
+121
+00:12:46,560 --> 00:12:56,459
+from if i am using only the previous word
+ok that will be using it two gram language
+
+122
+00:12:56,459 --> 00:13:04,199
+model so in general if i am using only n minus
+one words of prior context i am defining in
+
+123
+00:13:04,199 --> 00:13:13,139
+n gram language model ok so here if i am using
+if i am not using any word from the context
+
+124
+00:13:13,139 --> 00:13:19,400
+zero words from the context this is a unigram
+language model n is equal to one here if i
+
+125
+00:13:19,400 --> 00:13:25,019
+am using one word from the context then its
+a bigram language model n is equal to two
+
+126
+00:13:25,019 --> 00:13:28,190
+if i am taking two two words from the context
+it is a trigram language model n is equal
+
+127
+00:13:28,190 --> 00:13:35,449
+to three ok now can you try to relate in n
+gram language model with some kth order markovs
+
+128
+00:13:35,449 --> 00:13:36,449
+assumption
+
+129
+00:13:36,449 --> 00:13:41,399
+in kth order markov assumptions you were using
+kth previous word so if i am using k previous
+
+130
+00:13:41,399 --> 00:13:50,829
+words i have a k plus one gram language model
+so i can say an n gram language model is an
+
+131
+00:13:50,829 --> 00:13:57,500
+n minus oneth order markov model ok in n gram
+language model i use n minus one words from
+
+132
+00:13:57,500 --> 00:14:02,200
+the context so this is the relation between
+an n gram language model and an n minus one
+
+133
+00:14:02,200 --> 00:14:10,649
+order markov model now internal we can extended
+to trigrams we assume two words from the context
+
+134
+00:14:10,649 --> 00:14:15,649
+four grams three words from the context of
+five grams four words from the context ok
+
+135
+00:14:15,649 --> 00:14:22,010
+but in general we cannot see that any n gram
+will be sufficient model for the language
+
+136
+00:14:22,010 --> 00:14:27,910
+why because language we also see some long
+term dependencies so consider this sentence
+
+137
+00:14:27,910 --> 00:14:33,420
+the computer which i had just put into the
+machine room on the fifth floor crashed
+
+138
+00:14:33,420 --> 00:14:39,420
+now what is the word on these the word crashed
+depends ok if you were see here the word crashed
+
+139
+00:14:39,420 --> 00:14:47,139
+depends on the about computer but this cannot
+be captured by using two gram three gram four
+
+140
+00:14:47,139 --> 00:14:52,230
+gram five gram six gram so on to see so you
+might have to go to eleven twelve grams and
+
+141
+00:14:52,230 --> 00:14:58,700
+that is probably not very advisable so you
+use must always knew that an any n gram model
+
+142
+00:14:58,700 --> 00:15:05,680
+is not a sufficient model of a language but
+it captures many word ordering relative regularities
+
+143
+00:15:05,680 --> 00:15:15,379
+ok so in most of the applications we can use
+simple n gram model with an it will two three
+
+144
+00:15:15,379 --> 00:15:19,920
+and we will get up with it ok
+
+145
+00:15:19,920 --> 00:15:24,800
+so now the question is how do we estimate
+these n gram probabilities from a corpus so
+
+146
+00:15:24,800 --> 00:15:31,440
+for that the simple method of estimating these
+probabilities is by using some maximum likelihood
+
+147
+00:15:31,440 --> 00:15:37,250
+estimate ok so what is that suppose i have
+to compute the probability of w i given w
+
+148
+00:15:37,250 --> 00:15:44,319
+i minus one so i will find out in my corpus
+how many times the word w w i minus one occurred
+
+149
+00:15:44,319 --> 00:15:50,890
+among those what fraction of times w i occurs
+after that ok remember we were doing it from
+
+150
+00:15:50,890 --> 00:15:58,310
+the one of the earlier slides in versatile
+actress whose so how many times the word actress
+
+151
+00:15:58,310 --> 00:16:03,060
+comes after versatile what fraction of times
+same here what is the fraction of times that
+
+152
+00:16:03,060 --> 00:16:07,769
+the word w i occurs after the w i minus one
+so which defines a probability distribution
+
+153
+00:16:07,769 --> 00:16:14,290
+after w i minus one each word my vocabulary
+can come and this will be a probability distribution
+
+154
+00:16:14,290 --> 00:16:17,389
+ok
+
+155
+00:16:17,389 --> 00:16:25,230
+so in general it i can give a notations of
+c instead of count c w i mi minus one means
+
+156
+00:16:25,230 --> 00:16:33,620
+number of times w i minus one occurred in
+my corpus and so on now lets take an examples
+
+157
+00:16:33,620 --> 00:16:39,860
+and see how do i estimate these probabilities
+so i have three sentences in this corpus i
+
+158
+00:16:39,860 --> 00:16:45,310
+am here who am i and i would like to know
+and you also have some tokens on a start of
+
+159
+00:16:45,310 --> 00:16:50,420
+the sentence and the end of the sentence and
+you want to compute the bi bigram probability
+
+160
+00:16:50,420 --> 00:16:58,720
+w i given w i minus one so how will you do
+that so suppose i want compute all these probabilities
+
+161
+00:16:58,720 --> 00:17:06,600
+probability of i coming at the start of the
+sentence probability of here coming with this
+
+162
+00:17:06,600 --> 00:17:12,530
+probability end of the sentence coming after
+here probability of would coming after again
+
+163
+00:17:12,530 --> 00:17:18,069
+so on so how do i compute this probabilities
+so i just take the first one probability of
+
+164
+00:17:18,069 --> 00:17:22,949
+i coming at the start of the sentence so i
+will find out how many of start of the sentences
+
+165
+00:17:22,949 --> 00:17:29,559
+i have seen among those perfection of the
+times i occurred so i have seen three start
+
+166
+00:17:29,559 --> 00:17:36,360
+of the sentence out of those two is highly
+occurred so this probability would be two
+
+167
+00:17:36,360 --> 00:17:47,130
+by three here how many times i have seen here
+one ok and among those how many times the
+
+168
+00:17:47,130 --> 00:17:53,250
+end of the sentence occurred also one this
+will be one by one and so on ok
+
+169
+00:17:53,250 --> 00:18:02,390
+so so this is what i find two by three one
+one by three one by two and zero so this is
+
+170
+00:18:02,390 --> 00:18:09,010
+easy given a corpus you can find out the bi
+bigram probabilities by its just giving the
+
+171
+00:18:09,010 --> 00:18:14,670
+counts now this is some example from some
+restaurant corpus so that had nine thousand
+
+172
+00:18:14,670 --> 00:18:20,970
+plus sentences and these some bigrams that
+were the numbers are given here so can you
+
+173
+00:18:20,970 --> 00:18:28,789
+see some regularities here so i and i do not
+occur together much ok but i and want occurred
+
+174
+00:18:28,789 --> 00:18:34,090
+eight hundred twenty seven times so you are
+in a restaurant after i mostly say want i
+
+175
+00:18:34,090 --> 00:18:40,510
+want some sort of food ok so i want is a bigram
+that occurs a lot in this data what are the
+
+176
+00:18:40,510 --> 00:18:51,410
+others bigrams that occurs a lot want to i
+want to do something eat chinese ok chinese
+
+177
+00:18:51,410 --> 00:18:59,390
+food eat lunch to spend so all these bigrams
+that occurs a lot so this tells in lot about
+
+178
+00:18:59,390 --> 00:19:03,740
+that corpus so i am talking about the restaurant
+corpus where its more about ordering some
+
+179
+00:19:03,740 --> 00:19:07,350
+food and eating some so so a kind of foods
+ok
+
+180
+00:19:07,350 --> 00:19:16,299
+now suppose i i have to compute the probability
+bigram probability what is do i need i need
+
+181
+00:19:16,299 --> 00:19:20,570
+the count number of times this were occurs
+without the word and you know divided by the
+
+182
+00:19:20,570 --> 00:19:25,210
+unigram probability of the previous word so
+suppose i give you the unigram counts also
+
+183
+00:19:25,210 --> 00:19:30,570
+of all these words can you come with the bigram
+probabilities yes it is becomes quite easy
+
+184
+00:19:30,570 --> 00:19:37,220
+so now i just divided by the number of times
+i occurs so here so number of times i amount
+
+185
+00:19:37,220 --> 00:19:41,730
+of the together divided that number of times
+i occurs so this gives you probability goes
+
+186
+00:19:41,730 --> 00:19:46,190
+to point three three so probability of want
+occurring after i is point three three from
+
+187
+00:19:46,190 --> 00:19:53,970
+this corpus and so on i can compute all the
+words in this corpus ok
+
+188
+00:19:53,970 --> 00:20:00,010
+so now given a corpus you should be confident
+now that how do i compute the bigram probabilities
+
+189
+00:20:00,010 --> 00:20:06,150
+now suppose you have computed bigrams probabilities
+from the corpus now can use that to solve
+
+190
+00:20:06,150 --> 00:20:10,340
+over initial problem that is how do i find
+the probability of this sentence this sequence
+
+191
+00:20:10,340 --> 00:20:17,140
+of words so i have the sentence here a start
+of the sentence i want english food and in
+
+192
+00:20:17,140 --> 00:20:22,081
+end of the sentence i i want to find the probability
+of the sentence so how do use bigram model
+
+193
+00:20:22,081 --> 00:20:28,530
+do that i will say ok this is probability
+of i given as the start of the sentence times
+
+194
+00:20:28,530 --> 00:20:34,580
+probability want given i times probability
+english even want and so on because i am actually
+
+195
+00:20:34,580 --> 00:20:40,340
+using the chin rule of the probabilities but
+i am using in first short of a markov assumption
+
+196
+00:20:40,340 --> 00:20:44,680
+ok so that gives me all this probabilities
+and i multiply that and then it gives me the
+
+197
+00:20:44,680 --> 00:20:48,380
+probability of this sentences each ok
+
+198
+00:20:48,380 --> 00:20:52,940
+so if i use the previous probability that
+will be flip point zero zero zero zero three
+
+199
+00:20:52,940 --> 00:20:58,130
+one and now you can give me any sentence and
+i can use my bigram probabilities to find
+
+200
+00:20:58,130 --> 00:21:03,881
+out the probability of the sentence and i
+can solve all my problems of spelling corrections
+
+201
+00:21:03,881 --> 00:21:15,360
+and other scenarios so now so from this corpus
+what does the knowledge n gram represent ok
+
+202
+00:21:15,360 --> 00:21:21,380
+so these are some values so what do you ah
+try to infer from there so probability english
+
+203
+00:21:21,380 --> 00:21:26,260
+given want is point zero zero one one and
+probability chinese given want is point zero
+
+204
+00:21:26,260 --> 00:21:32,180
+zero six five what does it that tell so if
+you see that will tell that the ah any chinese
+
+205
+00:21:32,180 --> 00:21:37,970
+food its six time more popular than the english
+food in whatever from whatever detail it was
+
+206
+00:21:37,970 --> 00:21:43,360
+taken from ok to given want is point six six
+so that is two occurs a lot with a corpus
+
+207
+00:21:43,360 --> 00:21:51,260
+after i want i want to do something eat after
+to is again point two eight someone want to
+
+208
+00:21:51,260 --> 00:21:58,170
+eating to do something into eat occurs a point
+two eight probability food given to a zero
+
+209
+00:21:58,170 --> 00:22:03,360
+that means the word food never occurs after
+to and that is something that talks about
+
+210
+00:22:03,360 --> 00:22:11,679
+the language in language generally use a verb
+after two i want to do something and here
+
+211
+00:22:11,679 --> 00:22:17,350
+the food is a noun so this will not this will
+not occur in my data similarly want given
+
+212
+00:22:17,350 --> 00:22:22,450
+a spend as a zero again some fact about language
+that two words generally do not occur occurred
+
+213
+00:22:22,450 --> 00:22:28,330
+simultaneously ok and i given the start of
+the sentence point two five again gives gives
+
+214
+00:22:28,330 --> 00:22:35,090
+some in instigation that most of the sentences
+start with i in that in that corpus so mo
+
+215
+00:22:35,090 --> 00:22:41,559
+mostly about i want to do something so you
+started with i so these n grams might represent
+
+216
+00:22:41,559 --> 00:22:47,500
+some knowledge about the language and grammar
+as such or about the particular data or domain
+
+217
+00:22:47,500 --> 00:22:53,570
+that you are trying to build it these form
+and this is some idea that we can use for
+
+218
+00:22:53,570 --> 00:22:58,840
+even modeling different domains in in my data
+separately i can build different language
+
+219
+00:22:58,840 --> 00:23:07,520
+models for each domain ok so will talk about
+this further ok
+
+220
+00:23:07,520 --> 00:23:13,340
+so now so there are certain practical issues
+that you might have to aware of like when
+
+221
+00:23:13,340 --> 00:23:17,909
+i am doing this probability computation for
+a sentence i am actually doing multiplication
+
+222
+00:23:17,909 --> 00:23:23,440
+of many probability values and all of these
+might be very very small so if i simply do
+
+223
+00:23:23,440 --> 00:23:27,620
+multiplication of probabilities it might lead
+to some underflow and this might just end
+
+224
+00:23:27,620 --> 00:23:32,690
+up in getting a zero values for all the probabilities
+so its better that you do everything in log
+
+225
+00:23:32,690 --> 00:23:37,280
+a space in that way you are simply adding
+them and in any case adding each individual
+
+226
+00:23:37,280 --> 00:23:43,059
+operation or more efficient operation then
+multiplication so you are just storing the
+
+227
+00:23:43,059 --> 00:23:51,260
+log of probabilities and you are adding these
+problem these logs ok so you can if you aware
+
+228
+00:23:51,260 --> 00:23:55,580
+to find out probabilities p one times p two
+times p three times p four if you convert
+
+229
+00:23:55,580 --> 00:23:59,399
+in log space that is nothing but log p one
+plus log p two plus log p three plus and so
+
+230
+00:23:59,399 --> 00:24:00,399
+on
+
+231
+00:24:00,399 --> 00:24:05,909
+so you can restore a log values and you can
+just add this there is another problem of
+
+232
+00:24:05,909 --> 00:24:12,240
+handling zeros ok suppose in your a trends
+there is a particular bigram that you see
+
+233
+00:24:12,240 --> 00:24:15,610
+that never occurred you a trend data so what
+would happen you will give it a value zero
+
+234
+00:24:15,610 --> 00:24:22,180
+but that will convert the whole the ah everything
+zero ok so you need to do something for that
+
+235
+00:24:22,180 --> 00:24:30,519
+and we will see that in the in the in in the
+concept of a smoothing ok so there are some
+
+236
+00:24:30,519 --> 00:24:35,279
+popular toolkits are available so s r i s
+r i s r i l m is one popular toolkit but there
+
+237
+00:24:35,279 --> 00:24:42,170
+are many other toolkits that you can use for
+language modeling ok you can also if you want
+
+238
+00:24:42,170 --> 00:24:47,320
+to use some large corpus data you can try
+to use these google n grams so there again
+
+239
+00:24:47,320 --> 00:24:53,659
+available on this link and there you will
+find out for each different n gram what is
+
+240
+00:24:53,659 --> 00:24:58,169
+the number of times they occurred in the corpus
+ok
+
+241
+00:24:58,169 --> 00:25:04,130
+so if you go to this link you will find out
+there are huge number of tokens sentences
+
+242
+00:25:04,130 --> 00:25:10,370
+and all ok they they gave you you unigrams
+bigrams trigrams fourgrams and fivegrams so
+
+243
+00:25:10,370 --> 00:25:17,260
+what are some of the examples so suppose i
+am sing it after a starting from serve as
+
+244
+00:25:17,260 --> 00:25:22,211
+the so the that data will tell you serve as
+the inspector occurred sixty six times the
+
+245
+00:25:22,211 --> 00:25:26,920
+in the in the corpus serve as the inspiration
+occurs thirteen ninety times serve as the
+
+246
+00:25:26,920 --> 00:25:31,070
+installation occurred one thirty six times
+and so on so this is a fourgram that you find
+
+247
+00:25:31,070 --> 00:25:35,970
+from the data but you see these are only the
+counts now how will you use that the compute
+
+248
+00:25:35,970 --> 00:25:41,750
+the probability that probability will inspector
+given serve as the so for that you will also
+
+249
+00:25:41,750 --> 00:25:47,269
+need to use the trigram count of serve as
+the so again this five is available you can
+
+250
+00:25:47,269 --> 00:25:51,940
+you can get this fourgram of the data and
+trigram data and try to compute the all the
+
+251
+00:25:51,940 --> 00:25:53,799
+probability values ok
+
+252
+00:25:53,799 --> 00:26:03,299
+now so they also give a nice a p i by which
+you can visualize many interesting patterns
+
+253
+00:26:03,299 --> 00:26:09,830
+in the usage of words ok so because heritage
+divide across many different centuries you
+
+254
+00:26:09,830 --> 00:26:16,230
+can also plot it temporally so what we are
+seeing here suppose i give three different
+
+255
+00:26:16,230 --> 00:26:23,429
+queries albert einstein sherlock holmes and
+frankenstein on google n gram viewer it tells
+
+256
+00:26:23,429 --> 00:26:28,860
+me over the years what is the probability
+of these bigrams so can you see something
+
+257
+00:26:28,860 --> 00:26:34,850
+interesting here so sherlock holmes became
+popular around eighteen eighty five and so
+
+258
+00:26:34,850 --> 00:26:40,390
+on before that is when nearly zero frankenstein
+probably there in the novels even before that
+
+259
+00:26:40,390 --> 00:26:45,130
+so even from the six eighteen hundred he find
+the occurrence of frankenstein that keeps
+
+260
+00:26:45,130 --> 00:26:49,010
+on increasing even two thousand its more its
+much more than albert einstein and sherlock
+
+261
+00:26:49,010 --> 00:26:55,250
+holmes albert ein einstein started getting
+popular in in the data around nineteen seventies
+
+262
+00:26:55,250 --> 00:27:01,029
+thats why the most of the dict discoveries
+happen happened and and it came into the books
+
+263
+00:27:01,029 --> 00:27:06,580
+and at some at some point of time it became
+more popular than even sherlock holmes ok
+
+264
+00:27:06,580 --> 00:27:12,960
+so you can do nice sort of analysis of what
+kind of words came into ah the language all
+
+265
+00:27:12,960 --> 00:27:19,360
+my data in what times and how the popularity
+changed over the years by using these kind
+
+266
+00:27:19,360 --> 00:27:21,070
+of data ok
+
+267
+00:27:21,070 --> 00:27:28,370
+so so today we will we gave only some in intuition
+and what is language model how do we compute
+
+268
+00:27:28,370 --> 00:27:34,260
+that and what we can use it from for there
+were some problems that we saw that how do
+
+269
+00:27:34,260 --> 00:27:39,630
+we handle the zeros ok so with zero is the
+whole probability of the a trends will go
+
+270
+00:27:39,630 --> 00:27:44,250
+to zero even if one of the component has a
+probability of zero so how do we avoid that
+
+271
+00:27:44,250 --> 00:27:47,610
+problem how do we solve that problem thats
+were the concept of the smoothing will come
+
+272
+00:27:47,610 --> 00:27:51,929
+in picture and thats what we will covering
+the next lecture ok
+

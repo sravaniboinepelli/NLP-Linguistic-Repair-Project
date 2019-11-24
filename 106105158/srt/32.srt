@@ -1,0 +1,1269 @@
+1
+00:00:18,780 --> 00:00:22,200
+so welcome everyone to the seventh week of
+the course so where that we are now moving
+
+2
+00:00:22,200 --> 00:00:30,110
+into the second half so in the first six weeks
+we had talked about basic tasks on in any
+
+3
+00:00:30,110 --> 00:00:36,000
+language how do we pre process the language
+how do we deal about its morphology and syntax
+
+4
+00:00:36,000 --> 00:00:41,850
+now we will be going to some advance topics
+so in the next three weeks starting this this
+
+5
+00:00:41,850 --> 00:00:46,920
+week we will talking about semantics how do
+we capture semantics so again semantics is
+
+6
+00:00:46,920 --> 00:00:52,900
+very huge topic we will focus only on very
+very basic and interesting notions that can
+
+7
+00:00:52,900 --> 00:00:58,500
+you help you build some important applications
+and also read some research papers in this
+
+8
+00:00:58,500 --> 00:01:02,780
+field later in the in the in the last three
+weeks of the course we will going to various
+
+9
+00:01:02,780 --> 00:01:08,840
+applications so today we are starting our
+discussion on semantics so and we will be
+
+10
+00:01:08,840 --> 00:01:14,700
+taking about two notions distribution semantics
+and then semantics before going into that
+
+11
+00:01:14,700 --> 00:01:23,500
+let us see what do i mean by semantics so
+in this lecture today we will we will give
+
+12
+00:01:23,500 --> 00:01:28,810
+the introduction to the topic of distributional
+semantics so as such when i say semantics
+
+13
+00:01:28,810 --> 00:01:36,780
+what comes to your mind in general syntax
+talks about arrangement ok how are that different
+
+14
+00:01:36,780 --> 00:01:42,250
+words are arrange in the language in when
+while talk about semantics it immediately
+
+15
+00:01:42,250 --> 00:01:49,670
+we move from arrangement to some sort of meaning
+domain so i want to find out what is the meaning
+
+16
+00:01:49,670 --> 00:01:54,450
+of different words how do they combine together
+to form the meaning of the of the larger unit
+
+17
+00:01:54,450 --> 00:01:59,159
+that can be the sentence that is in general
+the the main the main field
+
+18
+00:01:59,159 --> 00:02:05,679
+so if i have to give a definition i can say
+that semantics is the study of meaning that
+
+19
+00:02:05,679 --> 00:02:12,880
+is what is the relation between symbols and
+what do they denote so here suppose i have
+
+20
+00:02:12,880 --> 00:02:20,290
+the sentence john told mary that the train
+moved out of the station at three o clock
+
+21
+00:02:20,290 --> 00:02:25,120
+ok it's a sentence in the national language
+contains multiple words we know how to tokenize
+
+22
+00:02:25,120 --> 00:02:31,440
+them and how to find the morphological tax
+and may be also the syntax and different representations
+
+23
+00:02:31,440 --> 00:02:39,060
+now what do i mean by saying that now i want
+to go to semantics a semantics i will like
+
+24
+00:02:39,060 --> 00:02:46,599
+to know what all these words themselves mean
+separately so what do i mean by john told
+
+25
+00:02:46,599 --> 00:02:51,890
+mary etc so these are all symbols now what
+do they denote and when they combine together
+
+26
+00:02:51,890 --> 00:02:59,890
+in a sentence what meaning are they putting
+so this is as i said very very ah vast field
+
+27
+00:02:59,890 --> 00:03:06,310
+lot of different research has happened and
+is happening we will focus on mainly the word
+
+28
+00:03:06,310 --> 00:03:12,241
+meaning so how do we say what is the meaning
+of a word what are different notions so in
+
+29
+00:03:12,241 --> 00:03:19,540
+general so when i talk about distribution
+semantics or any other model that we will
+
+30
+00:03:19,540 --> 00:03:27,110
+cover in this course we we are trying to find
+out how in general computers can produce such
+
+31
+00:03:27,110 --> 00:03:32,470
+semantic representations so machines can interpret
+some sort of semantics and thats why the i
+
+32
+00:03:32,470 --> 00:03:38,239
+idea of computational comes in here
+so so computational semantics in general is
+
+33
+00:03:38,239 --> 00:03:45,879
+the study of how we can automate this process
+of building these ah semantic representation
+
+34
+00:03:45,879 --> 00:03:53,800
+and also reasoning with them ok so when we
+talk about the methods ah in general there
+
+35
+00:03:53,800 --> 00:04:00,439
+are two different methods one are based on
+formal semantics that is how do i construct
+
+36
+00:04:00,439 --> 00:04:05,269
+various mathematical models that can tell
+me what is the relation between various expressions
+
+37
+00:04:05,269 --> 00:04:11,860
+in the language and also relate them to whatever
+there is is there in the word for example
+
+38
+00:04:11,860 --> 00:04:17,959
+so if you have heard about read predicate
+logic thats what is done in formal semantics
+
+39
+00:04:17,959 --> 00:04:22,710
+so if i have a sentence like this john chases
+a bat and you want to produce a mathematical
+
+40
+00:04:22,710 --> 00:04:27,660
+structure that denotes the meaning of the
+sentence so i will put them in very very very
+
+41
+00:04:27,660 --> 00:04:34,340
+very logical form like i will say so [vocalized
+noise] so for startup i i will say there is
+
+42
+00:04:34,340 --> 00:04:43,060
+an x where x is a bat and john chases the
+bat so john chase becomes a predicate and
+
+43
+00:04:43,060 --> 00:04:50,610
+i will say john ah chases x an x i have already
+defined as a bat and like that i will define
+
+44
+00:04:50,610 --> 00:04:56,180
+how do i convert my natural language expression
+to some sort of this logical form and then
+
+45
+00:04:56,180 --> 00:05:01,750
+i will also have rules on how do i infer from
+this ah logical expressions how do i reduce
+
+46
+00:05:01,750 --> 00:05:04,389
+one expression into another one and then so
+on
+
+47
+00:05:04,389 --> 00:05:09,380
+and this is again a field of formal semantics
+and that is something we will not cover in
+
+48
+00:05:09,380 --> 00:05:16,030
+this course what is something apart from formal
+semantics that we can see and there where
+
+49
+00:05:16,030 --> 00:05:22,940
+the data a lot of data that we have can help
+us and this is where the field of distribution
+
+50
+00:05:22,940 --> 00:05:29,220
+semantics comes in that is can i study the
+statistical patterns of human word usage to
+
+51
+00:05:29,220 --> 00:05:34,751
+extract semantics so can i see how humans
+are using different words in their language
+
+52
+00:05:34,751 --> 00:05:40,860
+to find out what is their semantics and this
+is what will be the topic of this week what
+
+53
+00:05:40,860 --> 00:05:44,370
+is the type of distributional semantics how
+they capture that and how can i use that for
+
+54
+00:05:44,370 --> 00:05:53,800
+certain meaningful applications so so this
+field of distributional semantics is mainly
+
+55
+00:05:53,800 --> 00:05:58,650
+built upon this hypothesis of this hypothesis
+of distribution distributional hypothesis
+
+56
+00:05:58,650 --> 00:06:04,130
+that is prevent from many many years what
+is the distributional hypothesis let us see
+
+57
+00:06:04,130 --> 00:06:10,419
+some famous quotes about this so as earlier
+as in ninety fifty three wittgenstein said
+
+58
+00:06:10,419 --> 00:06:16,669
+that the meaning of a word is its usage in
+language so that is you can know what is the
+
+59
+00:06:16,669 --> 00:06:21,550
+meaning of a word if you see how it is being
+used in the language
+
+60
+00:06:21,550 --> 00:06:27,800
+ok along similar lines in ninety fifty seven
+firth said you know the word by the company
+
+61
+00:06:27,800 --> 00:06:33,020
+it keeps now what do i mean by the company
+of a word what are the other words it occurs
+
+62
+00:06:33,020 --> 00:06:40,210
+with in my corpus on my language and that
+tell me that tells me about the word now going
+
+63
+00:06:40,210 --> 00:06:49,570
+one step further so so here so what these
+different quotes are mentioning that the word
+
+64
+00:06:49,570 --> 00:06:54,860
+meaning whatever it might be i do not care
+about what exactly is the meaning but whatever
+
+65
+00:06:54,860 --> 00:07:00,380
+it is it should be reflected in the linguistic
+distributions that is the way the word has
+
+66
+00:07:00,380 --> 00:07:06,699
+been used in the language that will tell me
+the word meaning so now zellig harris in nineteen
+
+67
+00:07:06,699 --> 00:07:12,970
+sixty eight that gave this famous code that
+took this idea to one step ahead that is words
+
+68
+00:07:12,970 --> 00:07:18,970
+that occur in the same context tend to have
+similar meanings
+
+69
+00:07:18,970 --> 00:07:26,310
+so now i can talk about two words having similar
+or different meanings if i can somehow measure
+
+70
+00:07:26,310 --> 00:07:31,160
+their context and capture that and i will
+say two words are having similar meanings
+
+71
+00:07:31,160 --> 00:07:39,490
+if the context in which they occur are very
+very similar so so the idea here is two words
+
+72
+00:07:39,490 --> 00:07:45,160
+if they are semantically similar they tend
+to have similar distribution patterns so now
+
+73
+00:07:45,160 --> 00:07:50,500
+thats what we will be doing in this week how
+do we capture distribution patterns of words
+
+74
+00:07:50,500 --> 00:07:57,440
+and use that to find out similarity across
+words let see some other quotes from zellig
+
+75
+00:07:57,440 --> 00:08:03,039
+harris so he also said that if linguist have
+to deal with meaning it can only do so through
+
+76
+00:08:03,039 --> 00:08:10,330
+distributional analysis and that we said in
+very early ah seventies and eighties and and
+
+77
+00:08:10,330 --> 00:08:16,020
+if you see the the field right now so whatever
+the main methods or semantics are there they
+
+78
+00:08:16,020 --> 00:08:22,520
+are built upon distributions so with the idea
+of so with the recent idea of and all and
+
+79
+00:08:22,520 --> 00:08:29,120
+this is what we will also capture in our ah
+in this week of this course
+
+80
+00:08:29,120 --> 00:08:34,130
+another very similar sort of code from zellig
+harris from his distributional structures
+
+81
+00:08:34,130 --> 00:08:38,640
+so if we consider what are morphemes a and
+b to be more different in meaning than a and
+
+82
+00:08:38,640 --> 00:08:45,170
+c then we will often find that the distributions
+of a and b are more different than the distributions
+
+83
+00:08:45,170 --> 00:08:51,040
+of a and complaint in other words difference
+in meaning correlates with difference of distribution
+
+84
+00:08:51,040 --> 00:09:01,190
+so what he saying suppose i take three different
+words or morphemes a b and c and suppose there
+
+85
+00:09:01,190 --> 00:09:07,630
+is some where i can capture the distribution
+so that is how they are occurring in the languages
+
+86
+00:09:07,630 --> 00:09:16,130
+so i have distribution for a b and c now what
+he is saying if a and b the distributions
+
+87
+00:09:16,130 --> 00:09:25,430
+are more different then that of a and c then
+what you will find so what we are saying a
+
+88
+00:09:25,430 --> 00:09:36,500
+and b are more different than a and c if the
+distributions are more different in the meaning
+
+89
+00:09:36,500 --> 00:09:40,970
+also you will find they are more different
+ok so you can think of these as so i take
+
+90
+00:09:40,970 --> 00:09:50,310
+some examples like car as a and b c can be
+automobile they are quite close and b can
+
+91
+00:09:50,310 --> 00:09:59,060
+be something like a book ok so here a car
+and automobile are quite similar and car and
+
+92
+00:09:59,060 --> 00:10:04,290
+book are more different so they are very very
+different so if this this is what i see in
+
+93
+00:10:04,290 --> 00:10:09,670
+meaning i will also see something similar
+in distributions so what i will find these
+
+94
+00:10:09,670 --> 00:10:22,360
+two distributions are quite similar and these
+two would be quite different
+
+95
+00:10:22,360 --> 00:10:27,420
+ok we will see in this week that how do we
+capture these distributions and how do we
+
+96
+00:10:27,420 --> 00:10:35,340
+compare that but this is the basic idea now
+what is another important thing here so distributions
+
+97
+00:10:35,340 --> 00:10:40,960
+that we are capturing whatever semantics it
+is allowing me to to handle its all differential
+
+98
+00:10:40,960 --> 00:10:46,480
+not referential now what is the difference
+between that two terms differential and referential
+
+99
+00:10:46,480 --> 00:10:53,470
+so again if i would look at the same example
+of these three words car book and automobile
+
+100
+00:10:53,470 --> 00:10:59,270
+so what do i mean by saying so the semantic
+sign capturing is only differential but referential
+
+101
+00:10:59,270 --> 00:11:07,210
+so i cannot say what is the meaning of car
+i am not defining the meaning of car at sort
+
+102
+00:11:07,210 --> 00:11:11,840
+of this concept representation ok there is
+there is something i am not doing so what
+
+103
+00:11:11,840 --> 00:11:18,050
+i am doing what how similar or how different
+the two meanings are so i am saying a and
+
+104
+00:11:18,050 --> 00:11:23,600
+c how similar their meanings are or how different
+their meanings are thats why this is differential
+
+105
+00:11:23,600 --> 00:11:31,400
+sort of understanding of semantics so how
+different or how similar two different meanings
+
+106
+00:11:31,400 --> 00:11:40,230
+are i am not talk talking about some referential
+meaning in distributional semantics
+
+107
+00:11:40,230 --> 00:11:46,950
+so now ah if we look at so this was the linguistic
+prospective is there some cognitive prospective
+
+108
+00:11:46,950 --> 00:11:54,050
+also with distributional semantics so so there
+we have this idea that what is the representation
+
+109
+00:11:54,050 --> 00:11:59,870
+of the word and it is said to be some sort
+of abstract cognible structure that i am storing
+
+110
+00:11:59,870 --> 00:12:07,950
+in my in my brain or somewhere we do not know
+but that is something i gather as i keep on
+
+111
+00:12:07,950 --> 00:12:12,540
+hearing this word or looking or finding this
+word in more and more context as i find this
+
+112
+00:12:12,540 --> 00:12:17,190
+word in more and more context i tend to build
+some sort of representation about this word
+
+113
+00:12:17,190 --> 00:12:23,320
+this is the cognitive prospective and what
+is some sort of evidence so so for example
+
+114
+00:12:23,320 --> 00:12:28,350
+how when you encounter a new word that you
+have never heard before even if we do not
+
+115
+00:12:28,350 --> 00:12:36,490
+know its meaning you may guess something about
+this word what it might be ok so lets take
+
+116
+00:12:36,490 --> 00:12:44,250
+an example ah like i am saying this word wampimuk
+ok i have never heard this word before now
+
+117
+00:12:44,250 --> 00:12:48,550
+i am seeing this word or hearing this word
+in this context he filled the wampimuk with
+
+118
+00:12:48,550 --> 00:12:55,290
+the substance passed it around and we all
+drunk some ok so just by looking at the word
+
+119
+00:12:55,290 --> 00:12:59,230
+that are occurring around this word and seeing
+what are the words might occur in place of
+
+120
+00:12:59,230 --> 00:13:03,700
+wampimuk i can say that this might be some
+sort of a container some sort of a glass or
+
+121
+00:13:03,700 --> 00:13:10,230
+something so which can be used for filling
+up the substances and and passing around
+
+122
+00:13:10,230 --> 00:13:16,420
+so so as i keep on hearing a word or seeing
+a word in more and more context i tend to
+
+123
+00:13:16,420 --> 00:13:20,910
+build some sort of meaning structure about
+about that word now suppose i have i have
+
+124
+00:13:20,910 --> 00:13:26,390
+heard this word in a very different context
+like this we find a little wampimuk sleeping
+
+125
+00:13:26,390 --> 00:13:30,960
+behind the tree immediately i will have a
+different ah interpretation i will say ok
+
+126
+00:13:30,960 --> 00:13:37,610
+may be wampimuk some is some sort of a small
+animal ok so this is some sort of ah intuition
+
+127
+00:13:37,610 --> 00:13:42,880
+behind the cognitive prospective and why we
+might think the meaning in terms of the distributions
+
+128
+00:13:42,880 --> 00:13:51,800
+in the language now to capture these distribution
+and then and and find semantics from there
+
+129
+00:13:51,800 --> 00:13:56,240
+the models that are used are called distributional
+semantic models and also there is some term
+
+130
+00:13:56,240 --> 00:14:01,130
+called dsm for them and what are these so
+these are various computational models that
+
+131
+00:14:01,130 --> 00:14:06,310
+build contextual semantic representations
+from my corpus data so now what is important
+
+132
+00:14:06,310 --> 00:14:11,620
+here is that i am already given some sort
+of and if more data generally the better so
+
+133
+00:14:11,620 --> 00:14:16,700
+i am given some corpus data on how different
+words are used in language and from there
+
+134
+00:14:16,700 --> 00:14:22,490
+i am trying to come up with some ah some semantic
+models distribution semantic model and this
+
+135
+00:14:22,490 --> 00:14:31,820
+will capture the differential aspects of meaning
+among words so so dsms are models for semantic
+
+136
+00:14:31,820 --> 00:14:40,250
+representation and where i capture a semantic
+content by using a vector so for each word
+
+137
+00:14:40,250 --> 00:14:45,100
+we will try to build a different vector that
+will capture the semantics and these vectors
+
+138
+00:14:45,100 --> 00:14:49,680
+are obtained via the statistics analysis of
+the linguistic linguistic contexts of the
+
+139
+00:14:49,680 --> 00:14:57,880
+word now this word occurs in various context
+will will help to find out its vector representation
+
+140
+00:14:57,880 --> 00:15:02,880
+and there are some alter alternative names
+for this semantics like corpus based semantics
+
+141
+00:15:02,880 --> 00:15:08,560
+statistical semantics geometrical models of
+meaning vector semantics and word space models
+
+142
+00:15:08,560 --> 00:15:13,310
+and and there might be some other prevalent
+names also but we capture the same idea that
+
+143
+00:15:13,310 --> 00:15:19,240
+can i use the distribution of the words to
+find out the meaning or at least capture which
+
+144
+00:15:19,240 --> 00:15:26,320
+words are similar than other which pair of
+words are similar than other pair of words
+
+145
+00:15:26,320 --> 00:15:32,430
+so now so again so this distribution semantics
+when i talk about what do you mean by the
+
+146
+00:15:32,430 --> 00:15:39,690
+two terms distribution semantics so when i
+say distribution they are the vectors denoting
+
+147
+00:15:39,690 --> 00:15:44,000
+different different words and their vectors
+in some multi [vocalized noise] high dimensional
+
+148
+00:15:44,000 --> 00:15:51,930
+or in low dimensional space and this space
+is the semantic space so i have distributions
+
+149
+00:15:51,930 --> 00:15:57,060
+that are vectors denoting the words in that
+multidimensional semantic space and semantics
+
+150
+00:15:57,060 --> 00:16:03,560
+space has dimensions which correspond to various
+possible context and this context can be gathered
+
+151
+00:16:03,560 --> 00:16:12,060
+from a corpus so what i am doing every word
+i am denoting in this semantics space and
+
+152
+00:16:12,060 --> 00:16:17,380
+this is my distribution semantics and this
+semantics space composed of various dimensions
+
+153
+00:16:17,380 --> 00:16:23,930
+that are my context in which i am trying to
+represent a given word so let us let let us
+
+154
+00:16:23,930 --> 00:16:30,620
+take this an example so when i talk about
+symbol vector space model so that all of you
+
+155
+00:16:30,620 --> 00:16:35,540
+would already be aware of so this is my two
+dimensional plane and its x y plane and i
+
+156
+00:16:35,540 --> 00:16:40,610
+can denote different objects so here there
+are two points that i am denoting a and b
+
+157
+00:16:40,610 --> 00:16:46,140
+by their coordinates so what are ah so their
+projection in on x axis and y axis that tells
+
+158
+00:16:46,140 --> 00:16:52,620
+me the coordinates and i can now capture how
+similar how near to words two objects are
+
+159
+00:16:52,620 --> 00:16:59,540
+in this space analogous to that now let us
+think of a semantics space where dimensions
+
+160
+00:16:59,540 --> 00:17:06,480
+are not x and y axis but they are various
+context and can i denote all my words in those
+
+161
+00:17:06,480 --> 00:17:12,900
+dimensions so here suppose that my dimensions
+are two words eat and drive ok
+
+162
+00:17:12,900 --> 00:17:20,880
+two different words and i am trying to denote
+three words car dog and cat in these dimensions
+
+163
+00:17:20,880 --> 00:17:27,240
+and what you are seen here so this might denote
+how often a word occurs with this word on
+
+164
+00:17:27,240 --> 00:17:31,830
+and this word the projection will denote that
+so you see cat comes quite often with the
+
+165
+00:17:31,830 --> 00:17:39,100
+word eat similarly dog car comes a lot often
+with drive but not so much with eat so you
+
+166
+00:17:39,100 --> 00:17:43,510
+see immediately when you try to put these
+word in this semantic space will capture some
+
+167
+00:17:43,510 --> 00:17:50,450
+similarity that cat and dog are probably similar
+much more similar than cat and car and dog
+
+168
+00:17:50,450 --> 00:17:55,880
+and car and this is the this is the idea can
+i use different context as my dimensions and
+
+169
+00:17:55,880 --> 00:18:01,980
+represents all my words in those dimensions
+to give a meaning representation in general
+
+170
+00:18:01,980 --> 00:18:07,080
+here i have shown you only for the dimension
+that corresponds to two words but in general
+
+171
+00:18:07,080 --> 00:18:11,280
+you all have to use any number of dimensions
+so you can use any number of words that you
+
+172
+00:18:11,280 --> 00:18:18,150
+want so so you might have a representation
+like that so i can say cat is a is a any other
+
+173
+00:18:18,150 --> 00:18:22,570
+object or a word that has a weight of point
+eight in the dimension of dog point seven
+
+174
+00:18:22,570 --> 00:18:27,410
+dimension of eat point zero one dimension
+of joke so depending on how often the word
+
+175
+00:18:27,410 --> 00:18:34,810
+cat occurs with all these words ok and and
+this i can do for different different words
+
+176
+00:18:34,810 --> 00:18:39,890
+and then i can capture how similar they are
+and this is a very very powerful technique
+
+177
+00:18:39,890 --> 00:18:44,680
+although its looks very simple it it works
+quite well in many many applications that
+
+178
+00:18:44,680 --> 00:18:51,570
+that we will see
+so now lets take an example and how do we
+
+179
+00:18:51,570 --> 00:18:57,630
+start constructing this a vector space or
+word space model and try to see can we compute
+
+180
+00:18:57,630 --> 00:19:03,920
+the similarity across words so here i am given
+a small data set that has six different sentences
+
+181
+00:19:03,920 --> 00:19:09,290
+in so like an automobile is a wheeled motor
+vehicle used for transporting passengers and
+
+182
+00:19:09,290 --> 00:19:14,290
+so on there are six different sentences are
+given and i have to build a vector space model
+
+183
+00:19:14,290 --> 00:19:21,560
+or a distributional semantic model now to
+build the model i need to start with what
+
+184
+00:19:21,560 --> 00:19:26,130
+are the words i want to represent and these
+are my target words so here i want to represent
+
+185
+00:19:26,130 --> 00:19:32,800
+four word automobile car soccer and football
+so now once i know what are the words i want
+
+186
+00:19:32,800 --> 00:19:38,370
+to represent the next question i need to ask
+is i need to represent in in what dimensions
+
+187
+00:19:38,370 --> 00:19:43,620
+so this becomes my context here also denoted
+by term vocabulary what are the dimensions
+
+188
+00:19:43,620 --> 00:19:49,590
+in which i will be denoting all these four
+words so here i have one two three four five
+
+189
+00:19:49,590 --> 00:19:56,810
+six seven dimensions now so what will be the
+alg informal algorithm for constructing the
+
+190
+00:19:56,810 --> 00:20:01,740
+deman the distributional semantic space or
+the word space you start by picking up the
+
+191
+00:20:01,740 --> 00:20:07,250
+words that you are interested in that means
+the words for which you want to find the distributions
+
+192
+00:20:07,250 --> 00:20:11,510
+and these are called your target words so
+here i start with four target words then you
+
+193
+00:20:11,510 --> 00:20:16,890
+define what are the context words also so
+here you found seven context words next question
+
+194
+00:20:16,890 --> 00:20:23,990
+would be ok when do i say that this word occurs
+with another word should i say that when it
+
+195
+00:20:23,990 --> 00:20:31,000
+occurs in the same sentence same paragraph
+same document or within plus minus two words
+
+196
+00:20:31,000 --> 00:20:37,140
+ok when do i say that so so that is called
+the context window so i can define a context
+
+197
+00:20:37,140 --> 00:20:43,270
+window to be ah may be five words around the
+word or it can be a sentence paragraph and
+
+198
+00:20:43,270 --> 00:20:49,590
+whatever word so so i need to define a context
+window that is how many words should i consider
+
+199
+00:20:49,590 --> 00:20:56,190
+surrounding a target word and it can be defined
+in terms of a document paragraph sentences
+
+200
+00:20:56,190 --> 00:21:03,550
+and so on
+now a simple method would be once you defined
+
+201
+00:21:03,550 --> 00:21:07,770
+the context window you know what are your
+target words what are your context words so
+
+202
+00:21:07,770 --> 00:21:14,220
+when you are defining a distributions of the
+target words find out how often they occur
+
+203
+00:21:14,220 --> 00:21:18,680
+with the various context words within the
+context window and just write down the number
+
+204
+00:21:18,680 --> 00:21:24,420
+this occurs with this word in this context
+window two times three times zero times and
+
+205
+00:21:24,420 --> 00:21:29,340
+and so on and you define the vectors for different
+target words and this is this can also be
+
+206
+00:21:29,340 --> 00:21:36,380
+called your as your co occurrence matrix between
+the target words and the context words now
+
+207
+00:21:36,380 --> 00:21:42,560
+once you have built the co occurrence matrix
+you can think of each row of this matrix as
+
+208
+00:21:42,560 --> 00:21:51,670
+your vector for that denotes this individual
+word so if we try to apply this algorithm
+
+209
+00:21:51,670 --> 00:21:56,000
+on the previous example that we have seen
+so what we will have we will have four words
+
+210
+00:21:56,000 --> 00:22:00,480
+as the target words seven word as my context
+words and i will have a matrix of dimension
+
+211
+00:22:00,480 --> 00:22:05,840
+four cross seven and each element will denote
+how often this target word occurred with this
+
+212
+00:22:05,840 --> 00:22:10,460
+context word within my context window
+let us see the whole sentence here in the
+
+213
+00:22:10,460 --> 00:22:15,660
+context window so you can try doing that with
+the example that that we had seen and try
+
+214
+00:22:15,660 --> 00:22:19,300
+to find out what are the different number
+of times each individual word occurs with
+
+215
+00:22:19,300 --> 00:22:24,610
+another word and you will find something like
+that so this you can call as your co occurrence
+
+216
+00:22:24,610 --> 00:22:30,970
+matrix or distribution matrix composed of
+targets and contexts so what do we see here
+
+217
+00:22:30,970 --> 00:22:38,110
+automobile occurs with wheel transport passenger
+football occurs with passenger tournament
+
+218
+00:22:38,110 --> 00:22:43,840
+london goal and match and [vocalized noise]
+similarly for car and soccer so now this is
+
+219
+00:22:43,840 --> 00:22:52,960
+my ah representation of target words in this
+semantic space now suppose i take only two
+
+220
+00:22:52,960 --> 00:22:59,240
+dimensions of this semantic space so here
+i had one two three four five six seven dimensions
+
+221
+00:22:59,240 --> 00:23:05,090
+suppose i see only two dimensions so here
+i am seeing goal and transport and i am projecting
+
+222
+00:23:05,090 --> 00:23:12,570
+all the four words in this dimensions so what
+representation i will see so i will see that
+
+223
+00:23:12,570 --> 00:23:18,800
+soccer occurs with goal and goal not be transport
+football occurs with goal not be transport
+
+224
+00:23:18,800 --> 00:23:24,250
+automobile occurs with transport not with
+goal and car occurs with transport not with
+
+225
+00:23:24,250 --> 00:23:30,110
+goal immediately you can see some separation
+that is soccer and football are coming out
+
+226
+00:23:30,110 --> 00:23:34,610
+with more similar automobile and car are coming
+out with [vocalized noise] excuse me are being
+
+227
+00:23:34,610 --> 00:23:40,240
+more similar by just looking at these two
+dimensions ok and that is some very interesting
+
+228
+00:23:40,240 --> 00:23:45,750
+aspect that the distributional semantic models
+try to capture
+
+229
+00:23:45,750 --> 00:23:53,670
+now suppose i go back to my vector representation
+so where i have all the seven dimensions and
+
+230
+00:23:53,670 --> 00:24:00,320
+i want to find out which two words are similar
+and to what degree so one simple thing i can
+
+231
+00:24:00,320 --> 00:24:07,010
+do is to take the dot products ok so that
+will tell me if they are having weights in
+
+232
+00:24:07,010 --> 00:24:10,770
+similar dimensions if they having weights
+in different dimensions the dot products will
+
+233
+00:24:10,770 --> 00:24:16,640
+be zero or close to zero but if they are having
+weights in same dimensions their dot product
+
+234
+00:24:16,640 --> 00:24:21,690
+will be high suppose we are not doing any
+normalization i can just take simple dot products
+
+235
+00:24:21,690 --> 00:24:26,840
+and find out which two objects or which two
+words are more similar than other words so
+
+236
+00:24:26,840 --> 00:24:31,730
+if you try to do that in this example so what
+did you would you find automobile and car
+
+237
+00:24:31,730 --> 00:24:39,490
+so dot product would be one plus two three
+plus one four and everything else is zero
+
+238
+00:24:39,490 --> 00:24:44,840
+similarly automobile soccer you will find
+zero automobile football one car soccer one
+
+239
+00:24:44,840 --> 00:24:51,260
+car football two and soccer football five
+ok so from these simple dot products computations
+
+240
+00:24:51,260 --> 00:24:55,130
+so what what is something that you see so
+you see that immediately you can capture the
+
+241
+00:24:55,130 --> 00:25:03,380
+idea that here automobile and car are very
+similar they are having a very high dot product
+
+242
+00:25:03,380 --> 00:25:07,800
+four similarly soccer and football are also
+very similar they are having a dot product
+
+243
+00:25:07,800 --> 00:25:15,350
+of five on the other hand automobile soccer
+are not very not much similar car and soccer
+
+244
+00:25:15,350 --> 00:25:22,790
+are hm not much similar and so on so you can
+find out some sort of differential aspect
+
+245
+00:25:22,790 --> 00:25:28,590
+of my meaning that is which two words have
+similar meanings and which two words are different
+
+246
+00:25:28,590 --> 00:25:35,170
+meanings just by looking at the simple distribution
+and as you keep on getting more and more data
+
+247
+00:25:35,170 --> 00:25:39,240
+you will you will be able to capture more
+and more information about how similar and
+
+248
+00:25:39,240 --> 00:25:47,260
+how different two meanings of words are this
+is a very very basic ah basic idea that that
+
+249
+00:25:47,260 --> 00:25:53,150
+i had tried to give in this lecture now we
+will see what are the different formal ways
+
+250
+00:25:53,150 --> 00:25:58,350
+in which we can construct these models how
+do we count what are different ways in which
+
+251
+00:25:58,350 --> 00:26:03,830
+we can denote the entries of this matrix and
+how do we use that to compute ah similarity
+
+252
+00:26:03,830 --> 00:26:09,300
+across two different words ok so this we will
+cover in more detail in the next lecture but
+
+253
+00:26:09,300 --> 00:26:13,570
+i hope that the main idea of using these distribution
+models is clear
+
+254
+00:26:13,570 --> 00:26:14,340
+thank you
+

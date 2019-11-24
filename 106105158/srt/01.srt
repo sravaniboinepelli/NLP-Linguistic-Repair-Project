@@ -1,0 +1,655 @@
+1
+00:00:19,789 --> 00:00:24,429
+so hello everyone and welcome to this course
+on natural language processing so in this
+
+2
+00:00:24,429 --> 00:00:28,369
+course we will we will be having this course
+for twelve weeks and in which week will have
+
+3
+00:00:28,369 --> 00:00:32,910
+five modules so today we are starting this
+course and this is the first module ah first
+
+4
+00:00:32,910 --> 00:00:37,370
+lecture for this week and this is basically
+the course introduction what what are the
+
+5
+00:00:37,370 --> 00:00:41,850
+different topics we will be covering this
+course what are the different text books that
+
+6
+00:00:41,850 --> 00:00:46,300
+you might be using for this and some other
+details that might be necessarily for you
+
+7
+00:00:46,300 --> 00:00:55,799
+ok so firstly my contact so if you have certain
+questions you can only you may also write
+
+8
+00:00:55,799 --> 00:01:01,530
+to me on this email i d so this is my official
+email id and you might also want to visit
+
+9
+00:01:01,530 --> 00:01:09,189
+my web page that is provided in in this link
+so in this course we will have two teaching
+
+10
+00:01:09,189 --> 00:01:14,710
+assistants so amrith krishna and mayank singh
+both are my phd students and they are working
+
+11
+00:01:14,710 --> 00:01:20,040
+on n l p so so idea is that they can they
+will be able to help you with any of the queries
+
+12
+00:01:20,040 --> 00:01:24,760
+that you having during this course and they
+will also help you with all the assignments
+
+13
+00:01:24,760 --> 00:01:30,310
+that we will providing this course so they
+will so in addition to me they will also be
+
+14
+00:01:30,310 --> 00:01:39,190
+your primary contacts during this course
+so in this course we will be following two
+
+15
+00:01:39,190 --> 00:01:44,650
+of the main so very very popular books on
+natural language processing so so jurafsky
+
+16
+00:01:44,650 --> 00:01:52,700
+and martin is a very popular book so title
+is speech natural language processing so so
+
+17
+00:01:52,700 --> 00:01:57,020
+this is your second addition but there may
+be also be the third addition that is available
+
+18
+00:01:57,020 --> 00:02:01,350
+so you might you second additional and any
+later additional for of this book for this
+
+19
+00:02:01,350 --> 00:02:04,630
+course
+then there is a book by manning and schutze
+
+20
+00:02:04,630 --> 00:02:08,590
+on foundations of a statistical natural language
+processing by m i t press that is again a
+
+21
+00:02:08,590 --> 00:02:13,900
+very very popular book and we will be using
+concepts from both the books along which some
+
+22
+00:02:13,900 --> 00:02:19,120
+other sources in this course so you can you
+can try to avail any of these two books or
+
+23
+00:02:19,120 --> 00:02:23,730
+both the books if possible and with with the
+course some addition reading from this book
+
+24
+00:02:23,730 --> 00:02:32,150
+will be helpful for ah addition the the concepts
+and getting a good class on the course
+
+25
+00:02:32,150 --> 00:02:37,290
+so in addition to the books you you will also
+get the lecture slides so from the lectures
+
+26
+00:02:37,290 --> 00:02:42,060
+that i will be taking this course all those
+slides will be made available to you and if
+
+27
+00:02:42,060 --> 00:02:47,879
+necessary i will also point out to some additional
+ah a person and any other material that might
+
+28
+00:02:47,879 --> 00:02:53,980
+be helpful for you so that also will provide
+on the on the course website and we also thinking
+
+29
+00:02:53,980 --> 00:02:58,549
+of giving you some ipython note books
+so so that you can also do some sort of hands
+
+30
+00:02:58,549 --> 00:03:05,650
+on so these note books are so you will be
+using python for doing certain text twicing
+
+31
+00:03:05,650 --> 00:03:11,999
+tasks and so this will we will also provide
+you some basic instructions on how to start
+
+32
+00:03:11,999 --> 00:03:16,329
+teaching this ipython note books so they will
+also very very helpful for this course because
+
+33
+00:03:16,329 --> 00:03:23,739
+this is n l p is mostly and hands on so its
+its not very very nice just to have an l b
+
+34
+00:03:23,739 --> 00:03:28,609
+course to have only the theory theoretical
+knowledge its important also so that given
+
+35
+00:03:28,609 --> 00:03:38,720
+a problem you can a start doing some processing
+over that ok so in in for the evaluation so
+
+36
+00:03:38,720 --> 00:03:44,129
+we will have assignments that will be given
+after every week throughout the course so
+
+37
+00:03:44,129 --> 00:03:49,879
+that will constitute twenty five percent of
+the of the whole evaluation of for this course
+
+38
+00:03:49,879 --> 00:03:54,239
+ok so they will assignments will be on the
+lectures that are that are covered in this
+
+39
+00:03:54,239 --> 00:03:58,780
+course also we might also give you some sort
+of programming assignments time to time in
+
+40
+00:03:58,780 --> 00:04:03,849
+this course
+so they will be all been in python plus so
+
+41
+00:04:03,849 --> 00:04:08,799
+there will with the final exam that will be
+constituting seventy five percent of the overall
+
+42
+00:04:08,799 --> 00:04:16,389
+weightage that mean the after the end of this
+course so what are the different topics that
+
+43
+00:04:16,389 --> 00:04:22,170
+we will be covering this course so this course
+we have we have starting with so the basic
+
+44
+00:04:22,170 --> 00:04:28,970
+topics that are required for understanding
+all the concepts in in n l p then we will
+
+45
+00:04:28,970 --> 00:04:32,970
+move to some applications so what are the
+various basic topics that we will be covering
+
+46
+00:04:32,970 --> 00:04:38,000
+this course so we will start with the text
+processing so given a text data how do you
+
+47
+00:04:38,000 --> 00:04:43,750
+start doing some processing over that so that
+may include how do i tokenize it that is breaking
+
+48
+00:04:43,750 --> 00:04:49,050
+in to various words how do you i start doing
+lemmatization stemming find out the route
+
+49
+00:04:49,050 --> 00:04:54,320
+words and so on
+then we will be start with very foundational
+
+50
+00:04:54,320 --> 00:04:59,250
+topic on language modelling that is how do
+i use the ordering information inside the
+
+51
+00:04:59,250 --> 00:05:05,600
+language for developing certain applications
+so how can i use this statistics then we will
+
+52
+00:05:05,600 --> 00:05:13,190
+go to the morphology that is what to different
+categories of words and given a text data
+
+53
+00:05:13,190 --> 00:05:17,490
+how do i start finding out different categories
+of words so what are the different applications
+
+54
+00:05:17,490 --> 00:05:25,010
+or algorithms that i can i can use then we
+will go to the to high level finding out what
+
+55
+00:05:25,010 --> 00:05:28,760
+are different groups in the sentence how they
+are connected to each other in the topic of
+
+56
+00:05:28,760 --> 00:05:35,100
+syntax then we will move to se semantics where
+we will have various models of semantics using
+
+57
+00:05:35,100 --> 00:05:40,640
+lexicon and lexical semantics and using the
+distributions and distribution semantics and
+
+58
+00:05:40,640 --> 00:05:45,340
+we will also touch upon the topic on word
+embeddings that is very very popular ah as
+
+59
+00:05:45,340 --> 00:05:50,300
+of now
+so finally we will also cover topic mortis
+
+60
+00:05:50,300 --> 00:05:54,130
+so how do you find out what are the various
+topics that i have covered in a given text
+
+61
+00:05:54,130 --> 00:06:00,390
+data and how do you i make use of this in
+various applications then after cub once the
+
+62
+00:06:00,390 --> 00:06:05,720
+basic topics are covered we will also devote
+some time especially in the last three weeks
+
+63
+00:06:05,720 --> 00:06:11,730
+on how do you a start applying these basic
+concepts for certain applications so n l p
+
+64
+00:06:11,730 --> 00:06:16,360
+is very very broad topic and you will see
+enumerable applications where you can apply
+
+65
+00:06:16,360 --> 00:06:22,040
+all these concepts but to give you an idea
+so we will take three very very interesting
+
+66
+00:06:22,040 --> 00:06:27,110
+and important application in n l p so will
+start with the topic of entity linking and
+
+67
+00:06:27,110 --> 00:06:31,140
+information extraction this will be the first
+application that will be cover then we will
+
+68
+00:06:31,140 --> 00:06:37,450
+go to text summarization and classification
+finally we will end up with opinion analysis
+
+69
+00:06:37,450 --> 00:06:42,540
+and opinion mining so this will be the the
+final application that we will be cover and
+
+70
+00:06:42,540 --> 00:06:48,180
+we will hope that whatever basics and some
+aspects of application that we cover in this
+
+71
+00:06:48,180 --> 00:06:55,890
+course will help you in taking any new problem
+and starting to think of euron approach for
+
+72
+00:06:55,890 --> 00:07:01,330
+solving that ok so idea of this course is
+that you you are not only aware of what are
+
+73
+00:07:01,330 --> 00:07:07,320
+the tools available you can use them on your
+own but also you are you know what are the
+
+74
+00:07:07,320 --> 00:07:12,580
+basic algorithms what are the foundations
+and given a new problem you can think of a
+
+75
+00:07:12,580 --> 00:07:17,260
+think of a approach on your own and build
+your own tools so that is the the goal of
+
+76
+00:07:17,260 --> 00:07:22,910
+this course and as i said earlier this is
+million introductory course but all the basics
+
+77
+00:07:22,910 --> 00:07:27,080
+that that are required for dealing with any
+advanced topic will be covered
+
+78
+00:07:27,080 --> 00:07:31,030
+so if you take any new research topic that
+is not covered in this course the idea would
+
+79
+00:07:31,030 --> 00:07:35,910
+be whatever knowledge is covered will help
+you to at least start understanding the topic
+
+80
+00:07:35,910 --> 00:07:46,920
+and then go deep in to that so now so if you
+works on why do we need to study n l p ok
+
+81
+00:07:46,920 --> 00:07:52,870
+so so what does so what is n l p so n l p
+is all about processing text data so now you
+
+82
+00:07:52,870 --> 00:07:58,671
+see in in on on everywhere so you can find
+out this abandons of text data ok now you
+
+83
+00:07:58,671 --> 00:08:03,730
+can also see the text is the largest human
+knowledge a pastry that you that you have
+
+84
+00:08:03,730 --> 00:08:09,160
+so so what are the various sources where you
+find all these knowledge in in text data so
+
+85
+00:08:09,160 --> 00:08:13,400
+you can think of all the wikipedia articles
+for instance all the news articles that come
+
+86
+00:08:13,400 --> 00:08:18,380
+dealing ok so all the scientific articles
+they are available and text format patents
+
+87
+00:08:18,380 --> 00:08:22,750
+all with the all the social media all they
+have tweets facebook posts and everything
+
+88
+00:08:22,750 --> 00:08:29,810
+is also available in the text format
+so now this abundance of text data and this
+
+89
+00:08:29,810 --> 00:08:37,130
+is all quite un structured ok so to be able
+to make use of this information and build
+
+90
+00:08:37,130 --> 00:08:41,370
+some rise applications you should know how
+to process this data and thats why n l p comes
+
+91
+00:08:41,370 --> 00:08:49,130
+in to picture so ya so with recently with
+all the tweets facebook posts comments over
+
+92
+00:08:49,130 --> 00:08:55,370
+all the news articles everywhere and quora
+so you have an abundance of text data and
+
+93
+00:08:55,370 --> 00:09:01,230
+you should you should be aware of some tools
+by which you can do certain analysis of this
+
+94
+00:09:01,230 --> 00:09:09,760
+data so now so so this is one thing that we
+have a lot of text data available this is
+
+95
+00:09:09,760 --> 00:09:14,810
+another another problem that so so much data
+is available that is unstructured but this
+
+96
+00:09:14,810 --> 00:09:19,110
+is not in the single language for example
+in its not in english so so this gives you
+
+97
+00:09:19,110 --> 00:09:25,130
+some this chart gives you some a statistics
+so so what you will see here so this is from
+
+98
+00:09:25,130 --> 00:09:30,019
+november twenty two thousand fifteen how many
+millions of users are there in on internet
+
+99
+00:09:30,019 --> 00:09:34,959
+and different languages you see yes english
+users are the highest at the same time you
+
+100
+00:09:34,959 --> 00:09:42,029
+have lots and lots of chinese users and then
+spanish and arabic and again you see large
+
+101
+00:09:42,029 --> 00:09:44,860
+number for all the rest language that are
+not covered in this chart
+
+102
+00:09:44,860 --> 00:09:50,699
+so you will not be able to understand all
+the languages so and you will needed tool
+
+103
+00:09:50,699 --> 00:09:57,069
+that can take any given language and try to
+put it in the language that you can understand
+
+104
+00:09:57,069 --> 00:10:02,600
+ok so some sort of tools are are necessary
+so that they can automatically find out what
+
+105
+00:10:02,600 --> 00:10:07,100
+is the language provided in this document
+how do i ah translate to some languages that
+
+106
+00:10:07,100 --> 00:10:15,259
+i know and so on doing some information summarization
+over there and translation ok so you need
+
+107
+00:10:15,259 --> 00:10:25,170
+n l p in all of these aspects so now so this
+lecture i will just end with dealing saying
+
+108
+00:10:25,170 --> 00:10:32,360
+what is n l p ok so what is the main goal
+of n l p as such what for this research field
+
+109
+00:10:32,360 --> 00:10:38,910
+of n l p so if you think about it so so there
+is a very very broad ah scientific goal of
+
+110
+00:10:38,910 --> 00:10:45,069
+this field of n l p and that is can be understand
+language can we have a very very deep understanding
+
+111
+00:10:45,069 --> 00:10:49,800
+on how human process language can we teach
+computers how to understand language
+
+112
+00:10:49,800 --> 00:10:55,699
+so that is i will say a deep scientific goal
+behind all the n l p so can we teach computers
+
+113
+00:10:55,699 --> 00:11:00,810
+on understanding language and they can may
+be respond with humans the way humans to and
+
+114
+00:11:00,810 --> 00:11:06,740
+and so on so that is very very longest and
+in goal of n l p so this we would says mainly
+
+115
+00:11:06,740 --> 00:11:12,220
+a fundamental scientific goal ok i want to
+have a deep understanding of broad natural
+
+116
+00:11:12,220 --> 00:11:18,939
+language but with that we also be very very
+practical and engineering goal and what is
+
+117
+00:11:18,939 --> 00:11:26,760
+that so the goal is that so yes there is lot
+of text it available even if i do not know
+
+118
+00:11:26,760 --> 00:11:33,939
+how to make computers understand that fully
+can i still make use of this data to build
+
+119
+00:11:33,939 --> 00:11:37,639
+some very very nice applications that that
+will be helpful for people in they really
+
+120
+00:11:37,639 --> 00:11:42,139
+life and that you can see from you own life
+so how many different applications that you
+
+121
+00:11:42,139 --> 00:11:48,139
+might be using ok starting from the search
+that is very very very ah common application
+
+122
+00:11:48,139 --> 00:11:55,699
+that every one uses and so you will see in
+in a lot of other applications starting from
+
+123
+00:11:55,699 --> 00:11:59,910
+news recommendations and and all that that
+your using a new really life ok
+
+124
+00:11:59,910 --> 00:12:07,510
+so so this is the engineering goal for n l
+p that is can i design implement and test
+
+125
+00:12:07,510 --> 00:12:12,809
+systems that will process natural language
+and that i design for very very practical
+
+126
+00:12:12,809 --> 00:12:18,249
+applications that we can use in day to day
+life so this is the engineering goal of n
+
+127
+00:12:18,249 --> 00:12:24,779
+l p and that is what we will be mainly focusing
+in this course and n l p ok so all the concepts
+
+128
+00:12:24,779 --> 00:12:29,990
+and and algorithms that we will discuss in
+this course are mainly focus to words various
+
+129
+00:12:29,990 --> 00:12:37,240
+engineering applications of n l p so so with
+that i again welcome you for to this course
+
+130
+00:12:37,240 --> 00:12:44,499
+so so in the next module or the next lecture
+we will discuss what what do we actually do
+
+131
+00:12:44,499 --> 00:12:48,319
+in n l p by taking some simple examples ok
+thank you
+

@@ -1,0 +1,1434 @@
+1
+00:00:20,619 --> 00:00:25,560
+welcome back for the fourth lecture of this
+week so in the last two lectures we had discussed
+
+2
+00:00:25,560 --> 00:00:30,660
+a particular dependency parsing that was a
+transition based parsing method and we had
+
+3
+00:00:30,660 --> 00:00:36,829
+discussed how we can formulate parsing as
+a particular particular problem where we starting
+
+4
+00:00:36,829 --> 00:00:40,970
+with a initial configuration and moving from
+one configuration rather by using various
+
+5
+00:00:40,970 --> 00:00:46,170
+transitions and we modeled or learned these
+transitions using some training data that
+
+6
+00:00:46,170 --> 00:00:50,940
+we already had so this was a data driven approach
+now in this lecture we will talk about another
+
+7
+00:00:50,940 --> 00:00:56,220
+data driven approach here so the one main
+difference from the previous one is that we
+
+8
+00:00:56,220 --> 00:01:02,129
+do not assume that projectivity constraint
+over the dependency graph so in the last ah
+
+9
+00:01:02,129 --> 00:01:06,200
+method that we had covered we were assuming
+that the dependency graph that we want should
+
+10
+00:01:06,200 --> 00:01:11,280
+be projective although later on there are
+some variations proposed where this constraint
+
+11
+00:01:11,280 --> 00:01:18,430
+is is not required so you might if you want
+to look into those so coming to what we are
+
+12
+00:01:18,430 --> 00:01:22,530
+going to discuss in today's lecture and in
+the next lecture so this is the approach using
+
+13
+00:01:22,530 --> 00:01:28,619
+where we are formulating dependency parsing
+as a problem of finding maximum spanning tree
+
+14
+00:01:28,619 --> 00:01:39,039
+now what is the basic idea so we are starting
+with the sentence that is given to me so this
+
+15
+00:01:39,039 --> 00:01:43,489
+is the sentence for which i want to find the
+dependency graph and how do we formulate the
+
+16
+00:01:43,489 --> 00:01:52,489
+problem firstly think about the sentence as
+a set of nodes these are the words and assume
+
+17
+00:01:52,489 --> 00:01:58,340
+that all the possible nodes are connected
+to each other we will also include a additional
+
+18
+00:01:58,340 --> 00:02:04,820
+node called root so that we can find out what
+is the main head of this sentence now once
+
+19
+00:02:04,820 --> 00:02:09,820
+we start by assuming all possible connections
+my problem is to find out what is the maximum
+
+20
+00:02:09,820 --> 00:02:16,290
+spanning tree from this all all the connections
+that i can build and this i would assume corresponds
+
+21
+00:02:16,290 --> 00:02:25,550
+to my dependency graph and the weights etcetera
+that will define for this graph will be learned
+
+22
+00:02:25,550 --> 00:02:29,930
+by using some training data that will be available
+to me
+
+23
+00:02:29,930 --> 00:02:37,680
+so the the main idea here is i am given a
+dependency graph so i start with a sentence
+
+24
+00:02:37,680 --> 00:02:44,680
+john saw mary and i i assume an additional
+node like root assume that initially everything
+
+25
+00:02:44,680 --> 00:02:49,950
+is connected so from root there are all possible
+connections to all that node and each node
+
+26
+00:02:49,950 --> 00:02:56,749
+has an incoming and an outgoing edge with
+respect to every other node how do we learn
+
+27
+00:02:56,749 --> 00:03:01,849
+these edge weights this is something that
+we will discuss but assume that the weights
+
+28
+00:03:01,849 --> 00:03:07,430
+are already given to you now your problem
+would be how do i find out what is the maximum
+
+29
+00:03:07,430 --> 00:03:13,239
+spanning tree from this graph and this suppose
+this is the maximum spanning tree then this
+
+30
+00:03:13,239 --> 00:03:18,620
+is what i will assume corresponds to my dependency
+graph so my problem is starting from here
+
+31
+00:03:18,620 --> 00:03:22,670
+to come up with the maximum spanning tree
+that might be dependency graph [vocalized
+
+32
+00:03:22,670 --> 00:03:26,439
+noise]
+so now starting with some simple reminders
+
+33
+00:03:26,439 --> 00:03:32,519
+from graph theory on what is a maximum spanning
+tree so ah you are now now familiar with what
+
+34
+00:03:32,519 --> 00:03:40,620
+is a graph so when i say graph this is a set
+of v that is set of vertices and a set of
+
+35
+00:03:40,620 --> 00:03:50,349
+arcs ok so arcs generally connect to different
+nodes in the graph and i so arc is connecting
+
+36
+00:03:50,349 --> 00:03:56,529
+to nodes i and j both i and j are in the set
+v now if i talk about undirected graph like
+
+37
+00:03:56,529 --> 00:04:03,739
+the figure on the left so if i say that i
+and j are in the set of arcs then j and i
+
+38
+00:04:03,739 --> 00:04:08,310
+are also there there is no directions in this
+in this set of arcs
+
+39
+00:04:08,310 --> 00:04:15,379
+but if i see that my graph is directed then
+if i and j are in the ah set of arcs then
+
+40
+00:04:15,379 --> 00:04:20,359
+j and i may not be in the set of arcs ok like
+here i have a connection from this node to
+
+41
+00:04:20,359 --> 00:04:30,240
+this node but no connection from this node
+to this node so now so we so what is a simple
+
+42
+00:04:30,240 --> 00:04:34,740
+graph and directed and what is a directed
+graph directed graph can also be written as
+
+43
+00:04:34,740 --> 00:04:42,229
+a digraph now we can also see what is a multi
+digraph a multi digraph what would happen
+
+44
+00:04:42,229 --> 00:04:47,750
+between a set of vertices there might be more
+than one possible arcs like here you are seeing
+
+45
+00:04:47,750 --> 00:04:54,729
+between this node and this node there are
+three different arcs so that's why you will
+
+46
+00:04:54,729 --> 00:05:02,370
+have an additional ah index saying i j and
+k between the nodes i and j what is the kth
+
+47
+00:05:02,370 --> 00:05:08,220
+arc ok so it's similar to the previous one
+except that between two vertices you can have
+
+48
+00:05:08,220 --> 00:05:16,740
+more than one arcs
+now once we know what is a multi digraph let
+
+49
+00:05:16,740 --> 00:05:23,310
+me define the notion of what is the directed
+spanning tree of the multi digraph so once
+
+50
+00:05:23,310 --> 00:05:32,090
+i start with the multi digraph that is set
+of nodes v and there is a a sub graph g prime
+
+51
+00:05:32,090 --> 00:05:39,030
+that is some v prime a prime is called a directed
+spanning tree if the following conditions
+
+52
+00:05:39,030 --> 00:05:45,370
+are followed what are the conditions in the
+directed spanning tree the number of the set
+
+53
+00:05:45,370 --> 00:05:51,190
+of nodes are the same as the set of nodes
+in the origin[al] original graph
+
+54
+00:05:51,190 --> 00:05:56,889
+so i will have to take the all the nodes from
+the original graph ok so now what what do
+
+55
+00:05:56,889 --> 00:06:04,080
+i do with the edges so the set of arcs that
+i take in g prime is the subset of the original
+
+56
+00:06:04,080 --> 00:06:13,440
+set of arcs with the constraint that the number
+of edges that i have now is equivalent to
+
+57
+00:06:13,440 --> 00:06:20,629
+number of nodes minus one ok and the third
+condition is the the graph g prime is a tree
+
+58
+00:06:20,629 --> 00:06:28,280
+it's there is no cycle in the graph
+so let's take a example so i have two different
+
+59
+00:06:28,280 --> 00:06:34,129
+multi digraphs that are given in the first
+and second figure and you are being shown
+
+60
+00:06:34,129 --> 00:06:39,240
+a directed spanning tree for this multi digraphs
+so what do you see here so it has the same
+
+61
+00:06:39,240 --> 00:06:45,509
+number of nodes as were there in the original
+multi digraph and what about the number of
+
+62
+00:06:45,509 --> 00:06:50,950
+connections so you see there are one two three
+four and five connections and number of nodes
+
+63
+00:06:50,950 --> 00:06:56,360
+are one two three four five six so number
+of connections are exactly number of nodes
+
+64
+00:06:56,360 --> 00:07:03,750
+minus one and you can take any possible ah
+any possible five connections in among these
+
+65
+00:07:03,750 --> 00:07:14,800
+nodes such that there is no cycle and it will
+called a directed spanning tree
+
+66
+00:07:14,800 --> 00:07:20,009
+now once we know what is directed spanning
+tree we can also define what is a weighted
+
+67
+00:07:20,009 --> 00:07:27,460
+directed spanning tree so here what we will
+do in my graph with all the arcs i will also
+
+68
+00:07:27,460 --> 00:07:34,330
+associate a weight so each arc is now labeled
+or weighted by some numerical value and this
+
+69
+00:07:34,330 --> 00:07:40,169
+i will call at w i j k for the i between the
+vertices i and j what is the weight for the
+
+70
+00:07:40,169 --> 00:07:52,479
+kth arc so in w i j superscript k is the weight
+of the edge i j k now i will also define what
+
+71
+00:07:52,479 --> 00:07:57,490
+is the weight of my directed spanning tree
+so this will be simply summation over the
+
+72
+00:07:57,490 --> 00:08:04,699
+weights of all the edges in my directed spanning
+tree so from my multi digraph i find a directed
+
+73
+00:08:04,699 --> 00:08:08,960
+spanning tree definition was already covered
+in the previous slide
+
+74
+00:08:08,960 --> 00:08:14,069
+now whatever edges i am obtaining i will find
+out the weights for each of these and sum
+
+75
+00:08:14,069 --> 00:08:19,389
+over them and that will define the weight
+of my directed spanning tree now the idea
+
+76
+00:08:19,389 --> 00:08:25,349
+here is for a for a given starting from a
+given multi digraph you can obtain a number
+
+77
+00:08:25,349 --> 00:08:30,680
+of different directed spanning trees so your
+problem is to find out which of these has
+
+78
+00:08:30,680 --> 00:08:36,370
+the maximum weight so now i by this concept
+of weighted spanning tree i have also define
+
+79
+00:08:36,370 --> 00:08:41,490
+what is the weight of the directed spanning
+tree so now among all the possibilities i
+
+80
+00:08:41,490 --> 00:08:46,890
+will find out the one that is having the maximum
+weight
+
+81
+00:08:46,890 --> 00:08:52,450
+so it's starting from the graph g let us say
+t g is the set of all the possible spanning
+
+82
+00:08:52,450 --> 00:08:59,370
+trees that i can obtained so like this is
+this is an example this ah multi digraph is
+
+83
+00:08:59,370 --> 00:09:05,620
+given and there are these four possible spanning
+trees so these are all directed spanning trees
+
+84
+00:09:05,620 --> 00:09:14,269
+now i have to find out which of these has
+the maximum weight so this is my m s t problem
+
+85
+00:09:14,269 --> 00:09:19,350
+finding the spanning tree g prime of the graph
+g that has the maximum weight and the weight
+
+86
+00:09:19,350 --> 00:09:26,950
+is written simply as summation over the weights
+of all the edge of that graph ok so i find
+
+87
+00:09:26,950 --> 00:09:30,820
+out all the edges of that graph sum over the
+weights and that will give me the weight of
+
+88
+00:09:30,820 --> 00:09:39,570
+the final graph
+so now my problem is from my sentence whenever
+
+89
+00:09:39,570 --> 00:09:46,570
+i construct a multi digraph that is all the
+possible connections a fix set of directed
+
+90
+00:09:46,570 --> 00:09:51,579
+spanning trees are possible now among those
+which is having the highest weight and that
+
+91
+00:09:51,579 --> 00:09:57,510
+is the one that i will say as the my dependency
+graph so now there are there are many questions
+
+92
+00:09:57,510 --> 00:10:03,870
+like ah how do i convert a sentence to an
+initial configuration analogous to what we
+
+93
+00:10:03,870 --> 00:10:10,730
+did in the previous method then the important
+problem here is how do we define the weights
+
+94
+00:10:10,730 --> 00:10:17,339
+of my edges and once i define the weights
+how do i choose the maximum spanning tree
+
+95
+00:10:17,339 --> 00:10:21,790
+so these are three different problems and
+then that's what we will be studying in this
+
+96
+00:10:21,790 --> 00:10:28,500
+lecture and in the next
+so now for the sentence how do i find the
+
+97
+00:10:28,500 --> 00:10:33,190
+maximum spanning tree so let us see this is
+the first problem how do i convert the sentence
+
+98
+00:10:33,190 --> 00:10:38,620
+to the initial configuration from where i
+can start so what is that for each sentence
+
+99
+00:10:38,620 --> 00:10:48,459
+x you define the directed graph g x as v x
+e x that is given by v x contains and additional
+
+100
+00:10:48,459 --> 00:10:56,389
+load like root and all the all the words that
+occur in my sentence x and what are my edges
+
+101
+00:10:56,389 --> 00:11:03,070
+i i have all possible edges except for the
+same node i do not have any self edge from
+
+102
+00:11:03,070 --> 00:11:09,220
+the node to itself
+but i have edges from every node to every
+
+103
+00:11:09,220 --> 00:11:15,611
+other node except that the word the root node
+will not have any incoming edges that's why
+
+104
+00:11:15,611 --> 00:11:20,750
+it is written here the edges are from the
+node zero to n to one to n zero denotes the
+
+105
+00:11:20,750 --> 00:11:25,790
+root node from root there are only outgoing
+edges and for every other node they have both
+
+106
+00:11:25,790 --> 00:11:35,709
+incoming edges and outgoing edges so that
+is my g x is a graph where the sentence words
+
+107
+00:11:35,709 --> 00:11:40,613
+and the dummy root symbol are the vertices
+this is my set of vertices and there is a
+
+108
+00:11:40,613 --> 00:11:46,600
+directed edge between every pair of distinct
+words yes that's what we have seen here and
+
+109
+00:11:46,600 --> 00:11:51,800
+a directed edge from the root symbol to every
+word from zero to one to n this is my initial
+
+110
+00:11:51,800 --> 00:11:58,980
+graph
+so now from a sentence i can construct this
+
+111
+00:11:58,980 --> 00:12:05,600
+initial graph and assume that i have some
+method of finding out what are the weights
+
+112
+00:12:05,600 --> 00:12:11,790
+of my edges we will discuss this this problem
+in the next lecture how do i find the weights
+
+113
+00:12:11,790 --> 00:12:17,090
+but for now let us assume that we have some
+method of finding the weights of my edges
+
+114
+00:12:17,090 --> 00:12:23,750
+so i i obtain a multi digraph now my problem
+is how do i find the m s t of that multi digraph
+
+115
+00:12:23,750 --> 00:12:28,550
+and for that we use a very very famous algorithm
+called chu liu edmonds algorithm and that's
+
+116
+00:12:28,550 --> 00:12:34,220
+the very simple algorithm as well
+so let us see what this algorithm does so
+
+117
+00:12:34,220 --> 00:12:41,060
+very simple steps each vertex in the graph
+greedily selects the incoming edge with the
+
+118
+00:12:41,060 --> 00:12:48,339
+highest weight ok so for each vertex in the
+graph i have incoming edges from every other
+
+119
+00:12:48,339 --> 00:12:52,990
+node so what we will do in the fir[st]- what
+i will do in the first step for each node
+
+120
+00:12:52,990 --> 00:12:59,089
+i will select the incoming edge with the highest
+weight so now i will now consider only those
+
+121
+00:12:59,089 --> 00:13:05,610
+edges that have been selected i will see whatever
+graph is resulting is it a tree or not if
+
+122
+00:13:05,610 --> 00:13:10,540
+it is a tree it has to be a maximum spanning
+tree because each node as related the maximum
+
+123
+00:13:10,540 --> 00:13:16,930
+incoming edge now the problem is if whatever
+you obtain is not a tree if this is not a
+
+124
+00:13:16,930 --> 00:13:24,890
+tree that means there has to be a cycle
+now if this is a cycle then there is a step
+
+125
+00:13:24,890 --> 00:13:31,440
+that says you contract the vertices that are
+involved in the cycle in a single vertex now
+
+126
+00:13:31,440 --> 00:13:37,590
+recalculate the incoming and outgoing edges
+for all those the for this new vertex that
+
+127
+00:13:37,590 --> 00:13:42,450
+i have constructed rerun the algorithm that
+is again for each vertex choose the edge with
+
+128
+00:13:42,450 --> 00:13:47,029
+the highest incoming edge again see if the
+if whatever you have finding is a tree or
+
+129
+00:13:47,029 --> 00:13:52,630
+not if it is a tree you stop otherwise you
+continue and you can see that you will converge
+
+130
+00:13:52,630 --> 00:13:59,509
+at some point why because at every step i
+am either finding a maximum spanning tree
+
+131
+00:13:59,509 --> 00:14:04,339
+so i mean stopping or i am finding a cycle
+if i am finding a cycle i will contract the
+
+132
+00:14:04,339 --> 00:14:11,300
+vertices ok so that means it will reduce the
+number of vertices that i have in my tree
+
+133
+00:14:11,300 --> 00:14:15,009
+so it at some point i will have only one vertex
+so that that is the point i will have to stop
+
+134
+00:14:15,009 --> 00:14:20,810
+anyway so this will converge
+so now again here are many questions like
+
+135
+00:14:20,810 --> 00:14:26,490
+how do i compute the weight for the incoming
+arcs and outgoing arcs so so let us see by
+
+136
+00:14:26,490 --> 00:14:33,060
+an example so i take the same sentence that
+we discussed in the previous method also the
+
+137
+00:14:33,060 --> 00:14:37,180
+simple sentence john saw mary and i also know
+what is the dependency graph that i i want
+
+138
+00:14:37,180 --> 00:14:44,680
+to obtain now how do i start -[ed]monds algorithm
+so let us see the first thing would be i start
+
+139
+00:14:44,680 --> 00:14:50,440
+by taking all these three words as my nodes
+plus root as an additional node so here we
+
+140
+00:14:50,440 --> 00:14:59,500
+have root john saw and mary has four different
+nodes next you you make an edge between every
+
+141
+00:14:59,500 --> 00:15:04,880
+two nodes in the graph
+so from root you will have only outgoing edges
+
+142
+00:15:04,880 --> 00:15:11,509
+from root you have an edge to saw to john
+and to mary and for every other pair of words
+
+143
+00:15:11,509 --> 00:15:16,500
+you have an incoming and outgoing edges so
+from saw to mary and mary to saw saw to john
+
+144
+00:15:16,500 --> 00:15:21,630
+john to saw and so on ok and there are some
+edge weights and we are not bothering right
+
+145
+00:15:21,630 --> 00:15:27,920
+now and how do we achieve these edge weights
+so let us see i i i am given the sentence
+
+146
+00:15:27,920 --> 00:15:32,690
+i have some way of finding the edge weights
+and i complete i construct this initial multi
+
+147
+00:15:32,690 --> 00:15:38,910
+digraph
+now once i have this this digraph what is
+
+148
+00:15:38,910 --> 00:15:45,080
+the next step of my algorithm the the next
+or the very first step says that each node
+
+149
+00:15:45,080 --> 00:15:51,660
+in the graph chooses the edge with the maximum
+so chooses the incoming edge with the maximum
+
+150
+00:15:51,660 --> 00:15:57,339
+weight simple ok so there are only three nodes
+here that are having incoming edges so let
+
+151
+00:15:57,339 --> 00:16:03,709
+us see what is the edge that i will choose
+so saw has incoming edge of weight ten twenty
+
+152
+00:16:03,709 --> 00:16:10,480
+and zero so it will have to choose there is
+with weight twenty similarly john has incoming
+
+153
+00:16:10,480 --> 00:16:16,570
+edge of weight nine thirty and eleven so it
+will choose the one with weight thirty and
+
+154
+00:16:16,570 --> 00:16:22,470
+mary has thirty nine and three so it will
+choose thirty and then i will remove all the
+
+155
+00:16:22,470 --> 00:16:27,920
+other edges so i have i will have only three
+edges in my graph
+
+156
+00:16:27,920 --> 00:16:32,079
+is this is this does the qualifier for the
+maximum spanning tree or the directed spanning
+
+157
+00:16:32,079 --> 00:16:37,449
+tree it satisfies the first tree first two
+conditions number of nodes will be same as
+
+158
+00:16:37,449 --> 00:16:42,540
+the original graph and number of edges will
+be one less than the number of original nodes
+
+159
+00:16:42,540 --> 00:16:49,070
+in the graph so i will now have three edges
+one for each node as the incoming edge but
+
+160
+00:16:49,070 --> 00:16:53,070
+that condition is there should not be any
+cycle so let us see do we get a cycle or do
+
+161
+00:16:53,070 --> 00:17:00,100
+we get a tree
+so if i do that i will get a graph like this
+
+162
+00:17:00,100 --> 00:17:05,350
+because saw selects this edge john select
+this edge and mary selects this edge so what
+
+163
+00:17:05,350 --> 00:17:11,330
+are you seeing here if there is a cycle so
+i find a cycle here from john to saw and saw
+
+164
+00:17:11,330 --> 00:17:19,490
+to john so that means so i i i am not done
+yet i have to now continue my algorithm so
+
+165
+00:17:19,490 --> 00:17:26,970
+what was the next step whenever i find a cycle
+i contract that i make a single vertex so
+
+166
+00:17:26,970 --> 00:17:50,770
+the idea would be so now i have a root node
+then john saw mary ok so what do i have found
+
+167
+00:17:50,770 --> 00:18:02,880
+till now twenty thirty thirty ok this is not
+a tree it is a cycle so what is the next step
+
+168
+00:18:02,880 --> 00:18:10,200
+i will take it i will contract it into a single
+vertex so there is a word j and s let us let
+
+169
+00:18:10,200 --> 00:18:16,450
+us call it w j s ok this is a single vertex
+now
+
+170
+00:18:16,450 --> 00:18:22,490
+and i will have to repeat my algorithm for
+repeating the algorithm i should know to this
+
+171
+00:18:22,490 --> 00:18:30,120
+vertex or to this new vertex w j s what are
+the incoming and outgoing edges from all the
+
+172
+00:18:30,120 --> 00:18:39,880
+nodes so there are two nodes now so root and
+mary so from root it will have an incoming
+
+173
+00:18:39,880 --> 00:18:45,730
+edge from mary it will have a incoming edge
+as well as outgoing edge so question is how
+
+174
+00:18:45,730 --> 00:18:51,960
+do i compute the incoming and outgoing weights
+from this vertex and for that we have some
+
+175
+00:18:51,960 --> 00:18:56,539
+very different tools how do i compute the
+outgoing edge weights and how do i compute
+
+176
+00:18:56,539 --> 00:19:04,110
+incoming edge weights so let us see how many
+i have to compute i have to compute this weight
+
+177
+00:19:04,110 --> 00:19:17,350
+one i have to compute so now let's forgot
+about this edge i have to compute weight two
+
+178
+00:19:17,350 --> 00:19:29,179
+and i have to compute weight three yes and
+root to mary will be already there that will
+
+179
+00:19:29,179 --> 00:19:40,640
+not change yes so i have now one two three
+edges three vertices only and i have to compute
+
+180
+00:19:40,640 --> 00:19:49,789
+these edge weights so how do i do that
+so so yes so if not a tree you have to identify
+
+181
+00:19:49,789 --> 00:19:54,539
+the cycle and contract that and you have to
+recalculate the arc weights into and out of
+
+182
+00:19:54,539 --> 00:20:01,780
+the cycle and what is the algorithm for doing
+that so algorithm is that for outgoing arc
+
+183
+00:20:01,780 --> 00:20:07,830
+weights you take the arc weights that are
+equal to max of outgoing arcs over all vertices
+
+184
+00:20:07,830 --> 00:20:17,730
+in the cycle what do i mean by this so here
+is my contracted vertex john and saw i want
+
+185
+00:20:17,730 --> 00:20:24,950
+to compute the outgoing arc weight from this
+vertex to mary yes so this will be equal to
+
+186
+00:20:24,950 --> 00:20:32,390
+the max of outgoing arcs from john to mary
+and saw to mary which of these these gives
+
+187
+00:20:32,390 --> 00:20:41,250
+me the maximum will be final ah weight
+so here let us see from john to mary and saw
+
+188
+00:20:41,250 --> 00:20:49,320
+to mary so john to mary i have a weight of
+three and saw to mary i have a weight of thirty
+
+189
+00:20:49,320 --> 00:20:54,520
+so among these highest is thirty so i will
+pick the one with thirty and this is the final
+
+190
+00:20:54,520 --> 00:21:01,660
+graph that is being shown so from this vertex
+the outgoing edge to mary will have a weight
+
+191
+00:21:01,660 --> 00:21:09,090
+of thirty and that the only outgoing outgoing
+edge for this contracted vertex this is fine
+
+192
+00:21:09,090 --> 00:21:17,010
+now how do i find out the weight for the incoming
+arcs so incoming arcs are from root as well
+
+193
+00:21:17,010 --> 00:21:25,010
+as from mary yes so from incoming arc the
+the algorithm is different i do not choose
+
+194
+00:21:25,010 --> 00:21:32,630
+the now so i have to find out from root to
+this vertex so i do not directly choose the
+
+195
+00:21:32,630 --> 00:21:39,110
+one that is having the maximum so what i do
+i have to also consider this the edges inside
+
+196
+00:21:39,110 --> 00:21:47,940
+the inside the tree so what i will do i will
+take the incoming arc weights as equal to
+
+197
+00:21:47,940 --> 00:21:53,659
+the weights of the best spanning tree that
+includes the head of the incoming arc and
+
+198
+00:21:53,659 --> 00:21:58,279
+all the nodes in my cycle so what do i mean
+by that
+
+199
+00:21:58,279 --> 00:22:04,630
+so let's take from root from root there are
+two different ways of defining incoming arc
+
+200
+00:22:04,630 --> 00:22:15,740
+weights either it has to be root to saw and
+saw to john or root to john john to saw these
+
+201
+00:22:15,740 --> 00:22:21,900
+are the two possible trees ok so so what i
+will do i will find out the weight for individual
+
+202
+00:22:21,900 --> 00:22:28,360
+trees and take which one is having the maximum
+weight so let us say root to saw saw to john
+
+203
+00:22:28,360 --> 00:22:35,320
+this is ten plus thirty forty root to john
+john to saw this is nine plus twenty twenty
+
+204
+00:22:35,320 --> 00:22:40,640
+nine so i will take the weight as forty and
+that is the edge weight from root to saw this
+
+205
+00:22:40,640 --> 00:22:45,890
+is having the weight of forty
+now can you compute the weight from mary to
+
+206
+00:22:45,890 --> 00:22:54,650
+this vertex again i will see the two different
+ways mary to saw saw to john so this is zero
+
+207
+00:22:54,650 --> 00:23:03,179
+plus thirty choose this thirty second is mary
+to john john to saw and that is eleven and
+
+208
+00:23:03,179 --> 00:23:09,100
+twenty thirty one so i have two ways thirty
+and thirty one so i will choose one with thirty
+
+209
+00:23:09,100 --> 00:23:17,429
+one so it is starting from mary to john and
+john to saw so now once i have computed all
+
+210
+00:23:17,429 --> 00:23:23,390
+these weights i have now got the the new tree
+on which i have to compute my algorithm so
+
+211
+00:23:23,390 --> 00:23:33,740
+here what did you find this weight is equal
+to forty this weight we found to thirty and
+
+212
+00:23:33,740 --> 00:23:43,860
+this weight we found as thirty one and this
+first so now once i have find these weights
+
+213
+00:23:43,860 --> 00:23:51,390
+ah what is the next steps i will have to see
+if each vertex now selects the incoming arc
+
+214
+00:23:51,390 --> 00:23:57,760
+with the highest weight do we obtain a tree
+so let us see for this vertex incoming arcs
+
+215
+00:23:57,760 --> 00:24:07,100
+are forty and thirty one so it will choose
+this arc for this vertex nine and thirty so
+
+216
+00:24:07,100 --> 00:24:14,390
+we choose this arc so what is my ah what is
+the graph that i am seeing so let me color
+
+217
+00:24:14,390 --> 00:24:28,470
+only the edges by this so one edge is here
+and the second edge is here yes so do you
+
+218
+00:24:28,470 --> 00:24:39,279
+see it's a tree it's a tree and this is directed
+spanning tree so am i done so as one point
+
+219
+00:24:39,279 --> 00:24:43,750
+i am done because there is no cycle so i do
+not have to repeat my algorithm but i still
+
+220
+00:24:43,750 --> 00:24:51,919
+haven't the optimal dependency graph why because
+i am i am now stuck with an edge from root
+
+221
+00:24:51,919 --> 00:24:56,450
+to this contracted vertex and i do not know
+what happens inside and i know there is an
+
+222
+00:24:56,450 --> 00:24:59,929
+outgoing edge from this contracted vertex
+to mary again i want to know what happened
+
+223
+00:24:59,929 --> 00:25:08,530
+inside so how do i construct my full graph
+and for that you have to go back to how you
+
+224
+00:25:08,530 --> 00:25:13,740
+actually constructed these connections for
+this contracted vertex
+
+225
+00:25:13,740 --> 00:25:22,990
+so what you will do so the incoming edge from
+root to john john and saw and the outgoing
+
+226
+00:25:22,990 --> 00:25:30,520
+edge from john saw to mary so let us see how
+did we compute the outgoing edge we said the
+
+227
+00:25:30,520 --> 00:25:37,010
+outgoing edge should be the maximum of both
+the outgoing edges so from john to mary and
+
+228
+00:25:37,010 --> 00:25:44,919
+from saw saw to mary and where did these come
+from this came from saw so i will now see
+
+229
+00:25:44,919 --> 00:25:55,570
+here this edge from saw to mary that may write
+it thirty ok so this is done so this outgoing
+
+230
+00:25:55,570 --> 00:26:00,210
+edge is from saw not from john that's how
+we found it out
+
+231
+00:26:00,210 --> 00:26:08,299
+now it is about the incoming edge this an
+incoming edge could have been from saw then
+
+232
+00:26:08,299 --> 00:26:18,090
+john or john then saw in our algorithm where
+did it come from forty so it came from root
+
+233
+00:26:18,090 --> 00:26:31,630
+to saw and saw to john yes so i have to construct
+now root to saw saw to john so root to saw
+
+234
+00:26:31,630 --> 00:26:43,140
+and saw to john ok this was ten and this was
+thirty and that is my final m s t that is
+
+235
+00:26:43,140 --> 00:26:55,750
+my dependency graph ok so so this is the algorithm
+so let us see again here so you you are at
+
+236
+00:26:55,750 --> 00:27:03,320
+this step where you have this contracted vertex
+and you found out the maximum incoming edge
+
+237
+00:27:03,320 --> 00:27:09,799
+for each vertex and you obtain a tree so now
+you have to go back after your recursive call
+
+238
+00:27:09,799 --> 00:27:15,120
+and we construct the original graph and there
+you have to find out where is this outgoing
+
+239
+00:27:15,120 --> 00:27:20,030
+edge coming from is it coming from saw or
+john and you found it is coming from saw incoming
+
+240
+00:27:20,030 --> 00:27:26,360
+edge is it coming for this tree or that is
+root to saw saw to john or root to john john
+
+241
+00:27:26,360 --> 00:27:31,230
+to saw and that you can again find out where
+did you find this forty it was from root to
+
+242
+00:27:31,230 --> 00:27:37,070
+saw saw to john
+so so yes the edge from w j s to mary was
+
+243
+00:27:37,070 --> 00:27:43,330
+from saw so we construct that the edge from
+root to w j s represents a tree from root
+
+244
+00:27:43,330 --> 00:27:50,410
+to saw saw to john and that is your dependency
+graph so now there might be a question in
+
+245
+00:27:50,410 --> 00:27:57,059
+your mind that in my algorithm i have different
+ways of computing incoming arc weights and
+
+246
+00:27:57,059 --> 00:28:01,380
+as well as outgoing arc weights they are not
+the same so we need them to be different so
+
+247
+00:28:01,380 --> 00:28:08,019
+that we can also account for the weight for
+the ah connection inside the tree but the
+
+248
+00:28:08,019 --> 00:28:16,309
+question is can i reverse this that is can
+i say that the outgoing weight should be the
+
+249
+00:28:16,309 --> 00:28:20,340
+maximum of the directed spanning tree and
+the incoming weight should be the maximum
+
+250
+00:28:20,340 --> 00:28:27,049
+among all the possible incoming weights so
+i would like you to think about it but i can
+
+251
+00:28:27,049 --> 00:28:31,250
+give you basic intuition that why this is
+the case
+
+252
+00:28:31,250 --> 00:28:41,630
+so let us see so suppose i have a contracted
+vertex that has nodes word one and word two
+
+253
+00:28:41,630 --> 00:28:51,100
+so right now what we are doing we are saying
+the outgoing weight is max of to a vertex
+
+254
+00:28:51,100 --> 00:29:04,980
+like w three it is a max of these two ok now
+so we take the max here suppose there is another
+
+255
+00:29:04,980 --> 00:29:12,909
+word x w four i will do the same the outgoing
+weight from here to w four is the max of these
+
+256
+00:29:12,909 --> 00:29:26,850
+two ok fine now when i have taken the max
+here and i am done my with my call and everything
+
+257
+00:29:26,850 --> 00:29:32,080
+each vertex will choose only one incoming
+edge weight so w three will choose either
+
+258
+00:29:32,080 --> 00:29:38,179
+this or this w four will choose either this
+or this or anything else so that that means
+
+259
+00:29:38,179 --> 00:29:43,549
+i will know for sure whether this there is
+connection from w two to w three or w one
+
+260
+00:29:43,549 --> 00:29:51,940
+to w three or there is no connection and whatever
+i obtain even if i say that from w one suppose
+
+261
+00:29:51,940 --> 00:29:56,490
+my finally i find out a situation like this
+that's from w one there are both the connections
+
+262
+00:29:56,490 --> 00:30:03,770
+are there this is valid from a because from
+a single node you can have two different outgoing
+
+263
+00:30:03,770 --> 00:30:13,159
+edges this is fine or if w one and w two that
+is also ok in no case there will be a there
+
+264
+00:30:13,159 --> 00:30:17,630
+will be two incoming edges for the same node
+this is not allowed by the algorithm itself
+
+265
+00:30:17,630 --> 00:30:23,440
+now suppose i change my algorithm and say
+that the outgoing edge is coming from the
+
+266
+00:30:23,440 --> 00:30:32,049
+directed spanning tree so that will be the
+situation where i will have to see so this
+
+267
+00:30:32,049 --> 00:30:46,320
+edge is the max of w one to w two to w three
+and the other one that is w two to w one to
+
+268
+00:30:46,320 --> 00:31:00,210
+w three yes similarly this will be the max
+of w two to w one to w four and w one to w
+
+269
+00:31:00,210 --> 00:31:12,830
+two to w four fine now what might happened
+that in your final tree that you obtain you
+
+270
+00:31:12,830 --> 00:31:25,940
+find out 
+this edge yes and this edge ok
+
+271
+00:31:25,940 --> 00:31:34,950
+now you have to go back and construct your
+tree so what you will see there you will see
+
+272
+00:31:34,950 --> 00:31:46,450
+that this edge is coming from by following
+this connection and this is coming by following
+
+273
+00:31:46,450 --> 00:31:56,000
+this connection so you will end up by saying
+ok there is a cycle inside and this will not
+
+274
+00:31:56,000 --> 00:32:01,741
+terminate again ok you can also try to see
+what will happen in the case of so this is
+
+275
+00:32:01,741 --> 00:32:05,630
+only for the outgoing edges so you see there
+might be a case where you can end up finding
+
+276
+00:32:05,630 --> 00:32:13,380
+a cycle or may not be able to say which of
+these two is the correct ah ah sign between
+
+277
+00:32:13,380 --> 00:32:18,190
+the edges so this case might happen this will
+never arise in the way we have define the
+
+278
+00:32:18,190 --> 00:32:27,370
+algorithm similarly you can try for the incoming
+edges would you end up with the situation
+
+279
+00:32:27,370 --> 00:32:33,139
+where you you are either ah violating some
+principle of the dependency graph or where
+
+280
+00:32:33,139 --> 00:32:37,740
+you are getting the cycle and you are not
+able to converge this is something i will
+
+281
+00:32:37,740 --> 00:32:42,919
+say that you try to take both the cases and
+see whether you are finding why the algorithm
+
+282
+00:32:42,919 --> 00:32:49,610
+ah proceeds in this way of for finding the
+incoming and outgoing edge weights so fine
+
+283
+00:32:49,610 --> 00:32:54,270
+so so we discuss this algorithm of chu liu
+edmonds and how do we use that for finding
+
+284
+00:32:54,270 --> 00:33:00,320
+maximum spanning tree so what we did not cover
+is how do we find the edge weights ok and
+
+285
+00:33:00,320 --> 00:33:03,950
+that's where the learning algorithm comes
+in that how do we find the edge weight from
+
+286
+00:33:03,950 --> 00:33:07,180
+my dependency graph and that's what we will
+see in the next lecture
+
+287
+00:33:07,180 --> 00:33:08,030
+thank you
+

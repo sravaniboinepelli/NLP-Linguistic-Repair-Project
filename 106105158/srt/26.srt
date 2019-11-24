@@ -1,0 +1,1079 @@
+1
+00:00:18,279 --> 00:00:24,980
+so welcome back for the final lecture of this
+week so in the last lecture we had started
+
+2
+00:00:24,980 --> 00:00:29,980
+with the concept of inside outside probabilities
+and how do you use them for answering certain
+
+3
+00:00:29,980 --> 00:00:35,460
+questions like what is the probability of
+a sentence as per my grammar and what is the
+
+4
+00:00:35,460 --> 00:00:42,059
+most likely parse ok so i have use the inside
+algorithm specifically to find out what is
+
+5
+00:00:42,059 --> 00:00:46,770
+the probabilities of this sentence as per
+my grammar and then in the end i was saying
+
+6
+00:00:46,770 --> 00:00:53,250
+that we will also use this this concept to
+find out the rule probabilities of my grammar
+
+7
+00:00:53,250 --> 00:00:59,449
+and how do we do that again exactly what we
+will discuss in this lecture
+
+8
+00:00:59,449 --> 00:01:06,940
+so now (Refer Time: 01:00) in general how
+do you obtain the the rule probabilities and
+
+9
+00:01:06,940 --> 00:01:12,250
+remember this is very similar to what we were
+also talking about in the case of h m m s
+
+10
+00:01:12,250 --> 00:01:18,240
+when i have to learn the parameters of my
+h m m i can do that in two manner one where
+
+11
+00:01:18,240 --> 00:01:24,920
+where i am given already the labeled data
+set that means i am given what are the sentences
+
+12
+00:01:24,920 --> 00:01:32,890
+and what is their past edge if i am given
+all that so then from there i can compute
+
+13
+00:01:32,890 --> 00:01:40,110
+how many times non terminal derives a particular
+sequence divide by number of times a particular
+
+14
+00:01:40,110 --> 00:01:45,950
+non terminal has been used that will give
+me the probability of this particular rule
+
+15
+00:01:45,950 --> 00:01:51,320
+ok if there is only one rule possible from
+n j this is always you want but if there multiple
+
+16
+00:01:51,320 --> 00:01:56,619
+rules are possible i can find out what fraction
+of times this particular instance has been
+
+17
+00:01:56,619 --> 00:02:02,810
+used in my labeled data sets and by (Refer
+Time: 02:00) that i can compute all the rule
+
+18
+00:02:02,810 --> 00:02:10,940
+probabilities
+now so this is easy but what about the case
+
+19
+00:02:10,940 --> 00:02:17,049
+where the training data is not given to us
+that is i have no way to find out in which
+
+20
+00:02:17,049 --> 00:02:24,860
+sentence what is the rule that has been used
+so what is in fact given to us so we are assume
+
+21
+00:02:24,860 --> 00:02:29,670
+that we are given the underlying context free
+grammar so i am given all the possible rules
+
+22
+00:02:29,670 --> 00:02:34,629
+but what i am not given what is the probabilities
+for each individual rules so that means the
+
+23
+00:02:34,629 --> 00:02:39,180
+the particular p c f gs part the rule probabilities
+is not given to us and i am given a lot of
+
+24
+00:02:39,180 --> 00:02:43,400
+sentences and i am the given the grammar that
+will generate these sentences but not the
+
+25
+00:02:43,400 --> 00:02:50,541
+rule probabilities and my my task is how do
+i find out these rules probabilities so so
+
+26
+00:02:50,541 --> 00:02:56,040
+in other words how do i find out the parameters
+of my p c f gs and we will use the same sort
+
+27
+00:02:56,040 --> 00:03:01,700
+of idea that we did earlier that is (Refer
+Time: 03:00) you are given the observation
+
+28
+00:03:01,700 --> 00:03:09,040
+of sentences find out the parameters of a
+model that maximize the likelihood of observing
+
+29
+00:03:09,040 --> 00:03:15,590
+the sentences ok so this is what we are going
+to do maximize the likelihood of the sentences
+
+30
+00:03:15,590 --> 00:03:21,680
+in the data under the p c f g constraints
+and for that we will use some sort of expectation
+
+31
+00:03:21,680 --> 00:03:29,520
+expression algorithm
+so so lets take a simple example and what
+
+32
+00:03:29,520 --> 00:03:36,129
+is the intuition for using this so we start
+with this simple sentence like she eats pizza
+
+33
+00:03:36,129 --> 00:03:44,040
+without anchovies and a particular parse tree
+is given to us so what kind of rules to you
+
+34
+00:03:44,040 --> 00:03:50,910
+see here so you have rules of the form a single
+non terminal derives to two different non
+
+35
+00:03:50,910 --> 00:03:57,690
+terminals like s derives n and v v derives
+v and n and so on and there are rules of the
+
+36
+00:03:57,690 --> 00:04:03,760
+form a non terminal derives (Refer Time: 04:00)
+a terminal like here and derives anchovies
+
+37
+00:04:03,760 --> 00:04:09,210
+pp derives without n derives pizza v derives
+eats and so on so these are different sort
+
+38
+00:04:09,210 --> 00:04:16,019
+of non terminals that are given the rules
+that are given to me i do not know the probabilities
+
+39
+00:04:16,019 --> 00:04:22,349
+for each individual rule
+now can you think of any other parse for this
+
+40
+00:04:22,349 --> 00:04:33,349
+sentence she eats pizza without anchovies
+ok so one parse that we saw was she eats pizza
+
+41
+00:04:33,349 --> 00:04:42,389
+and pizza without anchovies modifying pizza
+ok what is the other possibilities ok so other
+
+42
+00:04:42,389 --> 00:04:49,270
+could be the without anchovies does not modify
+pizza it is a separate phrase altogether starting
+
+43
+00:04:49,270 --> 00:05:00,570
+from v ok so something like she eats pizza
+with fog ok in in that sort of meaning (Refer
+
+44
+00:05:00,570 --> 00:05:06,680
+Time: 05:00) so yeah so she eats pizza without
+hesitation that is another sort of possibility
+
+45
+00:05:06,680 --> 00:05:13,889
+now a single v here is giving me v and n p
+so this is the different parse tree for the
+
+46
+00:05:13,889 --> 00:05:18,100
+same sentence
+now i can what are the new rules that i have
+
+47
+00:05:18,100 --> 00:05:23,330
+added v gives me v n and p and n gives me
+hesitation these are two new rules i have
+
+48
+00:05:23,330 --> 00:05:30,060
+added so now what do you see i have two different
+sentences she eats pizza without anchovies
+
+49
+00:05:30,060 --> 00:05:36,180
+and she eats pizza without hesitation and
+both have two possible parse edge and i know
+
+50
+00:05:36,180 --> 00:05:42,819
+what are the all possible rules now my task
+is given these sentences how do i find out
+
+51
+00:05:42,819 --> 00:05:50,930
+what should be the ideal rule probabilities
+so now for that let me first define so we
+
+52
+00:05:50,930 --> 00:05:56,039
+need to find out all these probabilities so
+probability of this rule s gives me n and
+
+53
+00:05:56,039 --> 00:06:01,150
+v probability of rule n gives me pizza and
+so on now (Refer Time: 06:00) what is the
+
+54
+00:06:01,150 --> 00:06:06,190
+p c f g requirement the p c f g requirement
+is that it starting from a single non terminal
+
+55
+00:06:06,190 --> 00:06:12,910
+all the possible sets of right hand side that
+i can generate so that is so all the possible
+
+56
+00:06:12,910 --> 00:06:22,060
+rules starting from a to any alpha the probability
+should also added to one ok so now if i look
+
+57
+00:06:22,060 --> 00:06:28,889
+at my grammar so i have five rules pair and
+occurs in the left hand side n gives me np
+
+58
+00:06:28,889 --> 00:06:32,750
+n gives me pizza anchovies and so on so all
+these should also added to one
+
+59
+00:06:32,750 --> 00:06:37,889
+similarly three rules where v occurs in the
+left hand side so all these should also added
+
+60
+00:06:37,889 --> 00:06:43,460
+to one and then there are some other rules
+like s gives me n v n v nothing else this
+
+61
+00:06:43,460 --> 00:06:48,889
+would be one and so on so this constraints
+i can obtain from my from my grammar i know
+
+62
+00:06:48,889 --> 00:06:53,000
+what are the rules and what is the constraint
+starting from the left hand side all possible
+
+63
+00:06:53,000 --> 00:06:57,200
+rule should have a probability adding up to
+one
+
+64
+00:06:57,200 --> 00:07:03,830
+now i have two sentences (Refer Time: 07:00)
+can i compute the likelihood of the sentences
+
+65
+00:07:03,830 --> 00:07:09,440
+w one and w two so what do i mean by likelihood
+what is the probability of generating the
+
+66
+00:07:09,440 --> 00:07:14,440
+sentence as of my grammar right now i am not
+giving the rule probabilities but i can write
+
+67
+00:07:14,440 --> 00:07:21,840
+down in terms of the variable rule probabilities
+so what will the likelihood of w one ok so
+
+68
+00:07:21,840 --> 00:07:27,250
+for the that i have to take the two possible
+parse trees so here t one is the first parse
+
+69
+00:07:27,250 --> 00:07:33,190
+tree so here i am giving the probabilities
+of both the sentences as per the first parse
+
+70
+00:07:33,190 --> 00:07:40,550
+tree ok so probability of sentence w one as
+per the first parse tree t one and probability
+
+71
+00:07:40,550 --> 00:07:46,099
+of sentence w two as per the first parse tree
+t one how do i compute that it is very similar
+
+72
+00:07:46,099 --> 00:07:49,979
+to what we saw in the case of p c f g how
+do we compute the probability of a parse tree
+
+73
+00:07:49,979 --> 00:07:55,099
+if the rule probabilities are given that was
+very easy here the possibilities are not given
+
+74
+00:07:55,099 --> 00:08:00,600
+but you can parameterize so you will say what
+is the probability of s giving me n v and
+
+75
+00:08:00,600 --> 00:08:05,180
+so on (Refer Time: 08:00) up to you go to
+the leaves and i do not know these whole probabilities
+
+76
+00:08:05,180 --> 00:08:09,960
+similarly i can write down this likelihood
+of the sentence w two as per my first parse
+
+77
+00:08:09,960 --> 00:08:14,711
+tree
+similarly i can do further second parse tree
+
+78
+00:08:14,711 --> 00:08:22,389
+also for both the sentences so this tells
+me so if i know all the possible parse trees
+
+79
+00:08:22,389 --> 00:08:30,629
+because my ah c f g s given to me i will know
+all the possible parse tree i can ah put my
+
+80
+00:08:30,629 --> 00:08:35,849
+all the rule probabilities as variables and
+define what is the likelihood of various parse
+
+81
+00:08:35,849 --> 00:08:40,660
+tree now what is the likelihood of the sentence
+it will be summation of the likelihood as
+
+82
+00:08:40,660 --> 00:08:48,130
+per different possible parse trees ok so probability
+sentence such summation over all the possible
+
+83
+00:08:48,130 --> 00:08:53,340
+trees that can generate this this p phi w
+t in this case for both sentences w one w
+
+84
+00:08:53,340 --> 00:08:57,830
+two i had two different parse trees so i will
+just add the two two probabilities to get
+
+85
+00:08:57,830 --> 00:09:00,890
+the likelihood of the sentence and how do
+i get the (Refer Time: 09:00) likelihood of
+
+86
+00:09:00,890 --> 00:09:04,949
+the whole corpus that has multiple sentences
+for that i will come to the likelihood of
+
+87
+00:09:04,949 --> 00:09:11,650
+each sentence and multiply those so if i have
+a sentences w 1 to w n i compute the likelihood
+
+88
+00:09:11,650 --> 00:09:20,980
+of each and keep on multiplying now now we
+know that how do i express the likelihood
+
+89
+00:09:20,980 --> 00:09:27,059
+of my corpus in terms of the rule probabilities
+right the only variable here are all the rule
+
+90
+00:09:27,059 --> 00:09:32,309
+probabilities now i can further define my
+problem
+
+91
+00:09:32,309 --> 00:09:39,270
+so my problem would be so this is some sort
+of e m approach i will start with some initial
+
+92
+00:09:39,270 --> 00:09:46,600
+parameters phi phi means the rule probabilities
+i want to re estimate so that i obtain some
+
+93
+00:09:46,600 --> 00:09:54,130
+new parameters phi prime such that the likelihood
+of my corpus increases now so l phi prime
+
+94
+00:09:54,130 --> 00:10:00,290
+will be greater than equal to l phi and i
+keep on doing that until l converge (Refer
+
+95
+00:10:00,290 --> 00:10:08,819
+Time: 10:00) so now here we have to apply
+algorithm so that we can so that we can keep
+
+96
+00:10:08,819 --> 00:10:14,600
+on updating our rule ah rule probabilities
+this is the parameter of my system and how
+
+97
+00:10:14,600 --> 00:10:19,319
+do we do that if you remember that like what
+we did in the case of learning parameters
+
+98
+00:10:19,319 --> 00:10:24,939
+for g s analogous to that what we will do
+here we will start with some arbitrary rule
+
+99
+00:10:24,939 --> 00:10:30,650
+probabilities phi ok and use that to compute
+something intermediate so in this case what
+
+100
+00:10:30,650 --> 00:10:36,579
+we will compute what is the expected number
+of times a particular rule has been used if
+
+101
+00:10:36,579 --> 00:10:42,540
+the rule probabilities are as per the current
+parameters i will compute the expected value
+
+102
+00:10:42,540 --> 00:10:49,549
+again use the expected value to compute the
+probabilities so i will compute my phi prime
+
+103
+00:10:49,549 --> 00:10:53,140
+again use the phi prime to compute the expected
+number of times each rule has been used and
+
+104
+00:10:53,140 --> 00:10:57,559
+again compute five dwell prime and keep on
+doing that until you converge and thats why
+
+105
+00:10:57,559 --> 00:11:03,079
+we will be using the inside outside probabilities
+so let us see (Refer Time: 11:00)
+
+106
+00:11:03,079 --> 00:11:09,929
+so so idea is that i start with some rules
+probabilities phi and i am given a corpus
+
+107
+00:11:09,929 --> 00:11:18,569
+that that what are sentences that i observing
+w i w j and i will obtain the new parameters
+
+108
+00:11:18,569 --> 00:11:26,040
+phi prime using the simple idea so this is
+something that we were saying if we are given
+
+109
+00:11:26,040 --> 00:11:30,400
+the labeled data thats why i will compute
+the rule probabilities so i am saying i can
+
+110
+00:11:30,400 --> 00:11:37,050
+always define probability of the rule a given
+b c as the number of times the rule a given
+
+111
+00:11:37,050 --> 00:11:43,380
+b c a gives goes to b c or a derives to b
+c has been applied in my corpus divide by
+
+112
+00:11:43,380 --> 00:11:50,670
+all the possible all the different times where
+a derives alpha for all possible alpha and
+
+113
+00:11:50,670 --> 00:11:55,240
+this gives me the probability for a deriving
+b c
+
+114
+00:11:55,240 --> 00:12:00,400
+similarly i can compute probability a deriving
+w by saying how many times this rule has been
+
+115
+00:12:00,400 --> 00:12:04,370
+used (Refer Time: 12:00) divide by number
+of times a gives me alpha has been used in
+
+116
+00:12:04,370 --> 00:12:10,620
+my corpus in my actual corpus but we do not
+have any labeled corpus we only know what
+
+117
+00:12:10,620 --> 00:12:16,570
+parse are possible ok and for each parse we
+can compute the probabilities using the previous
+
+118
+00:12:16,570 --> 00:12:23,540
+parameter phi so how do i write down this
+count a derives b c number of times this rule
+
+119
+00:12:23,540 --> 00:12:30,829
+has been used for that i use the idea that
+i have multiple sentences any sentence i can
+
+120
+00:12:30,829 --> 00:12:38,640
+find the expected number of times this rule
+a deriving b c has been used so that is count
+
+121
+00:12:38,640 --> 00:12:44,500
+a deriving b c is nothing but summation over
+all the sentences number of times a deriving
+
+122
+00:12:44,500 --> 00:12:54,350
+b c has been used for the particular sentence
+ok same one for the count of a deriving w
+
+123
+00:12:54,350 --> 00:13:00,140
+each sentence find out the expected number
+of times a particular rule has been used now
+
+124
+00:13:00,140 --> 00:13:04,510
+how do i (Refer Time: 13:00) actually come
+up with this formulation expected number of
+
+125
+00:13:04,510 --> 00:13:11,750
+times a particular rule has been used in a
+sentence and for that we use the inside probabilities
+
+126
+00:13:11,750 --> 00:13:20,049
+and outside probabilities ok
+so now coming back to this inside and outside
+
+127
+00:13:20,049 --> 00:13:24,680
+probabilities and how do we use that to compute
+the expected number of times a rule has been
+
+128
+00:13:24,680 --> 00:13:30,400
+used in a sentence now this must be clear
+by the previous slide that if i can compute
+
+129
+00:13:30,400 --> 00:13:34,830
+the expected number of times a rule has been
+used in a sentence i can keep on updating
+
+130
+00:13:34,830 --> 00:13:39,329
+my parameters this is the only bottleneck
+in the previous computation and we will see
+
+131
+00:13:39,329 --> 00:13:44,090
+how to do that using the inside and outside
+probabilities so let me give the definitions
+
+132
+00:13:44,090 --> 00:13:51,089
+again so inside probability is starting from
+non terminal a i derive the words w i to w
+
+133
+00:13:51,089 --> 00:14:00,319
+j in the sentence ok so that is probability
+that a derives w i to w j as per my grammar
+
+134
+00:14:00,319 --> 00:14:05,829
+and the outside (Refer Time: 14:00) probabilities
+starting from the symbol s i can derive the
+
+135
+00:14:05,829 --> 00:14:13,179
+string w one to w i minus one a and w j plus
+one to w n ok so it starting from s i can
+
+136
+00:14:13,179 --> 00:14:20,100
+derive w one to w i minus one a w j plus one
+to w n now once we are given the inside and
+
+137
+00:14:20,100 --> 00:14:24,280
+outside probabilities we can actually compute
+the expected number of times the rule has
+
+138
+00:14:24,280 --> 00:14:30,410
+been used and the expression comes out to
+be this one expected number of times a rule
+
+139
+00:14:30,410 --> 00:14:37,040
+a has been a derives b c has been used in
+my sentence w each the rule probability a
+
+140
+00:14:37,040 --> 00:14:45,180
+given b c divide by the probability of the
+sentence and this very ah peculiar term that
+
+141
+00:14:45,180 --> 00:14:51,120
+you see that you are seeing here so you are
+seeing here alpha i k a beta i j b and beta
+
+142
+00:14:51,120 --> 00:14:56,970
+j plus one k c now how how do i actually come
+up with a term like that and how do i come
+
+143
+00:14:56,970 --> 00:15:02,870
+up with this expression that is expected count
+is given by this (Refer Time: 15:00) so for
+
+144
+00:15:02,870 --> 00:15:09,400
+that let us go back to what we were discussing
+in the last lecture that i can multiply inside
+
+145
+00:15:09,400 --> 00:15:12,770
+and outside probabilities to know something
+about the probability for the sentence
+
+146
+00:15:12,770 --> 00:15:21,579
+so let us go back to that so what we were
+saying if i multiply alpha j p q and beta
+
+147
+00:15:21,579 --> 00:15:31,819
+j p q what does it give me it gives me the
+probability that it starting from n one i
+
+148
+00:15:31,819 --> 00:15:48,880
+can derive w one m and it starting from n
+j i can derive w p q as per my grammar ok
+
+149
+00:15:48,880 --> 00:15:58,300
+so now i can use the chain rule here to write
+it like that so its probability n one derives
+
+150
+00:15:58,300 --> 00:16:08,039
+w one m so this (Refer Time: 16:00) derives
+any number of given by grammar times probability
+
+151
+00:16:08,039 --> 00:16:23,120
+n j derives w p q given n one derives w one
+m and my grammar so now what is this probability
+
+152
+00:16:23,120 --> 00:16:31,880
+that n one derives w one m given by grammar
+second write as the p phi w probability of
+
+153
+00:16:31,880 --> 00:16:44,059
+the sentence ok and what is this this say
+what is the probability that this rule n j
+
+154
+00:16:44,059 --> 00:16:51,319
+has been used to derive w p q given that the
+sentences there and my grammar is there ok
+
+155
+00:16:51,319 --> 00:17:00,370
+so and how many times this has been used in
+this particular context only one time so can
+
+156
+00:17:00,370 --> 00:17:19,059
+i (Refer Time: 17:00) write down expected
+number of times n j derives 
+
+157
+00:17:19,059 --> 00:17:40,510
+w p q is used that would be alpha j p q beta
+j p q given divided by p phi w ok and suppose
+
+158
+00:17:40,510 --> 00:17:46,600
+because i do not want to fix this p q i just
+want to say expected number of times the rule
+
+159
+00:17:46,600 --> 00:17:53,810
+n j has been used so each time it has been
+used only once for deriving w to w q so here
+
+160
+00:17:53,810 --> 00:18:02,050
+i will have to sum over all the possible p
+and q (Refer Time: 18:00) so i will say p
+
+161
+00:18:02,050 --> 00:18:08,640
+can go from one to m suppose there are w one
+to w m so these are number of words and q
+
+162
+00:18:08,640 --> 00:18:20,720
+can go from p up to m ok so this is the expected
+number of times my rule and j has been used
+
+163
+00:18:20,720 --> 00:18:28,180
+now now what is something that i have to express
+i want to find out for example expected number
+
+164
+00:18:28,180 --> 00:18:35,730
+of times a rule like a goes to b c has been
+used or a goes to w has been used what is
+
+165
+00:18:35,730 --> 00:18:43,540
+the expected number of times these has been
+used now for that suppose let us take the
+
+166
+00:18:43,540 --> 00:18:53,240
+easy case expected number of times the rule
+a goes to w or a derives w has been used so
+
+167
+00:18:53,240 --> 00:19:00,542
+in this case what i am saying n j derives
+a particular terminal here that (Refer Time:
+
+168
+00:19:00,542 --> 00:19:14,590
+19:00) is some p p so i can write the beta
+j p p for that case and beta j p p is simply
+
+169
+00:19:14,590 --> 00:19:24,060
+the rule probability that is what is the probability
+that in non terminal derives this word w p
+
+170
+00:19:24,060 --> 00:19:27,600
+so we will see the expression for that so
+this one is easy
+
+171
+00:19:27,600 --> 00:19:33,150
+but what about this case when the rule a derives
+b c so in the particular notation that i have
+
+172
+00:19:33,150 --> 00:19:50,230
+written suppose you want to say expected number
+of times n j derives n r n s is used ok so
+
+173
+00:19:50,230 --> 00:19:59,680
+now what would happen so this beta j p q is
+when the terminal n j derives the whole sequence
+
+174
+00:19:59,680 --> 00:20:10,130
+p q (Refer Time: 20:00) w p to w q and can
+use any possible rules yes n r n s or n j
+
+175
+00:20:10,130 --> 00:20:15,880
+n z whatever it can use any non terminals
+now what i am my limiting i am saying this
+
+176
+00:20:15,880 --> 00:20:24,000
+rule should only use this so this non terminal
+should only derive n r n s ok so then i am
+
+177
+00:20:24,000 --> 00:20:33,600
+saying so that means my n j will derive n
+r n s and this n r n s will again derive say
+
+178
+00:20:33,600 --> 00:20:46,720
+w p to some w d and this will derive w d plus
+one to w q ok
+
+179
+00:20:46,720 --> 00:20:53,160
+so now how do i modify this equation so alpha
+j p q is the outside probability that will
+
+180
+00:20:53,160 --> 00:20:57,790
+remain the same nothing has changed for outside
+probability but inside probability because
+
+181
+00:20:57,790 --> 00:21:01,980
+i am saying this should be the situation so
+i (Refer Time: 21:00) further express it like
+
+182
+00:21:01,980 --> 00:21:08,181
+with a particular path so i will write in
+place of beta j p q i will write probability
+
+183
+00:21:08,181 --> 00:21:22,280
+of the rule n j derives n r n s times this
+beta probability that is beta r p d times
+
+184
+00:21:22,280 --> 00:21:32,510
+beta s d plus one to q but now the d can vary
+i have already been given that n j gives me
+
+185
+00:21:32,510 --> 00:21:40,090
+n r n s but they can take different possible
+d s so this will be summation over d and d
+
+186
+00:21:40,090 --> 00:21:54,301
+can vary from p to q minus one ok so these
+between p and q now if you put that can you
+
+187
+00:21:54,301 --> 00:21:59,320
+see that you can you can actually obtain the
+same expression that was given in the slide
+
+188
+00:21:59,320 --> 00:22:03,780
+so if you go back to the slide (Refer Time:
+22:00) thats what we have been doing here
+
+189
+00:22:03,780 --> 00:22:13,070
+so you see the expression we have three parameters
+beta i j b so three parameters i j and k that
+
+190
+00:22:13,070 --> 00:22:24,240
+corresponds to 
+p d and q ok and this was the outside probability
+
+191
+00:22:24,240 --> 00:22:32,980
+and this is the inside probability for ah
+the i j and j plus one k and then you have
+
+192
+00:22:32,980 --> 00:22:39,820
+the rule probability here ok so this expected
+number of count has been derived in this particular
+
+193
+00:22:39,820 --> 00:22:45,900
+form and same thing you can try with the next
+formula the expected number of times the rule
+
+194
+00:22:45,900 --> 00:22:52,670
+a deriving the w has been used in my graph
+and you will obtain this particular expression
+
+195
+00:22:52,670 --> 00:22:57,890
+ok
+so so what we are seeing here suppose i start
+
+196
+00:22:57,890 --> 00:23:03,330
+with some initial rule probabilities ok (Refer
+Time: 23:00) so i can use the inside outside
+
+197
+00:23:03,330 --> 00:23:07,650
+probability so all the recursive formulation
+to compute all the inside outside probabilities
+
+198
+00:23:07,650 --> 00:23:15,680
+for my various rules and stages once i do
+that i can compute what is the expected number
+
+199
+00:23:15,680 --> 00:23:20,260
+of times each and each individual rule has
+been used in my corpus as per the current
+
+200
+00:23:20,260 --> 00:23:25,730
+parameters once i have the expected number
+of times rule has been used i can further
+
+201
+00:23:25,730 --> 00:23:30,570
+estimate my parameters by number of times
+the rule used divide by number of times any
+
+202
+00:23:30,570 --> 00:23:35,860
+particular rule starting with that non terminal
+has been used and that will give me the new
+
+203
+00:23:35,860 --> 00:23:42,000
+parameters again i will compute inside outside
+probabilities expected count the parameters
+
+204
+00:23:42,000 --> 00:23:52,310
+and this i will continue until this converges
+and yeah so so computing inside outside probabilities
+
+205
+00:23:52,310 --> 00:24:01,130
+is as we discussed earlier by this inductive
+manner so (Refer Time: 24:00) so what we discussed
+
+206
+00:24:01,130 --> 00:24:09,200
+in this module was that what is parsing in
+terms of a constituency structure and how
+
+207
+00:24:09,200 --> 00:24:15,100
+do you use the formulation of context free
+grammar to do parsing how do we incorporate
+
+208
+00:24:15,100 --> 00:24:18,870
+the rule probabilities there how do we learn
+the rule probabilities using this interesting
+
+209
+00:24:18,870 --> 00:24:24,540
+concept of inside outside probabilities ok
+so i hope the by the example that we did in
+
+210
+00:24:24,540 --> 00:24:29,900
+the class you will be able to ah understand
+how it is actual exactly works in practice
+
+211
+00:24:29,900 --> 00:24:36,110
+so in the next week so we will starting with
+this different notion of parsing so right
+
+212
+00:24:36,110 --> 00:24:39,870
+now we have done a constituency parsing so
+we will see there is a different notion of
+
+213
+00:24:39,870 --> 00:24:45,309
+parsing called dependency parsing so what
+is the formulation that that dependency parsing
+
+214
+00:24:45,309 --> 00:24:50,430
+follows how it is different from this constituency
+parsing and what are different methods we
+
+215
+00:24:50,430 --> 00:24:54,040
+can used for that that will be a topic for
+the next week
+
+216
+00:24:54,040 --> 00:24:55,420
+thank you (Refer Time: 25:00)
+

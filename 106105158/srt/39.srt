@@ -1,0 +1,1539 @@
+1
+00:00:17,830 --> 00:00:22,670
+so welcome to the third lecture of this week
+so so we are talking about lexis semantics
+
+2
+00:00:22,670 --> 00:00:27,840
+and there we delt with what are the various
+relations we can establish between the word
+
+3
+00:00:27,840 --> 00:00:34,140
+form so we were talking specific ah in traditional
+now that are lexemes different items in my
+
+4
+00:00:34,140 --> 00:00:42,130
+lexicon and we also talked about word net
+that what are the different relations we can
+
+5
+00:00:42,130 --> 00:00:47,210
+establish between various lexemes word net
+and what are the different standard forms
+
+6
+00:00:47,210 --> 00:00:52,059
+like using sins at and what is the hierarchical
+award net how do you use the define word similarity
+
+7
+00:00:52,059 --> 00:00:58,010
+and so on and finally we ended up the saying
+that there is one in head problem engaging
+
+8
+00:00:58,010 --> 00:01:03,500
+word net that is when you get a new sentence
+you do not know what is the particular sense
+
+9
+00:01:03,500 --> 00:01:10,080
+of the word that is being use in the sentence
+so you cannot apply the methods vary directly
+
+10
+00:01:10,080 --> 00:01:18,119
+so so thats fair so we deal with this problem
+that given a sentence for each word find out
+
+11
+00:01:18,119 --> 00:01:22,570
+what is the sense in the word net that is
+being used here and this problem is called
+
+12
+00:01:22,570 --> 00:01:28,110
+versions disambiguation so very classical
+problem in n l p and let lot of research has
+
+13
+00:01:28,110 --> 00:01:36,240
+happened in over last few decades so we will
+ah talk about what are the most important
+
+14
+00:01:36,240 --> 00:01:41,690
+methods for dealing with this problem and
+we will talk about both simple approaches
+
+15
+00:01:41,690 --> 00:01:46,800
+and machine learning based approaches and
+also some unsupervised approaches so we will
+
+16
+00:01:46,800 --> 00:01:52,720
+cover that in the next two lectures starting
+today so this is our topic that is word sense
+
+17
+00:01:52,720 --> 00:01:59,120
+disambiguation
+so let me just define the problem again so
+
+18
+00:01:59,120 --> 00:02:04,430
+we have seen in this week that there are many
+words that are having several meanings and
+
+19
+00:02:04,430 --> 00:02:10,030
+then we can call them different senses of
+the same word so now example can be of the
+
+20
+00:02:10,030 --> 00:02:15,049
+word bass so you can use bass or base depending
+on that they you want to use that in the context
+
+21
+00:02:15,049 --> 00:02:23,010
+of fish or music now the problem is whenever
+you are given this word i will be talking
+
+22
+00:02:23,010 --> 00:02:28,840
+about music or fish you know ok so lets see
+these two sentences here the first sentence
+
+23
+00:02:28,840 --> 00:02:35,400
+is an electric guitar and best bass players
+stand off to one side not really part of the
+
+24
+00:02:35,400 --> 00:02:41,840
+scene just as a sort of nod to gringo expectation
+perhaps this is one sentence and the second
+
+25
+00:02:41,840 --> 00:02:50,870
+sentence is talking about some trip bass in
+in lake mead were too skinny so now the same
+
+26
+00:02:50,870 --> 00:02:56,140
+word is being used in both the sentences and
+i have to find out whether the word is being
+
+27
+00:02:56,140 --> 00:03:02,070
+used the sense of fish or music now once you
+see the sentences how do you find out that
+
+28
+00:03:02,070 --> 00:03:09,010
+what is the meaning of of the of this word
+in the sentence you will try to look around
+
+29
+00:03:09,010 --> 00:03:13,740
+the context in what context this word is being
+talked about accordingly you will chose one
+
+30
+00:03:13,740 --> 00:03:19,239
+sense over and another one now this whole
+the field of words has disambiguation
+
+31
+00:03:19,239 --> 00:03:24,880
+so this deals with this problem that so i
+have to find out the sense of the word depending
+
+32
+00:03:24,880 --> 00:03:34,060
+the context know how can i do that computational
+so so so we can define the task of the disambiguation
+
+33
+00:03:34,060 --> 00:03:39,210
+that is to determine which of the senses of
+an ambiguous word is invoked in a particular
+
+34
+00:03:39,210 --> 00:03:43,930
+use of a word so we say we are doing this
+problem only for the ambiguous words whenever
+
+35
+00:03:43,930 --> 00:03:48,840
+it has more than one senses in a particular
+use of that word what is the sense that has
+
+36
+00:03:48,840 --> 00:03:55,700
+been used
+now and and as you can see we will deal with
+
+37
+00:03:55,700 --> 00:04:01,510
+this problem by looking at the context of
+the words use so now how exactly we do that
+
+38
+00:04:01,510 --> 00:04:07,209
+there are many different algorithms that handle
+this problem so there are approaches based
+
+39
+00:04:07,209 --> 00:04:12,569
+on their knowledge base approaches that use
+different overlap based methods for handling
+
+40
+00:04:12,569 --> 00:04:17,160
+that then there are some machine learning
+based approaches they use supervised approaches
+
+41
+00:04:17,160 --> 00:04:21,060
+unsupervised approaches and semi supervised
+approaches and also there are some hybrid
+
+42
+00:04:21,060 --> 00:04:24,840
+approaches and in the literature there are
+a lot of different methods for solving this
+
+43
+00:04:24,840 --> 00:04:27,620
+problem
+now what we will do we will talk about some
+
+44
+00:04:27,620 --> 00:04:34,400
+very basic methods so that you have the intuition
+with you that what are the different ah features
+
+45
+00:04:34,400 --> 00:04:39,340
+what are different methods you can apply for
+word sense disambiguation so now starting
+
+46
+00:04:39,340 --> 00:04:44,089
+with the knowledge base approaches so there
+are some sort of overlap based approaches
+
+47
+00:04:44,089 --> 00:04:49,889
+they try to use some sort of overlap now how
+do they find is overlap they would require
+
+48
+00:04:49,889 --> 00:04:54,520
+a machine readable dictionary ok so like word
+net is my machine readable dictionary you
+
+49
+00:04:54,520 --> 00:04:59,430
+can have some other sort of the torus also
+that are in a machine readable form so by
+
+50
+00:04:59,430 --> 00:05:05,419
+machine readable i mean so all the entries
+and all the information is such that you can
+
+51
+00:05:05,419 --> 00:05:09,639
+easily access that and you can make use of
+that
+
+52
+00:05:09,639 --> 00:05:14,400
+now so what approaches will do they will try
+to find the overlap between the features of
+
+53
+00:05:14,400 --> 00:05:19,460
+different senses of an ambiguous word that
+is they will call it sense bag and the features
+
+54
+00:05:19,460 --> 00:05:25,949
+of the word in its context and call it as
+the context bag and they will try to measure
+
+55
+00:05:25,949 --> 00:05:36,599
+the overlap so now just to explain this idea
+let us see i am having a sentence s that contains
+
+56
+00:05:36,599 --> 00:05:50,680
+some words w one to w n and the word w i can
+be used in two senses w i prime and w i double
+
+57
+00:05:50,680 --> 00:06:01,180
+prime its sense one sense two ok now in the
+sentence this word w i would be used only
+
+58
+00:06:01,180 --> 00:06:06,830
+for one sense and that is what we are assuming
+this will be true in most of the cases unless
+
+59
+00:06:06,830 --> 00:06:12,419
+the speaker himself wants to imply two different
+meanings of the same words so we will say
+
+60
+00:06:12,419 --> 00:06:17,619
+in general for this word w i you would have
+only one sense
+
+61
+00:06:17,619 --> 00:06:24,399
+so now i want to find out depending this context
+whether sense one should be taken off sense
+
+62
+00:06:24,399 --> 00:06:32,069
+to should be taken so idea would be for each
+sense i will construct the sense bag ok and
+
+63
+00:06:32,069 --> 00:06:36,180
+we will see how do we construct sense bag
+so i will have a so this i will convert that
+
+64
+00:06:36,180 --> 00:06:45,050
+to a sense bag sense bag one and this i will
+convert to sense bag two now looking at the
+
+65
+00:06:45,050 --> 00:06:49,490
+context that is you can think of all the words
+that are coming in the sentence other than
+
+66
+00:06:49,490 --> 00:06:58,530
+this word i will construct a context bag now
+i will try to find out what is the overlap
+
+67
+00:06:58,530 --> 00:07:07,050
+between context bag in sense bag one and what
+is the overlap here ok and i will take the
+
+68
+00:07:07,050 --> 00:07:12,629
+answer as the as the one sense that is having
+the highest overlap and this is to explain
+
+69
+00:07:12,629 --> 00:07:17,279
+that simply i have various senses lets context
+the sense bag context that the context bag
+
+70
+00:07:17,279 --> 00:07:21,940
+take the overlap take the sense with the maximum
+overlap
+
+71
+00:07:21,940 --> 00:07:27,589
+now to construct this sense bags and context
+bag you will use various features that are
+
+72
+00:07:27,589 --> 00:07:32,979
+provided in the dictionary that you have so
+features could be like what are the sense
+
+73
+00:07:32,979 --> 00:07:37,210
+definitions that i am having what are the
+example sentences that are provided different
+
+74
+00:07:37,210 --> 00:07:42,610
+hyponyms hyponyms and so on and any other
+criteria that you can use from the dictionary
+
+75
+00:07:42,610 --> 00:07:47,300
+and you will use that to construct both the
+sense bags and the context bag take the one
+
+76
+00:07:47,300 --> 00:07:52,030
+with does maximum overlap
+now lets take a simple example or in actual
+
+77
+00:07:52,030 --> 00:07:57,169
+algorithm that that does that so we have lesks
+algorithm so we talked about this algorithm
+
+78
+00:07:57,169 --> 00:08:02,400
+in the previous lecture also for a different
+case when you wanted to find out what is some
+
+79
+00:08:02,400 --> 00:08:08,030
+ready between two different senses now suppose
+i want to use this this less algorithm for
+
+80
+00:08:08,030 --> 00:08:14,459
+the purpose of versus disambiguation so what
+it does so it constructs the sense bag context
+
+81
+00:08:14,459 --> 00:08:20,319
+bag and how are they constructed the sense
+bag contains the words in the definition of
+
+82
+00:08:20,319 --> 00:08:26,240
+the candidate sense of the candidate part
+so i have a word that it ambiguous can have
+
+83
+00:08:26,240 --> 00:08:32,289
+multiple senses for each of the senses which
+i will construct one sense bag and the sense
+
+84
+00:08:32,289 --> 00:08:37,880
+bag is constructed by using the definitions
+that i have in my dictionary and how do i
+
+85
+00:08:37,880 --> 00:08:44,650
+construct the context bag i take all the words
+in my context take each of the senses of the
+
+86
+00:08:44,650 --> 00:08:51,490
+context word and then take their definition
+all these together become my context bag so
+
+87
+00:08:51,490 --> 00:08:56,780
+i have a single context bag and i have multiple
+sense bag for different senses of the word
+
+88
+00:08:56,780 --> 00:09:01,620
+and then i take the overlap and this overlap
+is taken by using the leska algorithm similar
+
+89
+00:09:01,620 --> 00:09:05,670
+to what we saw in the previous lecture that
+if there is a match of n a particular n gram
+
+90
+00:09:05,670 --> 00:09:13,090
+i a d score of n square
+so now lets take this case so i have a sentence
+
+91
+00:09:13,090 --> 00:09:19,960
+on burning coals we get ash now hear the word
+ash it ambiguous and i want to find out what
+
+92
+00:09:19,960 --> 00:09:25,300
+is the correct sense of this word that is
+usually sentence and suppose for simplicity
+
+93
+00:09:25,300 --> 00:09:33,200
+we are using only the word coal as my context
+so what am i going to do i will find out i
+
+94
+00:09:33,200 --> 00:09:38,360
+will make different sense bag for the word
+ash whatever senses are recorded in my word
+
+95
+00:09:38,360 --> 00:09:44,180
+net and i will construct the context bag by
+using all the definitions of the word coal
+
+96
+00:09:44,180 --> 00:09:51,091
+ok and then i will try to measure the overlap
+so suppose we do that so here is the case
+
+97
+00:09:51,091 --> 00:09:56,950
+from by taking the dictionary definitions
+from word net so ash has three senses so one
+
+98
+00:09:56,950 --> 00:10:02,180
+is corresponds to some trees second corresponds
+to some solid residue and third is to converting
+
+99
+00:10:02,180 --> 00:10:07,590
+to convert that into ash and we want to find
+out what which of the three senses is used
+
+100
+00:10:07,590 --> 00:10:11,300
+here
+so what we will do we will take the word coal
+
+101
+00:10:11,300 --> 00:10:14,770
+that is the only context for we are using
+here but in general you can use any number
+
+102
+00:10:14,770 --> 00:10:20,910
+of context words i take all its sense definitions
+that are defined combine them together to
+
+103
+00:10:20,910 --> 00:10:28,380
+make a context bag so this whole thing together
+becomes my contacts bag now i measure it similarity
+
+104
+00:10:28,380 --> 00:10:34,710
+with each of the senses ok and if you do that
+we find the sense to three of the words are
+
+105
+00:10:34,710 --> 00:10:39,240
+matching here and sense to becomes a winner
+so here what you using here you are also using
+
+106
+00:10:39,240 --> 00:10:45,100
+the is stemming so this is optional you might
+use stemming you may not use stemming so this
+
+107
+00:10:45,100 --> 00:10:50,130
+is the generic idea of leska algorithm ok
+i hope this is clear if i want to use multiple
+
+108
+00:10:50,130 --> 00:10:56,750
+words i can repeat the same thing i suppose
+i am using burning coal and get all the three
+
+109
+00:10:56,750 --> 00:11:02,510
+words i will take all their definitions and
+combine them together into a single context
+
+110
+00:11:02,510 --> 00:11:09,890
+bag and then measure the similarity of each
+of senses with this whole context bag ok
+
+111
+00:11:09,890 --> 00:11:16,960
+so now lets take another scenario where we
+have a different kind of source so what is
+
+112
+00:11:16,960 --> 00:11:23,710
+this source now for each word we are told
+what are the categories these senses its senses
+
+113
+00:11:23,710 --> 00:11:28,720
+belong to so i have some finite set of categories
+this can be like finance category location
+
+114
+00:11:28,720 --> 00:11:33,550
+categories sports category and so on and each
+word has been recorded as it has a sense in
+
+115
+00:11:33,550 --> 00:11:40,170
+these this category so now the problem would
+be when i am given a sentence a word can can
+
+116
+00:11:40,170 --> 00:11:45,840
+have senses in multiple categories find out
+what is the a probably category in this sentence
+
+117
+00:11:45,840 --> 00:11:52,850
+so how do we use the this framework here so
+what i will do so for each sense of the target
+
+118
+00:11:52,850 --> 00:12:00,390
+word if find out what is the source category
+to which this belongs ok now calculate the
+
+119
+00:12:00,390 --> 00:12:06,600
+score for each senses by using context words
+no idea would be the context words again would
+
+120
+00:12:06,600 --> 00:12:11,310
+be having the researches all categories so
+for each context but i will find out what
+
+121
+00:12:11,310 --> 00:12:16,180
+is the source category over i will see by
+using the context word which thesaurus category
+
+122
+00:12:16,180 --> 00:12:23,380
+getting the highest count so here so what
+we will be doing a context word will add score
+
+123
+00:12:23,380 --> 00:12:29,870
+of one of the sense if the thesaurus category
+of the word matches that of the sense so lets
+
+124
+00:12:29,870 --> 00:12:35,680
+take this sentence the money in this bank
+fetches interest of eight percent per annum
+
+125
+00:12:35,680 --> 00:12:42,630
+and suppose my ambiguous word here is bank
+has two senses one in the case of safe finance
+
+126
+00:12:42,630 --> 00:12:48,130
+that is for the money bank that is also used
+in the sentence another could be river bank
+
+127
+00:12:48,130 --> 00:12:54,990
+also also can be used as location or something
+ok and i take each context words money interest
+
+128
+00:12:54,990 --> 00:13:00,410
+and annum fetch each again would have their
+own dissolves category
+
+129
+00:13:00,410 --> 00:13:06,820
+so what we will be doing i will take all these
+words money interest fetch annum i know bank
+
+130
+00:13:06,820 --> 00:13:13,601
+have two different senses finance and location
+so for each of these context words i will
+
+131
+00:13:13,601 --> 00:13:20,280
+put a one if the match any of this category
+so money message finance so i will put a one
+
+132
+00:13:20,280 --> 00:13:25,690
+here interest message finance again i will
+put a one here fetch does not meet meet any
+
+133
+00:13:25,690 --> 00:13:31,260
+of these senses so both are zero and a message
+finance again plus one and then i will add
+
+134
+00:13:31,260 --> 00:13:36,470
+the score of both the senses and i in here
+i say that a finance the score is three for
+
+135
+00:13:36,470 --> 00:13:42,160
+locations score is zero so i will take the
+sense of bank is finance in this particular
+
+136
+00:13:42,160 --> 00:13:47,940
+case so these are simple approach it by just
+taking the dictionary definition thesaurus
+
+137
+00:13:47,940 --> 00:13:53,760
+category
+now so so there is one problem in both these
+
+138
+00:13:53,760 --> 00:14:00,170
+approaches that is work for disambiguating
+the sense of a particular word we are not
+
+139
+00:14:00,170 --> 00:14:04,670
+disambiguating the sense of the other context
+words we are taking all the possible senses
+
+140
+00:14:04,670 --> 00:14:10,170
+of them into a single context bag but suppose
+you want to solve this problem where in a
+
+141
+00:14:10,170 --> 00:14:15,120
+sing in the same sentence there are multiple
+ambiguous words and you want to disambiguate
+
+142
+00:14:15,120 --> 00:14:20,980
+each of them together then can we do that
+and this can be done by making each of the
+
+143
+00:14:20,980 --> 00:14:26,710
+fact that although each word might have multiple
+senses but the particular senses that are
+
+144
+00:14:26,710 --> 00:14:31,950
+being used in this [sen/sentence] this sentence
+there will be somehow connected to each other
+
+145
+00:14:31,950 --> 00:14:37,880
+so we want to exploit this and for this we
+can use some sort of grab based method similar
+
+146
+00:14:37,880 --> 00:14:44,690
+to what we do in the case of ah pagerank algorithm
+so let me just quickly explain this idea and
+
+147
+00:14:44,690 --> 00:14:51,300
+we will actually deal with this pagerank algorithm
+in detail when we talk about summation application
+
+148
+00:14:51,300 --> 00:14:56,370
+but i will try to give you the intuition so
+this is the problem that suppose i have the
+
+149
+00:14:56,370 --> 00:15:05,060
+sentence the church bells no longer ring on
+sundays ok and i can say there are four words
+
+150
+00:15:05,060 --> 00:15:10,920
+bell rings church in sunday and i want to
+disambiguate the senses of these words and
+
+151
+00:15:10,920 --> 00:15:16,490
+also suppose that from the dictionary i know
+what are there sense definitions so here the
+
+152
+00:15:16,490 --> 00:15:20,860
+word church has three senses bell has three
+senses ring has three senses and sunday has
+
+153
+00:15:20,860 --> 00:15:28,440
+one senses and i want to disambiguate the
+first three words together so how do i do
+
+154
+00:15:28,440 --> 00:15:35,370
+that so idea would be so that is treated as
+a graph based problem where for each word
+
+155
+00:15:35,370 --> 00:15:40,690
+i first write down water [diff/different]
+different senses of this word so i have made
+
+156
+00:15:40,690 --> 00:15:46,210
+a vortex for each of the sense of these words
+so there are three three words is for a bell
+
+157
+00:15:46,210 --> 00:15:51,320
+three for ring three for church and one for
+sunday so i have now ten words in this graph
+
+158
+00:15:51,320 --> 00:15:58,500
+now what will be the idea i will now try to
+connect the different words together by seeing
+
+159
+00:15:58,500 --> 00:16:07,610
+what is the overlap among different sense
+definition so i will now try to correct connect
+
+160
+00:16:07,610 --> 00:16:14,120
+some weighted edges between different sense
+definitions by using [las/laska] lesks method
+
+161
+00:16:14,120 --> 00:16:19,300
+so the [lask/laska] is by similar by simple
+for finding similarity between two sentences
+
+162
+00:16:19,300 --> 00:16:24,400
+i use that find out what is the similarity
+between any two sense definitions and add
+
+163
+00:16:24,400 --> 00:16:29,670
+a weight between these two and this will give
+me some sort of matrix like that so i have
+
+164
+00:16:29,670 --> 00:16:35,290
+all the sense definitions connected now one
+thing one important thing is that for the
+
+165
+00:16:35,290 --> 00:16:39,839
+same word i will not have to connect its own
+sense definition so there will not be any
+
+166
+00:16:39,839 --> 00:16:45,150
+edge between s three and s two for the same
+word bell but they will be edges between different
+
+167
+00:16:45,150 --> 00:16:51,790
+words so as three of bell an s two of ring
+would be connected by what is the similarity
+
+168
+00:16:51,790 --> 00:17:00,090
+between these two sense definition so idea
+is that now we want to somehow find out that
+
+169
+00:17:00,090 --> 00:17:05,750
+particular combination here so one sense for
+each of the three words such that their overall
+
+170
+00:17:05,750 --> 00:17:11,289
+similarity is the highest so they are having
+the highest similarity and one particular
+
+171
+00:17:11,289 --> 00:17:18,089
+method that can use for that is using it a
+pagerank kind of algorithm so idea would be
+
+172
+00:17:18,089 --> 00:17:22,819
+if there are multiple if there are appropriate
+sense definitions that are similar to each
+
+173
+00:17:22,819 --> 00:17:28,940
+other if i use the pagrank algorithm they
+would have very high ranking school because
+
+174
+00:17:28,940 --> 00:17:38,110
+they will all contribute to each other
+so what do we do so for this graph once we
+
+175
+00:17:38,110 --> 00:17:45,490
+have all the word decease we have all the
+edge bit also we treated as a problematic
+
+176
+00:17:45,490 --> 00:17:54,779
+fear finding the page rank for each vertex
+of this graph and to give you simple intuition
+
+177
+00:17:54,779 --> 00:18:06,419
+so now what would we have so we have ah ten
+nodes the graph and i try to connect them
+
+178
+00:18:06,419 --> 00:18:13,749
+by different numbers these numbers depend
+on there lesks similarity now once i have
+
+179
+00:18:13,749 --> 00:18:29,080
+this if i want to compute the pagerank scores
+for each node ok and now what is the algorithm
+
+180
+00:18:29,080 --> 00:18:39,360
+for computing paging is score if you take
+it the simple idea that is ah i suppose so
+
+181
+00:18:39,360 --> 00:18:46,789
+this pagerank it completed in a creative manner
+so we start with some initial random is course
+
+182
+00:18:46,789 --> 00:18:57,911
+this will be some sort of probable distribution
+and i use this equation v equal to v a to
+
+183
+00:18:57,911 --> 00:19:06,249
+find out what will be the pagerank score ok
+and we denotes the pagerank scores and and
+
+184
+00:19:06,249 --> 00:19:11,169
+how do we actually come up with this score
+start with some initial v zero and then keep
+
+185
+00:19:11,169 --> 00:19:24,240
+on multiplying a a square a cube until it
+converge and that becomes your pagerank score
+
+186
+00:19:24,240 --> 00:19:28,740
+ok
+so we will talk about this algorithm in detail
+
+187
+00:19:28,740 --> 00:19:34,470
+later and for now you can just quickly have
+a look at what what is the pagerank algorithm
+
+188
+00:19:34,470 --> 00:19:40,360
+but the idea would be once we we do all that
+you will find one pagerank score for each
+
+189
+00:19:40,360 --> 00:19:50,990
+node and the nodes that are having a lot of
+connections with other nodes and with high
+
+190
+00:19:50,990 --> 00:19:58,789
+in degree connection will be given a higher
+pagerank score so if suppose this node is
+
+191
+00:19:58,789 --> 00:20:06,970
+connected to multiple sense definitions it
+is connected to this sense definition this
+
+192
+00:20:06,970 --> 00:20:16,340
+sense definition and this sense definition
+that means this might be one of the important
+
+193
+00:20:16,340 --> 00:20:23,110
+senses in this for this particular word and
+idea would be to find out for each word one
+
+194
+00:20:23,110 --> 00:20:29,120
+sense that is having the highest connection
+and this would be so someone that will get
+
+195
+00:20:29,120 --> 00:20:39,470
+a high pagerank a score
+so i will give pagerank the score to each
+
+196
+00:20:39,470 --> 00:20:44,679
+of the ten node and then for each word i will
+pick the one that is having the highest among
+
+197
+00:20:44,679 --> 00:20:51,779
+this set so i will take one from each of the
+set and here i anyway choose this one and
+
+198
+00:20:51,779 --> 00:20:59,110
+this becomes my final disambiguated sense
+so once i have added all these weighted adages
+
+199
+00:20:59,110 --> 00:21:07,690
+i will apply the graph based ranking algorithm
+so this can be pagerank algorithm and now
+
+200
+00:21:07,690 --> 00:21:13,360
+once we get all this course i will for each
+word i will choose the one with the highest
+
+201
+00:21:13,360 --> 00:21:19,409
+score an idea here is the sign the purpose
+sense that is connected to multiple other
+
+202
+00:21:19,409 --> 00:21:23,850
+sense which for multiple words would get a
+higher score and that is the intuition that
+
+203
+00:21:23,850 --> 00:21:29,340
+i want to choose the particular sense that
+is having a similar definition has many other
+
+204
+00:21:29,340 --> 00:21:36,570
+senses and this i do for each of the word
+so here suppose s one in for bell one s three
+
+205
+00:21:36,570 --> 00:21:43,399
+for ring and s two for church are selected
+and they are my final disambiguated senses
+
+206
+00:21:43,399 --> 00:21:53,330
+for these three words ok and this is my overall
+algorithm
+
+207
+00:21:53,330 --> 00:22:00,220
+now we can also use some machine learning
+based methods and one simple idea would be
+
+208
+00:22:00,220 --> 00:22:06,779
+to use a naive bayes algorithm so naive bayes
+algorithm we were we are using for doing classification
+
+209
+00:22:06,779 --> 00:22:12,070
+here what is the classification task for a
+given word there are multiple senses from
+
+210
+00:22:12,070 --> 00:22:18,619
+the sentence find out what is the appropriate
+sense so this is this method has to be word
+
+211
+00:22:18,619 --> 00:22:25,739
+specifics and for each word you might have
+as many classes as the number of sense of
+
+212
+00:22:25,739 --> 00:22:41,340
+this word so so problem here is find out the
+sense of the word that gives the maximum probability
+
+213
+00:22:41,340 --> 00:22:50,730
+as given f and set of features that i will
+extract from the context around this word
+
+214
+00:22:50,730 --> 00:22:57,369
+so this for a multiple senses i want to find
+out the sense that is having this score at
+
+215
+00:22:57,369 --> 00:23:08,989
+maximum now because naīve bayes genetic model
+that means the sense comes on the off first
+
+216
+00:23:08,989 --> 00:23:16,659
+and then the features are are generated from
+their different features so how do we compute
+
+217
+00:23:16,659 --> 00:23:25,590
+this particular probability this would be
+nothing but orgmax s probability f given s
+
+218
+00:23:25,590 --> 00:23:31,590
+probability s divided probabilities f and
+because this common for all the sense this
+
+219
+00:23:31,590 --> 00:23:42,679
+is orgmax over s p s p f given s is now p
+s nothing but the prior probability of the
+
+220
+00:23:42,679 --> 00:23:48,119
+sense that is if a particular sense of the
+word is more commonly used that get a high
+
+221
+00:23:48,119 --> 00:23:54,600
+prior and p f given s h what is the probability
+of different features being observed or generated
+
+222
+00:23:54,600 --> 00:24:01,429
+by this sense so naīve bays model what we
+do we make this assumption that each of these
+
+223
+00:24:01,429 --> 00:24:10,009
+features are conditional independent of each
+other given s given the sense s so suppose
+
+224
+00:24:10,009 --> 00:24:20,169
+there are features f one two f n so i was
+write it as orgmax s p s i is equal to one
+
+225
+00:24:20,169 --> 00:24:27,020
+to n probability f i given s ok and this i
+will do for each sense and i will i will take
+
+226
+00:24:27,020 --> 00:24:32,379
+the one that is giving you the maximum score
+now what is important here is what are different
+
+227
+00:24:32,379 --> 00:24:37,419
+features that you will be choosing for an
+naīve bayes method and these features have
+
+228
+00:24:37,419 --> 00:24:45,120
+to come from the context around the word so
+what what are different things i can use in
+
+229
+00:24:45,120 --> 00:24:50,230
+the context i can use water different part
+of speech that are being used what are different
+
+230
+00:24:50,230 --> 00:24:56,590
+words and so on let us see for this task what
+are the important features so this we have
+
+231
+00:24:56,590 --> 00:25:03,700
+already seen some for this task i can use
+the part of speech of surrounding words and
+
+232
+00:25:03,700 --> 00:25:08,039
+what are different semantic and syntactic
+features i can use co occurrence vector that
+
+233
+00:25:08,039 --> 00:25:14,809
+is what are the different other words this
+sense is used with and then i can use this
+
+234
+00:25:14,809 --> 00:25:19,909
+collocation vector vector that is water in
+general the next word next next word previous
+
+235
+00:25:19,909 --> 00:25:25,389
+word previous to previous word and their part
+of speech tags when the word is used in this
+
+236
+00:25:25,389 --> 00:25:33,309
+particular sense so i will construct this
+this side of feature vector by by using this
+
+237
+00:25:33,309 --> 00:25:42,549
+all these examples and the two parameters
+of a model that is the prior probability of
+
+238
+00:25:42,549 --> 00:25:48,509
+the sense and the probability of features
+given the sense can be computed from my corpus
+
+239
+00:25:48,509 --> 00:25:54,321
+by using simply maximum likelihood estimate
+so how do we compute probability of the sense
+
+240
+00:25:54,321 --> 00:26:00,970
+s i number of times the sensitive divide by
+number of times this word is used improbability
+
+241
+00:26:00,970 --> 00:26:04,790
+of a particular feature to the senses sense
+number of times this feature is observe with
+
+242
+00:26:04,790 --> 00:26:10,739
+the sense divide by number of times all other
+features are or number of times senses used
+
+243
+00:26:10,739 --> 00:26:16,999
+so these are simple formula for mle and you
+use that and plug into the algorithm and you
+
+244
+00:26:16,999 --> 00:26:24,600
+have your naive bayes models thirty for for
+use and you can use some other approaches
+
+245
+00:26:24,600 --> 00:26:32,799
+like decision list algorithm so what is the
+idea so here so you will use so this hypothesis
+
+246
+00:26:32,799 --> 00:26:39,669
+of one sense per collocation now what is this
+one sense for collocation hypothesis for a
+
+247
+00:26:39,669 --> 00:26:45,980
+given word idea is that with the particular
+collocation it is use only in one sense for
+
+248
+00:26:45,980 --> 00:26:50,700
+example take the word like bat we saw there
+are two two different sense one is like it
+
+249
+00:26:50,700 --> 00:26:58,150
+creates cricket bat and what another it like
+a flying mammal now suppose you take this
+
+250
+00:26:58,150 --> 00:27:04,940
+collocation cricket bat ok so the word cricket
+covering before bat with this collocation
+
+251
+00:27:04,940 --> 00:27:10,889
+the word bat will always used in one sense
+only not the other sense this is the idea
+
+252
+00:27:10,889 --> 00:27:16,570
+can i collocations to find out with this collocation
+this word to be with all in this sense and
+
+253
+00:27:16,570 --> 00:27:21,320
+with the other collocations it will be used
+in another other senses and this is called
+
+254
+00:27:21,320 --> 00:27:29,580
+the one collocation percents property sorry
+one sense per collocation property and so
+
+255
+00:27:29,580 --> 00:27:36,070
+how do i start about getting these set of
+collocations for a for a ambiguous word so
+
+256
+00:27:36,070 --> 00:27:41,489
+initially i can try out all the possible set
+of nearby words that that occurs with this
+
+257
+00:27:41,489 --> 00:27:50,179
+word more more often and once i have done
+that for each such collocation i can compute
+
+258
+00:27:50,179 --> 00:27:56,609
+what is the probability of a particular sense
+being used for this collocation with respect
+
+259
+00:27:56,609 --> 00:28:02,870
+to the other sense now take the simple case
+where the word has only two sense sense a
+
+260
+00:28:02,870 --> 00:28:13,039
+and sense b so for a given collocation i will
+find out what is the probability of sense
+
+261
+00:28:13,039 --> 00:28:24,019
+a given the collocation and what is the probability
+of sense b given this collocation
+
+262
+00:28:24,019 --> 00:28:29,979
+now question is once i found both these numbers
+what will be a function that will tell me
+
+263
+00:28:29,979 --> 00:28:37,049
+how good this collocation is now this collocation
+would be good if one of these probabilities
+
+264
+00:28:37,049 --> 00:28:46,519
+is high another probabilities quite low so
+collocation indicates sense a if this probability
+
+265
+00:28:46,519 --> 00:28:54,919
+divide by this probability is high sense b
+if the inverse of that is high and this simple
+
+266
+00:28:54,919 --> 00:29:02,769
+measure we used to come find out what collocations
+for a word are more important than others
+
+267
+00:29:02,769 --> 00:29:08,029
+so so i come so this and i take a log of this
+and this is called a log likelihood ratio
+
+268
+00:29:08,029 --> 00:29:13,049
+log of probability of sense a given the collocation
+i divide by probability of sense b k given
+
+269
+00:29:13,049 --> 00:29:20,169
+collocation i and then hire log likelihood
+means more evidence so what i will do for
+
+270
+00:29:20,169 --> 00:29:24,940
+different collocations that i have extend
+for the word these can be some simple words
+
+271
+00:29:24,940 --> 00:29:30,399
+that occurs a lot with this word in different
+context i will compute this log likelihood
+
+272
+00:29:30,399 --> 00:29:36,029
+this course and then i am i will arrange them
+in their decreasing order ok and this will
+
+273
+00:29:36,029 --> 00:29:45,749
+give me the decision list so now so here is
+an example suppose you have some training
+
+274
+00:29:45,749 --> 00:29:52,350
+data and here the ambiguous word is plant
+ok near trying to extra various collocations
+
+275
+00:29:52,350 --> 00:29:58,950
+that can help me to find out whether the sense
+used is a a is in the sense of plant life
+
+276
+00:29:58,950 --> 00:30:06,679
+and with the sense is b in the sense of manufacturing
+so suppose i i i run my algorithm and i find
+
+277
+00:30:06,679 --> 00:30:13,330
+out that the collocation plant growth its
+having a very high likelihood that is ten
+
+278
+00:30:13,330 --> 00:30:21,909
+point one two and this this is for the sense
+a what does that mean log of probability sense
+
+279
+00:30:21,909 --> 00:30:26,950
+a given plant growth divide by probability
+sense be given plant growth will become ten
+
+280
+00:30:26,950 --> 00:30:31,970
+point one two and this is the highest among
+all the collocations this comes out on top
+
+281
+00:30:31,970 --> 00:30:38,570
+n a c sense is a suppose similarly the second
+collocation is if the word car occurs in plus
+
+282
+00:30:38,570 --> 00:30:46,759
+minus k words around this ambiguous word plant
+then the sense would be b and this as a log
+
+283
+00:30:46,759 --> 00:30:53,159
+likelihood of nine point six eight and so
+on ok and with each likelihood i have a sense
+
+284
+00:30:53,159 --> 00:30:59,899
+now once i have that i can use it directly
+as my decision list classifier so what i will
+
+285
+00:30:59,899 --> 00:31:05,159
+do at runtime whenever i am given the sentence
+i find out if this collocation is present
+
+286
+00:31:05,159 --> 00:31:11,809
+plant growth if this is present senses a if
+not whether the word car occurs in plus minus
+
+287
+00:31:11,809 --> 00:31:18,340
+k words around plant if so senses being if
+not if plant height occurs senses a and so
+
+288
+00:31:18,340 --> 00:31:26,889
+on so so when i get a sentence at one time
+like plucking flowers affects plant growth
+
+289
+00:31:26,889 --> 00:31:32,539
+i will take this sentence and run it through
+this decision list classifier and accordingly
+
+290
+00:31:32,539 --> 00:31:37,179
+wherever i find a match i immediately provide
+the sense and i stop
+
+291
+00:31:37,179 --> 00:31:44,259
+now one thing you have to be careful here
+with these numbers so so remember the formula
+
+292
+00:31:44,259 --> 00:31:50,789
+we have a probable determine the denominator
+and it can also be zero in some cases so you
+
+293
+00:31:50,789 --> 00:31:54,470
+might have to use some sort of smoothing you
+can use add one a smoothing or some other
+
+294
+00:31:54,470 --> 00:32:01,889
+smoothing method for that so once you do that
+you can come up with this decision list classifier
+
+295
+00:32:01,889 --> 00:32:06,470
+and at runtime given a sentence you can easily
+compute what is a sense that should be used
+
+296
+00:32:06,470 --> 00:32:12,190
+here here is another example of decision list
+classifier like you are discriminating with
+
+297
+00:32:12,190 --> 00:32:18,739
+me bass and base the fish and music sense
+so it can be something like that suppose this
+
+298
+00:32:18,739 --> 00:32:24,320
+is how you are different collocations are
+ordered h for a log likelihood so we make
+
+299
+00:32:24,320 --> 00:32:30,599
+a finishing tree if the word fish occurs in
+plus minus k words if yes sense is fish fish
+
+300
+00:32:30,599 --> 00:32:39,940
+if no if the collocation stripe bass occurs
+if yes fish if no if the word guitar occurs
+
+301
+00:32:39,940 --> 00:32:46,090
+is directly coming from the ordered list of
+log likelihood and this you can run through
+
+302
+00:32:46,090 --> 00:32:51,879
+a new sentence to find out the appropriate
+sense of the word bus
+
+303
+00:32:51,879 --> 00:32:56,279
+so we saw some of the algorithms that that
+that by using knowledge based approaches and
+
+304
+00:32:56,279 --> 00:33:00,950
+machine learning approaches now in the next
+lecture we will also talk to talk about some
+
+305
+00:33:00,950 --> 00:33:06,720
+other approaches that are either semi supervisor
+unsupervised but in general there are many
+
+306
+00:33:06,720 --> 00:33:12,259
+many different algorithms that you can apply
+on this task we only providing you very brief
+
+307
+00:33:12,259 --> 00:33:17,840
+ideas on some of those so
+thank you soon so i will see you in the next
+
+308
+00:33:17,840 --> 00:33:18,090
+lecture
+

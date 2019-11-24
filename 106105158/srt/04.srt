@@ -1,0 +1,1434 @@
+1
+00:00:19,789 --> 00:00:26,710
+ok so welcome back for the forth lecture of
+the first week so in the last lecture we discussed
+
+2
+00:00:26,710 --> 00:00:32,730
+why is then we had and we we took examples
+of various cases of ambiguities in the language
+
+3
+00:00:32,730 --> 00:00:41,829
+and some non standard disease also ok so we
+will actually go into a text corpus and try
+
+4
+00:00:41,829 --> 00:00:48,890
+to study some very simple empirical laws that
+are very very universal about language ok
+
+5
+00:00:48,890 --> 00:00:58,089
+so now before going to that i will i will
+try to make a simple distinction clear to
+
+6
+00:00:58,089 --> 00:01:03,670
+you so what are the difference between function
+words versus content words in language so
+
+7
+00:01:03,670 --> 00:01:08,650
+whenever you see a language in it's vocabulary
+there are various kinds of words and they
+
+8
+00:01:08,650 --> 00:01:13,610
+can be called either function words or content
+words what are the difference between those
+
+9
+00:01:13,610 --> 00:01:17,860
+ok
+so function words are mainly used to make
+
+10
+00:01:17,860 --> 00:01:25,170
+the sentence grammatically so things like
+where is determine us a and ah and pronouns
+
+11
+00:01:25,170 --> 00:01:30,610
+and all are function words content words are
+various nouns and verbs that convey what are
+
+12
+00:01:30,610 --> 00:01:37,570
+the important concepts in the sentence ok
+so content words are mainly used for determining
+
+13
+00:01:37,570 --> 00:01:44,450
+the structure of the sentence so now this
+is in this is your example to give you an
+
+14
+00:01:44,450 --> 00:01:47,090
+idea about what are content words and what
+are function words
+
+15
+00:01:47,090 --> 00:01:53,650
+so you see here the same sentence as we written
+in two different ways in the in one of the
+
+16
+00:01:53,650 --> 00:02:02,470
+cases we have replaced the content words by
+some garbage words so this may dove words
+
+17
+00:02:02,470 --> 00:02:05,680
+that are not in the language
+in the other in the other example we have
+
+18
+00:02:05,680 --> 00:02:12,150
+the function words by some arbitrary words
+that are not in the language ok so can you
+
+19
+00:02:12,150 --> 00:02:15,970
+try to find out in which sentence we have
+replaced the function words with something
+
+20
+00:02:15,970 --> 00:02:23,810
+else so we will see here in the second sentence
+so we have removed the word like the and replaced
+
+21
+00:02:23,810 --> 00:02:30,400
+with words like glop ok and and so on in the
+first sentence we have replaced all the nouns
+
+22
+00:02:30,400 --> 00:02:38,269
+like angry and investigator with winfy prunkilmonger
+that is is research to the garbage word that
+
+23
+00:02:38,269 --> 00:02:45,270
+is not the language now
+now try to see the two sentences and in which
+
+24
+00:02:45,270 --> 00:02:49,260
+sentence you can see the structure of the
+sentence clearly and in which of the sentence
+
+25
+00:02:49,260 --> 00:02:54,879
+you can understand the topics of the sentence
+clear and you will find out that in the second
+
+26
+00:02:54,879 --> 00:03:00,659
+sentence you know all the topics so we are
+talking about some investigator government
+
+27
+00:03:00,659 --> 00:03:05,919
+and infuriated and all that ok the information
+you cannot get from the first sentence when
+
+28
+00:03:05,919 --> 00:03:11,790
+in the first sentence you can understand the
+extraction of the sentence the some x some
+
+29
+00:03:11,790 --> 00:03:25,469
+noun from something and a verb and again a
+verb all which a noun and a adverb ok and
+
+30
+00:03:25,469 --> 00:03:29,430
+you do not know what are these nouns and adverbs
+but you know what is the extraction of these
+
+31
+00:03:29,430 --> 00:03:36,519
+sentence do a certain filers in the in the
+sense of various nouns and verbs
+
+32
+00:03:36,519 --> 00:03:41,949
+so in general function words in a language
+are closed class words what i mean by that
+
+33
+00:03:41,949 --> 00:03:46,909
+there are very specific grammatically categories
+that can be called as function words and they
+
+34
+00:03:46,909 --> 00:03:51,549
+they they are generally closed we do not have
+newer and newer functions what coming into
+
+35
+00:03:51,549 --> 00:03:57,809
+a language ok some examples of function words
+are like prepositions pronouns auxiliary verbs
+
+36
+00:03:57,809 --> 00:04:06,349
+conjunctions grammatical articles and various
+particles in the language ok so now let us
+
+37
+00:04:06,349 --> 00:04:11,819
+take a take a corpus and try to see what are
+the distribution of words that we encounter
+
+38
+00:04:11,819 --> 00:04:16,980
+in the corpus
+so here we have taken tom saw sawyer so that
+
+39
+00:04:16,980 --> 00:04:23,050
+was a noble written by mark twain and what
+we are doing in the slide we are just reporting
+
+40
+00:04:23,050 --> 00:04:28,430
+which of the words occur with what frequency
+so this is a sorted list a starting from the
+
+41
+00:04:28,430 --> 00:04:35,560
+highest frequency to the to some top fifteen
+twenty words and what is the grammatical category
+
+42
+00:04:35,560 --> 00:04:40,420
+ok so the top word you see here is the so
+that occurs with the frequency of three thousand
+
+43
+00:04:40,420 --> 00:04:45,910
+three hundred thirty two and this is very
+very common across different language corpus
+
+44
+00:04:45,910 --> 00:04:51,350
+ok so if you pick up any arbitrary language
+corpus you will feel that the distribution
+
+45
+00:04:51,350 --> 00:04:55,680
+roughly is
+so now till we have a look at this list and
+
+46
+00:04:55,680 --> 00:05:01,470
+find out what is special about this list what
+is the category of words that you see here
+
+47
+00:05:01,470 --> 00:05:06,830
+so so so remember we talked about two categories
+function words and content words can you try
+
+48
+00:05:06,830 --> 00:05:12,570
+to find out which of the category you see
+here so we see most of the words here are
+
+49
+00:05:12,570 --> 00:05:18,600
+function words ok so the and a to of and you
+can see also by the grammatical categories
+
+50
+00:05:18,600 --> 00:05:26,940
+that is also written here so so one thing
+like that we see in this distribution is that
+
+51
+00:05:26,940 --> 00:05:31,980
+this list is dominated by the little words
+of english that are that are very important
+
+52
+00:05:31,980 --> 00:05:37,540
+grammatical roles for for the sentence ok
+now what is one exception that you see to
+
+53
+00:05:37,540 --> 00:05:48,950
+this so we call them function words that we
+let me say a determine us prepositions complementizers
+
+54
+00:05:48,950 --> 00:05:56,120
+like the word that here so now what is one
+exception that we see in this list so that
+
+55
+00:05:56,120 --> 00:06:04,030
+exception is probably the word tom so tom
+is very specified to per topic of this text
+
+56
+00:06:04,030 --> 00:06:08,550
+ok so this is about tom sawyer so you see
+the word tom also as a very high frequency
+
+57
+00:06:08,550 --> 00:06:15,870
+and this makes into the list of top frequent
+words ok so so again if you take an arbitrary
+
+58
+00:06:15,870 --> 00:06:22,220
+text and try to find out some top frequent
+words mostly they will be function words also
+
+59
+00:06:22,220 --> 00:06:29,000
+sometimes known as where is this top words
+plus you can find some appearances of words
+
+60
+00:06:29,000 --> 00:06:35,950
+that come with the topic of that text so in
+this that is a word tom
+
+61
+00:06:35,950 --> 00:06:41,140
+so let us try to see something else how many
+words are there in this text what are the
+
+62
+00:06:41,140 --> 00:06:50,150
+various ah technical terms why which these
+are indicated so for that we will talk about
+
+63
+00:06:50,150 --> 00:06:58,710
+the type token distinction so type token astrology
+philosophical distinction between a concept
+
+64
+00:06:58,710 --> 00:07:09,460
+concept is a type and a particular instances
+of the concept ok so concept is type and instance
+
+65
+00:07:09,460 --> 00:07:22,470
+is a concept are tokens
+so what do i mean by typing token when it
+
+66
+00:07:22,470 --> 00:07:32,130
+comes to a language ok so a language if the
+same word occurs multiple times ok so i call
+
+67
+00:07:32,130 --> 00:07:40,460
+them the same type the same type same concept
+but different tokens ok so if i write the
+
+68
+00:07:40,460 --> 00:07:52,310
+same word say will will the same word twice
+i say this is a single type this is only one
+
+69
+00:07:52,310 --> 00:08:00,080
+type but there are two tokens so each individual
+occurrence is a different token but they have
+
+70
+00:08:00,080 --> 00:08:11,570
+the same type so in other sense by type i
+mean some sort of unique words in my vocabulary
+
+71
+00:08:11,570 --> 00:08:23,310
+and token means the number of words they are
+not unique so if the word occurs five times
+
+72
+00:08:23,310 --> 00:08:30,420
+i will count it as five different tokens but
+the same type
+
+73
+00:08:30,420 --> 00:08:35,930
+now so once we have understood what is a distinction
+between type and token there is a particular
+
+74
+00:08:35,930 --> 00:08:42,079
+concept that is called type token ratio that
+is you should describe some text ok so what
+
+75
+00:08:42,079 --> 00:08:49,940
+is type token token ratio very simple the
+ratio of the the number of types that is number
+
+76
+00:08:49,940 --> 00:08:55,450
+of different unique words to the number of
+running words so all the tokens so you find
+
+77
+00:08:55,450 --> 00:08:59,279
+out the number of types in the text divided
+by the number of tokens in the text and you
+
+78
+00:08:59,279 --> 00:09:06,360
+get the ttr type token ratio ok
+so what this ratio indicates that tells on
+
+79
+00:09:06,360 --> 00:09:15,220
+an average how often a new word appears in
+the text ok so if type divide by token that
+
+80
+00:09:15,220 --> 00:09:23,610
+is my type token ratio if it is high that
+means in the text lot of new words are keep
+
+81
+00:09:23,610 --> 00:09:28,410
+on coming because the number of types is very
+close to the number of token but if this is
+
+82
+00:09:28,410 --> 00:09:38,389
+small that means the small words are getting
+repeated again and again in the corpus ok
+
+83
+00:09:38,389 --> 00:09:44,709
+so suppose we take two different text corpus
+one is mark twains tom sawyer another we take
+
+84
+00:09:44,709 --> 00:09:50,800
+complete shakespeare work and we try to find
+out what is the ttr for each of this so our
+
+85
+00:09:50,800 --> 00:09:57,490
+mark twains we find that there are seventy
+one thousand three seventy word tokens and
+
+86
+00:09:57,490 --> 00:10:02,999
+eight thousand eighteen word types so how
+do we complete ttr you just find out we just
+
+87
+00:10:02,999 --> 00:10:08,579
+divide types by tokens so eight thousand eighteen
+divide by seventy one thousand three seventy
+
+88
+00:10:08,579 --> 00:10:12,059
+that will give me the ttr that is close to
+point one one two
+
+89
+00:10:12,059 --> 00:10:18,100
+now if you take the shakespeare work you find
+similarly there are eight eighty four thousand
+
+90
+00:10:18,100 --> 00:10:25,249
+plus tokens and twenty nine thousand plus
+types and type ttr comes to be much more than
+
+91
+00:10:25,249 --> 00:10:36,619
+that of tom sawyer point zero three ok suppose
+i take four different types of media so four
+
+92
+00:10:36,619 --> 00:10:43,369
+different types of media like conversations
+if two people are conversing academic prose
+
+93
+00:10:43,369 --> 00:10:50,860
+will be scientific articles and books news
+and fiction i take four different sorts of
+
+94
+00:10:50,860 --> 00:10:59,499
+media in which ah language is communicated
+now can you try to have a have a guess which
+
+95
+00:10:59,499 --> 00:11:03,279
+one will have the highest ttr and which will
+will have the lowest ttr
+
+96
+00:11:03,279 --> 00:11:12,660
+so so let us go to the definition of ttr so
+if high ttr it will be tendency to use the
+
+97
+00:11:12,660 --> 00:11:32,231
+new words what what about low ttr if you have
+low ttr that is tendency to use same word
+
+98
+00:11:32,231 --> 00:11:49,230
+repeatedly so now now given that so i have
+four different ah media one are conversation
+
+99
+00:11:49,230 --> 00:12:00,399
+then i have academic prose then i have news
+and fiction now which one do you think will
+
+100
+00:12:00,399 --> 00:12:08,360
+have the tendency to repeat the same word
+again and again so we think over it in conversation
+
+101
+00:12:08,360 --> 00:12:12,290
+we try to repeat the same word again and again
+so whatever you are conversing i will try
+
+102
+00:12:12,290 --> 00:12:17,699
+to take it from there and repeat it
+so conversation have the tendency to use the
+
+103
+00:12:17,699 --> 00:12:21,740
+same word repeatedly so that means they will
+have the lowest ttr ok on the other hand it
+
+104
+00:12:21,740 --> 00:12:33,649
+has been found in news you have tendency to
+use newer words so news this is the highest
+
+105
+00:12:33,649 --> 00:12:41,670
+ok so can you can you guess which of the remaining
+one will have the second lowest ttr where
+
+106
+00:12:41,670 --> 00:12:48,499
+the same words have been used repeatedly and
+and that is actually the academic prose because
+
+107
+00:12:48,499 --> 00:12:53,189
+academic prose is very very formal so they
+are very very particular kind of words and
+
+108
+00:12:53,189 --> 00:13:02,220
+verbs that that we use ok so that's why ttr
+is again found to be low in academic prose
+
+109
+00:13:02,220 --> 00:13:05,579
+ok
+so ttr is scores the lowest value in the case
+
+110
+00:13:05,579 --> 00:13:12,440
+of conversations and highest value in news
+and the academic prose as the second lowest
+
+111
+00:13:12,440 --> 00:13:22,800
+ttr ok and this also make sense now one thing
+you must be conscious about that ttr in in
+
+112
+00:13:22,800 --> 00:13:29,140
+itself is not a very valid measure of finding
+text complexity ok you might say that ok if
+
+113
+00:13:29,140 --> 00:13:34,940
+ttr is high text might be complex but this
+is not a valid measure in itself so why is
+
+114
+00:13:34,940 --> 00:13:41,170
+that so so think of this scenario if you are
+using more and more text what would happen
+
+115
+00:13:41,170 --> 00:13:47,240
+to your ttr ratio ok suppose your text contains
+you are taking a running text so till here
+
+116
+00:13:47,240 --> 00:13:55,809
+you have thirty thousand tokens
+now you go forward in your text and you go
+
+117
+00:13:55,809 --> 00:14:05,790
+to sixty thousand tokens now what would you
+guess can you see the ttr at this point it
+
+118
+00:14:05,790 --> 00:14:12,579
+will always be lower than the ttr at this
+point yes because whatever words were there
+
+119
+00:14:12,579 --> 00:14:18,179
+in the corpus most the words have already
+been introduced in the in the first half second
+
+120
+00:14:18,179 --> 00:14:24,239
+half most of the words will be again getting
+repeated ok so the number of tokens will increase
+
+121
+00:14:24,239 --> 00:14:30,889
+linearly with the size of text but number
+of words in a vocabulary do not ok
+
+122
+00:14:30,889 --> 00:14:44,759
+so that's why if i take say a tom sawyer versus
+shakespeares works you will see the ttr is
+
+123
+00:14:44,759 --> 00:14:52,930
+high in tom sawyer than shakespeare work because
+they since having a much larger number of
+
+124
+00:14:52,930 --> 00:14:59,239
+tokens so when it in itself it cannot be a
+valid measure so when you take into account
+
+125
+00:14:59,239 --> 00:15:06,309
+the size of the text so another way in which
+this is computed is by taking a running average
+
+126
+00:15:06,309 --> 00:15:13,360
+ok so you take a running average on some consecutive
+thousand word chunks so what i mean by running
+
+127
+00:15:13,360 --> 00:15:17,920
+average suppose i have a text that as five
+thousand tokens
+
+128
+00:15:17,920 --> 00:15:29,759
+so now you first compute ttr for the initial
+thousand tokens one to thousand ok get a ttr
+
+129
+00:15:29,759 --> 00:15:37,589
+for that now you take start from two to thousand
+one i didnt have ttr three to thousand two
+
+130
+00:15:37,589 --> 00:15:43,670
+compute ttr and then take an average so you
+compute ttr on moving window of thousand length
+
+131
+00:15:43,670 --> 00:15:50,199
+thousand and then you take an average
+so that is considered to be a better of a
+
+132
+00:15:50,199 --> 00:15:57,339
+ttr ok so now so you see that we will talk
+about some empirical laws so for that let
+
+133
+00:15:57,339 --> 00:16:03,449
+us try to have a look at some of the frequency
+distribution that we see in tom sawyer ok
+
+134
+00:16:03,449 --> 00:16:08,580
+so remember we we said that the ttr on tom
+sawyer is roughly point one one so what does
+
+135
+00:16:08,580 --> 00:16:15,250
+it indicate it says that on an average here
+what is repeated nine times yes try to token
+
+136
+00:16:15,250 --> 00:16:19,119
+ratio is one by nine roughly
+now what is that mean does that mean that
+
+137
+00:16:19,119 --> 00:16:24,420
+each word occurs nine times in the text or
+is it something different so what we see saying
+
+138
+00:16:24,420 --> 00:16:28,759
+saying here that words do not have a very
+even distribution it is not happen that each
+
+139
+00:16:28,759 --> 00:16:33,970
+word occurs nine times in the text so what
+is the usual kind of distribution that we
+
+140
+00:16:33,970 --> 00:16:38,660
+see in the corpus ok
+so on the left in the left hand side of the
+
+141
+00:16:38,660 --> 00:16:46,879
+slide so you see i have two columns first
+column gives me the word frequency second
+
+142
+00:16:46,879 --> 00:16:51,480
+column gives me frequency of frequency what
+do i mean by frequency of frequency how many
+
+143
+00:16:51,480 --> 00:16:59,000
+words in this corpus have that frequency ok
+so take the first row that means there are
+
+144
+00:16:59,000 --> 00:17:05,089
+three thousand nine hundred ninety three words
+in the corpus that occur only once they have
+
+145
+00:17:05,089 --> 00:17:10,480
+frequency one and there are twelve hundred
+ninety two words in the corpus that occur
+
+146
+00:17:10,480 --> 00:17:13,770
+twice and so on
+similarly there are hundred and two words
+
+147
+00:17:13,770 --> 00:17:22,120
+in the corpus that occur more than hundred
+times ok so now once you see this statistic
+
+148
+00:17:22,120 --> 00:17:28,480
+then immediately see that the distribution
+is not very very uniform ok so what are the
+
+149
+00:17:28,480 --> 00:17:34,360
+two different observations that we have here
+ok so first observation that we make are most
+
+150
+00:17:34,360 --> 00:17:38,650
+words are real so which are the real words
+the words that occur with frequency one or
+
+151
+00:17:38,650 --> 00:17:46,290
+two so we see here roughly fifty percent of
+the word types remember in tom sawyer roughly
+
+152
+00:17:46,290 --> 00:17:52,370
+eight thousand what else where their so roughly
+fifty percent of them occur only once so there
+
+153
+00:17:52,370 --> 00:17:58,990
+were frequency of one and they are also called
+happax legomena ok so that is a greek term
+
+154
+00:17:58,990 --> 00:18:03,320
+for read only once they occur only once in
+my corpus
+
+155
+00:18:03,320 --> 00:18:09,770
+what is the other observations that we have
+hundred words account for fifty one percent
+
+156
+00:18:09,770 --> 00:18:15,890
+of all the tokens of all text so you had only
+hundred and two words here that were higher
+
+157
+00:18:15,890 --> 00:18:23,630
+frequency greater than hundred but the together
+account for fifty percent of two of the corpus
+
+158
+00:18:23,630 --> 00:18:34,480
+so this is again a strange so now this particular
+observation gives the first empirical law
+
+159
+00:18:34,480 --> 00:18:39,550
+that we will study that is called zipfs law
+ok so very very popular law in in the case
+
+160
+00:18:39,550 --> 00:18:47,440
+of language corpus how the vocabulary is the
+distribution behave ok so you see zipfs law
+
+161
+00:18:47,440 --> 00:18:55,790
+what do we need to do first take a large corpus
+ok now take find out what are the individual
+
+162
+00:18:55,790 --> 00:19:01,490
+word types and count the frequency of each
+word type ok
+
+163
+00:19:01,490 --> 00:19:08,270
+now what you need to do you list the word
+types in their decreasing order of frequency
+
+164
+00:19:08,270 --> 00:19:15,010
+ok so for example suppose in the previous
+case we found there are various types like
+
+165
+00:19:15,010 --> 00:19:23,380
+the an and tom and so on in the corpus i will
+find out the frequency so this occurs with
+
+166
+00:19:23,380 --> 00:19:30,600
+four thousand frequency this occurs with thousand
+this occurs with say two thousand and this
+
+167
+00:19:30,600 --> 00:19:35,291
+occurs with thousand five hundred and so on
+there are various first occur occurring the
+
+168
+00:19:35,291 --> 00:19:39,390
+different frequencies
+now the first thing i will do i will try to
+
+169
+00:19:39,390 --> 00:19:46,990
+sort them in the decreasing order so first
+i will have the then i will have and then
+
+170
+00:19:46,990 --> 00:19:55,150
+i have tom then i will have an and so on all
+that the words in the vocabulary so they will
+
+171
+00:19:55,150 --> 00:20:01,210
+have their frequency this is four thousand
+one thousand sorry two thousand one thousand
+
+172
+00:20:01,210 --> 00:20:08,850
+five hundred and thousand now i will give
+you then the ranks ok because i have already
+
+173
+00:20:08,850 --> 00:20:14,950
+sorted in decreasing order i put the rank
+so there is this rank one rank two rank three
+
+174
+00:20:14,950 --> 00:20:23,070
+rank four and so on ok
+so now what is zipf law say so zipf law gives
+
+175
+00:20:23,070 --> 00:20:30,440
+me a relationship between the frequency of
+a word the f in this list and the rank of
+
+176
+00:20:30,440 --> 00:20:36,310
+this word ok in this sorted list and what
+is the relation that zipf law gives a relation
+
+177
+00:20:36,310 --> 00:20:43,970
+is very very easy so relation is the frequency
+is inversely proportional to the rank of the
+
+178
+00:20:43,970 --> 00:20:50,760
+word ok so inversely ratio between the frequency
+and the rank so that is i can say that if
+
+179
+00:20:50,760 --> 00:20:59,660
+i multiple f dot r i will get some sort of
+the constant f dot r is a constant this is
+
+180
+00:20:59,660 --> 00:21:04,890
+for our arbitrary example that we took in
+this case we can even see that this holds
+
+181
+00:21:04,890 --> 00:21:13,810
+so four thousand into one is so this is four
+thousand this is again four thousand this
+
+182
+00:21:13,810 --> 00:21:21,790
+is four thousand five hundred and this four
+thousand they are roughly the same ok so what
+
+183
+00:21:21,790 --> 00:21:29,120
+it means suppose i make a list like that and
+i have two words
+
+184
+00:21:29,120 --> 00:21:39,320
+so i have a word with as a rank of fifty and
+remember that as a rank of one fifty and i
+
+185
+00:21:39,320 --> 00:21:45,960
+find it's frequency f one it's frequency f
+two so i can see that f one is three times
+
+186
+00:21:45,960 --> 00:21:53,490
+f two so f one is three times f two ok so
+the fiftieth most count word should occur
+
+187
+00:21:53,490 --> 00:22:00,010
+with three times the frequency of the one
+fiftieth most convert ok this is what zipf
+
+188
+00:22:00,010 --> 00:22:08,800
+laws tells me we can write it in also a different
+manner so we talked about frequency we can
+
+189
+00:22:08,800 --> 00:22:16,260
+also talk about probability ok so let p r
+denote the probability of a word with rank
+
+190
+00:22:16,260 --> 00:22:20,650
+r
+so what is pr pr is nothing but frequency
+
+191
+00:22:20,650 --> 00:22:25,810
+of the word word of rank r divide by the number
+of tokens that i seen the corpus that's how
+
+192
+00:22:25,810 --> 00:22:36,150
+i will compute the probability of that so
+n is the total number of word account says
+
+193
+00:22:36,150 --> 00:22:49,520
+tokens ok so what does zipf law tell so it
+says frequency is inversely proportion to
+
+194
+00:22:49,520 --> 00:23:03,740
+r i can also write f divide by n with some
+a by r ok so what i have done i taken the
+
+195
+00:23:03,740 --> 00:23:12,520
+constant k i have written that it as a times
+n ok n is a number of tokens in my vocabulary
+
+196
+00:23:12,520 --> 00:23:18,950
+n a is from other constant and it's fixed
+given a corpus and using in the constant so
+
+197
+00:23:18,950 --> 00:23:23,460
+now what why we are doing that because it
+as been seen in that in the corpus a's when
+
+198
+00:23:23,460 --> 00:23:34,770
+we take a valid close to point one ok this
+is generally more fix than the value of k
+
+199
+00:23:34,770 --> 00:23:40,060
+ok
+so now going back to the a jumble of tom sawyer
+
+200
+00:23:40,060 --> 00:23:44,730
+let us take some words their frequency and
+their rank and see whether the relation that
+
+201
+00:23:44,730 --> 00:23:50,580
+f dot r is roughly constant holds to it ok
+what you are seeing here so we have arrays
+
+202
+00:23:50,580 --> 00:23:57,280
+words like the and he there and so on we have
+written their frequencies and their ranks
+
+203
+00:23:57,280 --> 00:24:04,760
+and what is f dot r so what the what we are
+seeing here f dot r if you start form the
+
+204
+00:24:04,760 --> 00:24:11,880
+forth word say he this remains roughly in
+the same range ok is start it remains in eight
+
+205
+00:24:11,880 --> 00:24:17,430
+thousand to some ten thousand four hundred
+and two hundred ok it does not the range does
+
+206
+00:24:17,430 --> 00:24:22,160
+not vary a lot
+so that is very nice empirical evidence that
+
+207
+00:24:22,160 --> 00:24:27,040
+zipf law holds and let us see we will see
+in various corpus that f dot r remains constant
+
+208
+00:24:27,040 --> 00:24:37,190
+from most of the words that you will see ok
+so now so zipf law is one of the very very
+
+209
+00:24:37,190 --> 00:24:42,280
+important law so that we have just see but
+zipf as given some other laws also there are
+
+210
+00:24:42,280 --> 00:24:47,490
+not so popular but still we will is try to
+have a look quick look at this so one of the
+
+211
+00:24:47,490 --> 00:24:54,970
+laws is relating the number of means a word
+as with it's frequency so what this law says
+
+212
+00:24:54,970 --> 00:25:00,090
+so the number of meanings m that a word as
+obeys the simple law that m is proportion
+
+213
+00:25:00,090 --> 00:25:07,720
+to the a square of roots it's frequency
+so that is as i as we have words with higher
+
+214
+00:25:07,720 --> 00:25:11,691
+and higher frequencies the number of the different
+sansage or the meanings will which they can
+
+215
+00:25:11,691 --> 00:25:21,930
+be used also increases ok so now if i use
+it with the first law so what do we get so
+
+216
+00:25:21,930 --> 00:25:31,960
+the first law says that frequency is inversely
+proportional to the rank this is law one and
+
+217
+00:25:31,960 --> 00:25:38,280
+the second law says the meanings are directly
+proportional to the as a square root of frequency
+
+218
+00:25:38,280 --> 00:25:47,540
+this is law two if we combine these two laws
+together we can get meaning r inversely proportional
+
+219
+00:25:47,540 --> 00:25:55,010
+to the rank of that ok so that means if i
+if i put the words in the decreasing order
+
+220
+00:25:55,010 --> 00:25:58,680
+of your rank so you are starting from rank
+one to rank two and so on
+
+221
+00:25:58,680 --> 00:26:03,270
+so now so they mean number of meanings will
+also keep on decreasing so these clause hold
+
+222
+00:26:03,270 --> 00:26:12,230
+an average ok what is the empirical support
+so as i were saying the hold on an average
+
+223
+00:26:12,230 --> 00:26:18,400
+so if we saw the words that are having rank
+roughly close to ten thousand so they have
+
+224
+00:26:18,400 --> 00:26:23,680
+roughly two two point one meanings if their
+words that are having rank roughly five thousand
+
+225
+00:26:23,680 --> 00:26:28,370
+they are found to have roughly three meanings
+and the words that are having having rank
+
+226
+00:26:28,370 --> 00:26:33,240
+plus two thousand they were having roughly
+four point six meanings ok and you can do
+
+227
+00:26:33,240 --> 00:26:39,770
+the math and you will find out this roughly
+ah this roughly follows whatever we have seen
+
+228
+00:26:39,770 --> 00:26:48,240
+in this law ok
+and these are the law by zipf that tries to
+
+229
+00:26:48,240 --> 00:26:53,390
+correlate the length of the word that means
+the number of characters the word as with
+
+230
+00:26:53,390 --> 00:26:59,320
+the the frequency of the word and it says
+the frequencies of the word is inversely proportional
+
+231
+00:26:59,320 --> 00:27:04,880
+to it's length ok and in can you try to see
+that in the case of english so the very very
+
+232
+00:27:04,880 --> 00:27:10,160
+long words are very very really used so their
+frequency is very very small but some of the
+
+233
+00:27:10,160 --> 00:27:18,800
+very small words like examples like function
+words they are used very very often and that
+
+234
+00:27:18,800 --> 00:27:24,340
+also make sense because language is used for
+having some efficient communication ok so
+
+235
+00:27:24,340 --> 00:27:29,140
+you cannot have long words that are very very
+common then you will have to write a lot ok
+
+236
+00:27:29,140 --> 00:27:36,980
+so the words that are very very common are
+generally short ok
+
+237
+00:27:36,980 --> 00:27:43,050
+so we talked about zipfs law now so for doing
+the processing of language what is the impact
+
+238
+00:27:43,050 --> 00:27:47,310
+of zipfs law so we said there is a good part
+in the and there is a bad part so what is
+
+239
+00:27:47,310 --> 00:27:53,720
+a good part so in the language we saw that
+so remember there were two important observations
+
+240
+00:27:53,720 --> 00:28:00,410
+that we made from a zipf law what was those
+so one observation was that fifty percent
+
+241
+00:28:00,410 --> 00:28:19,440
+of the vocabulary that means the types occur
+only once so they are very rare rare words
+
+242
+00:28:19,440 --> 00:28:29,920
+and this is most words are rare words this
+fifty percent of the words occur only once
+
+243
+00:28:29,920 --> 00:28:39,050
+and what is the their observation you say
+that roughly hundred roughly words account
+
+244
+00:28:39,050 --> 00:28:51,060
+for fifty percent of the tokens ok so that
+is from common words are very very common
+
+245
+00:28:51,060 --> 00:29:06,000
+they occur they occur a lot so words are very
+common ok they of fifty percent of your text
+
+246
+00:29:06,000 --> 00:29:10,100
+so now given these observations what do you
+think is the good part what is a bad part
+
+247
+00:29:10,100 --> 00:29:19,110
+when it comes to an end ok so so this is a
+bad part ok why is it the bad part so what
+
+248
+00:29:19,110 --> 00:29:25,780
+it says is is that a fifty percent of my words
+in the vocabulary they can only once so it
+
+249
+00:29:25,780 --> 00:29:31,360
+is not easy for me to gather some statistics
+to do some meaning analysis so there are only
+
+250
+00:29:31,360 --> 00:29:36,350
+once let's all the knowledge i have about
+these words ok so that's why this is called
+
+251
+00:29:36,350 --> 00:29:43,140
+the bad part i cannot do lot of modeling for
+these words and the other part that hundred
+
+252
+00:29:43,140 --> 00:29:49,030
+roughly hundred words account for fifty percent
+of token it's we call sometimes the good part
+
+253
+00:29:49,030 --> 00:29:57,960
+why because for most of the analysis you can
+always remove these words and so will reduce
+
+254
+00:29:57,960 --> 00:30:03,770
+you total number of tokens by half so we will
+have to process roughly half of the text because
+
+255
+00:30:03,770 --> 00:30:09,730
+how the text is simply these stop words and
+the function words ok
+
+256
+00:30:09,730 --> 00:30:14,630
+so that's what i we mean meant here the good
+part is that the stop words account for a
+
+257
+00:30:14,630 --> 00:30:20,360
+large fraction of text thus they eliminate
+if i eliminate the stopwords it reduces the
+
+258
+00:30:20,360 --> 00:30:26,240
+size of my text roughly by half and the bad
+part is most of the words are extremely rare
+
+259
+00:30:26,240 --> 00:30:33,860
+and it is very very difficult to gather data
+to some meaningful analysis with each words
+
+260
+00:30:33,860 --> 00:30:42,410
+ok so now so we will talk about one more law
+here so that is the relation between the size
+
+261
+00:30:42,410 --> 00:30:50,160
+of my vocabulary and the number of tokens
+in my text ok so so that is how does the size
+
+262
+00:30:50,160 --> 00:30:58,240
+of my vocabulary go with the size of my corpus
+ok so we talked about type token ratio so
+
+263
+00:30:58,240 --> 00:31:02,720
+that is one sort of analysis that we can do
+but that does not give me a particular law
+
+264
+00:31:02,720 --> 00:31:09,420
+so what will be the rough distribution their
+rough relationship between them ok
+
+265
+00:31:09,420 --> 00:31:15,630
+so we have heaps law they tries with the relationship
+between the size of my vocabulary that we
+
+266
+00:31:15,630 --> 00:31:24,690
+call as v and the number of tokens n what
+this law says that it gives a symbol relationship
+
+267
+00:31:24,690 --> 00:31:32,930
+it says the size of my vocabulary is some
+constant times k n is a number of tokens to
+
+268
+00:31:32,930 --> 00:31:40,230
+the power beta and the ranges are also observing
+the corpus so k has been found to be roughly
+
+269
+00:31:40,230 --> 00:31:45,510
+in the range of ten to hundred although this
+can vary this is our roughly this as been
+
+270
+00:31:45,510 --> 00:31:50,110
+found to be in this range and beta is very
+close to the square root so it is found in
+
+271
+00:31:50,110 --> 00:31:57,250
+the range of point four to point six
+so what it says so vocabulary generally grows
+
+272
+00:31:57,250 --> 00:32:02,420
+as for the a square root of the number of
+tokens so that also make sense remember we
+
+273
+00:32:02,420 --> 00:32:07,110
+are talking about what if i keep on teaching
+my vocabulary i will tend to use the sorry
+
+274
+00:32:07,110 --> 00:32:11,530
+keep on teaching my tokens i will tend to
+use the same word again and again so number
+
+275
+00:32:11,530 --> 00:32:20,240
+of unique tokens or unique types in each roughly
+to the square root of my ah corpus size ok
+
+276
+00:32:20,240 --> 00:32:25,760
+so what is some sort of empirical evidence
+for that so so here so there are four different
+
+277
+00:32:25,760 --> 00:32:32,620
+corpus that has been taking care of taken
+taken so like moisture wsj and there are some
+
+278
+00:32:32,620 --> 00:32:40,580
+other different new corpus and what what this
+plot shows on the x axis you have the words
+
+279
+00:32:40,580 --> 00:32:44,590
+in collection in millions
+so how many words in my collection so there
+
+280
+00:32:44,590 --> 00:32:49,280
+are ten million twenty million thirty million
+forty million on the y axis it is showing
+
+281
+00:32:49,280 --> 00:32:53,600
+the number of words in a vocabulary in thousand
+so twenty fifty thousand hundred thousand
+
+282
+00:32:53,600 --> 00:32:59,300
+hundred fifty thousand and so on and the plot
+so the relationship between the vocabulary
+
+283
+00:32:59,300 --> 00:33:05,330
+and the number of tokens and you see at the
+plot shows roughly is square root behaviour
+
+284
+00:33:05,330 --> 00:33:14,059
+ok and this as been found to to match with
+whatever he proposed so this is again an empirical
+
+285
+00:33:14,059 --> 00:33:21,940
+law that is very very universal to the language
+ok so that's for this lecture and in the next
+
+286
+00:33:21,940 --> 00:33:28,400
+lecture we will start talking about some actual
+task related to the preprocessing of the corpus
+
+287
+00:33:28,400 --> 00:33:29,779
+thank you
+

@@ -1,0 +1,1440 @@
+1
+00:00:18,900 --> 00:00:25,430
+so welcome to the fourth module of the of
+this week ok so so as we said last time we
+
+2
+00:00:25,430 --> 00:00:30,390
+will be starting with a very very popular
+problem of part of speech tagging if you remember
+
+3
+00:00:30,390 --> 00:00:34,860
+this was one of the processes that we talked
+about when dealing with morphology so you
+
+4
+00:00:34,860 --> 00:00:39,650
+can do lamentation you can do morphological
+analysis you can also tagging so what was
+
+5
+00:00:39,650 --> 00:00:45,000
+the thing that was that was different in tagging
+that you are not doing morphological analysis
+
+6
+00:00:45,000 --> 00:00:49,360
+if you remember you will also finding out
+among all the possibilities what is the actual
+
+7
+00:00:49,360 --> 00:00:53,360
+ah particular morphological degree that this
+four things
+
+8
+00:00:53,360 --> 00:00:57,700
+so you also doing the disambiguation here
+ok so this is my problem of part of speech
+
+9
+00:00:57,700 --> 00:01:05,640
+tagging that given a set of words ok so that
+means a sentence of document whatever can
+
+10
+00:01:05,640 --> 00:01:10,119
+i identify what is the actual category for
+each of the word i have to give the unique
+
+11
+00:01:10,119 --> 00:01:20,240
+answer for each one so each one so if we take
+example for english text so given a text of
+
+12
+00:01:20,240 --> 00:01:26,780
+english can be sentence or whatever can identify
+the part of speech of each and every word
+
+13
+00:01:26,780 --> 00:01:34,060
+that is the problem of part of speech tagging
+so so if i have a sentence like the boy put
+
+14
+00:01:34,060 --> 00:01:40,560
+the keys on the table and i have four possible
+part of speech tags so very very ah coarse
+
+15
+00:01:40,560 --> 00:01:48,659
+label like noun and pronoun v for verb and
+p for pronoun the first p here is for prepositions
+
+16
+00:01:48,659 --> 00:01:56,560
+and d det for the determiner so you can map
+the is a determiner and boy is a noun put
+
+17
+00:01:56,560 --> 00:02:02,280
+is a verb the is a determiner keys a noun
+and on is a preposition and the is a determiner
+
+18
+00:02:02,280 --> 00:02:06,530
+and table is a noun
+so each word you can map to one of the four
+
+19
+00:02:06,530 --> 00:02:12,110
+one of the four tags so this is a problem
+that given a sentence you have all the individual
+
+20
+00:02:12,110 --> 00:02:19,720
+words can identify and define what is a in
+grammatical category for each of this word
+
+21
+00:02:19,720 --> 00:02:25,280
+so now ah so one one natural question that
+you might have is ok so how many different
+
+22
+00:02:25,280 --> 00:02:30,879
+part of speech tags are there ok so firstly
+let us see what are the different things that
+
+23
+00:02:30,879 --> 00:02:36,319
+will go in the part of speech part of speech
+tag categories ok firstly you will have the
+
+24
+00:02:36,319 --> 00:02:44,049
+open class words ok that are sort of content
+words so they are like nouns verbs adverbs
+
+25
+00:02:44,049 --> 00:02:48,760
+adjectives they are they are there they will
+have their own part of speech text so they
+
+26
+00:02:48,760 --> 00:02:56,099
+are the the open class words are those that
+we are the content mostly and so why do we
+
+27
+00:02:56,099 --> 00:03:01,659
+call them open class because you keep on adding
+new and new words ah in in the language we
+
+28
+00:03:01,659 --> 00:03:07,040
+have coin ah we have seen a term for this
+right so you have words like google photoshop
+
+29
+00:03:07,040 --> 00:03:12,981
+skype they come into the language all so these
+are coming into nouns or verbs in the in the
+
+30
+00:03:12,981 --> 00:03:18,700
+language so this is open class you can keep
+on adding new and new words and then you have
+
+31
+00:03:18,700 --> 00:03:23,799
+the closed class words like pronouns here
+very fixed set of pronouns determiners very
+
+32
+00:03:23,799 --> 00:03:29,329
+a fixed ok then prepositions connectives and
+all that they are very fixed they are all
+
+33
+00:03:29,329 --> 00:03:34,939
+functional words and they are closed class
+ok and as you know they are they are used
+
+34
+00:03:34,939 --> 00:03:40,139
+to tie various concepts the sentence together
+ok
+
+35
+00:03:40,139 --> 00:03:44,499
+so i need some part of speech categories for
+open class words some categories for closed
+
+36
+00:03:44,499 --> 00:03:52,219
+class words so one possibility can be i can
+choose very very coarse grained categories
+
+37
+00:03:52,219 --> 00:03:58,290
+right like here so i can take noun so i am
+also giving some examples here like chair
+
+38
+00:03:58,290 --> 00:04:05,079
+bandwidth pacing all these are nouns i can
+take verb study debate munch all these are
+
+39
+00:04:05,079 --> 00:04:10,999
+verbs then adjective like purple tall ridiculous
+they are adjectives adverbs unfortunately
+
+40
+00:04:10,999 --> 00:04:19,609
+slowly proportion of by to they become my
+preposition pronoun i me mine and then determiner
+
+41
+00:04:19,609 --> 00:04:24,010
+ok the a that those
+so maybe i can just use it very very coarse
+
+42
+00:04:24,010 --> 00:04:31,620
+label ah part of speech tags but think of
+the perspective when a of language pronouncing
+
+43
+00:04:31,620 --> 00:04:38,139
+so what is helpful to me to take a very coarse
+label or to go to the more fine grained label
+
+44
+00:04:38,139 --> 00:04:44,770
+so here what will happen i can find out which
+word is a noun but if i to tell it's a singular
+
+45
+00:04:44,770 --> 00:04:49,590
+noun a plural noun i cannot tell if i have
+even if i have the tagging information so
+
+46
+00:04:49,590 --> 00:04:55,240
+i might want to prefer a tagging scheme where
+i also go to some sort of grammatical details
+
+47
+00:04:55,240 --> 00:05:01,550
+of the word ok it is a noun ok and and is
+it a verb is it a the third same person singular
+
+48
+00:05:01,550 --> 00:05:08,810
+verb is it it is a verb plus a past tense
+and so on even noun is it a proper noun
+
+49
+00:05:08,810 --> 00:05:14,580
+so i might want to go into finer detail but
+again i cannot go into very very finer details
+
+50
+00:05:14,580 --> 00:05:19,479
+so again they ah otherwise there will be too
+many part of speech tags so there are various
+
+51
+00:05:19,479 --> 00:05:27,490
+ah is schemes that are available so they have
+their own part of speech tags definitions
+
+52
+00:05:27,490 --> 00:05:33,770
+so but given a sentence if you have to do
+part of speech tag tagging you need to first
+
+53
+00:05:33,770 --> 00:05:39,020
+defined what is your tagset what is all the
+possible categories among which you have to
+
+54
+00:05:39,020 --> 00:05:44,139
+choose it and there are various standards
+available ok
+
+55
+00:05:44,139 --> 00:05:49,720
+so yeah i can choose very very coarse tagsets
+like only taking noun verb adjective adverb
+
+56
+00:05:49,720 --> 00:05:54,370
+or i can take a good enough set that gives
+me some additional grammatical information
+
+57
+00:05:54,370 --> 00:05:59,520
+with each of the word each of the word ok
+so one for very popular part of speech tagset
+
+58
+00:05:59,520 --> 00:06:05,710
+is university pennsylvania upenn ah treebank
+tagset that contains every forty five part
+
+59
+00:06:05,710 --> 00:06:11,909
+of speech tags and we will see examples also
+and there is a very nice tutorial on these
+
+60
+00:06:11,909 --> 00:06:17,449
+part of speech tags in terms of ah how what
+is the difference between this part of speech
+
+61
+00:06:17,449 --> 00:06:22,539
+tag verses at part of speech tag particle
+versus adverb how are they different by giving
+
+62
+00:06:22,539 --> 00:06:27,909
+examples so that i recommend as if you want
+to get more information in in the sense of
+
+63
+00:06:27,909 --> 00:06:33,889
+how they are used in various sentences you
+can look at this this site
+
+64
+00:06:33,889 --> 00:06:39,939
+so here are some examples of ah the treebank
+the upenn treebank part of speech tag so what
+
+65
+00:06:39,939 --> 00:06:44,229
+are the part of speech tags they used and
+what are the various sort some example words
+
+66
+00:06:44,229 --> 00:06:50,009
+here so for example in this if i see ah conjunction
+so and but are all j conjunction they they
+
+67
+00:06:50,009 --> 00:06:56,349
+give a tag like c c one two three we are cardinal
+numbers they give a tag like c d a da det
+
+68
+00:06:56,349 --> 00:07:03,430
+they are determiner give a tag of d e t then
+additional there foreign word then off in
+
+69
+00:07:03,430 --> 00:07:11,319
+by they are preposition yellow adjective then
+bigger so again with adjective you have comparative
+
+70
+00:07:11,319 --> 00:07:17,870
+superlative so you are add adapting some more
+information there let's start a marker
+
+71
+00:07:17,870 --> 00:07:23,830
+now if you see at the nouns ok you have a
+tag n n for only the noun is a singular noun
+
+72
+00:07:23,830 --> 00:07:32,810
+a masculine sorry it's a singular noun ah
+for plural noun you have a tag like n n s
+
+73
+00:07:32,810 --> 00:07:41,069
+ok if but now you see there an extra text
+for proper noun you had separate tags so once
+
+74
+00:07:41,069 --> 00:07:46,219
+you know the tag you know it's a noun or it's
+a proper noun and whether it is a singular
+
+75
+00:07:46,219 --> 00:07:50,960
+or plural you get all this information so
+that is the that's why getting it into some
+
+76
+00:07:50,960 --> 00:07:55,259
+finer details is helpful so you have four
+different text for nouns
+
+77
+00:07:55,259 --> 00:08:00,620
+similarly so if i am escaping those i am going
+to the verb directly so here text like v b
+
+78
+00:08:00,620 --> 00:08:05,669
+for the base form of the verb then v b d for
+the past tense v b g for gerent v b n for
+
+79
+00:08:05,669 --> 00:08:14,939
+past participle and then third singular present
+is v b p and third singular ah and is like
+
+80
+00:08:14,939 --> 00:08:20,539
+v b z ok non third singular versus first singular
+there are two different forms so you have
+
+81
+00:08:20,539 --> 00:08:25,919
+different forms of verbs so again that they
+give you various grammatical information and
+
+82
+00:08:25,919 --> 00:08:29,919
+then you can see other sort of part part of
+speech tag that are available in to upenn
+
+83
+00:08:29,919 --> 00:08:36,539
+trees ah ah tag tagset
+so let's take an example then so we have taken
+
+84
+00:08:36,539 --> 00:08:42,060
+a taking a sentence and if we tag it by upenn
+tagset how does it look like so the sentence
+
+85
+00:08:42,060 --> 00:08:51,830
+is the grand jury commented on a number of
+other topics so now here the word does determiner
+
+86
+00:08:51,830 --> 00:09:00,530
+grand jury adjective ok so jury would be a
+noun commented becomes a verb so you have
+
+87
+00:09:00,530 --> 00:09:09,470
+seen the part of speech tags on is a preposition
+i n a is determiner number is a noun of is
+
+88
+00:09:09,470 --> 00:09:20,410
+a again a preposition other ah adjective and
+topics they come in noun in plural form ok
+
+89
+00:09:20,410 --> 00:09:27,000
+so this is the information that you get by
+the part of speech tags
+
+90
+00:09:27,000 --> 00:09:31,970
+now the question might come come that why
+are you worried about solving this problem
+
+91
+00:09:31,970 --> 00:09:35,130
+of part of speech tagging it is a hard problem
+or a trivial problem can i define for each
+
+92
+00:09:35,130 --> 00:09:40,020
+word in my lexicon what will be it's part
+of speech tag it is a very very simple problem
+
+93
+00:09:40,020 --> 00:09:46,900
+no so so the problem occurs because each for
+does ah does not have a unique part of speech
+
+94
+00:09:46,900 --> 00:09:53,020
+tags and it might depend on the context in
+this the word is being used ok so so what
+
+95
+00:09:53,020 --> 00:09:57,150
+i am saying is that a word might have multiple
+part of speech tags and only by seeing the
+
+96
+00:09:57,150 --> 00:10:01,000
+context you might be able to identify what
+is the actual part of speech tag is being
+
+97
+00:10:01,000 --> 00:10:06,320
+used in this particular context
+so let's take an example so i have the word
+
+98
+00:10:06,320 --> 00:10:12,380
+like back ok so what are the part of speech
+tags that this simple word like back can help
+
+99
+00:10:12,380 --> 00:10:17,770
+so if i take the sentence like the back door
+what is back here what is the part of speech
+
+100
+00:10:17,770 --> 00:10:26,820
+tag of back so it is an adjective now if i
+take a word like sentence like on my back
+
+101
+00:10:26,820 --> 00:10:34,350
+it's not an adjective anymore it becomes a
+noun in this case yes now i have it win the
+
+102
+00:10:34,350 --> 00:10:41,620
+voters back of the sentence it becomes in
+win back ok so it becomes in adjective and
+
+103
+00:10:41,620 --> 00:10:48,820
+if i have a sentence promised to back the
+bill now this becomes a verb ok so the same
+
+104
+00:10:48,820 --> 00:10:52,310
+word back can be used in multiple part of
+speech tags
+
+105
+00:10:52,310 --> 00:10:56,510
+so so immediately you can see the problem
+that given the context find out what is the
+
+106
+00:10:56,510 --> 00:11:02,220
+appropriate part of speech tag is be used
+ok so to determine the part of speech tag
+
+107
+00:11:02,220 --> 00:11:07,470
+for a particular instance of a word is my
+part of speech tagging problem ok
+
+108
+00:11:07,470 --> 00:11:14,850
+now what are the various ah information that
+we can use for doing this for how co how common
+
+109
+00:11:14,850 --> 00:11:20,300
+is this first of all how common is this problem
+how how many words are actually ambiguous
+
+110
+00:11:20,300 --> 00:11:26,300
+in terms of part of speech tags so if i see
+if i want to see that from the data ok so
+
+111
+00:11:26,300 --> 00:11:31,630
+so this is your this so this point i just
+want to say something like once you encounter
+
+112
+00:11:31,630 --> 00:11:36,670
+problem in in in language or any other field
+the first thing that you might want to see
+
+113
+00:11:36,670 --> 00:11:42,090
+is that how common is that problem if it is
+a very very rare problem maybe it's not worth
+
+114
+00:11:42,090 --> 00:11:46,090
+to spend too much time you can have simple
+rules for solving that but it says if it is
+
+115
+00:11:46,090 --> 00:11:50,520
+a very very common problem then yes you might
+have to tackle it using certain models
+
+116
+00:11:50,520 --> 00:11:54,820
+so similarly here the disambiguation part
+is speech tags so then it happen only for
+
+117
+00:11:54,820 --> 00:11:59,420
+ten words if it happens for only for ten words
+i did ah need not worry about building some
+
+118
+00:11:59,420 --> 00:12:04,570
+models and all that for solving this problem
+but if it happens for say ten percent of the
+
+119
+00:12:04,570 --> 00:12:09,610
+words then yes there is a real problem and
+i need to ah think of some model for solving
+
+120
+00:12:09,610 --> 00:12:15,690
+it ok so now if let us see from the corpus
+how common is this ambiguity problem so if
+
+121
+00:12:15,690 --> 00:12:22,920
+i take the brown corpus so what we see here
+forty percent of the word tokens are ambiguous
+
+122
+00:12:22,920 --> 00:12:26,730
+and twelve percent of the word types ambiguous
+so i i hope you remember the distinction between
+
+123
+00:12:26,730 --> 00:12:32,440
+types and tokens tokens are the all the passes
+all the occurrences of different words so
+
+124
+00:12:32,440 --> 00:12:37,170
+same word occurs multiple times are multiple
+tokens ok so forty percent of word tokens
+
+125
+00:12:37,170 --> 00:12:43,280
+are ambiguous so what we are seeing saying
+is that in a corpus if i am encountering and
+
+126
+00:12:43,280 --> 00:12:48,790
+tokens forty percent of them are ambiguous
+that's a huge number forty percent of all
+
+127
+00:12:48,790 --> 00:12:55,430
+the words that occurred in the corpus ambiguous
+ok so that means the real problem
+
+128
+00:12:55,430 --> 00:13:03,180
+now if we want to just break down of the ambiguity
+type that how many ah unique words have um
+
+129
+00:13:03,180 --> 00:13:10,070
+different number of tags so what we see here
+so roughly thirty five thousand types have
+
+130
+00:13:10,070 --> 00:13:16,160
+only one part of speech tag now three thousand
+seven sixty types have two tags and two sixty
+
+131
+00:13:16,160 --> 00:13:20,840
+four have three tags and so on and there is
+one word like is still that has got seven
+
+132
+00:13:20,840 --> 00:13:26,630
+different part of speech tags in the brown
+corpus so so yes getting six seven tag is
+
+133
+00:13:26,630 --> 00:13:30,870
+very very rare but getting two and three tags
+is quite common especially two tags is very
+
+134
+00:13:30,870 --> 00:13:38,990
+very common in the brown corpus
+now now the next problem so we have solve
+
+135
+00:13:38,990 --> 00:13:44,230
+that this problem is ah frequent yes this
+is not a real problem but how bad is this
+
+136
+00:13:44,230 --> 00:13:51,980
+problem what do i mean by this so can we always
+identifies for a given word is one tag more
+
+137
+00:13:51,980 --> 00:14:01,890
+likely than an another so let's take an example
+of the word race race can be a noun and a
+
+138
+00:14:01,890 --> 00:14:09,510
+verb when the brown corpus race at race occurs
+as a noun ninety eight percent of the time
+
+139
+00:14:09,510 --> 00:14:15,790
+but as a verb two percent of the time
+so if i have a simple model that always assigns
+
+140
+00:14:15,790 --> 00:14:20,740
+the word race to a noun that will im immi
+immediately achieve a ninety per eight percent
+
+141
+00:14:20,740 --> 00:14:25,140
+accuracy write for this particular example
+at least so that means whenever i am trying
+
+142
+00:14:25,140 --> 00:14:32,200
+to design a model i should be able to think
+of what is in what is simple baseline uninitialized
+
+143
+00:14:32,200 --> 00:14:37,330
+compare if i'm making computational model
+that is working even worse than this baseline
+
+144
+00:14:37,330 --> 00:14:42,190
+it may not be very very helpful ok so respite
+this can be my simple baseline for testing
+
+145
+00:14:42,190 --> 00:14:48,399
+any of the model that i will propose for this
+particular task
+
+146
+00:14:48,399 --> 00:14:52,950
+so so a tagger for english that simply chooses
+the most likely tag for each word can achieve
+
+147
+00:14:52,950 --> 00:14:59,680
+good performance so it can be ah even more
+than ninety percent ok so so always it's not
+
+148
+00:14:59,680 --> 00:15:05,320
+good to look only at the final numbers it's
+also ah good to see how much you are improving
+
+149
+00:15:05,320 --> 00:15:09,350
+over maybe some of the simplest baselines
+and some other models that that are there
+
+150
+00:15:09,350 --> 00:15:14,440
+in in the literature so at least the simple
+baseline how much you are able to do better
+
+151
+00:15:14,440 --> 00:15:21,070
+than the simple baseline
+say an any new approach should be able to
+
+152
+00:15:21,070 --> 00:15:28,340
+should be should be able to compared against
+the simple baseline now how do i decide the
+
+153
+00:15:28,340 --> 00:15:34,060
+correct part of speech tags so yeah one thing
+is a it might even be difficult for people
+
+154
+00:15:34,060 --> 00:15:39,270
+in some cases right it's not a very very easy
+problem always so here in this slide we have
+
+155
+00:15:39,270 --> 00:15:45,230
+three sentences this is shaffer never got
+around to joining all we go to do is to go
+
+156
+00:15:45,230 --> 00:15:50,380
+around the corners and chateau petrus costs
+around twenty five hundred ok and all the
+
+157
+00:15:50,380 --> 00:15:53,751
+three words three sentences you have the word
+around and you will find out what is the part
+
+158
+00:15:53,751 --> 00:15:58,700
+of speech tag ok and you will see this is
+not very very easy if you will just ah look
+
+159
+00:15:58,700 --> 00:16:02,990
+at these sentences is not easy to find it
+what are speech tags
+
+160
+00:16:02,990 --> 00:16:07,310
+so i will just suggest that you go to the
+tutorial once and so the tutorial that i i
+
+161
+00:16:07,310 --> 00:16:11,990
+talked about earlier so that all talks about
+what are the differences between various part
+
+162
+00:16:11,990 --> 00:16:16,430
+of speech that will give you some idea on
+how to find out the actual part of speech
+
+163
+00:16:16,430 --> 00:16:21,410
+tags of around in this case so what we will
+see here before in the first case it is a
+
+164
+00:16:21,410 --> 00:16:30,050
+ah the particle second case it is a preparation
+and third case it is in ah adverb ok
+
+165
+00:16:30,050 --> 00:16:36,500
+now what is the relevant knowledge that we
+might need for this part of speech tagging
+
+166
+00:16:36,500 --> 00:16:44,040
+problem that we might need to give to our
+models ok so for example some words might
+
+167
+00:16:44,040 --> 00:16:50,930
+always be in one part of category like arrow
+is always a noun so i can have this knowledge
+
+168
+00:16:50,930 --> 00:17:00,440
+some words are ambiguous like fly flies ok
+and what like like it can it is again ambiguous
+
+169
+00:17:00,440 --> 00:17:05,389
+so what might help is what is the probability
+that a word occurs at a particular as a particular
+
+170
+00:17:05,389 --> 00:17:09,620
+part of speech tag the baseline that you are
+talking about this might be helpful for our
+
+171
+00:17:09,620 --> 00:17:15,289
+model also that given a word what is the most
+probable tag for this word this is one thing
+
+172
+00:17:15,289 --> 00:17:19,510
+that we might use
+now what is the what what can be the other
+
+173
+00:17:19,510 --> 00:17:26,199
+information that is useful so take the word
+leg flies ok if you do not give me any other
+
+174
+00:17:26,199 --> 00:17:31,310
+word i may never be able to tell with full
+confidence what should be the corresponding
+
+175
+00:17:31,310 --> 00:17:37,290
+correct part of speech tag unless you tell
+me the sentence where it occurs ok same was
+
+176
+00:17:37,290 --> 00:17:41,660
+with the word like saw that was one of the
+earlier examples ok unless you give me the
+
+177
+00:17:41,660 --> 00:17:46,590
+sentence like peter saw her i cannot tell
+the saw is actually a verb and not a noun
+
+178
+00:17:46,590 --> 00:17:50,820
+so that means i need i need to do something
+of the word itself how come how common it
+
+179
+00:17:50,820 --> 00:17:56,400
+occurs with some part of speech tag then another
+i also need to know about the context in which
+
+180
+00:17:56,400 --> 00:18:00,540
+the word is occurring and how can i use the
+context to desegregate the actual part of
+
+181
+00:18:00,540 --> 00:18:06,190
+speech tag
+so so i need the local context in the sentence
+
+182
+00:18:06,190 --> 00:18:14,050
+so for example the information that to determiners
+really follow each other so if my model is
+
+183
+00:18:14,050 --> 00:18:19,290
+saying two words the determiner determiner
+which is not allowed ok similar two based
+
+184
+00:18:19,290 --> 00:18:24,210
+forms of the word they do not follow follow
+each other they they should not come together
+
+185
+00:18:24,210 --> 00:18:31,620
+similarly ah my model can tell me that a determiner
+is always followed by an adjective or now
+
+186
+00:18:31,620 --> 00:18:35,940
+this can be useful information that if the
+previous word is a signed determiner it is
+
+187
+00:18:35,940 --> 00:18:42,100
+a highly likely the next row will be adjectives
+or noun so all this we want to encode using
+
+188
+00:18:42,100 --> 00:18:51,390
+our models as well
+so what are the various approaches so so we
+
+189
+00:18:51,390 --> 00:18:56,820
+will try to use all this knowledge but what
+are the various approaches that we can use
+
+190
+00:18:56,820 --> 00:19:02,810
+so for all the problems that we will be is
+dealing with in this coarse mostly you can
+
+191
+00:19:02,810 --> 00:19:08,570
+always use a rule based approach ok so so
+this visual some of the earlier models that
+
+192
+00:19:08,570 --> 00:19:15,020
+work that were used in n l p so we are given
+a problem some language will sit together
+
+193
+00:19:15,020 --> 00:19:20,590
+find out what are the symbol patterns or sing
+simple kind of if then else rules that one
+
+194
+00:19:20,590 --> 00:19:25,520
+can write down to to solve this particular
+problem ok
+
+195
+00:19:25,520 --> 00:19:30,740
+so what would be a rule based ah solution
+to this problem ok for doing the part of speech
+
+196
+00:19:30,740 --> 00:19:37,380
+tagging disambiguation problem so what i will
+do i find out for all the words that can have
+
+197
+00:19:37,380 --> 00:19:44,350
+multiple part of speech tags what is one particular
+thing that that can help me decide whether
+
+198
+00:19:44,350 --> 00:19:52,350
+to use one tag or the other ok and this and
+given a new context i can again use this is
+
+199
+00:19:52,350 --> 00:20:05,570
+is that particular ah contexts appearing here
+or not then i can have a statistical tagging
+
+200
+00:20:05,570 --> 00:20:15,670
+that is i get a training corpus ok so this
+is a standard model so i have a corpus training
+
+201
+00:20:15,670 --> 00:20:22,260
+corpus that has the tag text by tag text i
+mean i have the sentence and with each word
+
+202
+00:20:22,260 --> 00:20:28,270
+i also have the actual part of speech category
+now using that can i learn what is the actual
+
+203
+00:20:28,270 --> 00:20:34,320
+part of speech tag for each individual word
+and this ah in a new sentence can i learn
+
+204
+00:20:34,320 --> 00:20:41,260
+some model so this is my statistical tagging
+so ah so they are again different variation
+
+205
+00:20:41,260 --> 00:20:47,610
+different various models so one simple model
+is ah t b l tagger that was one of the earlier
+
+206
+00:20:47,610 --> 00:20:52,470
+model proposed for part of speech tagging
+so that is i am given a any corpus of tag
+
+207
+00:20:52,470 --> 00:20:59,050
+text can i learn some sort of transformation
+rules that this word has a particular main
+
+208
+00:20:59,050 --> 00:21:06,550
+category most probable category of part of
+speech tag but given the context if this most
+
+209
+00:21:06,550 --> 00:21:12,210
+probable text should be changed to some other
+tag so can i use some rules from a corpus
+
+210
+00:21:12,210 --> 00:21:17,480
+training corpus itself and then the probabilistic
+models where i will i will have a probabilistic
+
+211
+00:21:17,480 --> 00:21:24,050
+in the position of what is the most likely
+sequence of tags for a sequence of words
+
+212
+00:21:24,050 --> 00:21:27,930
+so we will go go through t b l tagger very
+very briefly and then we will devote a lot
+
+213
+00:21:27,930 --> 00:21:36,160
+of time on the probabilistic taggers so what
+is t b l tagger transformation based learning
+
+214
+00:21:36,160 --> 00:21:40,970
+so let's try to understand the idea first
+so i have a sentence like the canvas rushed
+
+215
+00:21:40,970 --> 00:21:47,060
+it ok so how the model will process so this
+is my training data set so i also know what
+
+216
+00:21:47,060 --> 00:21:51,890
+is the actual part of speech tag for each
+of the individual word
+
+217
+00:21:51,890 --> 00:21:59,620
+now if you the first thing you will do is
+to find out for each individual word what
+
+218
+00:21:59,620 --> 00:22:07,940
+is the most likely part of speech tag so in
+other words the can was rested ok so if you
+
+219
+00:22:07,940 --> 00:22:12,520
+find out a more slightly tag for the word
+can it will be a model work and mostly occurs
+
+220
+00:22:12,520 --> 00:22:17,990
+as a model work ok similarly rush ford rusted
+it would be a verb in the in the past tense
+
+221
+00:22:17,990 --> 00:22:37,620
+that is the most popular ah probable tag so
+i will write down the can was rested ok now
+
+222
+00:22:37,620 --> 00:22:43,390
+i will see in my actual training sentence
+what are the actual ah or thus rejected are
+
+223
+00:22:43,390 --> 00:22:49,980
+assigned to different words so i find this
+is correct this is incorrect this i am sorry
+
+224
+00:22:49,980 --> 00:22:55,720
+this the most probable tag will be m d moreover
+is incorrect in this and as i will have a
+
+225
+00:22:55,720 --> 00:23:03,980
+noun this is fine but this will be instead
+v b n is a participant past participial ok
+
+226
+00:23:03,980 --> 00:23:09,030
+so these two are incorrect so i need to write
+some moves so that these can be transformed
+
+227
+00:23:09,030 --> 00:23:21,470
+so one symbol can be m d changes to n m sorry
+to n n when preceded by d t remember the rules
+
+228
+00:23:21,470 --> 00:23:27,700
+that we saw in the previous previous lecture
+so it needs to be if preceded by something
+
+229
+00:23:27,700 --> 00:23:32,590
+and there is nothing so we are not putting
+any restriction what is being followed so
+
+230
+00:23:32,590 --> 00:23:37,650
+this is a rule that i can use so now what
+will happen in a new case whenever a word
+
+231
+00:23:37,650 --> 00:23:43,840
+is assigned m d if i see the previous word
+is determiner i will change m d to n n ok
+
+232
+00:23:43,840 --> 00:23:47,880
+this is the rule i am running from this example
+similarly i can rule a learn ah learn a rule
+
+233
+00:23:47,880 --> 00:23:56,250
+here v b d goes to v b n whenever preceded
+by reading this can be another rule so this
+
+234
+00:23:56,250 --> 00:24:01,340
+is the idea i have training corpus i find
+out for each for what is the most likely tag
+
+235
+00:24:01,340 --> 00:24:05,760
+whenever they do not match i will write down
+some set of rules and then i keep on doing
+
+236
+00:24:05,760 --> 00:24:11,880
+that and i might put down a separate data
+set simple small data set for testing how
+
+237
+00:24:11,880 --> 00:24:21,040
+good my finally tagger text so this is my
+t b l tagger ok so this is what we have seen
+
+238
+00:24:21,040 --> 00:24:25,750
+now what is probabilistic tagger in probabilistic
+tagging i will have a probabilistic interpretation
+
+239
+00:24:25,750 --> 00:24:33,820
+of what is the most likely sequence of tags
+that should be used for a ah for a given sentence
+
+240
+00:24:33,820 --> 00:24:40,640
+so let me just briefly talk about what in
+general the probabilistic tagging models to
+
+241
+00:24:40,640 --> 00:24:48,390
+so in these models we have some data that
+is some observations d and a certain class
+
+242
+00:24:48,390 --> 00:24:55,020
+ok so in the case of part of speech tag what
+is the example of d n c so d are the words
+
+243
+00:24:55,020 --> 00:25:00,510
+and then tags are my classes i want to assign
+various classes that that tags to different
+
+244
+00:25:00,510 --> 00:25:03,800
+words so tags some a classes
+now you take a different problem like text
+
+245
+00:25:03,800 --> 00:25:09,880
+classification what will happen the documents
+all the sentences if you are doing classification
+
+246
+00:25:09,880 --> 00:25:15,130
+or documents a sentence is they become your
+data and you have your classes so suppose
+
+247
+00:25:15,130 --> 00:25:20,190
+using sentiment analysis so the sentence is
+your data and the class is positive negative
+
+248
+00:25:20,190 --> 00:25:25,990
+or neutral if you are doing text classification
+in terms of a sports visage politics and so
+
+249
+00:25:25,990 --> 00:25:31,390
+on there is categories the document or the
+vertical instance of the text becomes your
+
+250
+00:25:31,390 --> 00:25:36,559
+data and that becomes your class a sports
+and politics and so on so you have a paired
+
+251
+00:25:36,559 --> 00:25:46,550
+observation of ah a data and a class
+now they are two ah different families of
+
+252
+00:25:46,550 --> 00:25:51,100
+probability models that can be used for solving
+these problems ok i will just briefly talk
+
+253
+00:25:51,100 --> 00:25:55,620
+about these two families and we will take
+a examples from both of these for this problem
+
+254
+00:25:55,620 --> 00:26:01,070
+ok so and and you will be able to use that
+for many other applications n l p also ok
+
+255
+00:26:01,070 --> 00:26:06,250
+so what gives raise to two different families
+that is whether you generate the data from
+
+256
+00:26:06,250 --> 00:26:12,520
+the class or the class from the data so what
+is the philosophy of your model ok
+
+257
+00:26:12,520 --> 00:26:22,260
+so let's try to ah understand that from this
+ah so so from this slide so we have two different
+
+258
+00:26:22,260 --> 00:26:29,670
+types of models one is a generative model
+and and second is a conditional model so in
+
+259
+00:26:29,670 --> 00:26:37,330
+generative model what will happen so you have
+appear data and the class so generative model
+
+260
+00:26:37,330 --> 00:26:42,380
+you will assume that the class is there and
+the class generates the data ok so this is
+
+261
+00:26:42,380 --> 00:26:47,140
+the philosophy from the class that it i generated
+so examples are like nigh page modular hidden
+
+262
+00:26:47,140 --> 00:26:51,880
+markov models so your class is given and data
+generated from this
+
+263
+00:26:51,880 --> 00:26:57,520
+in the discriminative condition models what
+will happen that your data is there and you
+
+264
+00:26:57,520 --> 00:27:02,740
+assume that hidden state is a generated from
+the data so that is the the minor difference
+
+265
+00:27:02,740 --> 00:27:07,490
+between that so in the condition in the joint
+model you first at the class you first generate
+
+266
+00:27:07,490 --> 00:27:14,080
+the class and then you generate the data from
+the class ok so that is so so to give a simple
+
+267
+00:27:14,080 --> 00:27:18,820
+example if you want to use a joint for generating
+modules for text classification what will
+
+268
+00:27:18,820 --> 00:27:23,440
+you assume if i am going to take a document
+i will first think over what is the topic
+
+269
+00:27:23,440 --> 00:27:27,960
+i want to write say politics i think about
+the the class and i am given this class what
+
+270
+00:27:27,960 --> 00:27:33,470
+is the probability that i write all these
+words ok so from that class i find out the
+
+271
+00:27:33,470 --> 00:27:38,690
+probability of different different words so
+i that's how my model is defined in the case
+
+272
+00:27:38,690 --> 00:27:42,560
+of conditional model given the observation
+directly i want to find out the probability
+
+273
+00:27:42,560 --> 00:27:49,809
+of the class ok
+so so so this difference tells me whether
+
+274
+00:27:49,809 --> 00:27:56,910
+so how do i actually go about solving these
+models ok so ah so they are the models like
+
+275
+00:27:56,910 --> 00:28:02,410
+s v m s perceptron that are ah not probabilistic
+so they are not in division one of these so
+
+276
+00:28:02,410 --> 00:28:07,500
+they are also discriminative classifiers now
+this picture will help you understand that
+
+277
+00:28:07,500 --> 00:28:12,350
+two models again so you see the directions
+are different in the in the pic pictures in
+
+278
+00:28:12,350 --> 00:28:17,940
+the first direction in the first in the left
+hand side picture so direction is from the
+
+279
+00:28:17,940 --> 00:28:23,100
+class to all the data points ok so first the
+class is generated then all the data points
+
+280
+00:28:23,100 --> 00:28:26,630
+so you generative model
+in the second one is a conditional model so
+
+281
+00:28:26,630 --> 00:28:32,320
+given the data you want to find out directly
+the probability of the class ok so first one
+
+282
+00:28:32,320 --> 00:28:41,390
+example is nalve bayes second one example
+is logistic regression ok so so a joint model
+
+283
+00:28:41,390 --> 00:28:46,840
+will give you probability of so d l the data
+and the class together and you will try to
+
+284
+00:28:46,840 --> 00:28:51,490
+maximize the joint probability and condition
+of mo model you will directly want want to
+
+285
+00:28:51,490 --> 00:28:58,540
+find out the probability of the class given
+a rate ok so we will take examples of both
+
+286
+00:28:58,540 --> 00:29:05,000
+of these in the in the next modules so what
+is a ah joint model that can help me solve
+
+287
+00:29:05,000 --> 00:29:08,340
+the part of speech tagging problem and what
+is the condition model that can help me solve
+
+288
+00:29:08,340 --> 00:29:11,070
+the part of speech tagging problem ok
+thank you
+

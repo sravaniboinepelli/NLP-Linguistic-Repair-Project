@@ -1,0 +1,1175 @@
+1
+00:00:17,960 --> 00:00:23,010
+so welcome back for the third module of this
+week so in the last lecture we were talking
+
+2
+00:00:23,010 --> 00:00:29,349
+about computational morphology ok so so in
+this module we will talk about how do we use
+
+3
+00:00:29,349 --> 00:00:37,120
+financial math methods for doing this morphological
+analysis ok so i will just go in briefly into
+
+4
+00:00:37,120 --> 00:00:45,980
+what these models do so starting with what
+is a finite state automaton ok so if you have
+
+5
+00:00:45,980 --> 00:00:50,350
+taken a course on formal languages automaton
+theory or theory of computation you might
+
+6
+00:00:50,350 --> 00:00:55,440
+already be aware of what is a finite automaton
+i will just briefly tell what is what what
+
+7
+00:00:55,440 --> 00:01:00,820
+is this ok if you haven't taken a course that
+course you might just want to quickly see
+
+8
+00:01:00,820 --> 00:01:05,040
+that in one of the ah one of the books for
+that course
+
+9
+00:01:05,040 --> 00:01:11,850
+so what is a finite state automaton so it's
+kind of a directed graph ok so so in this
+
+10
+00:01:11,850 --> 00:01:17,909
+in this figure you are seeing ah there is
+a finite automaton that is having six different
+
+11
+00:01:17,909 --> 00:01:25,479
+nodes so these are the nodes here are called
+the states ok and there are edges between
+
+12
+00:01:25,479 --> 00:01:30,430
+the nodes and they are the edges are labeled
+with certain symbols so for example you are
+
+13
+00:01:30,430 --> 00:01:34,850
+seeing between node zero to one there is in
+there is an edge with a with the label of
+
+14
+00:01:34,850 --> 00:01:46,350
+c ok and they may also be empty if for certain
+category of these automaton there are certain
+
+15
+00:01:46,350 --> 00:01:52,229
+started states so for example here the node
+zero is the started state and there are certain
+
+16
+00:01:52,229 --> 00:01:58,850
+accepting or final states that are noted by
+maybe ah having in having a double circles
+
+17
+00:01:58,850 --> 00:02:04,219
+like on the node six you are having double
+circle this is an accepting state or the finite
+
+18
+00:02:04,219 --> 00:02:09,869
+state so they can be more than one final state
+very easily so now what do the finite state
+
+19
+00:02:09,869 --> 00:02:15,040
+automaton do so they are they they recognize
+a regular languages that is the language that
+
+20
+00:02:15,040 --> 00:02:19,700
+is specified by the regular expressions so
+any regular expression you can always convert
+
+21
+00:02:19,700 --> 00:02:26,940
+into a automaton financial automaton
+so now if you see the automaton that is provided
+
+22
+00:02:26,940 --> 00:02:33,440
+on this slide what is the language that it
+at that it recognizes what are the words that
+
+23
+00:02:33,440 --> 00:02:39,609
+will be passed through this and by seeing
+that you can also see how the automaton actually
+
+24
+00:02:39,609 --> 00:02:46,270
+works so if you give an input like c o l o
+r to this automaton what will happen so it
+
+25
+00:02:46,270 --> 00:02:52,400
+will start with the started state you will
+take the first character see from a started
+
+26
+00:02:52,400 --> 00:02:58,250
+state on the input character see you will
+go to the state one from this graph now state
+
+27
+00:02:58,250 --> 00:03:04,970
+one you take an input o that is the next in
+in the input and you move to state two and
+
+28
+00:03:04,970 --> 00:03:11,620
+so on and as you end with the with the phoneme
+character r you end up with the state six
+
+29
+00:03:11,620 --> 00:03:15,680
+in this graph
+so given an input like see c o l o r it is
+
+30
+00:03:15,680 --> 00:03:21,650
+accepted by this automaton but what happens
+if i give a word like c o l o u r you can
+
+31
+00:03:21,650 --> 00:03:27,040
+see the a path you can go from four to five
+and five to six and this automaton you can
+
+32
+00:03:27,040 --> 00:03:32,579
+accept c o l u r so it will accept two words
+c o l o r c o l o u r but what happens if
+
+33
+00:03:32,579 --> 00:03:39,699
+you give it is some other word like co l r
+so you will see c o l will go to state three
+
+34
+00:03:39,699 --> 00:03:45,760
+but if you take r there is no path from three
+that takes an input r so it can't move further
+
+35
+00:03:45,760 --> 00:03:52,360
+so this input will not be accepted by this
+automaton so what so given an automaton final
+
+36
+00:03:52,360 --> 00:04:00,430
+state automaton what it does it it recognizes
+if a finite so not finite a regular language
+
+37
+00:04:00,430 --> 00:04:06,090
+ok so if you give any string from the regular
+language it will accept that means this will
+
+38
+00:04:06,090 --> 00:04:10,370
+end up in one of the accepting states but
+you should give it any other string that is
+
+39
+00:04:10,370 --> 00:04:14,739
+not in the language it will not accept so
+this will not end up in any of the accepting
+
+40
+00:04:14,739 --> 00:04:20,870
+states
+so now how are these finite state automaton
+
+41
+00:04:20,870 --> 00:04:26,699
+used for doing the morphological analysis
+so what is the idea the idea is that when
+
+42
+00:04:26,699 --> 00:04:32,650
+you when you combine various morphemes there
+are certain changes that happen at the boundary
+
+43
+00:04:32,650 --> 00:04:37,700
+mainly concatenation and this is very very
+regular [fina/phenomena] so if or one want
+
+44
+00:04:37,700 --> 00:04:43,960
+to capture that two words like boy and car
+can be made converted into plural by adding
+
+45
+00:04:43,960 --> 00:04:49,810
+an s i can simply have a state for the noun
+where boy and car both come together and then
+
+46
+00:04:49,810 --> 00:04:57,290
+i have a single single edge from there with
+s marking that there is a plural and now you
+
+47
+00:04:57,290 --> 00:05:02,960
+think about all the possible plural that you
+can make in english all the singular nouns
+
+48
+00:05:02,960 --> 00:05:07,590
+can come to the same state and then you have
+a single arrow that with s and that will convert
+
+49
+00:05:07,590 --> 00:05:13,689
+into fluid so th so that very efficiently
+captures the process of converting in from
+
+50
+00:05:13,689 --> 00:05:18,240
+singular to plural and as long as this is
+regular this is very very straightforward
+
+51
+00:05:18,240 --> 00:05:23,889
+then how do you do that
+so here is an example in this slide so so
+
+52
+00:05:23,889 --> 00:05:28,770
+only three states are shown here q naught
+q one q two q notice the starter state and
+
+53
+00:05:28,770 --> 00:05:33,009
+q one and q two other accepting or finite
+states many other intermediate states are
+
+54
+00:05:33,009 --> 00:05:39,379
+not shown we will see that in some of the
+later slides so from q naught to q one the
+
+55
+00:05:39,379 --> 00:05:47,830
+regular nouns like car boy bag etcetera and
+then so all of these are also words in english
+
+56
+00:05:47,830 --> 00:05:53,340
+you can now add a plural morpheme s to convert
+them into plural so go going from q one to
+
+57
+00:05:53,340 --> 00:06:01,139
+q two but as such what happens if you have
+a irregular noun like goose to geese so that
+
+58
+00:06:01,139 --> 00:06:06,830
+cannot go to q one because to goose if you
+apply as you will not get its plural form
+
+59
+00:06:06,830 --> 00:06:11,599
+so for the irregular nouns you have a different
+path that goes from q naught that it to q
+
+60
+00:06:11,599 --> 00:06:16,699
+two again there will be some intermediate
+nodes for individual characters of phonemes
+
+61
+00:06:16,699 --> 00:06:22,680
+in in that in the language in the world so
+both the singular plural will go to q so q
+
+62
+00:06:22,680 --> 00:06:29,979
+one and q two both will accept the words in
+the english
+
+63
+00:06:29,979 --> 00:06:35,479
+similarly this is in f s a financial automaton
+for english adjectives ok so you have some
+
+64
+00:06:35,479 --> 00:06:44,240
+prefix like un then you have the actual adjective
+root like happy and then certain suffixes
+
+65
+00:06:44,240 --> 00:06:50,759
+like er e s t l y so you see here we are also
+showing some lot of morpho tactics that what
+
+66
+00:06:50,759 --> 00:06:56,990
+kind of morphemes follow other kind of morphemes
+ok so now what kind of words that you can
+
+67
+00:06:56,990 --> 00:07:05,060
+generate by using this automaton so you can
+say un happy unhappy ok a starting from q
+
+68
+00:07:05,060 --> 00:07:13,110
+naught or from q naught you taking go to q
+one and you have happy and er happier happiest
+
+69
+00:07:13,110 --> 00:07:22,219
+happily and so on ok so sick is generated
+words like happy happier happiest real from
+
+70
+00:07:22,219 --> 00:07:26,629
+q naught you take an absolute transition go
+to q one then you have the adjective root
+
+71
+00:07:26,629 --> 00:07:33,139
+real that can q two is a final state so you
+can generate real if you have generate unreal
+
+72
+00:07:33,139 --> 00:07:39,479
+from q naught you take un that will give you
+un plus have the word real and go to q two
+
+73
+00:07:39,479 --> 00:07:45,150
+you become you get unreal ok similarly all
+other words you can generate by using this
+
+74
+00:07:45,150 --> 00:07:52,979
+particular automaton
+so yeah so as we already said in these examples
+
+75
+00:07:52,979 --> 00:07:58,330
+we also seen some english morphotactics that
+is what kind of morphemes come after another
+
+76
+00:07:58,330 --> 00:08:06,680
+kind of morphemes in in english no no but
+what do i do about regular in regular roots
+
+77
+00:08:06,680 --> 00:08:15,199
+in english how do i capture that information
+in this automaton so can we include the lexicon
+
+78
+00:08:15,199 --> 00:08:20,689
+also in my automaton so thats what we was
+see if i also want to include word like words
+
+79
+00:08:20,689 --> 00:08:29,210
+like car cars bag everything in inside my
+automaton how do i do that so this is what
+
+80
+00:08:29,210 --> 00:08:34,409
+we have seen so from q naught i take all the
+regular nouns to q one all the irregular nouns
+
+81
+00:08:34,409 --> 00:08:39,690
+directly go to q two ok but now i want to
+include the lexicon so let's take a very very
+
+82
+00:08:39,690 --> 00:08:47,380
+simple and a small lexicon so i have the words
+like bag boy and dog as the regular noun and
+
+83
+00:08:47,380 --> 00:08:52,880
+man as the irregular noun and we want to generate
+all the so i want to recognize all the singular
+
+84
+00:08:52,880 --> 00:09:02,930
+and plural form so what do i do so you see
+here from the state q naught i am now having
+
+85
+00:09:02,930 --> 00:09:09,370
+all the possible other individual states that
+take the regular singular nouns to q one ok
+
+86
+00:09:09,370 --> 00:09:15,880
+so i have different nodes for b and then the
+be shared among bag and boy ok similarly there
+
+87
+00:09:15,880 --> 00:09:20,320
+is a different state for going to doc and
+finally all of these they go to q one all
+
+88
+00:09:20,320 --> 00:09:28,430
+the regular nouns in the singular form and
+then you get you can have s added to that
+
+89
+00:09:28,430 --> 00:09:34,051
+this becomes plural
+so you have dogs bags and boys together what
+
+90
+00:09:34,051 --> 00:09:39,310
+do you do for the irregular nouns you have
+a different path man and m a n and m e n they
+
+91
+00:09:39,310 --> 00:09:48,400
+again go to q two directly now given this
+figure can you recognize the words like boys
+
+92
+00:09:48,400 --> 00:09:55,010
+easily yes i start with q naught when i get
+the word b i go to the next state o i go to
+
+93
+00:09:55,010 --> 00:10:01,380
+another state why i go to q one and s i go
+to q two so i can recognize boys i can recognize
+
+94
+00:10:01,380 --> 00:10:06,990
+boy m a n m e n all this can be recognized
+by this automaton i can further expand it
+
+95
+00:10:06,990 --> 00:10:17,470
+to include other words my vocabulary ok but
+the education here is this the goal of morphological
+
+96
+00:10:17,470 --> 00:10:23,410
+asks that we started with so what is this
+automaton doing given a word in english it
+
+97
+00:10:23,410 --> 00:10:27,400
+will tell me whether it is a singular or plural
+word in english ok assuming that you have
+
+98
+00:10:27,400 --> 00:10:33,000
+taken care of all the words in your vocabulary
+while building this automaton so it can recognize
+
+99
+00:10:33,000 --> 00:10:41,410
+various words ok so so that's what we have
+written here so what are the properties of
+
+100
+00:10:41,410 --> 00:10:49,080
+f s a s so so they are very very elegant ok
+so that is the recognition problem can be
+
+101
+00:10:49,080 --> 00:10:55,740
+solved in linear time what do i mean by that
+given give give me any input string so you
+
+102
+00:10:55,740 --> 00:11:00,850
+can find out whether automaton recognizes
+the string or not a linear time linear in
+
+103
+00:11:00,850 --> 00:11:06,390
+the length of the string ok because every
+time you are making if you are having a word
+
+104
+00:11:06,390 --> 00:11:12,070
+like boys you are checking if from the start
+state if you go if you take input b where
+
+105
+00:11:12,070 --> 00:11:18,620
+do you go o y s and then finally if you end
+up in the accepted state you will accept the
+
+106
+00:11:18,620 --> 00:11:25,320
+string otherwise you will not of course this
+will happen only for the deterministic automaton
+
+107
+00:11:25,320 --> 00:11:31,580
+but as in the elegance of itself we know that
+every non deterministic finite automaton can
+
+108
+00:11:31,580 --> 00:11:36,250
+be contributed to a deterministic finite automaton
+and there is in a simple algorithm for that
+
+109
+00:11:36,250 --> 00:11:41,570
+so we do not have to worry about it even if
+we have started building an n f a i non deterministic
+
+110
+00:11:41,570 --> 00:11:46,010
+automaton i can convert it to d f a where
+the linear time you can find out whether a
+
+111
+00:11:46,010 --> 00:11:52,350
+string is accepted or not similarly i do not
+have to worry about getting the minimum mode
+
+112
+00:11:52,350 --> 00:11:56,730
+of states of the automator ok because the
+again there is an algorithm that converts
+
+113
+00:11:56,730 --> 00:12:06,000
+any automaton into it the equivalent automaton
+that has the minimum number of states ok
+
+114
+00:12:06,000 --> 00:12:10,230
+so yeah so this is why we say this is very
+very elegant you can convert an n f a to d
+
+115
+00:12:10,230 --> 00:12:18,360
+f a and in d f a you can convert in into the
+minimum number of st since very very elegant
+
+116
+00:12:18,360 --> 00:12:24,580
+and we have seen that it can work as a language
+recognizer given a regular language it can
+
+117
+00:12:24,580 --> 00:12:31,190
+can tell me a new given a new string whether
+this is in the language or not but so coming
+
+118
+00:12:31,190 --> 00:12:37,290
+to my previous question is it what we need
+in the morphological analysis so answer is
+
+119
+00:12:37,290 --> 00:12:46,000
+no this is not sufficient for the morphological
+analysis we so so take the word boys remember
+
+120
+00:12:46,000 --> 00:12:49,470
+what are the different morphology analysis
+we talked about we talked about finding the
+
+121
+00:12:49,470 --> 00:12:54,140
+lambdaization ok is like the simplest one
+lambdaization i want to find out what is the
+
+122
+00:12:54,140 --> 00:12:59,280
+lemma for the word boys i want to find out
+the word boy can the d f a help me to obtain
+
+123
+00:12:59,280 --> 00:13:07,620
+the word boy it it can't it can only tell
+me that boys is a word in my in my defined
+
+124
+00:13:07,620 --> 00:13:13,410
+regular language this this is there so this
+is either single plural but it cannot tell
+
+125
+00:13:13,410 --> 00:13:21,530
+whether boys is what is the lemma forward
+by so i need some some other more model that
+
+126
+00:13:21,530 --> 00:13:28,180
+can give a word can also give me what is the
+lemma or the root form so for that so f s
+
+127
+00:13:28,180 --> 00:13:35,990
+a s are language recognizer or generators
+so we need instead transducers that can help
+
+128
+00:13:35,990 --> 00:13:43,320
+me do morphological analysis ok
+so what are transducers so transducers are
+
+129
+00:13:43,320 --> 00:13:49,760
+very very similar to final state automaton
+except that they can help me translate one
+
+130
+00:13:49,760 --> 00:13:57,540
+string into another ok so now what happens
+there how do they do that the model is very
+
+131
+00:13:57,540 --> 00:14:04,030
+similar to f s a but now in each edge of the
+f s a instead of having a single phoneme as
+
+132
+00:14:04,030 --> 00:14:09,790
+the label i have the input phoneme or input
+characters symbol and the output character
+
+133
+00:14:09,790 --> 00:14:15,260
+symbol so it translates one character symbol
+to another character symbol so that that solves
+
+134
+00:14:15,260 --> 00:14:21,070
+my problem of going from the input string
+like boys to an output this string like boy
+
+135
+00:14:21,070 --> 00:14:27,790
+ok
+so let's take the example on the on on the
+
+136
+00:14:27,790 --> 00:14:34,050
+on the same lexicon of forwards and they are
+plural so earlier we saw the final decision
+
+137
+00:14:34,050 --> 00:14:39,600
+automaton where we were having each edge label
+within input character only so finally it
+
+138
+00:14:39,600 --> 00:14:46,030
+could recognize whether a word is there in
+the language or not but now we have the transducer
+
+139
+00:14:46,030 --> 00:14:51,140
+where each other is labeled with the input
+as well as the output character so you see
+
+140
+00:14:51,140 --> 00:14:58,400
+here so here m m e n and e is the input a
+is the out so once you give an input like
+
+141
+00:14:58,400 --> 00:15:07,720
+m e n to this transducer the output you will
+get is m e n the actual lemma ok that is how
+
+142
+00:15:07,720 --> 00:15:12,370
+they can solve the morphological analysis
+problem
+
+143
+00:15:12,370 --> 00:15:18,630
+now some small details that what might be
+the problem that that you might face while
+
+144
+00:15:18,630 --> 00:15:25,590
+doing that so for example here is an input
+so we are calling it the lexical label cat
+
+145
+00:15:25,590 --> 00:15:33,050
+i want to cat i want to convert it to a it's
+now but a plural form so i know cat cat gives
+
+146
+00:15:33,050 --> 00:15:41,070
+me cats ok but what happens if i take a word
+like fox fox will give me foxes ok so there
+
+147
+00:15:41,070 --> 00:15:48,840
+will be they are changed at the at the boundary
+you adding an e between fox and s so now there
+
+148
+00:15:48,840 --> 00:15:55,150
+are many ways in which you can handle it one
+is you have you take cat has a regular know
+
+149
+00:15:55,150 --> 00:16:01,700
+and then have a regular plural to that and
+fox as irregular noun separately this is one
+
+150
+00:16:01,700 --> 00:16:04,810
+possibility
+but the interesting idea is if you can use
+
+151
+00:16:04,810 --> 00:16:10,920
+a two level morphology that is between the
+lexical form cat plus non plus plural and
+
+152
+00:16:10,920 --> 00:16:17,380
+the surface form that is cats can i define
+an intermediate form that is cat there is
+
+153
+00:16:17,380 --> 00:16:24,470
+an s but in between there is some placeholder
+that can be null or e depending on what are
+
+154
+00:16:24,470 --> 00:16:32,000
+the phonemes available in the stem and the
+surface so that is instead of going from lexical
+
+155
+00:16:32,000 --> 00:16:37,259
+to surface level directly can i go to the
+individual level first this is my first label
+
+156
+00:16:37,259 --> 00:16:43,700
+and then i transfer from intermediate label
+to the surface level in the second level of
+
+157
+00:16:43,700 --> 00:16:46,380
+morphology so this is my two level morphologic
+so example is so the motivation example is
+
+158
+00:16:46,380 --> 00:16:56,260
+for cats and foxs so instead of going from
+fox plus n plus p l two foxes i go to fox
+
+159
+00:16:56,260 --> 00:17:03,880
+and some placeholder n n s and this is the
+end the now i can have a second label rule
+
+160
+00:17:03,880 --> 00:17:10,740
+that says if my damaged fox of x is h s will
+there be some addition in the in between will
+
+161
+00:17:10,740 --> 00:17:15,939
+there will be sudden change in between that
+can be taken care of by a separate module
+
+162
+00:17:15,939 --> 00:17:21,730
+similarly cat there is a placeholder n s i
+can find out what should be the actual surface
+
+163
+00:17:21,730 --> 00:17:28,620
+from given this intermediate form
+so here is an example so i have in my vocabulary
+
+164
+00:17:28,620 --> 00:17:40,259
+words like fox cat goose ok and i am generating
+the singular and plural form so what are you
+
+165
+00:17:40,259 --> 00:17:48,549
+seeing here from from fox to generate the
+plural form same with cat i add a placeholder
+
+166
+00:17:48,549 --> 00:18:01,710
+as and the end of the character ok so so that
+is here now so this is my intermediate form
+
+167
+00:18:01,710 --> 00:18:07,620
+so that means at this point i am not distinguishing
+between fox and cat they are behaving very
+
+168
+00:18:07,620 --> 00:18:15,389
+very similarly so i need an additional process
+to find out given this intermediate form what
+
+169
+00:18:15,389 --> 00:18:25,809
+should be the surface level form ok so so
+this is this is the two level morphology i
+
+170
+00:18:25,809 --> 00:18:32,860
+go to fox s there is something in between
+that may be null or something else intermediate
+
+171
+00:18:32,860 --> 00:18:37,750
+label and then from intermediate labeled you
+go to the surface level ok
+
+172
+00:18:37,750 --> 00:18:42,870
+now what do you think the transition depend
+depends on from intermediate or surface label
+
+173
+00:18:42,870 --> 00:18:48,899
+so it will depend on what are the ending characters
+of the stem and the starting director of the
+
+174
+00:18:48,899 --> 00:18:58,789
+affix now given these what should be the replacement
+character ok so you can have these simple
+
+175
+00:18:58,789 --> 00:19:04,980
+rules in this notation this is also called
+k notation for condensed context as sensitive
+
+176
+00:19:04,980 --> 00:19:17,110
+rules ok so that so rules is that a letter
+a h converted to b if h visited by c and followed
+
+177
+00:19:17,110 --> 00:19:24,129
+by d ok so this is if you remember the context
+sensitive grammar so that is what i am saying
+
+178
+00:19:24,129 --> 00:19:33,470
+h converted to b if preceded by c and forward
+by d that means whenever a comes between c
+
+179
+00:19:33,470 --> 00:19:42,809
+and d then you convert a to b ok this is the
+context sensitive rules so this kind of spelling
+
+180
+00:19:42,809 --> 00:19:52,071
+change rules you can apply to go from intermediate
+label to the surface level you can use this
+
+181
+00:19:52,071 --> 00:20:04,669
+rules to to do the conversion
+now so after talking about this two level
+
+182
+00:20:04,669 --> 00:20:09,320
+morphology in general when people design the
+morphological analysis for the for a given
+
+183
+00:20:09,320 --> 00:20:14,799
+language they follow two different kind of
+approaches ok so so they are also called the
+
+184
+00:20:14,799 --> 00:20:19,580
+linguistic approach and engineering approach
+so what is the difference between the two
+
+185
+00:20:19,580 --> 00:20:26,909
+ok so in the linguistic approach what will
+happen you have the stem stem is already defined
+
+186
+00:20:26,909 --> 00:20:32,869
+in the in the in the lexicon or or the language
+and you have an affix that is also defined
+
+187
+00:20:32,869 --> 00:20:39,149
+so to the stem you will apply the suffixes
+h but the surface changing rules will be taking
+
+188
+00:20:39,149 --> 00:20:43,600
+care of separately by the rules of this kind
+that we have just seen so there will be rules
+
+189
+00:20:43,600 --> 00:20:48,870
+of this kind that will define the the surface
+how what are the changes that are happening
+
+190
+00:20:48,870 --> 00:20:54,460
+at the surface label on the other hand engineering
+approaches you won't have the separate rules
+
+191
+00:20:54,460 --> 00:21:01,490
+for spelling changes they will try to find
+out the minimum possible unit of the stem
+
+192
+00:21:01,490 --> 00:21:07,539
+that can be used and to that what other and
+the affixes can be big and in in that case
+
+193
+00:21:07,539 --> 00:21:13,629
+that can be applied to the stem ok let's see
+one example that makes it clear so so the
+
+194
+00:21:13,629 --> 00:21:19,220
+idea is that engineering approach all the
+phonetic irregularities will be factored into
+
+195
+00:21:19,220 --> 00:21:31,759
+the endings so here is one example from check
+so so what you are seeing here so they are
+
+196
+00:21:31,759 --> 00:21:40,970
+various words women owl draft iceberg wrapper
+and fly for each of these you have the actual
+
+197
+00:21:40,970 --> 00:21:51,649
+word and so that is like for women z e n and
+or it's s o v so here the root word and there
+
+198
+00:21:51,649 --> 00:21:55,559
+are various affixes are applied in various
+grammatical functions that are abstracted
+
+199
+00:21:55,559 --> 00:22:03,770
+using s one s two s three so on and p two
+the various grammatical ah functions ok you
+
+200
+00:22:03,770 --> 00:22:08,090
+might treat them as singular plural and and
+so on
+
+201
+00:22:08,090 --> 00:22:12,289
+so to a given root word where is affixes have
+being applied so what you are seeing here
+
+202
+00:22:12,289 --> 00:22:17,259
+are the final forms ok so for the initial
+two words they seen pretty pretty regular
+
+203
+00:22:17,259 --> 00:22:24,249
+so you have the word s o v you apply a y e
+n o for getting different different forms
+
+204
+00:22:24,249 --> 00:22:32,220
+similarly for z e n s k i c you see some difference
+right they are in red so what is the difference
+
+205
+00:22:32,220 --> 00:22:40,200
+that you are seen so now the the suffix why
+has been changed to i in the case of h two
+
+206
+00:22:40,200 --> 00:22:45,830
+similarly the accent is gone over e from me
+and you are getting the single sim simple
+
+207
+00:22:45,830 --> 00:22:52,899
+e so that is why it's in red ok so this is
+a irregularity this is ok but what happens
+
+208
+00:22:52,899 --> 00:22:59,610
+if we go to icework with k r you see in the
+case of s three even the stem that's a change
+
+209
+00:22:59,610 --> 00:23:05,600
+so on are you are getting an accent and for
+p two you are getting another word another
+
+210
+00:23:05,600 --> 00:23:11,691
+character e in between k r so you are getting
+k e r so now so so on you will see such changes
+
+211
+00:23:11,691 --> 00:23:19,610
+even vapor and fly so now the question is
+how does one capture all this all the changes
+
+212
+00:23:19,610 --> 00:23:26,539
+all these irregularities in the case of stems
+and the suffixes
+
+213
+00:23:26,539 --> 00:23:31,710
+so now in the linguistic approach what will
+happen i will take the same route word so
+
+214
+00:23:31,710 --> 00:23:37,360
+for example here i will have s k i c as the
+root word and k r as the root word and the
+
+215
+00:23:37,360 --> 00:23:43,490
+same set of suffixes so y a y e with an accent
+you know are my suffixes that is my root and
+
+216
+00:23:43,490 --> 00:23:50,009
+the suffix pair i will add these and whatever
+a spelling change rules i will try to enumerate
+
+217
+00:23:50,009 --> 00:23:54,730
+whatever different spelling change rules by
+taking what is the previous character previous
+
+218
+00:23:54,730 --> 00:23:58,539
+to previous character i will try to define
+the spelling changes in that way that is a
+
+219
+00:23:58,539 --> 00:24:07,110
+linguistic approach what will happen in engineering
+approach i try to find out the part of the
+
+220
+00:24:07,110 --> 00:24:15,019
+stem that is common across all all these variations
+so it's ok with the first three z e n s o
+
+221
+00:24:15,019 --> 00:24:21,200
+v n s k i c but with k r i will take only
+k as common i will not take r because r is
+
+222
+00:24:21,200 --> 00:24:27,230
+getting changed into something with an accent
+or with an e n r so i will take only k h common
+
+223
+00:24:27,230 --> 00:24:33,970
+is part of my stem and everything else remaining
+i will convert into my stem that i might add
+
+224
+00:24:33,970 --> 00:24:38,870
+and that you see in the last three so you
+have only k p n m as the actual strength and
+
+225
+00:24:38,870 --> 00:24:43,350
+everything else goes into the suffix so this
+is what is engineering approach so by doing
+
+226
+00:24:43,350 --> 00:24:49,879
+that you do not have to worry about handling
+the spelling change rules separately you are
+
+227
+00:24:49,879 --> 00:24:57,009
+you handling them here itself ok
+so there are various tool kits set available
+
+228
+00:24:57,009 --> 00:25:03,399
+for doing the morphological pricing for example
+at and t f s m library that is very popular
+
+229
+00:25:03,399 --> 00:25:09,200
+again the open f s t tools is very very popular
+for doing the morphological analysis for a
+
+230
+00:25:09,200 --> 00:25:15,549
+given language so so this is this was about
+our computation morphology using finite state
+
+231
+00:25:15,549 --> 00:25:21,239
+methods so i have very very briefly talked
+about what our financial methods and how do
+
+232
+00:25:21,239 --> 00:25:26,559
+we how do you use that for computational morphology
+so in the next lecture we will talk about
+
+233
+00:25:26,559 --> 00:25:31,299
+in the same process a more popular problem
+about part of speech tagging so what is the
+
+234
+00:25:31,299 --> 00:25:35,690
+problem part of speech tagging and what are
+the different computational models that you
+
+235
+00:25:35,690 --> 00:25:38,479
+can use to handle that ok
+thank you
+

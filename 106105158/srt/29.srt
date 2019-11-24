@@ -1,0 +1,1530 @@
+1
+00:00:18,270 --> 00:00:23,070
+welcome back for the third lecture of this
+week so in the last lecture we had defined
+
+2
+00:00:23,070 --> 00:00:28,150
+what is the notion of our transition based
+parsing and we we saw what are the configuration
+
+3
+00:00:28,150 --> 00:00:34,040
+that i should i should have what are transitions
+i can take and how do i come up with a final
+
+4
+00:00:34,040 --> 00:00:39,110
+dependency graph and we took an example and
+showed what are the transitions you can take
+
+5
+00:00:39,110 --> 00:00:46,030
+and how you should be taking the transitions
+and then we ended with saying that how i will
+
+6
+00:00:46,030 --> 00:00:55,000
+be using that for getting parse for a new
+sentence ok so this is something that we had
+
+7
+00:00:55,000 --> 00:01:01,860
+ah initially asked
+so i have some sentence s s i can find out
+
+8
+00:01:01,860 --> 00:01:07,510
+what initial configuration is why the function
+i keep on taking some transitions go to some
+
+9
+00:01:07,510 --> 00:01:14,380
+intermediate configuration until i obtain
+terminal configuration and i said with the
+
+10
+00:01:14,380 --> 00:01:22,100
+data i will have some sentences and their
+corresponding dependency parsing and from
+
+11
+00:01:22,100 --> 00:01:28,830
+there i will try to learn what are the operations
+of transitions i am where to take now in this
+
+12
+00:01:28,830 --> 00:01:35,820
+lecture we will see for a particular problem
+how we will be doing the learning part
+
+13
+00:01:35,820 --> 00:01:43,600
+so again let me start by giving you the basic
+intuition so what will be the basic intuition
+
+14
+00:01:43,600 --> 00:01:51,850
+so in the last lecture you had learned that
+for a sentence if you know the dependency
+
+15
+00:01:51,850 --> 00:02:01,830
+graph so this is my labeled data if you know
+that you can run through the steps very very
+
+16
+00:02:01,830 --> 00:02:08,270
+easily the steps of transitions so you can
+say that this is my initial configuration
+
+17
+00:02:08,270 --> 00:02:14,849
+and you can find out what is the transition
+i should take say it is shift so you can store
+
+18
+00:02:14,849 --> 00:02:20,700
+somewhere this is my initial configuration
+c zero and this is the transition then by
+
+19
+00:02:20,700 --> 00:02:26,140
+taking this transition you will go to some
+other configuration c one what is the transition
+
+20
+00:02:26,140 --> 00:02:39,460
+it may be left arc ok again some c two it
+can be shift and so on ok some c m it can
+
+21
+00:02:39,460 --> 00:02:45,810
+be shift or something
+so this given a sentence you can easily run
+
+22
+00:02:45,810 --> 00:02:54,670
+through these steps and find out and what
+is this c i c i is nothing but a some words
+
+23
+00:02:54,670 --> 00:03:03,790
+in stack some words in buffer and something
+in my arc that is my c i so that means suppose
+
+24
+00:03:03,790 --> 00:03:14,840
+i am given a set of sentences and their dependency
+graph i can store all the possible set of
+
+25
+00:03:14,840 --> 00:03:20,150
+configuration and all the possible by all
+the possible i mean whatever i obtaining from
+
+26
+00:03:20,150 --> 00:03:26,930
+these sentences and their corresponding transitions
+ok
+
+27
+00:03:26,930 --> 00:03:37,400
+and this i can have a last set so i will have
+a set of all possible c i and that optimal
+
+28
+00:03:37,400 --> 00:03:42,740
+transition that i should be taking and c i's
+of this form something in stack and something
+
+29
+00:03:42,740 --> 00:03:50,970
+in buffer arc now what is my problem at run
+time at run time i am given a sentence s i
+
+30
+00:03:50,970 --> 00:03:58,150
+do not know it's dependency parse ok so i
+start my transition i converted to some initial
+
+31
+00:03:58,150 --> 00:04:05,440
+configuration c zero that is easy of the function
+of converting to initial configuration there
+
+32
+00:04:05,440 --> 00:04:13,590
+i have to find out what is the transition
+i should take now what will be the idea i
+
+33
+00:04:13,590 --> 00:04:23,880
+will try to use this set of ah data that i
+have i know for what configurations what transitions
+
+34
+00:04:23,880 --> 00:04:30,710
+word taken in my gold standard or in my ah
+set of labeled data set so i will try to find
+
+35
+00:04:30,710 --> 00:04:37,520
+out so before going into what this is the
+machine learning ah approach we will use so
+
+36
+00:04:37,520 --> 00:04:49,610
+what will be intuitive idea try to find out
+what are the closest configurations in the
+
+37
+00:04:49,610 --> 00:04:56,360
+set and for those closest configurations what
+transition was taken and i will try to use
+
+38
+00:04:56,360 --> 00:05:01,370
+that t star from there
+suppose i find out the t star is the transition
+
+39
+00:05:01,370 --> 00:05:05,900
+that was taken to the closest configuration
+here so i will use t star and once i know
+
+40
+00:05:05,900 --> 00:05:11,879
+this t star i can transit it to next one c
+one again the question will come what is the
+
+41
+00:05:11,879 --> 00:05:19,499
+transition i should take so again go back
+to this and choose t dash take this go to
+
+42
+00:05:19,499 --> 00:05:25,919
+c two keep on doing that until you will come
+up with the final configuration c m and that's
+
+43
+00:05:25,919 --> 00:05:36,550
+why you say this is the dependency graph for
+s and this is the intuitive idea in the last
+
+44
+00:05:36,550 --> 00:05:44,210
+lecture we have seen how do come up with this
+set and today we will see how do i how do
+
+45
+00:05:44,210 --> 00:05:49,139
+i approach this problem so that i can come
+up with this function that what is the closest
+
+46
+00:05:49,139 --> 00:05:54,659
+configuration from here to here what is the
+transition that i should take it
+
+47
+00:05:54,659 --> 00:05:59,789
+so so one important idea that we had already
+discussed earlier in this course is that for
+
+48
+00:05:59,789 --> 00:06:05,740
+example how do you find out the closest configuration
+and what is the transition that we are taking
+
+49
+00:06:05,740 --> 00:06:14,180
+this you have to use by using a some sort
+of classifier that is you are trying to classify
+
+50
+00:06:14,180 --> 00:06:19,809
+for a given configuration among all the four
+transitions which transitions will be taken
+
+51
+00:06:19,809 --> 00:06:28,229
+so you are as a four class classification
+problem at each point you are trying to classify
+
+52
+00:06:28,229 --> 00:06:34,210
+among one of the four classes and how are
+you going to classify you have to convert
+
+53
+00:06:34,210 --> 00:06:46,110
+your input data in some representation so
+this will be using some feature representation
+
+54
+00:06:46,110 --> 00:06:51,800
+so you will have to convert your configuration
+into some sort features feature vector and
+
+55
+00:06:51,800 --> 00:06:59,979
+for those features you have to learn the weights
+and this weight you have to learn by the training
+
+56
+00:06:59,979 --> 00:07:04,849
+examples again and once you have learn the
+optimal weights you can find out what is the
+
+57
+00:07:04,849 --> 00:07:09,969
+transition at at any given point and this
+is what we will be discussing in this lecture
+
+58
+00:07:09,969 --> 00:07:15,190
+so let us see
+so now we are talking about the data driven
+
+59
+00:07:15,190 --> 00:07:22,520
+deterministic parsing so so i have written
+here certain things like deterministic parsing
+
+60
+00:07:22,520 --> 00:07:30,580
+requires in oracle what do i mean by oracle
+so oracle is nothing but the set of configurations
+
+61
+00:07:30,580 --> 00:07:37,349
+and the set of transition that i took ok so
+this you have already seen in the last lecture
+
+62
+00:07:37,349 --> 00:07:43,809
+how do you find out configuration and transitions
+now what we are going to do we want to approximate
+
+63
+00:07:43,809 --> 00:07:50,509
+it by a classifier so we will be learning
+classifier from there and it will be trained
+
+64
+00:07:50,509 --> 00:07:55,889
+using the treebank data so whatever data we
+have in the gold standard label data we will
+
+65
+00:07:55,889 --> 00:08:01,020
+use that to train our classifier also so you
+will use that label data for two different
+
+66
+00:08:01,020 --> 00:08:08,159
+tasks first for building the ah oracle configuration
+transition configuration transition second
+
+67
+00:08:08,159 --> 00:08:17,560
+to learn the weights of my classifier ok
+now what is the learning problem now as we
+
+68
+00:08:17,560 --> 00:08:25,399
+said we will be given a configuration as a
+input and we want to find out what is the
+
+69
+00:08:25,399 --> 00:08:31,099
+transition i should be taking at a particular
+configuration so ideally i want to approximate
+
+70
+00:08:31,099 --> 00:08:38,320
+the function that takes a configuration which
+is represented by a feature vectors two transitions
+
+71
+00:08:38,320 --> 00:08:44,260
+so configuration to transitions here configuration
+is nothing but a feature vector form because
+
+72
+00:08:44,260 --> 00:08:49,529
+otherwise how do you compare between two configurations
+so that's why you will take give it a very
+
+73
+00:08:49,529 --> 00:08:55,280
+exact representation in terms of ah some feature
+vector form and you will learn a function
+
+74
+00:08:55,280 --> 00:09:04,100
+from feature vector to the optimal transition
+and this is this will be your classifier and
+
+75
+00:09:04,100 --> 00:09:08,680
+how will you learn that you will be given
+a training set of gold standard transition
+
+76
+00:09:08,680 --> 00:09:15,250
+sequences that we already have seen
+so now to completely solve this problem or
+
+77
+00:09:15,250 --> 00:09:19,380
+to completely understand this problem there
+are three issues that you need to understand
+
+78
+00:09:19,380 --> 00:09:28,260
+first is how do i represent configuration
+by a feature vector second how do i derive
+
+79
+00:09:28,260 --> 00:09:35,370
+training data from my treebanks and third
+is how do i learn my classifiers so let us
+
+80
+00:09:35,370 --> 00:09:40,980
+try to answer each of these three questions
+so how do i represent configuration by by
+
+81
+00:09:40,980 --> 00:09:48,130
+feature vectors and this is something that
+we had done earlier in the class that how
+
+82
+00:09:48,130 --> 00:09:53,060
+do i convert a a given state or represent
+to a feature vector
+
+83
+00:09:53,060 --> 00:10:04,710
+so what is my configuration my configuration
+is nothing but a stack buffer and arcs and
+
+84
+00:10:04,710 --> 00:10:12,900
+i want to convert that to some feature vector
+and feature vector again here we will take
+
+85
+00:10:12,900 --> 00:10:22,740
+it a very simple form like f c t it is a function
+over the configuration and the transition
+
+86
+00:10:22,740 --> 00:10:28,890
+and we will try to define features independent
+of transition so each feature that we define
+
+87
+00:10:28,890 --> 00:10:35,580
+can have four copies four four different transitions
+so f c t one f c t two f c t three f c t four
+
+88
+00:10:35,580 --> 00:10:43,070
+like that so so what are the different things
+that i can use in feature so i can use things
+
+89
+00:10:43,070 --> 00:10:49,740
+like what is the word at top of this stack
+what is the word at top of buffer they are
+
+90
+00:10:49,740 --> 00:10:57,050
+very important
+what is the word here then i may want to use
+
+91
+00:10:57,050 --> 00:11:04,960
+what is the part of speech tag of these words
+because sometimes some relations would might
+
+92
+00:11:04,960 --> 00:11:09,190
+might directly dependent on whether it is
+a verb and it is a noun then there might be
+
+93
+00:11:09,190 --> 00:11:14,810
+a relation otherwise not so i might use the
+part part of speech tag i might go to the
+
+94
+00:11:14,810 --> 00:11:20,940
+lemma i might want to use what is the distance
+between this word and this word in the actual
+
+95
+00:11:20,940 --> 00:11:27,490
+sentence i might also want to use what are
+neighbors here i might want to use what are
+
+96
+00:11:27,490 --> 00:11:32,530
+relations that i have already been established
+with this word or this word ok so that means
+
+97
+00:11:32,530 --> 00:11:40,790
+i will define certain conditions over stack
+buffer and arcs and that will i would like
+
+98
+00:11:40,790 --> 00:11:44,890
+to take my features
+and again these can be some binary questions
+
+99
+00:11:44,890 --> 00:11:51,890
+that i am asking so that is is the distance
+between these two words between two to five
+
+100
+00:11:51,890 --> 00:11:56,700
+yes or no ok so like that these can be my
+condition that is my features and i will define
+
+101
+00:11:56,700 --> 00:12:02,890
+it for all the four transitions
+so let us look at what are the different feature
+
+102
+00:12:02,890 --> 00:12:11,140
+models we can take in general so i am representing
+configuration c by a vector of simple features
+
+103
+00:12:11,140 --> 00:12:17,420
+so like i can use the nodes so what is the
+top of this stack what is the head of buffer
+
+104
+00:12:17,420 --> 00:12:23,230
+i can use the linear context that is what
+are the neighbors in s stack of the top word
+
+105
+00:12:23,230 --> 00:12:28,820
+what are the neighbors in buffer of the top
+word then i might also use what are the parents
+
+106
+00:12:28,820 --> 00:12:33,250
+children siblings depending on what relations
+are already been established in my set of
+
+107
+00:12:33,250 --> 00:12:39,040
+arcs
+then i can go to some other attributes like
+
+108
+00:12:39,040 --> 00:12:44,940
+i can use the word form i can use also it's
+lemma and we can use them up part of speech
+
+109
+00:12:44,940 --> 00:12:50,600
+tag and various other features for example
+is the is the word on top of stack ends with
+
+110
+00:12:50,600 --> 00:12:57,880
+e d or i n g things like that and i might
+be able to use the dependency type if i am
+
+111
+00:12:57,880 --> 00:13:04,090
+handling a labeled dependency problem so so
+yeah just a word what do i mean by labeled
+
+112
+00:13:04,090 --> 00:13:08,520
+dependency problem that means i also want
+to find out for two words what is the dependency
+
+113
+00:13:08,520 --> 00:13:12,920
+relation label and if i am solving unlabeled
+problem that means i want to just want to
+
+114
+00:13:12,920 --> 00:13:18,370
+establish a relation but i am not concern
+with the actual dependency type
+
+115
+00:13:18,370 --> 00:13:22,230
+so i am not worried about putting the label
+on the arc but just the structure of the tree
+
+116
+00:13:22,230 --> 00:13:26,360
+so if i am solving label problem i might also
+have to see what is the relation type that
+
+117
+00:13:26,360 --> 00:13:34,200
+i am establishing and we will also see the
+distance between different tokens as one of
+
+118
+00:13:34,200 --> 00:13:40,320
+the features so these are some typical examples
+but it doesn't mean that you are limited only
+
+119
+00:13:40,320 --> 00:13:45,860
+to using this set of features and as i keep
+on seeing for your particular task you might
+
+120
+00:13:45,860 --> 00:13:52,540
+have to think what might be some interesting
+features that you you can use
+
+121
+00:13:52,540 --> 00:13:58,660
+so by using all these features i am putting
+my binary questions i can represent my configuration
+
+122
+00:13:58,660 --> 00:14:04,340
+as a in terms of a feature representation
+so this is my first question now what was
+
+123
+00:14:04,340 --> 00:14:15,880
+the second question now how do i use this
+at run time but actually find the ah parse
+
+124
+00:14:15,880 --> 00:14:26,170
+of the sentence idea would be something like
+that so let me start from here at run time
+
+125
+00:14:26,170 --> 00:14:33,470
+you are given a sentence w one to w n ok and
+you can always go to the initial configuration
+
+126
+00:14:33,470 --> 00:14:37,650
+where the buffer is sorry s stack is empty
+buffer contains all the words and arc is empty
+
+127
+00:14:37,650 --> 00:14:45,360
+ok now this is your configuration and you
+are in a loop while the buffer is not empty
+
+128
+00:14:45,360 --> 00:14:54,450
+you keep on taking some transitions now this
+is the task say run time so this configuration
+
+129
+00:14:54,450 --> 00:14:59,780
+c you know how to covert to the to a feature
+vector because you are defined your features
+
+130
+00:14:59,780 --> 00:15:03,430
+so you can ask the questions at this point
+and find out your vector f c t
+
+131
+00:15:03,430 --> 00:15:12,860
+now what is my classifier my classifier is
+simple i have learned the weights of my features
+
+132
+00:15:12,860 --> 00:15:16,310
+assume that i have learned we will see how
+to learn the weights so once i have learned
+
+133
+00:15:16,310 --> 00:15:21,790
+the weights of my features i will multiply
+the weights with f c t and find out what is
+
+134
+00:15:21,790 --> 00:15:28,490
+the particular transition that is giving the
+maximum value that means i know what is my
+
+135
+00:15:28,490 --> 00:15:42,740
+f c t feature vector and i know my this is
+my f c t and this is my weights so now at
+
+136
+00:15:42,740 --> 00:15:51,260
+run time i am given a configuration c and
+i need to find out what is the optimal transition
+
+137
+00:15:51,260 --> 00:16:05,160
+how do i do that an idea is that i will multiply
+w with f c t i for all the four transitions
+
+138
+00:16:05,160 --> 00:16:12,380
+so t i is shift left arc reduce and right
+arc and i will take which one gives the maximum
+
+139
+00:16:12,380 --> 00:16:23,540
+value argmax over t i so at run time any configuration
+i can convert to f c t very easily i will
+
+140
+00:16:23,540 --> 00:16:26,600
+already have the weight vectors the only thing
+that i have to do multiply the weight vector
+
+141
+00:16:26,600 --> 00:16:31,170
+with the feature vector find out four different
+values four different transitions choose the
+
+142
+00:16:31,170 --> 00:16:35,670
+maximum or choose the transitions that has
+gives the maximum value that is the transition
+
+143
+00:16:35,670 --> 00:16:40,210
+you will take and then if you go back this
+is the transition you take and then apply
+
+144
+00:16:40,210 --> 00:16:44,970
+this transition over this configuration to
+find the next configuration and keep on going
+
+145
+00:16:44,970 --> 00:16:50,400
+in this loop until your buffer is empty and
+this is what your run time
+
+146
+00:16:50,400 --> 00:16:56,220
+now what is not clear to you right now is
+how do we learn these weights right everything
+
+147
+00:16:56,220 --> 00:17:04,909
+else is clear so let us see so so learning
+weights we will have to use the labeled data
+
+148
+00:17:04,909 --> 00:17:09,230
+that we have is the training data now let
+us see what are the steps that we need to
+
+149
+00:17:09,230 --> 00:17:15,870
+do over the training data now training data
+i will have the instances of this form f c
+
+150
+00:17:15,870 --> 00:17:22,920
+and t is this clear entering data we will
+have configurations and transitions yes and
+
+151
+00:17:22,920 --> 00:17:28,760
+configuration i know what is the feature representation
+so i convert the feature vector so i can have
+
+152
+00:17:28,760 --> 00:17:34,500
+f c and t f c is nothing but the feature representation
+of the configuration c and t is the correct
+
+153
+00:17:34,500 --> 00:17:42,000
+transition out of ah it starting from c and
+this i can for obtain from my oracle remember
+
+154
+00:17:42,000 --> 00:17:47,990
+in oracle i had my configuration and the optimal
+transition so i know this configuration what
+
+155
+00:17:47,990 --> 00:17:56,110
+is the transition it should take so from there
+i go to next step f c and t ok
+
+156
+00:17:56,110 --> 00:18:02,340
+now now this is something that we have done
+in the last class but let me try to repeat
+
+157
+00:18:02,340 --> 00:18:09,110
+that again that how do we sample this oracle
+function from the set of labeled ah sentences
+
+158
+00:18:09,110 --> 00:18:14,501
+labeled of dependency graph so for each sentence
+x with the gold standard dependency graph
+
+159
+00:18:14,501 --> 00:18:19,480
+g x you have to construct a transition sequence
+right like we did in the last class for the
+
+160
+00:18:19,480 --> 00:18:25,100
+example he sent her a letter such that c zero
+will something that will obtained by applying
+
+161
+00:18:25,100 --> 00:18:34,770
+the initialization function on on x and this
+is the final dependency graph ok now for each
+
+162
+00:18:34,770 --> 00:18:39,620
+intermediate configuration we will construct
+a training instance so right we will have
+
+163
+00:18:39,620 --> 00:18:48,190
+c i t i c i t i and c i will go to f c i and
+this is the condition for how are am i moving
+
+164
+00:18:48,190 --> 00:18:52,930
+in from one configuration to another configuration
+so this is the same thing that that i have
+
+165
+00:18:52,930 --> 00:18:58,180
+discussed earlier in today's lecture that
+what is the idea is starting from the gold
+
+166
+00:18:58,180 --> 00:19:06,180
+standard sentence and dependency graph find
+out this sequence c i t i c i t i now the
+
+167
+00:19:06,180 --> 00:19:11,780
+only addition here is i covert each c i to
+it's feature representation so that's why
+
+168
+00:19:11,780 --> 00:19:21,160
+i what i have i have f c i t i f c i t i
+and how do you sample ah the transitions in
+
+169
+00:19:21,160 --> 00:19:27,280
+oracle this is something again that we did
+in the last class so if you see that in my
+
+170
+00:19:27,280 --> 00:19:33,100
+dependency graph the current top of the word
+in the stack is connected to the top of the
+
+171
+00:19:33,100 --> 00:19:37,540
+word in buffer so you will have a relation
+depending on the direction it will be left
+
+172
+00:19:37,540 --> 00:19:44,330
+arc or right arc so here if the top of the
+word in buffer is the head and this is the
+
+173
+00:19:44,330 --> 00:19:49,390
+dependent you make a left arc transition so
+this is what you will store if top word in
+
+174
+00:19:49,390 --> 00:19:57,120
+the in the stack is head then you will have
+a right arc relation yes then how do you choose
+
+175
+00:19:57,120 --> 00:20:03,620
+between reduce and shift if there is a word
+below that of the stack such that it is connect
+
+176
+00:20:03,620 --> 00:20:09,670
+to the first word in the buffer then you do
+reduce otherwise you shift and remember this
+
+177
+00:20:09,670 --> 00:20:15,660
+is that we discussed in the last lecture if
+you are between reduce and shift this is the
+
+178
+00:20:15,660 --> 00:20:22,590
+condition that you can use
+so ok so so i hope the the idea is clear you
+
+179
+00:20:22,590 --> 00:20:27,490
+are starting with the sentence in training
+data you have the gold standard dependency
+
+180
+00:20:27,490 --> 00:20:34,670
+graph you keep on going through your transitions
+and store it somewhere f c i t i f c i t i
+
+181
+00:20:34,670 --> 00:20:43,020
+f c i t i now how do i use that to learn the
+weights now and this is the idea of learning
+
+182
+00:20:43,020 --> 00:20:53,179
+the weights so so what you will do you will
+start with some initial set of weights so
+
+183
+00:20:53,179 --> 00:20:56,600
+so here i have said all the weights can be
+initialized to zero but probably not will
+
+184
+00:20:56,600 --> 00:21:02,179
+zero you can initialize with some other numbers
+say ah some initial random numbers or some
+
+185
+00:21:02,179 --> 00:21:07,510
+uniform numbers you initialize your weights
+with now what are you going to do so there
+
+186
+00:21:07,510 --> 00:21:12,860
+are two loops here for i is one to k this
+is the number of iterations that you are doing
+
+187
+00:21:12,860 --> 00:21:19,320
+for j in one to n one to n is the all the
+set of sentences that you have in you are
+
+188
+00:21:19,320 --> 00:21:22,350
+training data so you are doing multiple iterations
+over your training data
+
+189
+00:21:22,350 --> 00:21:31,730
+in j iteration what do we do you take the
+sentence yes you get the initial configuration
+
+190
+00:21:31,730 --> 00:21:40,030
+fine now while buffer is not empty so so what
+you are doing right now you are again repeating
+
+191
+00:21:40,030 --> 00:21:47,910
+the same stuff over each sentence in the training
+data ok you start with the initial configuration
+
+192
+00:21:47,910 --> 00:21:55,600
+and now try to find the transition as per
+your current weights so so that's where the
+
+193
+00:21:55,600 --> 00:22:04,320
+idea of learning comes in
+so let me try to explain it here so so you
+
+194
+00:22:04,320 --> 00:22:15,350
+have a sentence s s now you can apply the
+c s x function or and you go to initial configuration
+
+195
+00:22:15,350 --> 00:22:23,580
+c zero now you take a transition to go to
+c now this is your sentence in your training
+
+196
+00:22:23,580 --> 00:22:35,670
+data that means you know what is the transition
+you should take yes but i want to use this
+
+197
+00:22:35,670 --> 00:22:43,300
+idea to learn and how do i do that now suppose
+that you are actually at the run time at testing
+
+198
+00:22:43,300 --> 00:22:49,270
+time so then you do not know the transition
+so you will convert that to some feature vector
+
+199
+00:22:49,270 --> 00:22:56,940
+f c t ok now it run time how do you find out
+the optimal transition multiplied with the
+
+200
+00:22:56,940 --> 00:23:09,240
+weights and take the argmax and let us say
+this is t star this you can do that even if
+
+201
+00:23:09,240 --> 00:23:15,650
+it is in the training set and let us call
+it t naught optimal transition
+
+202
+00:23:15,650 --> 00:23:21,980
+now what is the idea you are still in the
+learning stage so your weights will not be
+
+203
+00:23:21,980 --> 00:23:29,200
+optimal so when you do this operation you
+may not get the optimal transition you may
+
+204
+00:23:29,200 --> 00:23:35,500
+get something else and that's where you will
+try to adopt your weights so you will say
+
+205
+00:23:35,500 --> 00:23:48,650
+if t star not equal to t zero then you update
+your weights and how will you update your
+
+206
+00:23:48,650 --> 00:23:54,450
+weights such that you go in the direction
+of the actual transition and away from the
+
+207
+00:23:54,450 --> 00:23:59,760
+transition of the the transition that you
+obtain at the current point so simple thing
+
+208
+00:23:59,760 --> 00:24:13,630
+is w new would be w old plus f c t zero minus
+f c t start so going in the direction of the
+
+209
+00:24:13,630 --> 00:24:20,721
+optimal transition and away from the transition
+that you are currently ah predicting and there
+
+210
+00:24:20,721 --> 00:24:25,250
+can be some learning rate and all that we
+are not ah discussing right now so there will
+
+211
+00:24:25,250 --> 00:24:31,549
+be some learning weights by which you will
+do this update so you will have now new weights
+
+212
+00:24:31,549 --> 00:24:38,360
+again you keep on doing it for c one c one
+you know what is the transition optimal transition
+
+213
+00:24:38,360 --> 00:24:44,480
+but you will find out argmax t start match
+with this if they are not the same you will
+
+214
+00:24:44,480 --> 00:24:49,380
+again update your weights so you will keep
+keep on doing that for all the sentences s
+
+215
+00:24:49,380 --> 00:25:01,710
+one to s n in your training set and you will
+do it one two some k times until the weights
+
+216
+00:25:01,710 --> 00:25:08,250
+are converging so once the weights converged
+we stop so this is what we have shown here
+
+217
+00:25:08,250 --> 00:25:12,360
+so you start for each sentence you have some
+initial configuration while buffer is not
+
+218
+00:25:12,360 --> 00:25:17,070
+empty so you keep on doing the stuff find
+out what is the optimal transition as per
+
+219
+00:25:17,070 --> 00:25:24,250
+your weights find the optimal transition from
+the oracle if they are not matching update
+
+220
+00:25:24,250 --> 00:25:28,810
+your weights but you take the correct transition
+so the next time you are starting with correct
+
+221
+00:25:28,810 --> 00:25:37,080
+configuration keep on repeating it and finally
+you will end up with new set of weights ok
+
+222
+00:25:37,080 --> 00:25:43,610
+so now to further understand that let us take
+a an example and that will make it clear to
+
+223
+00:25:43,610 --> 00:25:50,679
+you that how the learning or how the weight
+updation takes place so so this is simple
+
+224
+00:25:50,679 --> 00:25:57,850
+example so i have a sentence john saw mary
+so what do you need to do first question is
+
+225
+00:25:57,850 --> 00:26:07,740
+draw a dependency graph for this sentence
+that is very easy yes now the next question
+
+226
+00:26:07,740 --> 00:26:12,890
+says that you are using the data driven dependency
+parsing the same method that we have discussed
+
+227
+00:26:12,890 --> 00:26:17,440
+in this lecture and in the last lecture and
+you already have the gold standard parse in
+
+228
+00:26:17,440 --> 00:26:24,020
+your training data and you have some other
+information like john and mary are nouns and
+
+229
+00:26:24,020 --> 00:26:33,940
+saw is verb and also given you features and
+you are told that initialize your weights
+
+230
+00:26:33,940 --> 00:26:41,141
+to five except that for left arc the weights
+are five point five define your feature vector
+
+231
+00:26:41,141 --> 00:26:49,070
+and the initial weight vector so let us try
+to do this
+
+232
+00:26:49,070 --> 00:26:53,880
+so how many conditions are we seen we are
+seeing three conditions over my configuration
+
+233
+00:26:53,880 --> 00:27:00,240
+the stack is empty top of stack is noun and
+top of buffer is verb top of stack is verb
+
+234
+00:27:00,240 --> 00:27:04,493
+and top of buffer is noun three conditions
+now these three conditions i have to check
+
+235
+00:27:04,493 --> 00:27:11,590
+for all the four different transitions so
+how many ah what is the size of my feature
+
+236
+00:27:11,590 --> 00:27:20,299
+vector three into four twelve so my feature
+vector 
+
+237
+00:27:20,299 --> 00:27:26,840
+so it's of twelve dimension and what are my
+features so first feature let me write it
+
+238
+00:27:26,840 --> 00:27:38,760
+simply condition one that is the stack is
+empty and same as starting with left arc transition
+
+239
+00:27:38,760 --> 00:27:50,360
+is left arc second feature can be condition
+two and left arc third condition three and
+
+240
+00:27:50,360 --> 00:27:59,710
+left arc yes this is my f c t a condition
+over the configuration and transition first
+
+241
+00:27:59,710 --> 00:28:06,720
+three elements next three elements same c
+one but now transition will change still right
+
+242
+00:28:06,720 --> 00:28:21,510
+arc c two right arc c three right arc and
+then the next elements c one reduce c two
+
+243
+00:28:21,510 --> 00:28:33,941
+reduce c three reduce and here c one shift
+c two shift c three shift so this is my feature
+
+244
+00:28:33,941 --> 00:28:41,080
+vector twelve elements here
+now what is my weight vector initial weight
+
+245
+00:28:41,080 --> 00:28:48,330
+vector we said all the elements are zero sorry
+are five except the left arc is five point
+
+246
+00:28:48,330 --> 00:28:54,570
+five so the weights are five point five five
+point five five point five and everything
+
+247
+00:28:54,570 --> 00:29:00,880
+else is five point o five point o and so on
+that is your initial weight vector and your
+
+248
+00:29:00,880 --> 00:29:07,540
+task is now so this was the first question
+what is my dependency parse john saw mary
+
+249
+00:29:07,540 --> 00:29:21,120
+so saw is here john and mary this is subject
+and this is object now let us see what what
+
+250
+00:29:21,120 --> 00:29:28,230
+the question says further
+so the next question the question says use
+
+251
+00:29:28,230 --> 00:29:34,430
+this gold standard parse during online learning
+and report the weights after completing one
+
+252
+00:29:34,430 --> 00:29:38,730
+full iteration of arc eager parsing so it
+says that now you have to learn the weights
+
+253
+00:29:38,730 --> 00:29:43,910
+using the arc eager parsing or the transition
+parsing that we have seen so ok
+
+254
+00:29:43,910 --> 00:29:51,910
+so now let let us see how do we learn the
+weights so so this is what we have defined
+
+255
+00:29:51,910 --> 00:29:56,010
+right now we have this features we have this
+weights initially as per dependency graphs
+
+256
+00:29:56,010 --> 00:30:01,540
+so how will i start learning in learning i
+will take this sentence i will put it to the
+
+257
+00:30:01,540 --> 00:30:07,330
+initial configuration initial configuration
+is what this stack is empty buffer contains
+
+258
+00:30:07,330 --> 00:30:19,860
+john saw and mary and arc is empty so now
+at this configuration c i have to choose what
+
+259
+00:30:19,860 --> 00:30:31,430
+is the optimal transition as per my classifier
+and i have to choose the optimal transition
+
+260
+00:30:31,430 --> 00:30:38,929
+as per my oracle from oracle what will be
+t zero oracle i will be very easily saying
+
+261
+00:30:38,929 --> 00:30:44,179
+that this would be shift i am doing a shift
+at this point i should shift here but what
+
+262
+00:30:44,179 --> 00:30:50,820
+is being predicted by my classifier so let
+us see what will be t star as per my classifier
+
+263
+00:30:50,820 --> 00:31:03,630
+so for my classifier how do i obtain t star
+so t star would be argmax w times f c t for
+
+264
+00:31:03,630 --> 00:31:13,543
+all possible transitions so let us do one
+by one so what will be f c l a what is the
+
+265
+00:31:13,543 --> 00:31:20,610
+feature vector when the transition is l a
+so for that let us look at my feature vector
+
+266
+00:31:20,610 --> 00:31:29,190
+definition so this will be a binary value
+at each point c one and l a what is c one
+
+267
+00:31:29,190 --> 00:31:35,080
+top of the stack is this stack is empty so
+c one is one and transition is left arc so
+
+268
+00:31:35,080 --> 00:31:42,419
+this will be one c two top of stack is noun
+and top buffer is verb now top of stack is
+
+269
+00:31:42,419 --> 00:31:47,710
+empty it cannot contain a noun so c two is
+zero so already this will be zero c three
+
+270
+00:31:47,710 --> 00:31:54,799
+again say top of stack is verb and top of
+buffer is noun again this will be zero ok
+
+271
+00:31:54,799 --> 00:32:00,660
+that's why i fill in my my feature vector
+now let us go to this now immediately as you
+
+272
+00:32:00,660 --> 00:32:04,700
+move to some other transition r a this should
+be zero yes because here your transitions
+
+273
+00:32:04,700 --> 00:32:17,230
+is l a so everything else will be zero twelve
+elements ok now what is your weight vector
+
+274
+00:32:17,230 --> 00:32:25,549
+weight vector is here say if you multiply
+weight vector with f c l a what do you get
+
+275
+00:32:25,549 --> 00:32:33,929
+so w times f c l a is equal to one so only
+one element is one so i will multiply with
+
+276
+00:32:33,929 --> 00:32:41,540
+that this will give you five point five ok
+now similarly now you can easily figure out
+
+277
+00:32:41,540 --> 00:32:49,450
+what are the other features f c r a for r
+a similarly only this element will be one
+
+278
+00:32:49,450 --> 00:33:03,430
+everything else will be zero so what is w
+times f c r a that will be five and similarly
+
+279
+00:33:03,430 --> 00:33:14,059
+if you keep on doing for all shift and reduce
+you will find this for shift is five and this
+
+280
+00:33:14,059 --> 00:33:25,440
+for reduce is five yes
+so now what is your t star argmax t w times
+
+281
+00:33:25,440 --> 00:33:38,420
+f c t that's will be left arc and what is
+your t zero optimal is shift as per your oracle
+
+282
+00:33:38,420 --> 00:33:43,560
+and how do you learn your weights if t star
+is not the same as t zero you will update
+
+283
+00:33:43,560 --> 00:33:56,900
+your weights and what is the late update w
+plus f c t zero minus f c t star so what is
+
+284
+00:33:56,900 --> 00:34:07,270
+f c t zero that is f c s h so what will be
+this function so suppose so s h was at the
+
+285
+00:34:07,270 --> 00:34:14,780
+end so it was one zero zero and everything
+else is zero and this is my l a so what will
+
+286
+00:34:14,780 --> 00:34:29,580
+be the new weight vector so i have the original
+weight vector that is this one plus this minus
+
+287
+00:34:29,580 --> 00:34:39,540
+this so what will be the new weight vector
+it will be i am i am subtracting one here
+
+288
+00:34:39,540 --> 00:34:49,450
+so four point five five point five five point
+five five point zero five point zero five
+
+289
+00:34:49,450 --> 00:34:57,810
+point zero five point zero five point zero
+five point zero and now i come to shift in
+
+290
+00:34:57,810 --> 00:35:05,069
+shift i am adding that one so it will be six
+point zero five point zero five point zero
+
+291
+00:35:05,069 --> 00:35:09,770
+and that is your new weight vector ok
+and now you will verb with this weight vector
+
+292
+00:35:09,770 --> 00:35:16,680
+for the next set of configuration so what
+will be the next configuration from here you
+
+293
+00:35:16,680 --> 00:35:23,950
+will apply shift and next configuration will
+be john saw mary and phi again you will convert
+
+294
+00:35:23,950 --> 00:35:29,770
+it to the feature vector see what are the
+what is t star that you are getting what is
+
+295
+00:35:29,770 --> 00:35:36,119
+t zero if they are not matching update your
+weights and that you will continue until you
+
+296
+00:35:36,119 --> 00:35:41,280
+arrive at the terminal configuration and then
+you will have the final weight vectors so
+
+297
+00:35:41,280 --> 00:35:47,200
+i i encourage all of you that you should try
+it this full example on your own and see what
+
+298
+00:35:47,200 --> 00:35:52,290
+is the final weight vector that you are ah
+getting and even if you are trying to see
+
+299
+00:35:52,290 --> 00:35:58,290
+that by using this weight vector does that
+help in that now with the new weight vector
+
+300
+00:35:58,290 --> 00:36:03,359
+if you try it on the old configuration you
+will actually attain the you will you will
+
+301
+00:36:03,359 --> 00:36:09,510
+be closer to the optimal configuration as
+per the oracle and not what your classical
+
+302
+00:36:09,510 --> 00:36:13,550
+early updating
+so so this is the idea of how you can use
+
+303
+00:36:13,550 --> 00:36:19,790
+the machine machine learning methods for this
+dependency parsing by taking this example
+
+304
+00:36:19,790 --> 00:36:24,859
+of arc eager of transition based parsing now
+in the next lecture we will we will start
+
+305
+00:36:24,859 --> 00:36:30,780
+discussion on a new method of dependency parsing
+and we will see that again how we can use
+
+306
+00:36:30,780 --> 00:36:34,000
+the label data for for doing this ok
+thank you
+

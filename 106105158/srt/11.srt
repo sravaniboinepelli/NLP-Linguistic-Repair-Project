@@ -1,0 +1,1094 @@
+1
+00:00:17,699 --> 00:00:23,480
+hello everyone welcome to the first tutorial
+session for the natural language processing
+
+2
+00:00:23,480 --> 00:00:31,029
+course so in this tutorial sessions we will
+be seeing how to set up the programming environment
+
+3
+00:00:31,029 --> 00:00:38,970
+for the course and how to use it to solve
+your assignment problems so we will be using
+
+4
+00:00:38,970 --> 00:00:45,160
+python as our default programming language
+and we will using jupyter as our default programming
+
+5
+00:00:45,160 --> 00:00:50,479
+environment so if you are already comfortable
+with a particular programming language or
+
+6
+00:00:50,479 --> 00:00:56,560
+an environment it is perfectly fine that you
+use one of those but if you feel that you
+
+7
+00:00:56,560 --> 00:01:03,240
+will be requiring our assistance it is recommended
+that you use python and jupyter
+
+8
+00:01:03,240 --> 00:01:13,000
+so let us see how to install a programming
+environment so what i will suggest is that
+
+9
+00:01:13,000 --> 00:01:24,799
+you can go to google and type anaconda python
+so anaconda is a package that gives you the
+
+10
+00:01:24,799 --> 00:01:30,619
+programming language programming environment
+and all other necessary packages required
+
+11
+00:01:30,619 --> 00:01:43,539
+to run your course so you can see that the
+first link here which is the anaconda package
+
+12
+00:01:43,539 --> 00:01:52,729
+leads you to the download page so the we get
+here we can go to the menu and see the download
+
+13
+00:01:52,729 --> 00:02:07,170
+link is up here for installation we can look
+into the packages here as we can see the package
+
+14
+00:02:07,170 --> 00:02:14,570
+is available for different operating systems
+and we recommend that you go with the python
+
+15
+00:02:14,570 --> 00:02:18,910
+two point seven version
+so depending on your you can install the sixty
+
+16
+00:02:18,910 --> 00:02:26,110
+bit installer or the thirty two bit installer
+so if you are working on osx or linux where
+
+17
+00:02:26,110 --> 00:02:32,680
+installers are available here we recommend
+that you install that version and go to the
+
+18
+00:02:32,680 --> 00:02:39,489
+particular director where the package is downloaded
+and run your dash command to execute this
+
+19
+00:02:39,489 --> 00:02:44,269
+particular package command line installer
+will take you through and it show you how
+
+20
+00:02:44,269 --> 00:02:54,090
+to install the package for the windows the
+graphical installer is available and you can
+
+21
+00:02:54,090 --> 00:03:04,110
+download it by clicking on this particular
+link as i have already have the install version
+
+22
+00:03:04,110 --> 00:03:10,459
+available with me i will be showing you a
+step by step process of how to install this
+
+23
+00:03:10,459 --> 00:03:33,299
+set up
+so if you have space constraint you can cry
+
+24
+00:03:33,299 --> 00:03:39,420
+the minimal package called as miniconda otherwise
+it is advisable that you go with the current
+
+25
+00:03:39,420 --> 00:03:51,370
+installation which is anaconda so here is
+the installation package and ah you can go
+
+26
+00:03:51,370 --> 00:03:59,569
+to a step by step process and yes it ask for
+two separate ways of installation if you dont
+
+27
+00:03:59,569 --> 00:04:03,879
+have admin privileges in the particular system
+you are installing you should be selecting
+
+28
+00:04:03,879 --> 00:04:10,440
+this one just for your particular use and
+you can define why you are package should
+
+29
+00:04:10,440 --> 00:04:19,660
+be install and make sure you have at least
+two gb of free space available in your system
+
+30
+00:04:19,660 --> 00:04:24,840
+since just that i have already a package install
+so i will be just showing you how to install
+
+31
+00:04:24,840 --> 00:04:31,460
+it to on a separate folder and i just you
+have to just make sure this are ticked and
+
+32
+00:04:31,460 --> 00:04:35,670
+click on the install button
+so the install will take somewhere around
+
+33
+00:04:35,670 --> 00:04:44,100
+fifteen to twenty minutes to complete and
+once its complete you will be able to see
+
+34
+00:04:44,100 --> 00:04:50,830
+the anaconda package in your programs and
+once you click here we can see different packages
+
+35
+00:04:50,830 --> 00:04:56,610
+installed where you should be selecting jupyter
+notebook so jupyter notebook is a programming
+
+36
+00:04:56,610 --> 00:05:03,930
+environment that runs from your browser so
+it has a server running at the back and i
+
+37
+00:05:03,930 --> 00:05:15,910
+have an instance of jupyter already running
+in my browser so in it go with by default
+
+38
+00:05:15,910 --> 00:05:22,530
+goes to your document folder and within the
+document folder it will show you where exactly
+
+39
+00:05:22,530 --> 00:05:26,160
+your files are residing
+so as part of the assignment we will be providing
+
+40
+00:05:26,160 --> 00:05:30,190
+you some help of files of which this is the
+particular programming file that you should
+
+41
+00:05:30,190 --> 00:05:42,170
+be looking for so this is your programming
+environment so notebook is not just a programming
+
+42
+00:05:42,170 --> 00:05:48,330
+environment it helps you keeps lot of things
+that you learn it helps you document the stuff
+
+43
+00:05:48,330 --> 00:05:56,370
+that you basically go through so that you
+can refer it back so i will be using python
+
+44
+00:05:56,370 --> 00:06:02,550
+as my language inside jupyter and python also
+tends to be my favorite calculator for example
+
+45
+00:06:02,550 --> 00:06:09,810
+if you want to calculate just some values
+i can just see how multiplication of two values
+
+46
+00:06:09,810 --> 00:06:16,220
+this may an answer so nine eight seven into
+five forty three will give me this particular
+
+47
+00:06:16,220 --> 00:06:25,180
+answer now if i want to stop using my variables
+i can gives the values to the variables there
+
+48
+00:06:25,180 --> 00:06:31,650
+is not type declaration as required we can
+just give a variables name so maybe i can
+
+49
+00:06:31,650 --> 00:06:45,170
+give variable one and this will be variable
+two and c equal to variables one plus variable
+
+50
+00:06:45,170 --> 00:06:54,960
+two and then i print the value for c
+now assuming i want since we will be we are
+
+51
+00:06:54,960 --> 00:06:59,860
+studying about natural language processing
+we will be taking a lot of things and lot
+
+52
+00:06:59,860 --> 00:07:07,240
+of textual data to handle we will how to stop
+text strings so if you have a variables you
+
+53
+00:07:07,240 --> 00:07:15,810
+can just assume text strings enclosed with
+in quotes so here i have typed hello and world
+
+54
+00:07:15,810 --> 00:07:25,270
+and i do the plus operation to both the variables
+let see what happens so the particular variables
+
+55
+00:07:25,270 --> 00:07:31,090
+strings hello world together which means it
+concatenation in a both the variable so this
+
+56
+00:07:31,090 --> 00:07:35,300
+automatic identification whether the sum needs
+to be done or concatenation needs to be done
+
+57
+00:07:35,300 --> 00:07:42,670
+this handled by the python interpreter
+suppose if i change and i say hello mook lets
+
+58
+00:07:42,670 --> 00:07:53,970
+say how with becomes yes so the output given
+here basically shows hello mook similarly
+
+59
+00:07:53,970 --> 00:07:59,390
+a variable initialized at a particular cell
+can be reused at an another cell as it resides
+
+60
+00:07:59,390 --> 00:08:05,940
+in your memory for example i reused the hello
+which is already there in which was already
+
+61
+00:08:05,940 --> 00:08:11,890
+defined in the particular cell here and i
+use hello in nptel let see how it comes it
+
+62
+00:08:11,890 --> 00:08:25,060
+works and important thing that you have to
+care of is indentation so when using conditional
+
+63
+00:08:25,060 --> 00:08:31,800
+statements like the if or the loops like the
+for loop you have to make sure that the block
+
+64
+00:08:31,800 --> 00:08:38,579
+indentation is maintained so what i want to
+check is that if a is equal to hello so i
+
+65
+00:08:38,579 --> 00:08:44,010
+check for whether the variable a contains
+the variable hello then the variables are
+
+66
+00:08:44,010 --> 00:08:49,200
+given the values one nine two otherwise the
+variables b and c are given the values ten
+
+67
+00:08:49,200 --> 00:08:57,200
+and eleven let see which value gets print
+since the value a since the variable a has
+
+68
+00:08:57,200 --> 00:09:10,900
+the value hello it prints one and two suppose
+i change it to nptel and execute it and now
+
+69
+00:09:10,900 --> 00:09:20,560
+i run here so here i get the values ten and
+eleven so if you are still confused how to
+
+70
+00:09:20,560 --> 00:09:26,260
+run the code after typing the code in the
+particular cell we can either use the short
+
+71
+00:09:26,260 --> 00:09:32,990
+cut controlled and enter or you may go to
+this button and this will execute the code
+
+72
+00:09:32,990 --> 00:09:42,430
+so let us change the variables values here
+and see if what happens if they enter code
+
+73
+00:09:42,430 --> 00:09:48,260
+now be gets the values sixty and that gets
+printed here
+
+74
+00:09:48,260 --> 00:09:53,840
+now suppose i am using a loop to print all
+the values between one and five that is one
+
+75
+00:09:53,840 --> 00:09:59,430
+to four how do i do so i defined keyword four
+i define a variable and i define that the
+
+76
+00:09:59,430 --> 00:10:05,110
+variable will be within a range from one to
+five if we can make it we can make it seven
+
+77
+00:10:05,110 --> 00:10:12,140
+or any value of your choice and lets see so
+it prints all the values from one to six if
+
+78
+00:10:12,140 --> 00:10:18,210
+i dont want to print it line by line i can
+just use a comma here and it gives me the
+
+79
+00:10:18,210 --> 00:10:27,300
+values written in the same line so this is
+some basic syntax that that will let you coding
+
+80
+00:10:27,300 --> 00:10:32,410
+python and we recommend that you go through
+some of the basic tutorials regarding python
+
+81
+00:10:32,410 --> 00:10:39,700
+and some of the basic data structures that
+python has so that it will help in making
+
+82
+00:10:39,700 --> 00:10:45,810
+ah coding experience mutch better
+so in order to provide that we will be providing
+
+83
+00:10:45,810 --> 00:10:52,310
+you some links and some resources that you
+can go through and get with the particular
+
+84
+00:10:52,310 --> 00:11:02,170
+code so as part of your assignment you are
+supposed to solve questions that involved
+
+85
+00:11:02,170 --> 00:11:09,250
+edit distance that involves ah calculating
+the likelihood using bigrams and unigrams
+
+86
+00:11:09,250 --> 00:11:17,570
+and i will be showing you how to handle this
+so as from the week two lecture one you might
+
+87
+00:11:17,570 --> 00:11:23,170
+be aware of the concept called as edit distance
+so edit distance is a particular function
+
+88
+00:11:23,170 --> 00:11:28,320
+that helps you compare two strings and find
+the similarity between them
+
+89
+00:11:28,320 --> 00:11:34,000
+so the edit distance gives you the minimum
+distance between two strings and the minimum
+
+90
+00:11:34,000 --> 00:11:38,560
+distance can be calculated in terms of the
+number of operations that required to change
+
+91
+00:11:38,560 --> 00:11:45,090
+one string from to another and this is defined
+in terms of three operations insertion deletion
+
+92
+00:11:45,090 --> 00:11:57,550
+and substitution so we have provided a function
+called ah levenshtein that helps you execute
+
+93
+00:11:57,550 --> 00:12:03,530
+or calculate the edit distance so this is
+how functions are methods are used in python
+
+94
+00:12:03,530 --> 00:12:09,779
+we use the keyword def followed by the name
+of the function and since i have two strings
+
+95
+00:12:09,779 --> 00:12:15,410
+to come i give the strings as my function
+arguments that so that when you call the function
+
+96
+00:12:15,410 --> 00:12:20,880
+you have to give which are the two strings
+to be given
+
+97
+00:12:20,880 --> 00:12:27,410
+now these are the three operations the insertion
+deletion substitution that you will be using
+
+98
+00:12:27,410 --> 00:12:32,370
+to compare both the strings so we need not
+worry about what exactly is happening inside
+
+99
+00:12:32,370 --> 00:12:37,160
+you can think of It as a black box and you
+can just execute it but if you are curious
+
+100
+00:12:37,160 --> 00:12:44,270
+you can obviously work around with it hack
+around with it and see how the output changes
+
+101
+00:12:44,270 --> 00:12:51,580
+so assuming i already have the code setup
+and i already executed this particular cell
+
+102
+00:12:51,580 --> 00:12:59,970
+so that the function goes to gets invoke now
+i call this function levenshtein and i give
+
+103
+00:12:59,970 --> 00:13:07,180
+two strings which is hellp and hello and i
+want to see what will be the difference between
+
+104
+00:13:07,180 --> 00:13:13,050
+the strings or what will be the edit operation
+edit distance it turns out that the edit distance
+
+105
+00:13:13,050 --> 00:13:22,800
+is one which is being written by this particular
+variable here
+
+106
+00:13:22,800 --> 00:13:38,610
+suppose i want to give yes it also gives the
+same values so if i have a new string the
+
+107
+00:13:38,610 --> 00:13:44,000
+value changes as part of your assignment you
+have one question where you are supposed to
+
+108
+00:13:44,000 --> 00:13:50,850
+solve the problems using jaro winkler distance
+jaro winkler distance is a variant of edit
+
+109
+00:13:50,850 --> 00:13:59,450
+distance that is used to combine strings and
+we have provided the explanation of how to
+
+110
+00:13:59,450 --> 00:14:07,740
+calculate the jaro winkler distance between
+two strings and you can read about more in
+
+111
+00:14:07,740 --> 00:14:13,420
+the wikipedia link provided that for your
+convenience i have we have already implemented
+
+112
+00:14:13,420 --> 00:14:19,310
+the jaro winkler as a function and we have
+stored it in the packages edit distance so
+
+113
+00:14:19,310 --> 00:14:24,420
+we can call the jaro winkler function and
+you can again assume it to be black box just
+
+114
+00:14:24,420 --> 00:14:31,480
+to solve your assignment
+so in jaro winkler as you can see the value
+
+115
+00:14:31,480 --> 00:14:38,930
+ranges between zero to one and the so if two
+strings are exactly the same they will provide
+
+116
+00:14:38,930 --> 00:14:43,480
+you the value of one and if they are complete
+different they will provide a value of zero
+
+117
+00:14:43,480 --> 00:14:50,600
+so if i give the same string i get a value
+of one as my jaro winkler distance so this
+
+118
+00:14:50,600 --> 00:14:57,300
+is very useful when it comes to ah combine
+strings such as person names because there
+
+119
+00:14:57,300 --> 00:15:04,230
+are each variations in the person name that
+we use for example it is very common that
+
+120
+00:15:04,230 --> 00:15:09,470
+the word vimal might be spelled as bimal depending
+on your demography
+
+121
+00:15:09,470 --> 00:15:16,680
+so suppose we apply this function and let
+see how the string gets the value so the similarity
+
+122
+00:15:16,680 --> 00:15:27,399
+between bimal and vimal turns out to be point
+eight six seven now let us see given a data
+
+123
+00:15:27,399 --> 00:15:34,540
+set or a corpus of words and you want to find
+the most similar words of a given string from
+
+124
+00:15:34,540 --> 00:15:41,420
+that how do we do that so you will be provided
+with a file called unigram dot csv you need
+
+125
+00:15:41,420 --> 00:15:50,720
+to load that file and you have to ah so you
+have to so ah every line contains s single
+
+126
+00:15:50,720 --> 00:15:58,660
+word or every unique word and the frequency
+with which it appears in a particular purpose
+
+127
+00:15:58,660 --> 00:16:05,440
+so i read the file to the variable unigrams
+and unigrams will be store as a list there
+
+128
+00:16:05,440 --> 00:16:11,580
+is a default data structure used in python
+you can ignore about list from the python
+
+129
+00:16:11,580 --> 00:16:21,830
+manuals so for convenience you can think of
+it as an array where i if i want to access
+
+130
+00:16:21,830 --> 00:16:28,459
+the first element i just give the index of
+the first entry which is zero and i print
+
+131
+00:16:28,459 --> 00:16:38,440
+that well so the entry gives me foul for which
+has a frequency of one suppose i want to say
+
+132
+00:16:38,440 --> 00:16:45,240
+the first ten entries in the file i will use
+the colon followed by number ten so it will
+
+133
+00:16:45,240 --> 00:16:50,520
+give me all the numbers from zero to nine
+and that gives me the first ten entries which
+
+134
+00:16:50,520 --> 00:16:57,380
+is foul which appears one time foul which
+appears three times and immature appears one
+
+135
+00:16:57,380 --> 00:17:04,510
+times bringing appears one time
+now i will be using a different data structure
+
+136
+00:17:04,510 --> 00:17:13,679
+called as dictionary that helps me separate
+the count and the word from one another so
+
+137
+00:17:13,679 --> 00:17:20,839
+dictionary is as the name suggest we have
+a key where the key is your word and when
+
+138
+00:17:20,839 --> 00:17:27,689
+i provide the key to the dictionary it will
+provide me the count with which it is appearing
+
+139
+00:17:27,689 --> 00:17:32,679
+so here is the function that helps me and
+it stores the value inside the dictionary
+
+140
+00:17:32,679 --> 00:17:43,539
+called as wordfreq
+so once i execute it so a dictionary has two
+
+141
+00:17:43,539 --> 00:17:49,029
+entities one it is called as the keys and
+it has it made as a list of the keys so if
+
+142
+00:17:49,029 --> 00:17:56,539
+you type wordfreq dot keys it will provide
+you all the keys that it has now if i want
+
+143
+00:17:56,539 --> 00:18:08,350
+to know how many times thunder is appearing
+what i would do Is i would see the count of
+
+144
+00:18:08,350 --> 00:18:16,039
+thunder by just giving the key as thunder
+to the variable wordfreq now it appears the
+
+145
+00:18:16,039 --> 00:18:22,860
+it appears only once let us see how many times
+hanging is appearing and thats validate with
+
+146
+00:18:22,860 --> 00:18:27,669
+the its coming out to be correct the its coming
+out to be correct as its four here and we
+
+147
+00:18:27,669 --> 00:18:34,730
+already have checked it was four
+now since you know how to open a file how
+
+148
+00:18:34,730 --> 00:18:40,500
+to store it in a dictionary and you already
+also know how to compare two strings let us
+
+149
+00:18:40,500 --> 00:18:47,139
+see we can whether we can find similarity
+the most similar word to a given string or
+
+150
+00:18:47,139 --> 00:18:54,460
+a given word so what i do is that i it trade
+through all the possible words in the dictionary
+
+151
+00:18:54,460 --> 00:19:00,399
+and then i find the levenshtein distance between
+the string that i want to come here which
+
+152
+00:19:00,399 --> 00:19:05,889
+happens to be tord it is a spelling mistakes
+so i have to which word be replaced with t
+
+153
+00:19:05,889 --> 00:19:14,239
+o r d and if you see here i take each word
+from the keys of the dictionary and assign
+
+154
+00:19:14,239 --> 00:19:21,119
+it to the variable item one at a time and
+i compare tord with item and i am going to
+
+155
+00:19:21,119 --> 00:19:26,539
+print all the words that has a levenshtein
+distance which is less than or equal to one
+
+156
+00:19:26,539 --> 00:19:34,629
+so if you fine tord well and good otherwise
+let us see what are the other words once it
+
+157
+00:19:34,629 --> 00:19:44,320
+turns out there are five words which are similar
+to tord which is lord tore torn told or word
+
+158
+00:19:44,320 --> 00:19:50,809
+let us see all the words which have a levenshtein
+distance of less than or equal to two when
+
+159
+00:19:50,809 --> 00:20:11,610
+it turns out there are much more entries which
+have a leveneshtein distance of two with words
+
+160
+00:20:11,610 --> 00:20:18,360
+now what will be doing either you are given
+with another file called the bigrams dot csf
+
+161
+00:20:18,360 --> 00:20:24,120
+and it contains all the bigrams with the frequency
+with which the bigrams are appearing
+
+162
+00:20:24,120 --> 00:20:31,000
+so this is very straight forward just like
+what we have done previously for unigram dot
+
+163
+00:20:31,000 --> 00:20:40,739
+csv we are going to use the same set o f code
+if you see here i but here i have just written
+
+164
+00:20:40,739 --> 00:20:47,559
+it in one lag so i have the bigrams file which
+i have read and i have spitted into a list
+
+165
+00:20:47,559 --> 00:20:56,659
+then i define the dictionary called wordbigram
+and i store every bigram as my key and the
+
+166
+00:20:56,659 --> 00:21:03,859
+count as the value so bigrams and unigrams
+as tord as now two different dictionary one
+
+167
+00:21:03,859 --> 00:21:13,230
+is in wordfreq and other is in wordbigram
+now suppose i want to calculate the bigram
+
+168
+00:21:13,230 --> 00:21:20,029
+likelihood as we know the formula is the count
+with which the bigram occurs by the count
+
+169
+00:21:20,029 --> 00:21:26,659
+with which the first word in the bigram occurs
+so if i want to calculate the bigram likelihood
+
+170
+00:21:26,659 --> 00:21:32,029
+of comeback i want in other frequency with
+which the comeback is occurring in a particular
+
+171
+00:21:32,029 --> 00:21:40,269
+corpus and the frequency with which come is
+occurring and it turns out that the value
+
+172
+00:21:40,269 --> 00:21:50,070
+is occurring ten times and come is occur one
+forty six times so if i want to calculate
+
+173
+00:21:50,070 --> 00:21:58,109
+the probability of come back and come i would
+do wordbirgam come back divided by word frequency
+
+174
+00:21:58,109 --> 00:22:07,149
+of come which will give me ten by one forty
+six it turns out that the value gives coming
+
+175
+00:22:07,149 --> 00:22:14,809
+out to be zero so there is certainly a some
+problem the problems is that since both come
+
+176
+00:22:14,809 --> 00:22:19,820
+the frequencies are individual values the
+system assumes the answer also should coming
+
+177
+00:22:19,820 --> 00:22:25,500
+an integer but it turns out that the value
+is coming out to be a floating point number
+
+178
+00:22:25,500 --> 00:22:33,249
+so to handle up there are different ways of
+explicit type casting what i am doing here
+
+179
+00:22:33,249 --> 00:22:39,730
+is just multiply the value with a one point
+zero so that before the division occurs one
+
+180
+00:22:39,730 --> 00:22:47,419
+of the value turns out to be a float so after
+the operation is done the value turns out
+
+181
+00:22:47,419 --> 00:22:57,009
+to be point zero six eight now suppose we
+want to calculate the likelihood of the same
+
+182
+00:22:57,009 --> 00:23:05,859
+bigram but using add one smoothing as we know
+add one smoothing basically adds a one to
+
+183
+00:23:05,859 --> 00:23:10,970
+the numerator for the bigram likelihood and
+it also adds to the vocabulary size or the
+
+184
+00:23:10,970 --> 00:23:15,560
+number of unique words in a corpus to get
+the number of unique words in a corpus we
+
+185
+00:23:15,560 --> 00:23:23,970
+can just take all the keys in the dictionary
+and we can find the count of that and the
+
+186
+00:23:23,970 --> 00:23:30,690
+number of keys and it turns out that the function
+length performs the same so i have used the
+
+187
+00:23:30,690 --> 00:23:42,620
+length function to find all the length of
+the keys and with that i print the add one
+
+188
+00:23:42,620 --> 00:23:48,739
+likelihood after add one smoothing and we
+can also see how many unique words are there
+
+189
+00:23:48,739 --> 00:24:01,830
+in the corpus
+so this is pretty much ah for what you can
+
+190
+00:24:01,830 --> 00:24:10,539
+do with your assignment two and there will
+be one question where you are suppose to modify
+
+191
+00:24:10,539 --> 00:24:17,600
+the course in word for the particular operation
+so in that particular question you are suppose
+
+192
+00:24:17,600 --> 00:24:25,210
+to change the value for substitution as insertion
+and deletion involve at cost of one but substitution
+
+193
+00:24:25,210 --> 00:24:36,710
+involves a cost of two so in order to do that
+i am going to modify the value so what this
+
+194
+00:24:36,710 --> 00:24:42,960
+particular function does is that it compares
+whether two characters at a position are same
+
+195
+00:24:42,960 --> 00:24:48,379
+so if they were not same it returns a one
+because this is a logical operation otherwise
+
+196
+00:24:48,379 --> 00:24:55,529
+it returns a zero so previously the cost was
+one so it was left as is now since the cost
+
+197
+00:24:55,529 --> 00:25:03,889
+is two and just modifying it to be two here
+and let us see how much does it cost and how
+
+198
+00:25:03,889 --> 00:25:09,779
+bimal and vimal compare with this operation
+and it turns out that the value becomes two
+
+199
+00:25:09,779 --> 00:25:15,649
+this is generally done when to want to substitutions
+and you want to check more into the insertions
+
+200
+00:25:15,649 --> 00:25:29,470
+and deletions operations 
+and for some aspects you might require some
+
+201
+00:25:29,470 --> 00:25:35,399
+external packages to be installed and i will
+be showing you how to install an external
+
+202
+00:25:35,399 --> 00:25:40,320
+packages suppose i know their exist a package
+gensim and i assume that it is installed in
+
+203
+00:25:40,320 --> 00:25:48,899
+this system i will invoke that external package
+using import gensim but it turns out that
+
+204
+00:25:48,899 --> 00:25:57,479
+the package is not installed so anaconda comes
+with a default package manager which you can
+
+205
+00:25:57,479 --> 00:26:07,309
+select using here anaconda navigator
+so anaconda navigator provides you all the
+
+206
+00:26:07,309 --> 00:26:13,019
+different packages and it provides a reposit
+way of different packages that you can install
+
+207
+00:26:13,019 --> 00:26:32,929
+alternatively you can create a new cell and
+you can install a package within the ah notebook
+
+208
+00:26:32,929 --> 00:26:37,679
+itself what you have to do is that you have
+to mind this exclamation mark so you have
+
+209
+00:26:37,679 --> 00:26:48,990
+type pip install gensim and this will also
+help you install the particular package but
+
+210
+00:26:48,990 --> 00:26:56,379
+you can have in trouble with that you can
+by default go to the anaconda navigator and
+
+211
+00:26:56,379 --> 00:27:03,831
+it will help you install the so i will just
+show you how to install this same and that
+
+212
+00:27:03,831 --> 00:27:24,999
+will be the end of the tutorial session
+so here you can click on to the environment
+
+213
+00:27:24,999 --> 00:27:32,279
+tab and you can see for all packages are reliable
+in the repository of anaconda and you can
+
+214
+00:27:32,279 --> 00:27:48,889
+just type gensim and you can click here you
+can say electric and you can apply it to install
+
+215
+00:27:48,889 --> 00:27:57,369
+as i was suggested you may alternatively use
+this command to install if you want to create
+
+216
+00:27:57,369 --> 00:28:04,269
+a new notebook you should click on the new
+and you should go to we should select one
+
+217
+00:28:04,269 --> 00:28:11,549
+of this so this will give me a new notebook
+where you can have a fresh notebook where
+
+218
+00:28:11,549 --> 00:28:18,159
+you can try out code by yourself so this is
+pretty much
+
+219
+00:28:18,159 --> 00:28:18,599
+thank you yeah
+

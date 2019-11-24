@@ -1,0 +1,1268 @@
+1
+00:00:17,720 --> 00:00:23,180
+so welcome back for second lecture of this
+week so we had started our discussions on
+
+2
+00:00:23,180 --> 00:00:34,019
+syntax so so in the last lecture we had talked
+about what is the formulation for doing the
+
+3
+00:00:34,019 --> 00:00:39,550
+syntax parsing so we had talked about context
+free grammars now we will see how do we use
+
+4
+00:00:39,550 --> 00:00:52,659
+context free grammars for the actual parsing
+so so let us take a simple grammar in in terms
+
+5
+00:00:52,659 --> 00:01:00,760
+of in a c f g formulation so you have in the
+grammar it is said that a sentence can be
+
+6
+00:01:00,760 --> 00:01:05,720
+a noun phrase followed by a verb phrase or
+an auxiliary followed by a noun phrase followed
+
+7
+00:01:05,720 --> 00:01:14,220
+by verb phrase or single single verb phrase
+noun phrase can be a determiner followed by
+
+8
+00:01:14,220 --> 00:01:22,409
+a nominal nominal can be a noun and so on
+so all the various possibilities are shown
+
+9
+00:01:22,409 --> 00:01:29,790
+here and similarly these are all the pre terminals
+that are giving me terminals that are words
+
+10
+00:01:29,790 --> 00:01:39,380
+in my lexical so this is one such grammar
+and now using this grammar i can write various
+
+11
+00:01:39,380 --> 00:01:49,280
+sentences ok so for example i want to write
+the sentence 
+
+12
+00:01:49,280 --> 00:01:55,030
+the man read this book ok so i want to write
+this sentence the man read this book now how
+
+13
+00:01:55,030 --> 00:02:01,090
+do i what kind of rules in the grammar do
+i use so that i can generate the sentence
+
+14
+00:02:01,090 --> 00:02:04,909
+so i have to write the man read this book
+ok
+
+15
+00:02:04,909 --> 00:02:21,170
+so let me just do it quickly on on the paper
+
+16
+00:02:21,170 --> 00:02:25,940
+now the sentence can be a noun phrase followed
+by a verb phrase or an auxiliary followed
+
+17
+00:02:25,940 --> 00:02:33,130
+by a noun phrase verb phrase or a verb phrase
+in this case it does not start with an auxiliary
+
+18
+00:02:33,130 --> 00:02:38,530
+nor a verb so it has to be a noun phrase followed
+by a verb phrase so i have to first start
+
+19
+00:02:38,530 --> 00:02:45,620
+by a noun phrase followed by a verb phrase
+ok and i will assume that the man will come
+
+20
+00:02:45,620 --> 00:02:49,480
+in noun phrase and read this book come in
+verb phrase
+
+21
+00:02:49,480 --> 00:02:54,099
+so what will be the next derivation so np
+have to get the man so i have to get something
+
+22
+00:02:54,099 --> 00:03:04,489
+that says determiner nominal ok so so here
+i will say determiner nominal and verb phrase
+
+23
+00:03:04,489 --> 00:03:12,130
+ok and determiner can can give me the a nominal
+can give me noun which can give the word man
+
+24
+00:03:12,130 --> 00:03:24,510
+so in some steps i can determine to the nominal
+verb phrase the noun verb phrase ok and if
+
+25
+00:03:24,510 --> 00:03:31,041
+i want to complete this i will say the man
+verb phrase now the verb phrase i have to
+
+26
+00:03:31,041 --> 00:03:36,819
+derive read this book ok so verb phrase goes
+to verb and noun phrase is the something like
+
+27
+00:03:36,819 --> 00:03:39,849
+that yes verb phrase goes to verb and noun
+phrase
+
+28
+00:03:39,849 --> 00:03:51,410
+so i will use this and say the man verb noun
+phrase verb can directly give me read the
+
+29
+00:03:51,410 --> 00:03:57,940
+man read noun phrase and from noun phrase
+i have to derive this book so i have to again
+
+30
+00:03:57,940 --> 00:04:09,340
+write this determiner for a nominal this will
+become a determiner the man read determiner
+
+31
+00:04:09,340 --> 00:04:17,900
+nominal and this will give me this and this
+will give me noun and this will give me book
+
+32
+00:04:17,900 --> 00:04:22,780
+ok and that will give me the whole sentence
+the man read this book that's i derive a sentence
+
+33
+00:04:22,780 --> 00:04:30,240
+using this grammar
+so now once i have this derivation i can use
+
+34
+00:04:30,240 --> 00:04:36,740
+this derivation to denote what is the particular
+syntax tree that generalizes the sentence
+
+35
+00:04:36,740 --> 00:04:42,830
+as per this grammar ok so same derivation
+can be used for to show the parse tree so
+
+36
+00:04:42,830 --> 00:04:47,370
+this is my derivation and this derivation
+can be shown using this parse tree in the
+
+37
+00:04:47,370 --> 00:04:53,150
+question of sentence you derived n p v p from
+n p you derived determiner and nominal v p
+
+38
+00:04:53,150 --> 00:05:02,190
+verb and noun phrase noun phrase phrase to
+this particular sub trees ok so this is exactly
+
+39
+00:05:02,190 --> 00:05:07,770
+what was the derivation that you did for the
+sentence in my grammar
+
+40
+00:05:07,770 --> 00:05:16,330
+so that can immediately tell me what is the
+problem of parsing i am given the grammar
+
+41
+00:05:16,330 --> 00:05:22,490
+and i am given the sentence in my language
+so given the sentence in my grammar i want
+
+42
+00:05:22,490 --> 00:05:28,340
+to find out what is it's actual parse tree
+and they may not be unique parse they may
+
+43
+00:05:28,340 --> 00:05:34,080
+be multiple parse tree so the process of parsing
+is to find out all the possible parse trees
+
+44
+00:05:34,080 --> 00:05:42,900
+for a given sentence as per my grammar so
+so find out all the trees whose root is the
+
+45
+00:05:42,900 --> 00:05:47,540
+start symbol s ok because i have to start
+with the start variable in my context free
+
+46
+00:05:47,540 --> 00:05:52,040
+grammar and which cover exactly the words
+in the input ok
+
+47
+00:05:52,040 --> 00:05:59,650
+now what are the constraints on which parsing
+suppose my sentence is book that flight so
+
+48
+00:05:59,650 --> 00:06:08,419
+what are the constraint in my parse they should
+be three leaf nodes book that and flight and
+
+49
+00:06:08,419 --> 00:06:13,270
+ms is you start at the start node and then
+i have to explore all the possible rules such
+
+50
+00:06:13,270 --> 00:06:17,990
+that i come up with the tree is starting with
+us as the root node and book that flight as
+
+51
+00:06:17,990 --> 00:06:24,009
+the only three nodes three leaf nodes ok so
+yes the tree must have one root the start
+
+52
+00:06:24,009 --> 00:06:30,890
+symbol s and that tells me that i can explore
+it in at least two different ways one is i
+
+53
+00:06:30,890 --> 00:06:37,160
+can with top down you start from s try to
+find out all the possible possible trees in
+
+54
+00:06:37,160 --> 00:06:42,229
+finding out i can have as per my grammar and
+see if there is one tree that can give me
+
+55
+00:06:42,229 --> 00:06:47,840
+the only the leaf nodes book that flight this
+is top down
+
+56
+00:06:47,840 --> 00:06:54,139
+other approach is bottom up i start from book
+that flight go up words what are the non terminals
+
+57
+00:06:54,139 --> 00:07:00,390
+and then see if any of this combination can
+lead to a full tree it starting from s ok
+
+58
+00:07:00,390 --> 00:07:04,740
+so these are two different strategies and
+that's what we will discuss how do we use
+
+59
+00:07:04,740 --> 00:07:10,530
+it top down or bottom up approach for parsing
+given this grammar
+
+60
+00:07:10,530 --> 00:07:17,500
+so let's take this grammar so you have certain
+rules so left hand side is mainly the rules
+
+61
+00:07:17,500 --> 00:07:24,300
+for ah non terminals and pre pre terminals
+and right hand side are for the lexicon pre
+
+62
+00:07:24,300 --> 00:07:31,060
+terminals deriving the terminals ok now using
+this grammar you want to find out the parse
+
+63
+00:07:31,060 --> 00:07:37,000
+for book that flight and we will use both
+the top down and bottom up strategies for
+
+64
+00:07:37,000 --> 00:07:45,030
+for finding out this parse tree
+so yeah this is also what is the expected
+
+65
+00:07:45,030 --> 00:07:50,970
+parse tree book that flight this is your whole
+verb phrase it's starting from a verb and
+
+66
+00:07:50,970 --> 00:07:57,080
+a noun phrase so a book is a verb and and
+this that flight is a noun phrase ok so i
+
+67
+00:07:57,080 --> 00:08:01,642
+want to come up with this parse tree given
+the grammar and how do i do that in a in a
+
+68
+00:08:01,642 --> 00:08:12,110
+deterministic manner using the ah using my
+ah top down strategy
+
+69
+00:08:12,110 --> 00:08:25,069
+so how do i start so i have to start from
+my so start node root node in top down and
+
+70
+00:08:25,069 --> 00:08:30,550
+using my grammar as my grammar i will see
+what is the different possible rules i can
+
+71
+00:08:30,550 --> 00:08:37,099
+apply at this point keep on going downwards
+ok so a start by assuming that the input can
+
+72
+00:08:37,099 --> 00:08:44,860
+be derived by s then find out the trees that
+is start with s looking at the rules that
+
+73
+00:08:44,860 --> 00:08:49,509
+are having on the left hand side because what
+are the all are different things that s can
+
+74
+00:08:49,509 --> 00:08:58,540
+derive now when you are going downward in
+your tree once you obtain the part of speech
+
+75
+00:08:58,540 --> 00:09:04,579
+category you will see if that matches the
+word in the leaf nodes if it is not matching
+
+76
+00:09:04,579 --> 00:09:14,300
+you will go back and try out some other path
+ok and if there is any trees where the part
+
+77
+00:09:14,300 --> 00:09:20,429
+of speech categories are not matching the
+the words at the leaf nodes you will get ok
+
+78
+00:09:20,429 --> 00:09:28,999
+so now so let us see so i am starting with
+s ok now what is my first rule so what are
+
+79
+00:09:28,999 --> 00:09:34,670
+the different rules from s so first rule is
+s can go to n p v p so what i will do i will
+
+80
+00:09:34,670 --> 00:09:42,399
+try to explore that path s can got to n p
+v p now from np what is the next possible
+
+81
+00:09:42,399 --> 00:09:50,860
+rule so next rule from n p is n p can give
+me a pronoun ok n p give me a pronoun again
+
+82
+00:09:50,860 --> 00:09:56,889
+i will try to explore this further the pronoun
+give me the so pronoun will be the first word
+
+83
+00:09:56,889 --> 00:10:03,480
+now pronoun is the pre terminal
+now what is the first pre terminal book so
+
+84
+00:10:03,480 --> 00:10:11,029
+pronoun can never give me a book book is not
+a pronoun so so this part is not correct so
+
+85
+00:10:11,029 --> 00:10:16,959
+i will go back from n p i will try to expose
+some other path ok so n p can also give me
+
+86
+00:10:16,959 --> 00:10:21,860
+a proper noun so you see these are the rules
+in sequence in my grammar a n p can give me
+
+87
+00:10:21,860 --> 00:10:26,970
+a pronoun n p can give me proper noun so again
+proper noun is a pre terminal that cannot
+
+88
+00:10:26,970 --> 00:10:31,799
+give me a book so again i cannot accept this
+path so i will go back
+
+89
+00:10:31,799 --> 00:10:38,639
+next rule is n p gives me a determiner followed
+by a nominal ok so again the first word has
+
+90
+00:10:38,639 --> 00:10:45,709
+to be determiner that in the sentence but
+the first word is book that is not a determiner
+
+91
+00:10:45,709 --> 00:10:52,639
+ok so again this path has to be this path
+is not correct now we see in the grammar there
+
+92
+00:10:52,639 --> 00:10:58,959
+is no other rule that has n p on the left
+hand side ok so that means i have to now go
+
+93
+00:10:58,959 --> 00:11:05,220
+back to the initial ah assumption that s will
+derive n p v p so i have to try out the next
+
+94
+00:11:05,220 --> 00:11:11,470
+possibility as per my grammar the next possibility
+is s can give me auxiliary followed by noun
+
+95
+00:11:11,470 --> 00:11:18,079
+phrase followed by a verb phrase ok so let
+me do that so s s is give me a auxiliary noun
+
+96
+00:11:18,079 --> 00:11:24,980
+phrase and verb phrase again what is auxiliary
+auxiliary is a pre terminal that gives only
+
+97
+00:11:24,980 --> 00:11:31,549
+does it does not give me book ok so again
+this part is not correct and auxiliary gives
+
+98
+00:11:31,549 --> 00:11:36,290
+me anything else so again i go back and try
+out something else from s and the only remaining
+
+99
+00:11:36,290 --> 00:11:42,569
+thing is v p
+so s gives me a v p ok now i will go to my
+
+100
+00:11:42,569 --> 00:11:48,019
+grammar what are the rules from v p v p can
+give me a verb that is the first thing v p
+
+101
+00:11:48,019 --> 00:11:56,660
+gives me a verb ok good now verb also gives
+me book that that matches there but what happens
+
+102
+00:11:56,660 --> 00:12:01,399
+to the other two words in my sentence that
+flight verb gives me book but that flight
+
+103
+00:12:01,399 --> 00:12:09,139
+is not covered in this tree so this is not
+a valid tree yes that flight there is no other
+
+104
+00:12:09,139 --> 00:12:17,629
+no node starting from s that captures this
+this is again not a valid tree so i will try
+
+105
+00:12:17,629 --> 00:12:24,329
+out something else with v p so next possibility
+is verb followed by n p ok verb followed by
+
+106
+00:12:24,329 --> 00:12:32,999
+n p and verb gives me book well now from n
+p i have to get that flight now again from
+
+107
+00:12:32,999 --> 00:12:41,399
+n p i can get pronoun pronoun cannot give
+me that yes then i can get proper noun it
+
+108
+00:12:41,399 --> 00:12:47,989
+will also not give me that then i can from
+n p i can get determiner followed by a nominal
+
+109
+00:12:47,989 --> 00:12:57,220
+ok and that is a determiner and from nominal
+i can go to noun and this can give me flight
+
+110
+00:12:57,220 --> 00:13:02,730
+so that means by doing all these exploration
+systematically i can come up with a parse
+
+111
+00:13:02,730 --> 00:13:09,949
+tree that starts from s and exactly covers
+these leaf nodes book that flight in my input
+
+112
+00:13:09,949 --> 00:13:13,959
+so that is my top down parsing strategies
+ok so hope that is clear
+
+113
+00:13:13,959 --> 00:13:20,009
+so we are given all the rules it starts from
+s and try to explore in some order you can
+
+114
+00:13:20,009 --> 00:13:24,899
+take it you can try to explore in the same
+order that is in which they are given to you
+
+115
+00:13:24,899 --> 00:13:30,679
+ok you might try to put them in the order
+in which they are actually used in in language
+
+116
+00:13:30,679 --> 00:13:37,579
+so which one is more probable than other that
+is also ok but again you take can you see
+
+117
+00:13:37,579 --> 00:13:43,999
+that this this requires a far too many steps
+right so you you are exploring paths that
+
+118
+00:13:43,999 --> 00:13:50,209
+will probably never lead to the whole parse
+trees so this this this may need very certain
+
+119
+00:13:50,209 --> 00:13:57,309
+space so we will try to ah take that problem
+that how we can avoid that so this is my a
+
+120
+00:13:57,309 --> 00:14:03,679
+this was my top down parsing
+now what do i do in bottom up parsing in top
+
+121
+00:14:03,679 --> 00:14:08,879
+up i start with s in bottom up i will start
+with my leaf nodes i will start with book
+
+122
+00:14:08,879 --> 00:14:15,240
+that flight and i will try to go my tree upwards
+and see which one can give me if complete
+
+123
+00:14:15,240 --> 00:14:20,999
+tree it is starting from s ok so the parser
+starts with the words of the input and tries
+
+124
+00:14:20,999 --> 00:14:26,919
+to build trees from the words up by applying
+rules from the grammar one at a time and parser
+
+125
+00:14:26,919 --> 00:14:31,299
+looks for the places in the parse in progress
+where the right hand side of the rule might
+
+126
+00:14:31,299 --> 00:14:36,809
+fit ok in top down we were looking at always
+the left hand side if the current non terminal
+
+127
+00:14:36,809 --> 00:14:42,329
+what is the rule in the left hand side so
+that accordingly i will i am trying to generate
+
+128
+00:14:42,329 --> 00:14:46,509
+the right hand side here i am seeing what
+what in the right hand side i already have
+
+129
+00:14:46,509 --> 00:14:55,770
+accordingly i select a rule in my grammar
+so so let's do this bottom up parsing so i
+
+130
+00:14:55,770 --> 00:14:59,941
+have the sentence book that flight i will
+start by seeking what are the nodes in my
+
+131
+00:14:59,941 --> 00:15:08,759
+grammar that can that can generate this ok
+so i start by say book and the first rule
+
+132
+00:15:08,759 --> 00:15:19,859
+that their word book is noun ok then i go
+up to noun and say nominal gives me noun fine
+
+133
+00:15:19,859 --> 00:15:25,540
+and nominal can gives me nominal followed
+by a noun so i am going my tree upward but
+
+134
+00:15:25,540 --> 00:15:33,540
+now i i arrive at noun that is a pre terminal
+and noun will not give me that ok so that
+
+135
+00:15:33,540 --> 00:15:38,910
+is not a noun so this is the inconsistency
+so i have to go back and see ok what is the
+
+136
+00:15:38,910 --> 00:15:43,589
+next possible rule from nominal so i have
+to derive from nominal nominal followed by
+
+137
+00:15:43,589 --> 00:15:52,730
+p p so rememberly we are seeing in which rule
+this occurs in the right hand side ok and
+
+138
+00:15:52,730 --> 00:15:58,240
+accordingly i will take the the production
+nominal gives me nominal followed by p p now
+
+139
+00:15:58,240 --> 00:16:05,269
+can can p p give me that flight so from p
+p so from that i i try to go go it upwards
+
+140
+00:16:05,269 --> 00:16:12,769
+i see determiner determiner comes in right
+hand side of this rule n p gives me determiner
+
+141
+00:16:12,769 --> 00:16:20,959
+nominal and flight again i grow it upwards
+it gives me noun a nominal can give me noun
+
+142
+00:16:20,959 --> 00:16:28,299
+ok so this looks a nice tree
+but now can i attach p p to n p so s if i
+
+143
+00:16:28,299 --> 00:16:39,059
+go n p upwards i will say ok s can give me
+n p followed by v p this creates a problem
+
+144
+00:16:39,059 --> 00:16:45,589
+in that this verb phrase does not have anything
+in so it cannot take me to any leaf node ok
+
+145
+00:16:45,589 --> 00:16:53,259
+so this is not valid if i go to this part
+can p p attached to n determiner and n p again
+
+146
+00:16:53,259 --> 00:16:57,730
+there is no rule in my grammar that p p can
+be determiner followed by n p
+
+147
+00:16:57,730 --> 00:17:03,389
+so i have to go back again try some other
+paths we have this is right hand side v p
+
+148
+00:17:03,389 --> 00:17:16,250
+s s and determiner nomi[nal]- and noun noun
+phrase what can they give to me s again this
+
+149
+00:17:16,250 --> 00:17:22,199
+does not work out so i try out something else
+with v p so i say v p gives me v p followed
+
+150
+00:17:22,199 --> 00:17:26,890
+by a prepositional phrase again prepositional
+phrase does not give me determiner followed
+
+151
+00:17:26,890 --> 00:17:34,450
+by a noun phrase this we will not work out
+again go one step down so earlier i was saying
+
+152
+00:17:34,450 --> 00:17:39,830
+v p is deriving a verb now i am saying ok
+v p derives verb followed by an n p does that
+
+153
+00:17:39,830 --> 00:17:49,929
+work yes if i can attach this v p to this
+verb and this noun phrase ok and then i can
+
+154
+00:17:49,929 --> 00:17:55,780
+say that s can derive this v p and this gives
+me the whole parse tree so this is my bottom
+
+155
+00:17:55,780 --> 00:18:00,760
+up strategy
+i start with the words in the leaf in the
+
+156
+00:18:00,760 --> 00:18:07,529
+leaves try to grow them upwards by seeing
+what is the rule in my in my grammar where
+
+157
+00:18:07,529 --> 00:18:12,250
+this occurs in the right hand side similarly
+i will see here and so on and finally can
+
+158
+00:18:12,250 --> 00:18:19,049
+i build them as a single tree starting from
+s and that strategy finally gives me this
+
+159
+00:18:19,049 --> 00:18:24,820
+particular tree so if we just try to compose
+this top down versus bottom up approaches
+
+160
+00:18:24,820 --> 00:18:32,970
+so what do we see so what we were see in top
+down we were always seeing wherever this non
+
+161
+00:18:32,970 --> 00:18:37,490
+terminal appears in the left hand side and
+i i immediately do the production
+
+162
+00:18:37,490 --> 00:18:43,909
+so what happens that i can x i can always
+explore options that will never lead to the
+
+163
+00:18:43,909 --> 00:18:56,160
+full parse ok i can always find options that
+will only give me one word but so so all the
+
+164
+00:18:56,160 --> 00:19:01,570
+options were given me a parse is starting
+from s in in the top down strategy but it
+
+165
+00:19:01,570 --> 00:19:06,380
+might happened that some options are giving
+me a particular parse tree where all the words
+
+166
+00:19:06,380 --> 00:19:12,100
+are not covered or some extra words are covered
+ok so this actual correction the actual sentence
+
+167
+00:19:12,100 --> 00:19:18,460
+is not taken care so in the bottom up it is
+the other way around so we are always seeing
+
+168
+00:19:18,460 --> 00:19:24,309
+the words first you are exploring that those
+paths that are covering the whole sentence
+
+169
+00:19:24,309 --> 00:19:29,269
+but it might happen that the the parse that
+you come up with is not a complete parse because
+
+170
+00:19:29,269 --> 00:19:38,380
+it is not having a root at s ok so they may
+not be a full parse and there are ways to
+
+171
+00:19:38,380 --> 00:19:41,710
+this specimen both top down and bottom up
+ok
+
+172
+00:19:41,710 --> 00:19:45,630
+so you are seeing you are experiencing lot
+many parse that are probably not valuable
+
+173
+00:19:45,630 --> 00:19:55,029
+and this depends on branching of my grammar
+in either direction ok so to avoid this problem
+
+174
+00:19:55,029 --> 00:20:00,440
+and obtain an algorithm that works in polynomial
+time so you will use some dynamic programming
+
+175
+00:20:00,440 --> 00:20:04,990
+approach ok so we have been using dynamic
+programming a lot in this course so we use
+
+176
+00:20:04,990 --> 00:20:09,500
+that for edit distance then we use that for
+coding kind of algorithm
+
+177
+00:20:09,500 --> 00:20:17,120
+now we will see how to use that for obtaining
+an efficient parsing algorithm so so idea
+
+178
+00:20:17,120 --> 00:20:23,549
+is that can we cache some intermediate results
+instead of exploring all the different possibilities
+
+179
+00:20:23,549 --> 00:20:31,559
+that are not relevant so by doing this caching
+i can obtain a polynomial time parsing algorithm
+
+180
+00:20:31,559 --> 00:20:38,370
+for context free grammars ok and there are
+different dynamic programming algorithms that
+
+181
+00:20:38,370 --> 00:20:46,690
+are both top down as well as bottom up and
+they can work in roughly order of n cube time
+
+182
+00:20:46,690 --> 00:20:54,070
+where n is the length of the sentence number
+of words in my input string
+
+183
+00:20:54,070 --> 00:21:00,360
+so what are the different approaches for dynamic
+programming parsing so one very popular algorithm
+
+184
+00:21:00,360 --> 00:21:06,600
+is c k y algorithm that works in bottom up
+manner ok so you will do it for individual
+
+185
+00:21:06,600 --> 00:21:10,530
+words then you are going to sequence of two
+words and so on up to you go to the whole
+
+186
+00:21:10,530 --> 00:21:15,960
+six sentence and this is the only thing is
+that it requires some normalizing of the grammar
+
+187
+00:21:15,960 --> 00:21:21,620
+that you will also see what is the normalization
+then there is earley parser that is again
+
+188
+00:21:21,620 --> 00:21:27,070
+very popular that works in top down manner
+it does not require any normalization of grammar
+
+189
+00:21:27,070 --> 00:21:33,390
+and slightly more complex than the c k y algorithm
+and a generic frame work is something called
+
+190
+00:21:33,390 --> 00:21:40,639
+a chart parsers where ah for individual phrases
+in the sentence they will see what are the
+
+191
+00:21:40,639 --> 00:21:46,679
+ah possible trees they were retain in the
+chart and use that for ah for the higher level
+
+192
+00:21:46,679 --> 00:21:55,240
+trees ok so and they combined both both of
+these approaches bottom up and and top down
+
+193
+00:21:55,240 --> 00:22:02,919
+so we will only focus on c k y algorithm that
+how do we use this for finding out parser
+
+194
+00:22:02,919 --> 00:22:08,279
+in efficient polynomial time ok so how does
+this c k y algorithm works
+
+195
+00:22:08,279 --> 00:22:15,940
+now before that we have seen that this requires
+normalization of grammar so what is that so
+
+196
+00:22:15,940 --> 00:22:21,950
+to apply c k y algorithm so my grammar must
+be converted to a normal form called chomsky
+
+197
+00:22:21,950 --> 00:22:26,690
+normal form ok and what is the constraint
+in chomsky normal form so the constraint is
+
+198
+00:22:26,690 --> 00:22:33,419
+that all the production of my grammar should
+be having of should be having one of these
+
+199
+00:22:33,419 --> 00:22:40,029
+two forms that is either exactly two non terminals
+on the right hand side or one terminal symbol
+
+200
+00:22:40,029 --> 00:22:46,269
+on the right hand side so what do i mean by
+that in the context free grammars
+
+201
+00:22:46,269 --> 00:22:54,110
+a rule is of the form a goes to gamma where
+a is a non terminal and gamma can be a sequence
+
+202
+00:22:54,110 --> 00:23:02,580
+of terminals and non terminals this is general
+c f c production rule so what happens in the
+
+203
+00:23:02,580 --> 00:23:08,429
+case of chomsky normal form the rules are
+constraint to be of these two forms a goes
+
+204
+00:23:08,429 --> 00:23:23,779
+to b c all these are non terminals or a goes
+to small a small a is a terminal so left hand
+
+205
+00:23:23,779 --> 00:23:28,169
+side is always the same it is only one non
+terminal in chomsky normal form what happens
+
+206
+00:23:28,169 --> 00:23:33,090
+is that you put some constraints on the right
+hand side so it can have a either only two
+
+207
+00:23:33,090 --> 00:23:42,009
+non terminals or only one terminal
+so to apply c k y algorithm i must convert
+
+208
+00:23:42,009 --> 00:23:49,730
+my grammar in any generic context free grammar
+form to chomsky normal form ok so what are
+
+209
+00:23:49,730 --> 00:24:02,649
+the steps involved they are what are ah necessary
+for our case so so we will also see that how
+
+210
+00:24:02,649 --> 00:24:09,080
+do we store all the possible ah phrases what
+are their parses in a triangular table in
+
+211
+00:24:09,080 --> 00:24:16,330
+the c k y algorithm so let me quickly see
+let me quickly show how we convert a grammar
+
+212
+00:24:16,330 --> 00:24:21,720
+to chomsky normal form so in the left hand
+side we have a grammar ok and i want to convert
+
+213
+00:24:21,720 --> 00:24:27,049
+that the chomsky normal form so can you quickly
+see go through the grammar and and find out
+
+214
+00:24:27,049 --> 00:24:33,360
+the rules that are not in chomsky normal form
+so all these are one non terminal giving me
+
+215
+00:24:33,360 --> 00:24:39,200
+a one terminal yes in all these cases so they
+are pre terminal to terminal they are always
+
+216
+00:24:39,200 --> 00:24:46,940
+in chomsky normal form yes a non terminal
+giving me a single terminal now let me go
+
+217
+00:24:46,940 --> 00:24:52,890
+upwards so p p gives me preposition followed
+by a noun noun phrase again one non terminal
+
+218
+00:24:52,890 --> 00:24:58,280
+giving me two non terminals in c n f this
+is also in c n f this is also in c n f but
+
+219
+00:24:58,280 --> 00:25:04,860
+this rule is not in c n f v p goes to verb
+one non terminal giving another non terminal
+
+220
+00:25:04,860 --> 00:25:12,200
+so how do i actually convert this to chomsky
+normal form so idea would be i will find out
+
+221
+00:25:12,200 --> 00:25:19,700
+what are the terminals that this derives so
+verb derives book include and prefer so instead
+
+222
+00:25:19,700 --> 00:25:28,779
+of this rule i will add a new rule verb phrase
+gives me book include and prefer ok and this
+
+223
+00:25:28,779 --> 00:25:35,630
+is the this is the strategy similarly here
+this is in c n f this is in c n f what about
+
+224
+00:25:35,630 --> 00:25:41,110
+this rule nominal goes to noun again i will
+find out what are different things that noun
+
+225
+00:25:41,110 --> 00:25:47,260
+derives book flight meal and money and i will
+add a rule nominal derives book flight meal
+
+226
+00:25:47,260 --> 00:25:54,340
+and money this is in c n f so here again n
+p goes to pronoun i will find out pronoun
+
+227
+00:25:54,340 --> 00:26:01,879
+goes to i he she me so n p gives me i he she
+me s goes to v p is again not in c n f so
+
+228
+00:26:01,879 --> 00:26:09,211
+v p gives me verb and also verb n p ok so
+i have to add these rules s goes to verb n
+
+229
+00:26:09,211 --> 00:26:18,190
+p s goes to v p n p s goes to preposition
+n p ok plus for v p going to be verb at now
+
+230
+00:26:18,190 --> 00:26:25,230
+takes it next rule v p verb going to book
+include prefer and the rule i will add is
+
+231
+00:26:25,230 --> 00:26:33,669
+s goes to book include and prefer s going
+to n p v p is fine
+
+232
+00:26:33,669 --> 00:26:40,340
+but what do i do with this rule s goes to
+auxiliary n p and v p ok so for this kind
+
+233
+00:26:40,340 --> 00:26:51,659
+of rule s goes to auxiliary n p v p where
+a single non terminal derives pre non terminals
+
+234
+00:26:51,659 --> 00:26:59,759
+so what do i do i coin some new non terminals
+so i will say that auxiliary noun phrase together
+
+235
+00:26:59,759 --> 00:27:07,370
+make a new terminals say x one ok so what
+will be my grammar it will be s goes to x
+
+236
+00:27:07,370 --> 00:27:15,659
+one followed by v p and x one will be auxiliary
+followed by n p and this is equivalent to
+
+237
+00:27:15,659 --> 00:27:24,220
+this rule and now this is in my chomsky normal
+form so idea is that whenever you have a rule
+
+238
+00:27:24,220 --> 00:27:30,059
+where you have two more than two non terminals
+you try to break them down such that it is
+
+239
+00:27:30,059 --> 00:27:34,610
+one non terminal another non terminal this
+you can again further break down if needed
+
+240
+00:27:34,610 --> 00:27:41,860
+ok and this is a simple approach and if we
+have a rule like this a goes to b and b goes
+
+241
+00:27:41,860 --> 00:27:50,590
+c you take this two a goes to small c this
+is a terminal ok and also if b has something
+
+242
+00:27:50,590 --> 00:27:56,300
+else you need take care of everything in this
+yes that's what we took we saw in this particular
+
+243
+00:27:56,300 --> 00:28:00,600
+example there
+so now if i convert this grammar to chomsky
+
+244
+00:28:00,600 --> 00:28:07,029
+normal form this is how it will look like
+ok so you see that here s goes to v p now
+
+245
+00:28:07,029 --> 00:28:13,600
+has multiple rules s goes to verb n p s goes
+to v p n p and s goes to book include prefer
+
+246
+00:28:13,600 --> 00:28:20,639
+and so on for the other case also
+so in this lecture we had seen that how do
+
+247
+00:28:20,639 --> 00:28:27,640
+we do a simple parsing using top down approach
+and bottom up approach but they are not very
+
+248
+00:28:27,640 --> 00:28:32,690
+efficient so can we do something better by
+using dynamic programming parsing approach
+
+249
+00:28:32,690 --> 00:28:38,309
+and for that we are trying we will be seeing
+ah c k y algorithm so how do you use c k y
+
+250
+00:28:38,309 --> 00:28:45,869
+algorithm for an efficient parsing but c k
+y algorithm requires normalization ah to some
+
+251
+00:28:45,869 --> 00:28:50,090
+chomsky normal form and we saw how do we convert
+a grammar to chomsky normal form
+
+252
+00:28:50,090 --> 00:28:55,759
+so in the next lecture we will start with
+this chomsky normal form and see given a new
+
+253
+00:28:55,759 --> 00:29:00,539
+ah given a string how do we parse that using
+c k y algorithm
+
+254
+00:29:00,539 --> 00:29:01,449
+thank you
+

@@ -1,0 +1,1175 @@
+1
+00:00:17,440 --> 00:00:25,060
+so welcome back for the second lecture of
+this week so in the last lecture we were ah
+
+2
+00:00:25,060 --> 00:00:30,510
+discussing viterbi decoding for h m ms and
+in the end we discussed the problem of learning
+
+3
+00:00:30,510 --> 00:00:36,650
+the parameters of h m ms and we say that when
+the label data set available we can simply
+
+4
+00:00:36,650 --> 00:00:42,430
+estimate using maximum likelihood estimate
+ok by by the label data set but if the label
+
+5
+00:00:42,430 --> 00:00:47,440
+data set is not available then how do we actually
+learn the parameters of the system and we
+
+6
+00:00:47,440 --> 00:00:52,860
+said we will be using some sort of expectation
+algorithm and in this particular case this
+
+7
+00:00:52,860 --> 00:01:02,190
+is called baum welch baum welch algorithm
+so baum welch algorithm as i was saying this
+
+8
+00:01:02,190 --> 00:01:09,040
+is a well known e m algorithm to estimate
+the maximum likelihood for the parameters
+
+9
+00:01:09,040 --> 00:01:17,650
+of the h m m ok so ah so what are the parameters
+of h m m that you want to estimate ok let
+
+10
+00:01:17,650 --> 00:01:25,440
+we just formally define them and then we will
+see how do we estimate them using buam welch
+
+11
+00:01:25,440 --> 00:01:34,150
+so in in the h m m model so we have a hidden
+state at every time point and an observation
+
+12
+00:01:34,150 --> 00:01:40,920
+variable ok so here i am using capital x t
+to denote the random variable that is the
+
+13
+00:01:40,920 --> 00:01:48,390
+hidden state and capital y to denote the observation
+variable ok so both x t and y t can take many
+
+14
+00:01:48,390 --> 00:01:53,700
+many different values for our part of speech
+tag is each x t can take one of the part of
+
+15
+00:01:53,700 --> 00:01:58,650
+speech tags and each y t can take one of the
+possible votes ok
+
+16
+00:01:58,650 --> 00:02:06,490
+so this my my ah hidden variable hidden state
+x t and the observation y t the parameters
+
+17
+00:02:06,490 --> 00:02:14,870
+are a b and pi that we discussed last time
+what is a so a is my state transition matrix
+
+18
+00:02:14,870 --> 00:02:21,260
+so given given that the previous state was
+i what is the probability that the current
+
+19
+00:02:21,260 --> 00:02:30,281
+state will be j ok so here the t as such does
+not matter what matters is that the state
+
+20
+00:02:30,281 --> 00:02:37,890
+j occurred after state i at any any given
+time point then i have the parameter pi that
+
+21
+00:02:37,890 --> 00:02:43,750
+is what is the probability that this particular
+state is starts the sequence so probability
+
+22
+00:02:43,750 --> 00:02:52,490
+of x one that the the first state beam the
+i x state that is my pi a and then thirdly
+
+23
+00:02:52,490 --> 00:02:59,000
+i have the emission matrix so where the entries
+are what is the probability of observing this
+
+24
+00:02:59,000 --> 00:03:05,959
+particular word or this observation given
+the current state ok so this i am denoting
+
+25
+00:03:05,959 --> 00:03:12,640
+like b j y t at the state j what is the probability
+of i am meeting the observation variable or
+
+26
+00:03:12,640 --> 00:03:19,340
+observation y so either three parameters three
+set of parameters that parameters i have learnt
+
+27
+00:03:19,340 --> 00:03:29,660
+so
+now what is given to me ok so i was saying
+
+28
+00:03:29,660 --> 00:03:36,020
+that we are given the coppers not labeled
+but the seek the word sequences are given
+
+29
+00:03:36,020 --> 00:03:40,740
+so this is this can be seen as y observations
+are given different sentences are given i
+
+30
+00:03:40,740 --> 00:03:45,090
+knew what are different words occurred in
+the sentences so i can say that i am given
+
+31
+00:03:45,090 --> 00:03:51,440
+a set of observations in data ok so here i
+can say that i am given a set of observation
+
+32
+00:03:51,440 --> 00:03:56,940
+sequences that the first observation was the
+word y one then y two up to some y t where
+
+33
+00:03:56,940 --> 00:04:03,110
+y t denote the end of the sentence so i am
+given a set of observation sequences and my
+
+34
+00:04:03,110 --> 00:04:08,840
+aim is to find out the optimal set of parameters
+theta that maximize the probability of this
+
+35
+00:04:08,840 --> 00:04:15,290
+observation so these observation sequences
+so that is where i am using buam welch algorithm
+
+36
+00:04:15,290 --> 00:04:19,620
+find out what are the optimal set of parameters
+theta that will maximize the pro probability
+
+37
+00:04:19,620 --> 00:04:27,639
+of likelihood of observing this observation
+that's why i am using expectation maximization
+
+38
+00:04:27,639 --> 00:04:38,870
+algorithm so what so what is the main intuition
+of of e m so idea would be i want to estimate
+
+39
+00:04:38,870 --> 00:04:49,000
+the parameters a b n pi so what i will do
+i will start with some random initial ah probabilities
+
+40
+00:04:49,000 --> 00:04:54,160
+for all all these parameters i will initialize
+them with some random values so i have all
+
+41
+00:04:54,160 --> 00:05:01,590
+these probabilities ok
+now using this initial values i will try to
+
+42
+00:05:01,590 --> 00:05:09,840
+find out what are the probabilities of various
+state paths so i give on a given sequence
+
+43
+00:05:09,840 --> 00:05:15,620
+what is the probability that a particular
+state would have occurred given these parameters
+
+44
+00:05:15,620 --> 00:05:19,910
+so once i have obtained the probabilities
+of different state paths or different states
+
+45
+00:05:19,910 --> 00:05:29,050
+a different point now i i got this this probability
+i will use that again to compute to re to
+
+46
+00:05:29,050 --> 00:05:35,490
+re estimate my parameters so i will get started
+with theta zero i get some theta prime ok
+
+47
+00:05:35,490 --> 00:05:41,650
+now i will again use the theta prime to complete
+my state paths probabilities again use that
+
+48
+00:05:41,650 --> 00:05:47,370
+to compute recompute my parameters until it
+somehow converges ok
+
+49
+00:05:47,370 --> 00:05:54,790
+so this is my trade devaluate first use some
+parameters theta to get some likely from the
+
+50
+00:05:54,790 --> 00:06:00,770
+data for the hidden variable here that is
+the states once you have that that likelihood
+
+51
+00:06:00,770 --> 00:06:10,050
+or the probabilities use that to compute my
+my theta ok so so what we are doing here so
+
+52
+00:06:10,050 --> 00:06:17,670
+i am start starting by choosing some initial
+values of the parameters a b m pi ok and then
+
+53
+00:06:17,670 --> 00:06:24,040
+i have to repeat the following steps until
+convenience what is that firstly determine
+
+54
+00:06:24,040 --> 00:06:32,000
+what are the probable paths ok that x t minus
+one that t minus one object point i see the
+
+55
+00:06:32,000 --> 00:06:39,880
+state i at tth i see the state j and so on
+what is the probability of various state paths
+
+56
+00:06:39,880 --> 00:06:46,100
+now once i have these will teach count the
+number of times so what is important expect
+
+57
+00:06:46,100 --> 00:06:49,450
+a number of times because we are only computing
+probabilities we are not finding the actual
+
+58
+00:06:49,450 --> 00:06:56,090
+paths so count the expected number of transitions
+a i j as well as the expected number of times
+
+59
+00:06:56,090 --> 00:07:03,400
+various emissions b j y t m eight ok so using
+these state paths can you do that yes i know
+
+60
+00:07:03,400 --> 00:07:07,780
+what is the probability of x t minus one is
+equal to i h t is equal to chain i can use
+
+61
+00:07:07,780 --> 00:07:12,940
+it to compute an expected value for a i j
+and this is what we will be doing so will
+
+62
+00:07:12,940 --> 00:07:17,960
+compute a i j similarly i al already know
+the observation so i can also computes unexpected
+
+63
+00:07:17,960 --> 00:07:23,460
+vanish for b j y t what is the probability
+that i see objection y t for the particular
+
+64
+00:07:23,460 --> 00:07:32,800
+state j so once i computed this a i j and
+d j y t i will again estimate my parameters
+
+65
+00:07:32,800 --> 00:07:39,580
+theta using these these computed values ok
+now i will go back in the loop i have this
+
+66
+00:07:39,580 --> 00:07:45,060
+theta i will compute the probabilities of
+various state paths ok again compute a i j
+
+67
+00:07:45,060 --> 00:07:52,009
+b j y t and again compute theta and i repeat
+that until convergence
+
+68
+00:07:52,009 --> 00:07:59,210
+so now what is so so all these are interesting
+here like firstly once you are given some
+
+69
+00:07:59,210 --> 00:08:04,650
+set of parameters theta it can be either the
+initial parameters or some intermediate parameters
+
+70
+00:08:04,650 --> 00:08:11,550
+how do you actually compute different the
+probabilities of different paths how do you
+
+71
+00:08:11,550 --> 00:08:19,039
+actually do it and for that we use a forward
+backward algorithm that is the ah main concept
+
+72
+00:08:19,039 --> 00:08:28,639
+of this algorithm ok so let us see what is
+this forward backward algorithm ok so in forward
+
+73
+00:08:28,639 --> 00:08:37,449
+by back backward algorithm we have a forward
+procedure and a backup procedure ok so so
+
+74
+00:08:37,449 --> 00:08:46,600
+far for explaining let me just take show it
+on paper ones so what is happening i am observing
+
+75
+00:08:46,600 --> 00:09:01,790
+this sequence y one y two y small t y t minus
+one y t this is my observation ok and correspondingly
+
+76
+00:09:01,790 --> 00:09:06,570
+so you can say this is y one is equal to y
+one first observation y two is equal to y
+
+77
+00:09:06,570 --> 00:09:17,590
+two and so on ok and correspondingly there
+are states so is my observation and then there
+
+78
+00:09:17,590 --> 00:09:24,880
+are states so there will be some state x t
+this is y t observation is my state x t is
+
+79
+00:09:24,880 --> 00:09:31,880
+equal to y it can be any of the possible states
+x t now what do i do in this forward backward
+
+80
+00:09:31,880 --> 00:09:38,690
+algorithm i compute two different probabilities
+one i called as the forward probability this
+
+81
+00:09:38,690 --> 00:09:51,560
+is the probability of observing y one to y
+t plus and x t is equal to i give my parameter
+
+82
+00:09:51,560 --> 00:10:00,010
+theta so this is my alpha t for the i of the
+state the probability that i am observing
+
+83
+00:10:00,010 --> 00:10:08,020
+y one to y t and at t h point the state is
+i given a parameters theta
+
+84
+00:10:08,020 --> 00:10:20,019
+ok y one is equal to y one y two is equal
+to y two y t is equal to small y t and x t
+
+85
+00:10:20,019 --> 00:10:28,920
+is equal to y given parameters theta this
+is my forward ah probability then i compute
+
+86
+00:10:28,920 --> 00:10:43,100
+a backward probability what is that this is
+the probability of observing this given this
+
+87
+00:10:43,100 --> 00:10:57,240
+state ok 
+so this is my alpha i t and there is beta
+
+88
+00:10:57,240 --> 00:11:10,510
+i t that is probability that y t plus one
+is small y t plus one up to capitol y t is
+
+89
+00:11:10,510 --> 00:11:20,680
+y t given x t is equal to i and theta so these
+are two different probabilities that i state
+
+90
+00:11:20,680 --> 00:11:29,279
+so what do you see here so i am taking just
+a state at a particular time t a particular
+
+91
+00:11:29,279 --> 00:11:34,589
+state time
+now why do you actually compute this alpha
+
+92
+00:11:34,589 --> 00:11:41,970
+i t and beta i t how does that help now i
+have these probabilities i can simply multiply
+
+93
+00:11:41,970 --> 00:11:52,820
+these alpha t times beta i t to get the probability
+that i observe the sequence and the i of the
+
+94
+00:11:52,820 --> 00:12:01,610
+state ok and to actually compute the probability
+of c saying that at t h time point the state
+
+95
+00:12:01,610 --> 00:12:07,430
+was i i can margini marginalize it by all
+the possible states that can happen at time
+
+96
+00:12:07,430 --> 00:12:15,370
+t ok so i can multiply sigma i t beta i t
+and divide by all the possible sigma j t alpha
+
+97
+00:12:15,370 --> 00:12:23,980
+j t n beta j t to compute the probability
+of seeing state i at time point t and this
+
+98
+00:12:23,980 --> 00:12:32,800
+is thats how this forward and backward probabilities
+help ok so you will see that in detail ok
+
+99
+00:12:32,800 --> 00:12:37,040
+so right now just the formulation so i am
+this higher the sequence i divided in two
+
+100
+00:12:37,040 --> 00:12:44,579
+parts for a given t this is state i i have
+the forward probability alpha i t and a backward
+
+101
+00:12:44,579 --> 00:12:50,870
+probability beta i t alpha i t is this further
+sequence and the state beta is the ending
+
+102
+00:12:50,870 --> 00:13:00,870
+sequence given this is state the previous
+state x is equal to i ok so now so this is
+
+103
+00:13:00,870 --> 00:13:07,070
+my alpha i t ok so now how do i compute these
+values of alpha i t i want to compute this
+
+104
+00:13:07,070 --> 00:13:12,420
+for all possible i's and all possible values
+of t so this is a forward probability so i
+
+105
+00:13:12,420 --> 00:13:21,240
+have to start with the first point so how
+do i actually compute alpha i one ok what
+
+106
+00:13:21,240 --> 00:13:29,700
+is that so alpha i one from this equation
+which probability of observing y one is equal
+
+107
+00:13:29,700 --> 00:13:41,482
+to y one ok and x one is i given theta so
+what is the probability of x one is equal
+
+108
+00:13:41,482 --> 00:13:59,089
+to i given theta that is pi i ok this is my
+pi i and this probability would be emission
+
+109
+00:13:59,089 --> 00:14:14,920
+from x one from the either state so this will
+be b i y one ok so this is how i will compute
+
+110
+00:14:14,920 --> 00:14:21,730
+the initial one alpha i one for all possible
+states i
+
+111
+00:14:21,730 --> 00:14:30,580
+now at some point of time ok at some point
+t plus one how will i compute alpha j t plus
+
+112
+00:14:30,580 --> 00:14:44,079
+one given the previous alpha i t i have completed
+so alpha j t plus one ok so t plus one means
+
+113
+00:14:44,079 --> 00:14:51,279
+the probability of seeing the sequence up
+to white t plus one and the state x t plus
+
+114
+00:14:51,279 --> 00:14:57,459
+one is j so how can i compute that using the
+previous alphas so i have the i have the previous
+
+115
+00:14:57,459 --> 00:15:09,700
+alpha that gives me this so alpha i t at the
+previous time step i had some state i i have
+
+116
+00:15:09,700 --> 00:15:18,600
+the transition from i to j so times a i j
+and now i have the emission for the t plus
+
+117
+00:15:18,600 --> 00:15:36,500
+oneth observation that is b j y t plus one
+and this i can obtain from any of the previous
+
+118
+00:15:36,500 --> 00:15:45,160
+states so i have to sum over all the possible
+states ok so from all the previous states
+
+119
+00:15:45,160 --> 00:15:51,540
+at the t h time step i can be an estate i
+i have the transition probabilities and the
+
+120
+00:15:51,540 --> 00:15:57,850
+emission probability for t plus one and that
+is how i can compute sigma alpha j t plus
+
+121
+00:15:57,850 --> 00:16:05,820
+one from all the alpha i t h so this is how
+you can compute your alpha then because a
+
+122
+00:16:05,820 --> 00:16:13,770
+manner starting from alpha i one
+what will you do for your betas ok so this
+
+123
+00:16:13,770 --> 00:16:20,510
+is a backward processor so what is my beta
+i t this gives me the probability of ending
+
+124
+00:16:20,510 --> 00:16:29,940
+the sequence with y t plus one two y t given
+the state i a time this is my backward procedure
+
+125
+00:16:29,940 --> 00:16:35,880
+now this i again compute aggressively in alpha
+i was starting from the first word i was campaigning
+
+126
+00:16:35,880 --> 00:16:42,780
+alpha i t in betas because the backward procedure
+i will first compute beta i capital t t is
+
+127
+00:16:42,780 --> 00:16:54,360
+the end of the sequence and what will the
+beta i t so beta i t would be probability
+
+128
+00:16:54,360 --> 00:17:01,130
+of so given that previous the t h point state
+is i having a sequence on t plus one but there
+
+129
+00:17:01,130 --> 00:17:06,020
+is no word from t plus one so this will always
+be so this is always be one this will be a
+
+130
+00:17:06,020 --> 00:17:13,870
+null sequence so this is always one
+now i have to compute it recursively for all
+
+131
+00:17:13,870 --> 00:17:24,169
+other beta i at time point t ok so here i
+am going backwards so you assume that you
+
+132
+00:17:24,169 --> 00:17:30,380
+have completed all the beta j at time t plus
+one and you want to use that to compute beta
+
+133
+00:17:30,380 --> 00:17:35,859
+i at time point t how will you do that so
+this is very similar to what you did in the
+
+134
+00:17:35,859 --> 00:17:44,509
+case of alpha so we can see this so this is
+beta j at time t plus one transition probabilities
+
+135
+00:17:44,509 --> 00:17:51,729
+from i to j and the emission probabilities
+probability for the t plus oneth observation
+
+136
+00:17:51,729 --> 00:17:57,980
+and you sum over all the possible states at
+times so very very similar to what you did
+
+137
+00:17:57,980 --> 00:18:02,340
+in the case of forward procedure so that's
+what you will do in the backward procedure
+
+138
+00:18:02,340 --> 00:18:11,259
+for computing beta h in a recursive manner
+ok so now you have the a way that given the
+
+139
+00:18:11,259 --> 00:18:20,070
+set of parameters minus theta you can compute
+all this alpha and beta ok so all the alpha
+
+140
+00:18:20,070 --> 00:18:26,990
+i t is an beta i t you can complete now remember
+what is the next step in the algorithm you
+
+141
+00:18:26,990 --> 00:18:30,769
+want to find out what are the best possible
+paths or what is the probability of various
+
+142
+00:18:30,769 --> 00:18:35,859
+paths that is what we intended by doing this
+alpha and beta let us see how exactly we can
+
+143
+00:18:35,859 --> 00:18:42,070
+compute these probabilities of various paths
+so i want to compute the probabilities of
+
+144
+00:18:42,070 --> 00:18:59,600
+say probability x is equal to y given my observation
+and parameters theta also i want to compute
+
+145
+00:18:59,600 --> 00:19:07,749
+x t is equal to y and x t plus one is equal
+to j given y n theta i want to compute both
+
+146
+00:19:07,749 --> 00:19:14,850
+of this so if i can compete both of this i
+can i can compute all the parameters i can
+
+147
+00:19:14,850 --> 00:19:19,159
+complete my transition probabilities using
+that i can compute my initial probabilities
+
+148
+00:19:19,159 --> 00:19:23,760
+using that by taking t is equal to one and
+you can also compute my ambition probabilities
+
+149
+00:19:23,760 --> 00:19:31,389
+so now my problem is once i commuted alphas
+and betas can i compute these probabilities
+
+150
+00:19:31,389 --> 00:19:46,350
+ok so that is what we will see next
+so i am giving these some some names so firstly
+
+151
+00:19:46,350 --> 00:19:55,359
+i have this gamma i t that gives me the probability
+that at t th point the state is i given my
+
+152
+00:19:55,359 --> 00:20:03,340
+observations y plus theta parameters and similarly
+i have zeta i j t that is probability that
+
+153
+00:20:03,340 --> 00:20:09,989
+at t th point i have state i t plus one point
+i will change a given by n theta so gamma
+
+154
+00:20:09,989 --> 00:20:16,659
+i t is written terms of multiplication of
+alpha i t and beta i t ok divided by summation
+
+155
+00:20:16,659 --> 00:20:23,529
+over all possible sigma z alpha j t and beta
+j t over all possible change so now how how
+
+156
+00:20:23,529 --> 00:20:31,539
+do we actually come up with this ah equation
+of gamma i t and and zeta i j t let us look
+
+157
+00:20:31,539 --> 00:20:46,099
+at it ok so here i want to compute probability
+x t given x t is equal to y given y n theta
+
+158
+00:20:46,099 --> 00:21:09,059
+so now i will computed using probability x
+t is equal to y y given theta divided by probability
+
+159
+00:21:09,059 --> 00:21:15,759
+y given theta ok the simple conditions ok
+so if you follow that theta this is nothing
+
+160
+00:21:15,759 --> 00:21:20,980
+but x t is equal to y given by x t is equal
+to y y divided by probability y this simple
+
+161
+00:21:20,980 --> 00:21:32,340
+the condition probability row
+now this one i am writing is summation j is
+
+162
+00:21:32,340 --> 00:21:43,940
+equal to one over n equal to one to n probability
+x t is equal to j y given theta ok so now
+
+163
+00:21:43,940 --> 00:21:49,539
+you can see the symmetry in this equation
+now what i what i have to show that alpha
+
+164
+00:21:49,539 --> 00:21:57,149
+i t times beta i t is probability x t is equal
+to y y given theta and that is very easy because
+
+165
+00:21:57,149 --> 00:22:08,519
+what is alpha i t this is probability y one
+to y t plus x t is equal to i what is beta
+
+166
+00:22:08,519 --> 00:22:18,639
+i t probability of y t plus one to y capital
+t and now x t is equal to y is already given
+
+167
+00:22:18,639 --> 00:22:27,460
+for beta and this is given my parameters theta
+ok and this is what we are seeing here this
+
+168
+00:22:27,460 --> 00:22:34,309
+is my alpha i t times beta i t and this is
+marginalizing over all possible states that
+
+169
+00:22:34,309 --> 00:22:39,029
+time bind so this will be sigma j equal to
+one to n alpha j t beta j t so this gives
+
+170
+00:22:39,029 --> 00:22:48,609
+me the equation for gamma i t similarly you
+can see for zeta i j t that is for probability
+
+171
+00:22:48,609 --> 00:22:58,260
+of x is equal to i x t plus one is equal to
+j y given y n theta so in the same way you
+
+172
+00:22:58,260 --> 00:23:10,610
+can write it as probability x t is equal to
+i x t plus one is equal to j y given theta
+
+173
+00:23:10,610 --> 00:23:20,070
+divided by probability y given theta that
+will marginalize over all possible i n j ok
+
+174
+00:23:20,070 --> 00:23:34,229
+and you will say probability x t is equal
+to i x t plus one is equal to j y given theta
+
+175
+00:23:34,229 --> 00:23:40,309
+for all possible values of phi n j
+now what we have to show that is that this
+
+176
+00:23:40,309 --> 00:23:51,409
+is actually this formula ok now so what is
+this so you are given state at time point
+
+177
+00:23:51,409 --> 00:23:58,849
+t and time point t plus one so what you are
+actually doing is that using the forward procedure
+
+178
+00:23:58,849 --> 00:24:08,510
+from y one to y t and you will also get the
+state at state i at time point t and you will
+
+179
+00:24:08,510 --> 00:24:16,019
+use the backward procedure because you are
+given the state at time t plus one state j
+
+180
+00:24:16,019 --> 00:24:26,479
+beggar procedure for from y t plus two up
+to y capital t ok so this is what is cap captured
+
+181
+00:24:26,479 --> 00:24:40,859
+in alpha i t and this is captured condition
+on j in beta in beta j t plus one then you
+
+182
+00:24:40,859 --> 00:24:50,379
+will compute the probability of transition
+from i to j that is a i j ok and y t plus
+
+183
+00:24:50,379 --> 00:25:02,289
+one given j that is your d j y t plus one
+ok so this equation is nothing but probability
+
+184
+00:25:02,289 --> 00:25:08,190
+of x t is equal to y x t plus one is equal
+to j y given theta this whole sequence is
+
+185
+00:25:08,190 --> 00:25:15,320
+there and these two states are also and similarly
+you can see for the for here this is over
+
+186
+00:25:15,320 --> 00:25:23,450
+all the possible values of i and j ok
+so i hope this is clear that once i have completed
+
+187
+00:25:23,450 --> 00:25:30,779
+all the possible alpha and beta and the parameters
+are the previous parameters of the ah we can
+
+188
+00:25:30,779 --> 00:25:39,239
+compute this gamma i t and zeta i j t th that
+are probability of state at a given time and
+
+189
+00:25:39,239 --> 00:25:48,109
+a sequence i and j at time t and t plus one
+ok this we can compute using alpha and beta
+
+190
+00:25:48,109 --> 00:25:55,919
+now coming to the last part that is once i
+computed some probability is over by possible
+
+191
+00:25:55,919 --> 00:26:02,159
+state paths how do i estimate my parameters
+again ok i have started with some initial
+
+192
+00:26:02,159 --> 00:26:10,889
+parameters computed this now i want to re
+estimate my parameters theta so how do i do
+
+193
+00:26:10,889 --> 00:26:24,990
+that so now i have to estimate my pi i a j
+and b i v k so how do i estimate this pi i
+
+194
+00:26:24,990 --> 00:26:34,179
+is probability of seeing the state i at time
+one so now from these parameters which one
+
+195
+00:26:34,179 --> 00:26:42,399
+can give me this value probability that x
+one is equal to i the second get from gamma
+
+196
+00:26:42,399 --> 00:26:53,929
+a one ok that is that can give me my pi i
+is probability that at x x one is i so this
+
+197
+00:26:53,929 --> 00:27:02,840
+is to estimate my pi next thing i have to
+estimate is transition probabilities probability
+
+198
+00:27:02,840 --> 00:27:13,840
+of going from state i to state j now i have
+completed this ok so how do i compute my e
+
+199
+00:27:13,840 --> 00:27:29,679
+i j e i j would be at all possible times how
+many times you are having the sequence i n
+
+200
+00:27:29,679 --> 00:27:48,580
+j so this will be summation over t zeta i
+j ok jee ji zeta i j t is each i followed
+
+201
+00:27:48,580 --> 00:27:59,909
+by j divide by over all the times when you
+are seeing this t ok so when you are seeing
+
+202
+00:27:59,909 --> 00:28:08,690
+the state i and this you can compute using
+your gamma i that is summation over t gamma
+
+203
+00:28:08,690 --> 00:28:19,339
+i t and that will give me my a i j all the
+possible cases where all the all the probabilities
+
+204
+00:28:19,339 --> 00:28:26,109
+of i and j having together at any point divide
+by all the probabilities of anyway this is
+
+205
+00:28:26,109 --> 00:28:37,219
+my a i j and similarly how can you compute
+your b j say v k that is at state j you are
+
+206
+00:28:37,219 --> 00:28:45,100
+emitting v k how can you estimate that so
+for that you have to find out whenever you
+
+207
+00:28:45,100 --> 00:28:52,580
+are in state j is the observation actually
+v k how many times we are in state j by the
+
+208
+00:28:52,580 --> 00:29:00,759
+observation is we can divide by number of
+times you are in state j ok so this is so
+
+209
+00:29:00,759 --> 00:29:09,999
+here the nominator is easy that is number
+of times you are so this b j v k a number
+
+210
+00:29:09,999 --> 00:29:19,880
+of times you are in state j this is gamma
+j t numerator number of times or the probability
+
+211
+00:29:19,880 --> 00:29:28,580
+that you are in state j times the observation
+is actually v k ok
+
+212
+00:29:28,580 --> 00:29:35,919
+now so at time t the observation is small
+y t ok so i can use some sort of a simple
+
+213
+00:29:35,919 --> 00:29:43,299
+notation or indicator function one v k is
+equal to y t so indicator function ok what
+
+214
+00:29:43,299 --> 00:29:53,539
+do indicator function so one v k is equal
+to y t will be one if v k is actually y t
+
+215
+00:29:53,539 --> 00:30:01,450
+and zero otherwise listen to my indicator
+function so now whenever if v k is y t whenever
+
+216
+00:30:01,450 --> 00:30:07,649
+i observe y t i will add it otherwise it will
+be zero and this is this will give me the
+
+217
+00:30:07,649 --> 00:30:18,480
+emission probabilities so i could estimate
+my pi a i j as well as b j v k using this
+
+218
+00:30:18,480 --> 00:30:25,070
+zeta i j and gamma i i which i computed using
+my forward backward probabilities and this
+
+219
+00:30:25,070 --> 00:30:31,419
+is one complete pass of this algorithm ok
+now i have these parameters i will plug these
+
+220
+00:30:31,419 --> 00:30:37,909
+again to compute alphas and betas again compute
+my gamma and zetas and again estimate the
+
+221
+00:30:37,909 --> 00:30:44,100
+parameters until it converges ok and this
+is the buam welch algorithm for for landing
+
+222
+00:30:44,100 --> 00:30:50,369
+the parameters of h m m when the label data
+set is not available so this gives you a very
+
+223
+00:30:50,369 --> 00:30:58,149
+nice handle on ah h m ms so you can apply
+h m ms when you have the label data set very
+
+224
+00:30:58,149 --> 00:31:03,570
+easily by by learning the parameters directly
+from h m ms maximum likelihood estimate and
+
+225
+00:31:03,570 --> 00:31:09,919
+data beta decoding but even if you get a new
+ah problem or a new language furtherer you
+
+226
+00:31:09,919 --> 00:31:14,889
+have to compute part-of-speech tax but you
+do not have the labels you can use it this
+
+227
+00:31:14,889 --> 00:31:19,100
+buam welch algorithm to estimate the parameters
+of a h m m and then you should have enter
+
+228
+00:31:19,100 --> 00:31:26,070
+the code to to actually given a new sentence
+find at part of speech tag sequence
+
+229
+00:31:26,070 --> 00:31:32,019
+so and you can use that for any other sequence
+label task so this completes our discussions
+
+230
+00:31:32,019 --> 00:31:38,349
+on h m ms that are that were one of the very
+popular models for ah this part is fish tagging
+
+231
+00:31:38,349 --> 00:31:44,090
+in many other sequence labeling task but they
+they have certain limitations and that is
+
+232
+00:31:44,090 --> 00:31:49,739
+what we will discuss next then that what are
+these limitations and how do some other models
+
+233
+00:31:49,739 --> 00:31:54,570
+some so we will go to now some discriminative
+classifiers like maxim and role models they
+
+234
+00:31:54,570 --> 00:32:01,690
+get rid of these limitations so this is for
+h m ms let us lets let's look at maxima into
+
+235
+00:32:01,690 --> 00:32:04,619
+the models in the next lecture
+thank you
+

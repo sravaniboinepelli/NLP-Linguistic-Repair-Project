@@ -1,0 +1,1405 @@
+1
+00:00:17,940 --> 00:00:23,060
+so hello everyone welcome back to the fourth
+lecture of this week in last lecture we had
+
+2
+00:00:23,060 --> 00:00:29,700
+discussed what is pcfgs and we we finally
+came up with what are the interesting problems
+
+3
+00:00:29,700 --> 00:00:35,390
+that that we would like to answer so for example
+what is the most likely parse for a given
+
+4
+00:00:35,390 --> 00:00:40,250
+sentence as per my pcfg grammar and what is
+the probability of the sentence as per the
+
+5
+00:00:40,250 --> 00:00:47,000
+grammar finally we also wanted to see how
+do i learn my pcfg rule probabilities ok if
+
+6
+00:00:47,000 --> 00:00:51,450
+you remember this was the only difference
+between context free grammar and the probabilities
+
+7
+00:00:51,450 --> 00:00:55,310
+version is that all the production rules here
+have a probability value
+
+8
+00:00:55,310 --> 00:01:00,121
+so how do i learn these values so this is
+what we will be covering in this lecture and
+
+9
+00:01:00,121 --> 00:01:05,610
+in the next lecture and we will be using a
+specific concept called called inside outside
+
+10
+00:01:05,610 --> 00:01:10,920
+probabilities ok and this will be very analogous
+to what you studied in forward backward algorithm
+
+11
+00:01:10,920 --> 00:01:17,210
+in in terms of learning parameters for h m
+m so we will go to that
+
+12
+00:01:17,210 --> 00:01:22,080
+so we so starting with the first problem how
+do i find out the most likely parse for a
+
+13
+00:01:22,080 --> 00:01:30,150
+sentence and this can be solved simply if
+we use the c k y algorithm for pcfg ok so
+
+14
+00:01:30,150 --> 00:01:34,610
+from the example that we did in the last class
+i hope you you understand now how to use c
+
+15
+00:01:34,610 --> 00:01:39,610
+k y algorithm for the context free grammar
+so today i will show how do you extend that
+
+16
+00:01:39,610 --> 00:01:45,180
+for p c f g
+so let us take an example so we have this
+
+17
+00:01:45,180 --> 00:01:53,560
+pcfg so what you are seeing here with each
+rule you have a rule probability as well ok
+
+18
+00:01:53,560 --> 00:01:58,640
+and and you can verify that all the probabilities
+starting from a given right hand side will
+
+19
+00:01:58,640 --> 00:02:09,200
+add up to one so now i want to find out what
+is the most likely parse for the sentence
+
+20
+00:02:09,200 --> 00:02:16,370
+the same sentence the pilot likes flying planes
+so for that i need to find out what is the
+
+21
+00:02:16,370 --> 00:02:26,040
+probability with which i can find a non terminal
+as in the final position for deriving this
+
+22
+00:02:26,040 --> 00:02:32,230
+whole sentence zero to five so we proceed
+nearly in the same manner as we did ah in
+
+23
+00:02:32,230 --> 00:02:39,760
+the in the case of c k y ok so what i will
+do i just take the same example how we solve
+
+24
+00:02:39,760 --> 00:02:43,860
+c k y in addition and what are the things
+that you need to do different here
+
+25
+00:02:43,860 --> 00:02:53,810
+so this is what we had seen last time so if
+you have to build a if you have to find out
+
+26
+00:02:53,810 --> 00:03:00,220
+what is the whether the sentence can derive
+this whole thing i fill it starting from zero
+
+27
+00:03:00,220 --> 00:03:05,890
+one one two two three three four four five
+then i will go further so now i just tell
+
+28
+00:03:05,890 --> 00:03:17,020
+what is what will differ in the case of pcfg
+so now with each non terminal there will be
+
+29
+00:03:17,020 --> 00:03:21,700
+probability with which it can derive that
+particular terminal or a set of terminals
+
+30
+00:03:21,700 --> 00:03:27,760
+so it is starting from the first element so
+this says that the non terminal dt derives
+
+31
+00:03:27,760 --> 00:03:34,709
+a now i will write down here what is the probability
+ok so if you go to your grammar the probability
+
+32
+00:03:34,709 --> 00:03:41,910
+dt gives me a it's point three so i will put
+point three here
+
+33
+00:03:41,910 --> 00:03:48,200
+similarly for this element what is the probability
+that n n gives me pilot and if i look at my
+
+34
+00:03:48,200 --> 00:03:57,849
+grammar this is point one similarly here what
+is the probability that vbz derives likes
+
+35
+00:03:57,849 --> 00:04:07,420
+this gives me point four and like that i will
+fill all these entries now this is ok
+
+36
+00:04:07,420 --> 00:04:13,560
+now what i want to show you is that how do
+i fill the next entry that is zero two what
+
+37
+00:04:13,560 --> 00:04:21,099
+is the probability with which the non terminal
+n p derives the sequence a pilot now if you
+
+38
+00:04:21,099 --> 00:04:29,160
+remember a single non terminal can derive
+two non terminals two terminals only via two
+
+39
+00:04:29,160 --> 00:04:35,520
+non terminals so it has to first derive x
+zero one x one two then each will individually
+
+40
+00:04:35,520 --> 00:04:47,800
+derive an pilot so how do i fill in this probability
+value so this would be probability that n
+
+41
+00:04:47,800 --> 00:05:08,130
+p derives d t n n times probability dt derives
+a times probability n n derives pilot ok this
+
+42
+00:05:08,130 --> 00:05:15,080
+probability getting my pcfg so this probability
+if i see in my grammar this is point three
+
+43
+00:05:15,080 --> 00:05:19,980
+this probability i have already filled in
+is point three and this probability also i
+
+44
+00:05:19,980 --> 00:05:25,460
+have filled in this is point one
+so the probability that n p derives a pilot
+
+45
+00:05:25,460 --> 00:05:31,780
+here comes out to be nine times ten to the
+power minus three and that's what i fill in
+
+46
+00:05:31,780 --> 00:05:42,100
+here ok and in the same manner you will fill
+in all the entries if it is five it means
+
+47
+00:05:42,100 --> 00:05:48,610
+the probability will be zero ok and if there
+is a non terminal here that means there will
+
+48
+00:05:48,610 --> 00:05:52,320
+be certain probabilities and this you can
+get by finding out probability individually
+
+49
+00:05:52,320 --> 00:05:58,410
+for each of this and multiplying the probability
+of this rule so that way you can incrementally
+
+50
+00:05:58,410 --> 00:06:05,010
+built all the stable from in a bottom up fashion
+we are starting from the first element then
+
+51
+00:06:05,010 --> 00:06:11,479
+in the next one and so on ok so remember nearly
+same as we did in the last class only the
+
+52
+00:06:11,479 --> 00:06:15,590
+the probabilities and the multifunctional
+probabilities will change suppose you do that
+
+53
+00:06:15,590 --> 00:06:21,380
+for this example this is what you will find
+out so these are the rule probabilities that
+
+54
+00:06:21,380 --> 00:06:27,850
+you will come up with so i will i will encourage
+all of you that you should try this on your
+
+55
+00:06:27,850 --> 00:06:35,229
+own and see that you can get the same set
+of values that have been shown in the slide
+
+56
+00:06:35,229 --> 00:06:41,150
+so now coming to the next question i am given
+the pcfg as my grammar how do i find out what
+
+57
+00:06:41,150 --> 00:06:48,370
+is the probability of the sentence ok so one
+simple solution you can always find is that
+
+58
+00:06:48,370 --> 00:06:53,100
+i find out all the possible parse trees find
+the probabilities for each of the parse trees
+
+59
+00:06:53,100 --> 00:06:59,860
+and add those up that is one way ok but this
+you might be inefficient if there are very
+
+60
+00:06:59,860 --> 00:07:04,490
+huge number of parses trees if you remember
+one of the introductory slides we said that
+
+61
+00:07:04,490 --> 00:07:09,180
+as you increase the number of words in the
+sentence or the number of phrases the number
+
+62
+00:07:09,180 --> 00:07:14,240
+of possible parses increase roughly exponentially
+ok there was something like peclet number
+
+63
+00:07:14,240 --> 00:07:20,380
+with this their group and it can go go two
+hundred plus parses so you don't want to sum
+
+64
+00:07:20,380 --> 00:07:24,400
+this get the probability individually and
+then do addition you want to do something
+
+65
+00:07:24,400 --> 00:07:29,960
+more efficient than that and how do we do
+this and that's why we use this inside algorithm
+
+66
+00:07:29,960 --> 00:07:34,260
+ok that is one of the main topics of this
+lecture so what is the inside algorithm and
+
+67
+00:07:34,260 --> 00:07:41,169
+this is some dynamic programming algorithm
+based on the concept of inside outside probabilities
+
+68
+00:07:41,169 --> 00:07:46,759
+so now i will i will try to introduce what
+is that inside outside probability so this
+
+69
+00:07:46,759 --> 00:07:52,180
+this is very centre to understanding this
+lecture as well as the next lecture so so
+
+70
+00:07:52,180 --> 00:07:58,820
+let us try to understand what is the concept
+ok and just so that it it helps you this is
+
+71
+00:07:58,820 --> 00:08:02,800
+very very similar to the concept of forward
+backward algorithm that we did in the case
+
+72
+00:08:02,800 --> 00:08:11,130
+of h m f s so what is inside outside probabilities
+so i can this is parameterized for certain
+
+73
+00:08:11,130 --> 00:08:18,069
+node of my tree so what you see in this figure
+i have a sentence with words w one to w m
+
+74
+00:08:18,069 --> 00:08:24,990
+ok and n one is the non terminal you can think
+of it as the sentence non terminal that derives
+
+75
+00:08:24,990 --> 00:08:36,509
+the whole sequence of words using my grammar
+now i am putting a parameter here that is
+
+76
+00:08:36,509 --> 00:08:43,370
+n j n j is one particular non terminal it
+can be n p v p or so on so what i am saying
+
+77
+00:08:43,370 --> 00:08:51,010
+here assume that there is a non terminal n
+j that derives the sequence w p to w q ok
+
+78
+00:08:51,010 --> 00:08:57,351
+again p and q are arbitrary you can take any
+p starting from one to m minus one ok so what
+
+79
+00:08:57,351 --> 00:09:05,760
+i am parameterized here is that this n j derives
+the sequence w p to w q so now with respect
+
+80
+00:09:05,760 --> 00:09:11,010
+to that i am defining what is my inside probabilities
+and what is my outside probabilities so you
+
+81
+00:09:11,010 --> 00:09:15,580
+can as such you can guess this is something
+outside of that and this is something inside
+
+82
+00:09:15,580 --> 00:09:19,300
+of that
+so how do i define my inside and outside probabilities
+
+83
+00:09:19,300 --> 00:09:24,730
+so outside probability is that it is starting
+from n one i can derive the sequence w one
+
+84
+00:09:24,730 --> 00:09:31,540
+to w p minus one i can derive this non terminal
+w sorry n j and the sequence w q plus one
+
+85
+00:09:31,540 --> 00:09:38,770
+to w m this is my outside probability and
+inside probability is given this n j the probability
+
+86
+00:09:38,770 --> 00:09:44,339
+that i can derive w p to w q as per my grammar
+ok and it will then follow the same sort of
+
+87
+00:09:44,339 --> 00:09:48,649
+ideas that if i can multiply inside and outside
+probability that will give me something like
+
+88
+00:09:48,649 --> 00:09:57,570
+the probability of the sentence parameterized
+by this particular jth non terminal so formally
+
+89
+00:09:57,570 --> 00:10:00,330
+that's how i can write the outside and inside
+probabilities
+
+90
+00:10:00,330 --> 00:10:06,860
+outside probability alpha j p q that is standard
+format which we can write p q denotes the
+
+91
+00:10:06,860 --> 00:10:12,320
+sequence w p w q on which this parameterized
+and j denotes the particular non terminal
+
+92
+00:10:12,320 --> 00:10:19,390
+n j here so the outside probabilities probability
+of generating w one to w p minus one yes and
+
+93
+00:10:19,390 --> 00:10:26,330
+j p q and w q plus one to m given by grammar
+and inside probabilities probability of generating
+
+94
+00:10:26,330 --> 00:10:34,380
+w p to w q given n j ok so this is also parameterized
+by n j p q because it is arriving w p to w
+
+95
+00:10:34,380 --> 00:10:42,269
+q and in my grammar so that's why i define
+my inside and outside probabilities
+
+96
+00:10:42,269 --> 00:10:49,360
+now let us take a simple example i have the
+sentence the gunman sprayed the building with
+
+97
+00:10:49,360 --> 00:10:57,190
+bullets ok and here your p q is four and five
+so you are parameterization with respect to
+
+98
+00:10:57,190 --> 00:11:03,450
+this sequence the building ok so accordingly
+this will be particular non terminal that
+
+99
+00:11:03,450 --> 00:11:11,320
+is n p that is deriving the building so now
+what do we mean by inside probability so inside
+
+100
+00:11:11,320 --> 00:11:18,830
+probabilities what is the probability that
+this non terminal n p at this location derives
+
+101
+00:11:18,830 --> 00:11:23,959
+the sequence the building this is my inside
+probability ok and what will be the outside
+
+102
+00:11:23,959 --> 00:11:31,000
+probability here that is starting from n one
+i can derive the sequence the gunman is sprayed
+
+103
+00:11:31,000 --> 00:11:43,339
+this n p and with bullets this is my outside
+probability ok so yeah so this is what we
+
+104
+00:11:43,339 --> 00:11:49,519
+have defined the outside probability alpha
+n p four five would be the probability of
+
+105
+00:11:49,519 --> 00:11:55,290
+this sequence the gunman is sprayed n p four
+five and with bullets given my grammar and
+
+106
+00:11:55,290 --> 00:12:01,390
+the inside probability beta n p four five
+would be the probability for deriving the
+
+107
+00:12:01,390 --> 00:12:08,600
+building given n p four five and grammar
+now this is this definition of inside and
+
+108
+00:12:08,600 --> 00:12:13,620
+outside probabilities now how do i actually
+compute this inside and outside probability
+
+109
+00:12:13,620 --> 00:12:22,050
+given this sentence and suppose our grammar
+is also given to me how do i compute that
+
+110
+00:12:22,050 --> 00:12:27,160
+so for inside probability so let us see this
+is the definition of inside probability beta
+
+111
+00:12:27,160 --> 00:12:35,269
+j p q is probability of deriving the sequence
+w p to w q given non terminal n j p q in my
+
+112
+00:12:35,269 --> 00:12:42,010
+grammar now so i am i will be deriving both
+these probabilities in a iterative manner
+
+113
+00:12:42,010 --> 00:12:49,360
+so what will be the base case here so the
+base case here if you see would be when p
+
+114
+00:12:49,360 --> 00:12:56,670
+and q are same that is i am deriving a single
+terminal from a non terminal ok and that you
+
+115
+00:12:56,670 --> 00:13:00,800
+can find out very easily if your grammar is
+in the chomsky normal form so what is the
+
+116
+00:13:00,800 --> 00:13:06,779
+particular non terminal that derives this
+term so this would be the base case for deriving
+
+117
+00:13:06,779 --> 00:13:15,260
+a single term base and then i will go in a
+bottom up fashion derive the inside probabilities
+
+118
+00:13:15,260 --> 00:13:23,140
+for higher and higher sequences so the base
+case here is when p is equal to q so beta
+
+119
+00:13:23,140 --> 00:13:30,940
+j k k would be probability of w k k given
+n j k k and g now w k k is a single word ok
+
+120
+00:13:30,940 --> 00:13:36,480
+sequence from k to k and i can immediately
+find out what is the role in my grammar that
+
+121
+00:13:36,480 --> 00:13:42,350
+derives this word w k k and i put this rule
+probability here and this will give me the
+
+122
+00:13:42,350 --> 00:13:49,940
+this probability beta j k k
+now as an example suppose here my word is
+
+123
+00:13:49,940 --> 00:13:58,660
+building ok so this is the fifth word so i
+am computing beta for five five and suppose
+
+124
+00:13:58,660 --> 00:14:03,940
+i take n j is equal to n n that works in non
+terminal derives this word so you can compute
+
+125
+00:14:03,940 --> 00:14:09,890
+beta n n five five as the probability with
+which the non terminal n n can derive this
+
+126
+00:14:09,890 --> 00:14:16,950
+word building ok and this is easily given
+by my grammar so this is my base case
+
+127
+00:14:16,950 --> 00:14:22,520
+now what will be the inductive case so i have
+to go bottom up so lets take a generic beta
+
+128
+00:14:22,520 --> 00:14:30,730
+j p q how do i derive it in terms of the smaller
+values so let us try to do that so if i am
+
+129
+00:14:30,730 --> 00:14:41,790
+given i have to compute beta j p q what is
+that mean it means that i have a non terminal
+
+130
+00:14:41,790 --> 00:14:55,060
+n j and that is deriving a sequence w p up
+to w q ok and i have to compute this probability
+
+131
+00:14:55,060 --> 00:15:03,580
+given n j the probability of the sequence
+w p to w q because i am conducting in a i
+
+132
+00:15:03,580 --> 00:15:08,100
+am doing it in a bottom fashion and i have
+to use the proper lower values
+
+133
+00:15:08,100 --> 00:15:20,450
+so i will first say n j can give me some n
+r and n s now n r will derive from w p to
+
+134
+00:15:20,450 --> 00:15:27,730
+some w d so very generic case so this can
+be any possible n r and n s that my n j can
+
+135
+00:15:27,730 --> 00:15:36,220
+derive and again i can go from w p to any
+w d so you can see what can d vary from to
+
+136
+00:15:36,220 --> 00:15:47,300
+so d can vary from p up to q minus one ok
+and this n s gives me w d plus one up to w
+
+137
+00:15:47,300 --> 00:15:54,940
+q this is my recursive case ok now how do
+i write down this probability so i will say
+
+138
+00:15:54,940 --> 00:16:03,750
+this is first the probability that n j derives
+the rule the non terminal the n r and n s
+
+139
+00:16:03,750 --> 00:16:14,709
+so probability n j derives n r n s times this
+probability now here n r is given so what
+
+140
+00:16:14,709 --> 00:16:20,360
+is the probability is that n r given n r it
+derives from w p to w d again you can compute
+
+141
+00:16:20,360 --> 00:16:28,980
+this using so you can express this using inside
+probability that is beta r p d similarly this
+
+142
+00:16:28,980 --> 00:16:40,670
+one beta s d plus one to q ok now this is
+for the particular variation that i have shown
+
+143
+00:16:40,670 --> 00:16:46,790
+but in general d can vary from p to q minus
+one and they can be any possible n r and n
+
+144
+00:16:46,790 --> 00:16:54,670
+s so i will have to write down this whole
+thing let me call it x so i have to say this
+
+145
+00:16:54,670 --> 00:17:13,250
+can vary from p to q minus one and all possible
+n r n s ok and i will put x here so this is
+
+146
+00:17:13,250 --> 00:17:21,409
+my inductive step
+now what do i mean by parameterization over
+
+147
+00:17:21,409 --> 00:17:30,460
+by all possible r s and all possible d so
+if you take the case of this simple phrase
+
+148
+00:17:30,460 --> 00:17:37,279
+the huge building ok so what do i mean by
+various d so if i have this this is the huge
+
+149
+00:17:37,279 --> 00:17:47,999
+building by variation of d i mean whether
+i am composing it by the huge and building
+
+150
+00:17:47,999 --> 00:17:55,429
+or the and huge building two possible variables
+of d ok and what do i mean by parameterization
+
+151
+00:17:55,429 --> 00:18:01,799
+over all possible n r and n s so that the
+particular non terminal that derives this
+
+152
+00:18:01,799 --> 00:18:10,529
+whole thing can be support this n p it can
+come via say n p gives me d t n n this is
+
+153
+00:18:10,529 --> 00:18:19,239
+one possibility this is dtnn this is and or
+we can make n p gives me d t n n s this is
+
+154
+00:18:19,239 --> 00:18:25,340
+another possibility so this is the parameterization
+over all possible n r n s and this is over
+
+155
+00:18:25,340 --> 00:18:33,820
+out possible d's
+so now we have seen that you can compute it
+
+156
+00:18:33,820 --> 00:18:40,700
+for the only the terminals first and then
+the bottom up to compute it for other values
+
+157
+00:18:40,700 --> 00:18:49,940
+ok so now if you do a simple example so this
+is again similar to what we have seen earlier
+
+158
+00:18:49,940 --> 00:18:57,979
+so i am given this pcfg and this is my sentence
+and i want to compute the inside probabilities
+
+159
+00:18:57,979 --> 00:19:03,989
+here so how do i go about out it and you looking
+at the table you can see that we will doing
+
+160
+00:19:03,989 --> 00:19:09,239
+something very similar to what we did in the
+case of c k y algorithm ok
+
+161
+00:19:09,239 --> 00:19:16,629
+but now we will focus on filling up what is
+the inside probability of deriving this from
+
+162
+00:19:16,629 --> 00:19:46,479
+the particular non terminal ok so let us just
+try to filling some entries here 
+
+163
+00:19:46,479 --> 00:19:59,929
+ok let me lets try only the first two this
+is astronomers and this is saw ok and i have
+
+164
+00:19:59,929 --> 00:20:10,500
+to fill in the inside probabilities so this
+would be so now in the in the in the way we
+
+165
+00:20:10,500 --> 00:20:19,419
+defined inside probability this would be one
+one this would be two two sequence from word
+
+166
+00:20:19,419 --> 00:20:25,519
+two to word two this would be sequence from
+word one to word two
+
+167
+00:20:25,519 --> 00:20:36,499
+so now when i define beta j p q so here p
+and q are both one so i have to find out what
+
+168
+00:20:36,499 --> 00:20:43,059
+is the non terminal that derives this word
+astronomers now if i see a grammar and these
+
+169
+00:20:43,059 --> 00:20:48,509
+derive astronomers with the probability of
+point one so i can fill fill the inside probability
+
+170
+00:20:48,509 --> 00:21:01,710
+here beta n p one one one one you need not
+to write and i am just writing here is equal
+
+171
+00:21:01,710 --> 00:21:09,149
+to point one ok because one one is already
+defined by the particular cell where we are
+
+172
+00:21:09,149 --> 00:21:14,580
+similarly let us go to two two two two is
+saw if i see the grammar n p derives saw n
+
+173
+00:21:14,580 --> 00:21:19,830
+p derives saw ok so there are two different
+so that's where you can see there are two
+
+174
+00:21:19,830 --> 00:21:30,120
+different j that are possible here so one
+is beta v another is beta n p and this has
+
+175
+00:21:30,120 --> 00:21:41,119
+the probability of one and this has the probability
+of zero point zero four using my grammar
+
+176
+00:21:41,119 --> 00:21:49,000
+now suppose i have to fill this one one two
+what is the particular non terminal that will
+
+177
+00:21:49,000 --> 00:21:55,080
+derive this this whole thing again similar
+to what we were doing in c k y is the something
+
+178
+00:21:55,080 --> 00:22:01,412
+that derives n p and n p if i see my grammar
+nothing derives n p and n p ok in the right
+
+179
+00:22:01,412 --> 00:22:12,799
+hand side now is there something that derives
+n p followed by v or again there is nothing
+
+180
+00:22:12,799 --> 00:22:19,659
+here n p followed by v so this will come out
+to be zero ok suppose there was something
+
+181
+00:22:19,659 --> 00:22:25,600
+that derives n p followed by v so i would
+simplify find out what is the non terminal
+
+182
+00:22:25,600 --> 00:22:33,700
+that is deriving this and put the probability
+as this times this times the rule probability
+
+183
+00:22:33,700 --> 00:22:35,619
+ok
+similar to what we were doing in the case
+
+184
+00:22:35,619 --> 00:22:41,080
+of c k y for probability context free grammars
+the only difference here is that if there
+
+185
+00:22:41,080 --> 00:22:51,039
+are multiple splits for same non terminal
+i will add all these ok so so for example
+
+186
+00:22:51,039 --> 00:22:56,869
+the same non terminal so i am taking a hypothetical
+case suppose the same non terminal x derives
+
+187
+00:22:56,869 --> 00:23:07,409
+n p followed by v and also n p followed by
+n p if the probability of p one is the rule
+
+188
+00:23:07,409 --> 00:23:16,799
+probability this is a probability of p two
+so i will put here beta x and this will be
+
+189
+00:23:16,799 --> 00:23:26,509
+p one times zero point one times one plus
+p two times zero point one times zero point
+
+190
+00:23:26,509 --> 00:23:31,370
+zero four and that's why i fill in all the
+entries ok
+
+191
+00:23:31,370 --> 00:23:34,990
+so i will i will take care of all the possible
+ways in which this particular non terminal
+
+192
+00:23:34,990 --> 00:23:42,629
+we can derive this ok so again so if you keep
+on doing that this is what you will see so
+
+193
+00:23:42,629 --> 00:23:48,379
+we had filled in this entry and this entry
+and this entry but i will encourage you to
+
+194
+00:23:48,379 --> 00:23:52,940
+fill in all the entries of this table and
+see if you can get to this particular term
+
+195
+00:23:52,940 --> 00:23:59,330
+what is the probability of the sentence generating
+this whole thing ok so now if you see this
+
+196
+00:23:59,330 --> 00:24:03,369
+table you also get the answer for the second
+question it how do i find out the probability
+
+197
+00:24:03,369 --> 00:24:11,721
+of my sentence use the same probabilities
+and compute beta as for one to m or one to
+
+198
+00:24:11,721 --> 00:24:20,080
+five in this case that will give you the probability
+of this whole sentence ok so this was about
+
+199
+00:24:20,080 --> 00:24:24,500
+inside probabilities
+now how do i compute the outside probabilities
+
+200
+00:24:24,500 --> 00:24:28,179
+ok so if you remember this is analogous to
+what we did in the case of forward backward
+
+201
+00:24:28,179 --> 00:24:34,389
+algorithm so now inside probabilities we are
+computing bottom up and this will be computed
+
+202
+00:24:34,389 --> 00:24:40,549
+top down and what will be the base case base
+case would be very very simple that is can
+
+203
+00:24:40,549 --> 00:24:46,509
+i generate the whole sequence one to m ok
+and now because this is the grammatical sentence
+
+204
+00:24:46,509 --> 00:24:52,389
+we are assuming so only the first non terminal
+that is sentence or you can write it as n
+
+205
+00:24:52,389 --> 00:24:57,580
+one can derive this whole sentence nothing
+else can derive so that's why the base case
+
+206
+00:24:57,580 --> 00:25:05,659
+will be alpha one one to m is one if the so
+this j is one otherwise it will be zero
+
+207
+00:25:05,659 --> 00:25:12,309
+so if i write down alpha one one to m will
+be one and alpha j one to m will be zero if
+
+208
+00:25:12,309 --> 00:25:17,879
+j is not equal to one if j is equal to one
+denotes the starting non terminal like s or
+
+209
+00:25:17,879 --> 00:25:26,860
+n one whatever ah we were using the notation
+form so now this is the base case now what
+
+210
+00:25:26,860 --> 00:25:34,779
+will be the inductive case so inductive case
+would be i have to compute it in a top down
+
+211
+00:25:34,779 --> 00:25:40,619
+fashion ok so can you think of inductive case
+here
+
+212
+00:25:40,619 --> 00:25:48,210
+so now what i am showing here what are the
+two possibilities of this inductive case so
+
+213
+00:25:48,210 --> 00:26:00,649
+let me just show it quickly on the paper so
+i have to compute alpha j p q ok and i am
+
+214
+00:26:00,649 --> 00:26:09,299
+going top down now what is the alpha j p q
+i have a non terminal n j that derives w p
+
+215
+00:26:09,299 --> 00:26:25,020
+to w q ok and everything else w one to w p
+minus one and w q plus one to w m is there
+
+216
+00:26:25,020 --> 00:26:33,330
+in the sentence now i have to do it in a top
+down manner so i have to use the probability
+
+217
+00:26:33,330 --> 00:26:40,440
+from the upper label so i would say what is
+the non terminal that derives this n j with
+
+218
+00:26:40,440 --> 00:26:45,429
+some other non terminal and again this can
+be either left child or right child lets take
+
+219
+00:26:45,429 --> 00:26:53,389
+the case where it is the left child so i would
+say there is some non terminal n f it is starting
+
+220
+00:26:53,389 --> 00:27:05,489
+from p up to you have to take some w e p e
+that derives n j and some n g and what is
+
+221
+00:27:05,489 --> 00:27:13,440
+the parameters here this is p q this would
+be q plus one to e ok so this is deriving
+
+222
+00:27:13,440 --> 00:27:21,229
+q plus one to e
+now i am doing it top down so i have already
+
+223
+00:27:21,229 --> 00:27:29,730
+completed this that is the probability of
+this sequence this and w e plus one up to
+
+224
+00:27:29,730 --> 00:27:35,379
+m this i have already obtained now what i
+have to obtained in alpha j p q is the probability
+
+225
+00:27:35,379 --> 00:27:52,740
+of w one to w p minus p n j p q and w q plus
+one to w m this is what i have to obtain now
+
+226
+00:27:52,740 --> 00:28:02,119
+here i have already obtained this probability
+and n f p e and somewhere w q plus one to
+
+227
+00:28:02,119 --> 00:28:10,529
+w m this i have obtained so how do i write
+it in in this in terms of n f p e i will say
+
+228
+00:28:10,529 --> 00:28:22,389
+this is n f p e ok although they may be different
+possible n f p e we will do the summation
+
+229
+00:28:22,389 --> 00:28:33,570
+over that later times probability of this
+will probability n f gives you n j n g already
+
+230
+00:28:33,570 --> 00:28:40,309
+we have come here and this is deriving w q
+plus one to w e because i need these probabilities
+
+231
+00:28:40,309 --> 00:28:43,589
+also
+now now how do i how do i write down this
+
+232
+00:28:43,589 --> 00:28:53,639
+expression this we just did in the previous
+case so this is nothing but the inside probability
+
+233
+00:28:53,639 --> 00:29:06,659
+ok so this would be beta g q plus one to e
+ok and that gives me the probability for this
+
+234
+00:29:06,659 --> 00:29:13,159
+particular extraction although there are various
+summations that we will have to do same case
+
+235
+00:29:13,159 --> 00:29:19,830
+we can do for the when this is the right child
+then n g will come here and this is a huge
+
+236
+00:29:19,830 --> 00:29:25,730
+very very similar ok
+so if you look at then in this case so this
+
+237
+00:29:25,730 --> 00:29:30,779
+is where it is a left child this is where
+it is a right child in this case as we did
+
+238
+00:29:30,779 --> 00:29:38,460
+it is alpha f p e probability of this rule
+and inside probability of this whole sequence
+
+239
+00:29:38,460 --> 00:29:44,720
+and what are these summing over all the possible
+f and g's ok because it can be any non terminal
+
+240
+00:29:44,720 --> 00:29:51,690
+that is arriving this n along with any other
+non terminal and what can what what is something
+
+241
+00:29:51,690 --> 00:30:00,070
+else that can vary my e can vary from q plus
+one up to m so i am summing over all the possibilities
+
+242
+00:30:00,070 --> 00:30:04,089
+and you can similarly see for the for the
+second case
+
+243
+00:30:04,089 --> 00:30:10,370
+so now so so what is important here you can
+compute this outside probabilities by using
+
+244
+00:30:10,370 --> 00:30:14,179
+inside probabilities on a that means you have
+to first compute the inside probabilities
+
+245
+00:30:14,179 --> 00:30:19,020
+use that to compute the outside probabilities
+ok although computing outside probabilities
+
+246
+00:30:19,020 --> 00:30:23,859
+much much more difficult than computing inside
+probability if you want to do that on paper
+
+247
+00:30:23,859 --> 00:30:29,020
+that's why we did a example only for the inside
+probabilities
+
+248
+00:30:29,020 --> 00:30:36,000
+now coming to this point so remember when
+i were saying that we have done this parameterization
+
+249
+00:30:36,000 --> 00:30:40,690
+of inside and outside probabilities such that
+if we multiply that we had something interesting
+
+250
+00:30:40,690 --> 00:30:46,839
+that we can use further and the goal here
+is also to compute the rule probabilities
+
+251
+00:30:46,839 --> 00:30:51,799
+that is my third question i was asking that
+how do i compute my rule probabilities of
+
+252
+00:30:51,799 --> 00:30:58,610
+pcfg we will come to that in the next lecture
+let us quickly see what do i get if i multiply
+
+253
+00:30:58,610 --> 00:31:05,379
+the alpha j p q with beta j p q ok so if i
+do that so alpha j p g is nothing but probability
+
+254
+00:31:05,379 --> 00:31:11,990
+of w one to w p minus one n j p q and w q
+plus one to m given my grammar and beta j
+
+255
+00:31:11,990 --> 00:31:17,809
+p q is probability of w p q given and n j
+p q in the grammar so you multiply both of
+
+256
+00:31:17,809 --> 00:31:25,149
+these you will see that w p q can come here
+and n p q is also retained here ok because
+
+257
+00:31:25,149 --> 00:31:32,709
+here i need n j p q to be given that is already
+given to me before so this is the multiplication
+
+258
+00:31:32,709 --> 00:31:39,879
+ok now what does this say so it is saying
+if i multiply alpha j p q with beta j p q
+
+259
+00:31:39,879 --> 00:31:48,629
+i get the probability of generating this whole
+sequence of words w one to w m and that a
+
+260
+00:31:48,629 --> 00:31:53,830
+non terminal n j derives w p to w q ok given
+my grammar
+
+261
+00:31:53,830 --> 00:32:01,090
+now suppose i want to find out the probability
+that any possible non terminal derives from
+
+262
+00:32:01,090 --> 00:32:07,751
+w p to w q there is some consistent spanning
+from w p w q in that case i will have to sum
+
+263
+00:32:07,751 --> 00:32:18,839
+over all possible j's that i can achieve by
+summing over all possible j`s for alpha j
+
+264
+00:32:18,839 --> 00:32:24,259
+p q into beta j p q this is the probability
+of the sentence and that there is some consistent
+
+265
+00:32:24,259 --> 00:32:31,740
+is spanning from the w word p to word q ok
+and this is you can write in this manner ok
+
+266
+00:32:31,740 --> 00:32:38,909
+this is the same thing n one derives w one
+m and n p q derives w p q this and this are
+
+267
+00:32:38,909 --> 00:32:43,950
+the same thing except this particular index
+of n j
+
+268
+00:32:43,950 --> 00:32:52,360
+now if we go back to the previous example
+that we took what does that mean so probability
+
+269
+00:32:52,360 --> 00:32:59,080
+is that this whole sentence the gunman sprayed
+the building with bullets and that there is
+
+270
+00:32:59,080 --> 00:33:05,310
+some consistent spanning from word four to
+word five that means there is some non terminal
+
+271
+00:33:05,310 --> 00:33:10,440
+they derive this sequence the word four to
+word five how do i obtain it this should be
+
+272
+00:33:10,440 --> 00:33:17,929
+summation over all the possible non terminals
+n j such that this happens the gunman sprayed
+
+273
+00:33:17,929 --> 00:33:24,999
+the building with bullets n j p q given g
+and this is nothing but alpha n p four five
+
+274
+00:33:24,999 --> 00:33:31,959
+beta n p four five so here i am taking all
+possible j's j can be n p v p and so on
+
+275
+00:33:31,959 --> 00:33:38,289
+so whatever non terminals so i multiply alpha
+beta for a particular j and add overall the
+
+276
+00:33:38,289 --> 00:33:43,979
+possible j that gives me this probabilities
+so even here it may not be very very clear
+
+277
+00:33:43,979 --> 00:33:51,049
+what is the actual use of obtaining this particular
+probability value ok how do i use it further
+
+278
+00:33:51,049 --> 00:33:56,399
+and that is what we will see in the next lecture
+that how do i use this inside outside probability
+
+279
+00:33:56,399 --> 00:34:02,339
+for learning the rule probabilities of my
+probabilistic context free grammatical ok
+
+280
+00:34:02,339 --> 00:34:07,059
+so i hope this concept of inside outside probabilities
+is clear to you and then we can see how do
+
+281
+00:34:07,059 --> 00:34:08,520
+use that further in the next class
+thank you
+

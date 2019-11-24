@@ -1,0 +1,1254 @@
+1
+00:00:17,850 --> 00:00:22,040
+so welcome back for the third lecture of this
+week so in this week we are doing some advanced
+
+2
+00:00:22,040 --> 00:00:29,170
+topics on text mining and so tutorial we will
+so this lecture we will start with information
+
+3
+00:00:29,170 --> 00:00:34,690
+extraction so we will see what are the basic
+ah so all the basic applications where information
+
+4
+00:00:34,690 --> 00:00:39,050
+extraction will be used what kind of techniques
+you can used and we will focus our attention
+
+5
+00:00:39,050 --> 00:00:43,910
+to a specific task that is relational extraction
+how do i find out relation between any two
+
+6
+00:00:43,910 --> 00:00:52,280
+entities by using the text corpus on the web
+so what do i mean by ah information extraction
+
+7
+00:00:52,280 --> 00:00:56,809
+so so we can say that the goal of information
+extraction is like machine reading so you
+
+8
+00:00:56,809 --> 00:01:03,180
+have a lot of text available on the web it's
+all on the um unstruct unstructured form there
+
+9
+00:01:03,180 --> 00:01:09,920
+is no particular structure to that now from
+that text can i obtain some structured knowledge
+
+10
+00:01:09,920 --> 00:01:15,990
+that can be used for various different applications
+and tasks ok so this is like a ah some sort
+
+11
+00:01:15,990 --> 00:01:20,300
+of caricature to to to denote that that yes
+we have a lot of knowledge available on the
+
+12
+00:01:20,300 --> 00:01:26,090
+web and machine is trying to go through the
+knowledge and get some a structured content
+
+13
+00:01:26,090 --> 00:01:33,649
+that can be useful
+so ah so what the information extraction systems
+
+14
+00:01:33,649 --> 00:01:41,759
+do they try to find and understand various
+different relevant parts of the text data
+
+15
+00:01:41,759 --> 00:01:46,920
+so so what you will have you will have a lot
+of text and you are trying to get a certain
+
+16
+00:01:46,920 --> 00:01:51,500
+important information from there and so we
+will see what are the various ways in which
+
+17
+00:01:51,500 --> 00:01:59,250
+you can gather this information
+so now now from this all this data that is
+
+18
+00:01:59,250 --> 00:02:04,579
+available what you want you want to get a
+structured representation of some sort of
+
+19
+00:02:04,579 --> 00:02:11,230
+relevant information and it can be like various
+relations in the sense of database so you
+
+20
+00:02:11,230 --> 00:02:16,950
+can find out what are the various entities
+involved in this text and what are the relations
+
+21
+00:02:16,950 --> 00:02:21,470
+between those entities and can also be some
+sort of knowledge base that you are constructing
+
+22
+00:02:21,470 --> 00:02:27,140
+from the data
+so ah so the goal of information extraction
+
+23
+00:02:27,140 --> 00:02:33,190
+is that we organize information so that it
+can be useful for two people for ah for doing
+
+24
+00:02:33,190 --> 00:02:40,970
+some of their tasks and we want to put information
+in a very precise form that will allow um
+
+25
+00:02:40,970 --> 00:02:46,220
+need to make further inferences ok so remember
+this was one of the things that we are talking
+
+26
+00:02:46,220 --> 00:02:53,140
+about in the introduction also that the natural
+language text is not very precise so how do
+
+27
+00:02:53,140 --> 00:02:57,780
+you make how do you convert the information
+to something precise that can be used for
+
+28
+00:02:57,780 --> 00:03:03,170
+doing various task and various inferences
+and that's what we we doing in the in the
+
+29
+00:03:03,170 --> 00:03:10,260
+case of information extraction
+so this is a simple definition that you can
+
+30
+00:03:10,260 --> 00:03:17,270
+get this is a sort of working def definition
+you will say so so what is information extraction
+
+31
+00:03:17,270 --> 00:03:24,820
+so that is task of finding a structured information
+from unstructured or semi structured text
+
+32
+00:03:24,820 --> 00:03:31,180
+so you have the corpus or data that you have
+is either completely unstructured ok so i
+
+33
+00:03:31,180 --> 00:03:39,290
+can think of various treats various cora questions
+answers and lot of web pages sort of unstructured
+
+34
+00:03:39,290 --> 00:03:43,410
+or it can be somewhat semi structured where
+you have some more information like extraction
+
+35
+00:03:43,410 --> 00:03:51,200
+information ah headlines etcetera but this
+is not completely structured so from this
+
+36
+00:03:51,200 --> 00:03:56,710
+unstructured or semi structured data i want
+to find out a structure information and that's
+
+37
+00:03:56,710 --> 00:04:01,080
+what it's the definition of my information
+extraction
+
+38
+00:04:01,080 --> 00:04:05,690
+so so now question comes in that what sort
+of information do you want to extract from
+
+39
+00:04:05,690 --> 00:04:13,810
+here so information can be something very
+very ah clear and factual like for example
+
+40
+00:04:13,810 --> 00:04:18,030
+this is this is ah this is something that
+that is normally done so they should like
+
+41
+00:04:18,030 --> 00:04:25,350
+who did what to whom when and who is in what
+relation to some other entity and and so on
+
+42
+00:04:25,350 --> 00:04:33,080
+so for example suppose you have some newspaper
+text and they talk about various ah earnings
+
+43
+00:04:33,080 --> 00:04:38,530
+profit headquarters etcetera and this is one
+one of the company report the headquarters
+
+44
+00:04:38,530 --> 00:04:43,710
+of b h p be billiton limited and the global
+headquarters of the combined b h p billiton
+
+45
+00:04:43,710 --> 00:04:49,200
+group are located in melbourne australia ok
+this is some sort of ah unstructured data
+
+46
+00:04:49,200 --> 00:04:53,670
+that you can say ah in the form of the sentence
+now from this data you want to gather some
+
+47
+00:04:53,670 --> 00:04:58,330
+structure information so what kind of structured
+information do you get from this um text so
+
+48
+00:04:58,330 --> 00:05:03,690
+you will see that so what are the headquarters
+of b h p billiton limited so then you know
+
+49
+00:05:03,690 --> 00:05:08,320
+the location here melbourne australia and
+this can be some sort of a structured information
+
+50
+00:05:08,320 --> 00:05:13,340
+that you are trying to gather from the simple
+sentence and that is what your information
+
+51
+00:05:13,340 --> 00:05:18,980
+extraction system can do so from here suppose
+you get this information headquarters of the
+
+52
+00:05:18,980 --> 00:05:24,900
+b h p billiton limited are in melbourne australia
+since out of relation form there are two entities
+
+53
+00:05:24,900 --> 00:05:29,250
+and there is a relation between them and this
+you are extracting by using information extraction
+
+54
+00:05:29,250 --> 00:05:35,600
+now what is the so what is the use of doing
+this extraction so once you do this extraction
+
+55
+00:05:35,600 --> 00:05:39,470
+you will know all these tuples so you will
+know this two entities are related are related
+
+56
+00:05:39,470 --> 00:05:45,100
+by this relation and so on and over there
+you can do lot of queries you can do lot of
+
+57
+00:05:45,100 --> 00:05:54,050
+inferences and so on this can be very helpful
+for many question task also another example
+
+58
+00:05:54,050 --> 00:05:59,630
+let us say we have the sentence in nineteen
+ninety eight larry page and sergey brin founded
+
+59
+00:05:59,630 --> 00:06:03,010
+google ok
+now from this sentence what kind of information
+
+60
+00:06:03,010 --> 00:06:10,010
+you can get so who are the founders of google
+and when they find when they found found google
+
+61
+00:06:10,010 --> 00:06:16,210
+so all this information can be extracted from
+here and put in a very a structured form so
+
+62
+00:06:16,210 --> 00:06:23,360
+like i can have a information like founder
+of larry page google founder of sergey brin
+
+63
+00:06:23,360 --> 00:06:28,430
+google and founded in google in nineteen ninety
+eight so all this information is there in
+
+64
+00:06:28,430 --> 00:06:34,820
+this text and this can be extracted by a using
+information extraction systems
+
+65
+00:06:34,820 --> 00:06:40,310
+so now once you have this information it can
+be used by various search engines and database
+
+66
+00:06:40,310 --> 00:06:46,770
+management systems to provide better services
+to the end users it is not very trivial to
+
+67
+00:06:46,770 --> 00:06:51,330
+do it directly by using the text data but
+once you have this in the database form you
+
+68
+00:06:51,330 --> 00:06:56,070
+can you can do a lot of different tasks and
+look you can use a lot of different tools
+
+69
+00:06:56,070 --> 00:07:02,570
+to to make each of this information
+so now what are the various applications of
+
+70
+00:07:02,570 --> 00:07:07,100
+information extraction for example biomedical
+domain so in biomedical domain you have a
+
+71
+00:07:07,100 --> 00:07:12,669
+lot of ah research papers that are published
+that give details about what about the various
+
+72
+00:07:12,669 --> 00:07:18,940
+experiments that were done using and using
+various ah patients and what was the findings
+
+73
+00:07:18,940 --> 00:07:23,490
+of those experiments and what kind of drugs
+work what kind of drugs does not work they
+
+74
+00:07:23,490 --> 00:07:27,900
+can be various clinic clinical clinical trials
+they can be various patrons and all that lot
+
+75
+00:07:27,900 --> 00:07:34,440
+of information is there but this is already
+very unstructured form so so suppose i need
+
+76
+00:07:34,440 --> 00:07:39,980
+to look for discoveries that are related to
+various genes proteins or other biomedical
+
+77
+00:07:39,980 --> 00:07:46,730
+entities so and and then the problem here
+could can be that these entities can have
+
+78
+00:07:46,730 --> 00:07:52,870
+various synonyms and there are lot of ambiguities
+involved so what is the task i need to automatically
+
+79
+00:07:52,870 --> 00:07:58,920
+identify what are the mentions of biomedical
+entities in the text i find out ok these are
+
+80
+00:07:58,920 --> 00:08:05,639
+that entities that has mentioned in the text
+and then i want to link them to their corresponding
+
+81
+00:08:05,639 --> 00:08:09,740
+entries in the lexical database
+suppose i have a database that says ok these
+
+82
+00:08:09,740 --> 00:08:14,740
+are all the all the different biomedical entities
+now in a research paper i i need to find out
+
+83
+00:08:14,740 --> 00:08:20,949
+ok this entity talks about this is corresponding
+to the per particular entity in the database
+
+84
+00:08:20,949 --> 00:08:27,110
+this is very similar to the entity relenting
+problem that we discussed in this week itself
+
+85
+00:08:27,110 --> 00:08:33,620
+now once we find out various entities in in
+the document other task here could be that
+
+86
+00:08:33,620 --> 00:08:38,000
+i want to find out how they are related to
+each other so this is called relational extraction
+
+87
+00:08:38,000 --> 00:08:44,320
+that is one of the focus of ah the next three
+lectures
+
+88
+00:08:44,320 --> 00:08:51,290
+so so this is an example so you have this
+ah research paper in biomedical dome domain
+
+89
+00:08:51,290 --> 00:08:56,240
+and this is research paper you also get some
+abstract now from this abstract can you extract
+
+90
+00:08:56,240 --> 00:09:02,389
+information in a structured format like p
+fifty three is a protein bax is a protein
+
+91
+00:09:02,389 --> 00:09:08,680
+p fifty three has function of apoptosis and
+so on now all this information is available
+
+92
+00:09:08,680 --> 00:09:13,779
+in the text data but not in this very nice
+structured format so from from there can you
+
+93
+00:09:13,779 --> 00:09:17,430
+extract these are the entities and this is
+the relation between them
+
+94
+00:09:17,430 --> 00:09:23,949
+so here so you find what are the entities
+and with different ah between various pairs
+
+95
+00:09:23,949 --> 00:09:30,050
+of entities what is the relation and this
+is called the structured knowledge extraction
+
+96
+00:09:30,050 --> 00:09:33,990
+and this the analogy is shown here so the
+research paper extract can be thought of as
+
+97
+00:09:33,990 --> 00:09:39,310
+a as a if something for humans and this structured
+knowledge means can be thought of as something
+
+98
+00:09:39,310 --> 00:09:47,170
+for machines so machines can make use of this
+information for various tasks now
+
+99
+00:09:47,170 --> 00:09:52,529
+another example so this is like a report that
+that you find on the web and from this report
+
+100
+00:09:52,529 --> 00:09:57,930
+can you extract various relations so here
+you have the sentence american airlines the
+
+101
+00:09:57,930 --> 00:10:04,790
+unit of a m r immediately matched the move
+a spokesman tim wagner said so from here you
+
+102
+00:10:04,790 --> 00:10:10,399
+can find out the tim wagner region is a spokesman
+for american airlines and suppose your relation
+
+103
+00:10:10,399 --> 00:10:17,600
+is employee so we can say tim wagner is employee
+of american airlines also american air airlines
+
+104
+00:10:17,600 --> 00:10:22,399
+is the unit of a m r so you can have this
+relation american airlines is a subsidiary
+
+105
+00:10:22,399 --> 00:10:30,660
+of a m r ok and similarly here united a unit
+of u a l you can find out this relation again
+
+106
+00:10:30,660 --> 00:10:35,980
+so from this huge amount of text data can
+you find out this is a structured information
+
+107
+00:10:35,980 --> 00:10:41,389
+so that is the task of information extraction
+find out the entities and what are the relations
+
+108
+00:10:41,389 --> 00:10:50,110
+between them another example so when the relation
+can be were also very very generic so like
+
+109
+00:10:50,110 --> 00:10:55,209
+you can be personal relations like married
+to mother of organization relations like a
+
+110
+00:10:55,209 --> 00:11:03,480
+spokesmans for president of artifactual owns
+something invented something produces something
+
+111
+00:11:03,480 --> 00:11:08,509
+they can geospatial relations that this city
+is near to this city this city in the on the
+
+112
+00:11:08,509 --> 00:11:14,990
+outskirts of the city and these kind of relations
+might be very very helpful in ah replying
+
+113
+00:11:14,990 --> 00:11:19,550
+to various queries they talk about that need
+geography information see you know what cities
+
+114
+00:11:19,550 --> 00:11:25,629
+are nearby other city so you can try to answer
+these kind of questions and directional relation
+
+115
+00:11:25,629 --> 00:11:30,929
+this is southeast of and so on and they can
+be part of relations so you need of something
+
+116
+00:11:30,929 --> 00:11:35,740
+parent of annexed acquired for this political
+relations
+
+117
+00:11:35,740 --> 00:11:39,949
+so you can think of lot of lots and lots of
+different relations that can be established
+
+118
+00:11:39,949 --> 00:11:46,480
+between entities now using these relations
+you can do lot of different ah ah some sort
+
+119
+00:11:46,480 --> 00:11:50,860
+knowledge engineering you can do a lot of
+inferencing you can try to answer questions
+
+120
+00:11:50,860 --> 00:11:55,060
+and and try to predict certain relations between
+the entities there are lot of different tasks
+
+121
+00:11:55,060 --> 00:12:01,209
+that you can use once do you can do once you
+have this structured information
+
+122
+00:12:01,209 --> 00:12:09,329
+so now so the topic here is how do we gather
+this resea[rch]- information ok so there are
+
+123
+00:12:09,329 --> 00:12:16,040
+like ah i would say like in many different
+n l p applications so here also there are
+
+124
+00:12:16,040 --> 00:12:22,380
+five different methods for doing this task
+so one simple method is you choose your hand
+
+125
+00:12:22,380 --> 00:12:28,290
+built patterns then you get it bootstrapping
+methods you know supervised methods distance
+
+126
+00:12:28,290 --> 00:12:33,379
+supervision is a very very nice idea that
+you will see for this particular task and
+
+127
+00:12:33,379 --> 00:12:38,699
+then you can also use some unsupervised methods
+so we will focus on the first four methods
+
+128
+00:12:38,699 --> 00:12:44,230
+and we will see ah clearly how you can use
+one of these methods for the task of information
+
+129
+00:12:44,230 --> 00:12:50,140
+extraction so let us see what we do in the
+hand built patterns so idea is you can use
+
+130
+00:12:50,140 --> 00:12:55,730
+various regular expressions for finding entities
+and the relations between them so suppose
+
+131
+00:12:55,730 --> 00:13:03,709
+you want to find the entities so here so this
+is ah for noun groups it's simple regular
+
+132
+00:13:03,709 --> 00:13:09,850
+expression so regular expression you can also
+ah denote by using a finite automaton so here
+
+133
+00:13:09,850 --> 00:13:14,699
+you are seeing a finite automaton that is
+denoting a regular expression and this so
+
+134
+00:13:14,699 --> 00:13:20,869
+what it is denoting any noun group
+so let us try to follow this so you have this
+
+135
+00:13:20,869 --> 00:13:27,239
+ah phrase johns interest interesting book
+with a nice cover this is a noun group so
+
+136
+00:13:27,239 --> 00:13:37,119
+how does this automatic capture this you say
+a pronoun a personal noun john johns ok interesting
+
+137
+00:13:37,119 --> 00:13:47,910
+becomes an adjective book is a noun with is
+a preposition a article nice adjective cover
+
+138
+00:13:47,910 --> 00:13:51,910
+noun and this is a it is a final state so
+this becomes a noun group
+
+139
+00:13:51,910 --> 00:14:00,670
+so we will see even john is a noun group and
+johns interest interesting book is also a
+
+140
+00:14:00,670 --> 00:14:06,689
+ah noun group so it is trying to capture nouns
+group noun group in various sort of granularity
+
+141
+00:14:06,689 --> 00:14:11,189
+you can even have single word you can have
+multiple words so you it is telling you what
+
+142
+00:14:11,189 --> 00:14:17,240
+is a noun group now you can further extend
+it to find out ok i know what are the noun
+
+143
+00:14:17,240 --> 00:14:26,619
+groups now what is the relation between that
+so suppose i want to find out which person
+
+144
+00:14:26,619 --> 00:14:32,040
+holds what position in what org organization
+so what kind of patterns i can think of a
+
+145
+00:14:32,040 --> 00:14:38,709
+person x holding position y in organization
+z so suppose i have to use some hand built
+
+146
+00:14:38,709 --> 00:14:43,199
+patterns how will i go about it so i will
+first think about what are the various kind
+
+147
+00:14:43,199 --> 00:14:49,220
+of sentences where ah all these three entities
+can can occur together so there will be a
+
+148
+00:14:49,220 --> 00:14:54,730
+person who is working in an organization so
+and then once i have found some sentence is
+
+149
+00:14:54,730 --> 00:15:00,420
+i will try to abstract what is the normal
+pattern that i am seeing here
+
+150
+00:15:00,420 --> 00:15:09,449
+so for example one pattern can be person comma
+position of organization because you find
+
+151
+00:15:09,449 --> 00:15:19,970
+sentences like vuk draskovic is a person comma
+position leader of the serbian renewal movement
+
+152
+00:15:19,970 --> 00:15:25,569
+ok so now what you are abstracting here there
+is a person position and organization and
+
+153
+00:15:25,569 --> 00:15:30,839
+now you can think of many many many such ah
+sentences where all these these three entities
+
+154
+00:15:30,839 --> 00:15:35,610
+will be there in this relation so once you
+identified this pattern you will give this
+
+155
+00:15:35,610 --> 00:15:40,779
+pattern to the machine and from there corpus
+it can ah extract all these entities for you
+
+156
+00:15:40,779 --> 00:15:47,310
+and you will know immediately that these entities
+are connected by a particular relation
+
+157
+00:15:47,310 --> 00:15:55,879
+what can be other ah patterns so like organization
+named appointed etcetera person preposition
+
+158
+00:15:55,879 --> 00:16:03,259
+office ok again they are all these entities
+so nato appointed wesley clark as commander
+
+159
+00:16:03,259 --> 00:16:11,999
+in chief so we are finding again all the three
+ah entities in a particular relation
+
+160
+00:16:11,999 --> 00:16:16,800
+so similarly suppose your task is to find
+out where is an organization located so we
+
+161
+00:16:16,800 --> 00:16:25,050
+will think about what are the patterns something
+like x located in y and or y is xs headquarters
+
+162
+00:16:25,050 --> 00:16:29,040
+so we will think of these patterns and using
+these patterns you will try to extract these
+
+163
+00:16:29,040 --> 00:16:36,929
+pairs of x y like organization location nato
+headquarters in brussels so we will extract
+
+164
+00:16:36,929 --> 00:16:43,939
+nato headquarters and brussels are the two
+entities organization location and you can
+
+165
+00:16:43,939 --> 00:16:49,230
+say division branch headquarters like k f
+o r kosovo headquarters so you know this is
+
+166
+00:16:49,230 --> 00:16:54,009
+the observation and it's a location
+so like that you can think of various patterns
+
+167
+00:16:54,009 --> 00:17:01,739
+and extract these relations and this is one
+of the very early examples on how these kind
+
+168
+00:17:01,739 --> 00:17:06,650
+of patterns for used for extracting hyponym
+relation so hyponym which is you remember
+
+169
+00:17:06,650 --> 00:17:12,590
+it's a relation between sub concept and a
+super concept when these words ah first um
+
+170
+00:17:12,590 --> 00:17:18,210
+given by hearst
+so what is the basic intuition suppose you
+
+171
+00:17:18,210 --> 00:17:23,579
+are seeing this sentence agar is a substance
+prepared from a mixture of red algae such
+
+172
+00:17:23,579 --> 00:17:30,019
+as gelidium for laboratory or industrial use
+this is sentence now suppose i asked what
+
+173
+00:17:30,019 --> 00:17:38,049
+is gelidium and you can say ok ah gelidium
+is some sort of algae or red algae from the
+
+174
+00:17:38,049 --> 00:17:44,990
+sentence yes now how do you know that gelidium
+is a red algae see you are seeing some sort
+
+175
+00:17:44,990 --> 00:17:51,320
+of pattern here red algae such as gelidium
+ok so this pattern is telling you that gelidium
+
+176
+00:17:51,320 --> 00:17:55,789
+is the kind of red algae
+now you can try to abstract these pattern
+
+177
+00:17:55,789 --> 00:18:02,269
+in you say that whenever you are finding such
+patterns x such as y there is a hyponym hyponym
+
+178
+00:18:02,269 --> 00:18:08,580
+relation between x and y and this is the idea
+find out many such patterns and from these
+
+179
+00:18:08,580 --> 00:18:15,360
+patterns you try to extract these entities
+so what has did he found out various search
+
+180
+00:18:15,360 --> 00:18:20,620
+patterns where you can have two entities connected
+by hyponym relation ok
+
+181
+00:18:20,620 --> 00:18:28,289
+so ah y such as x is for hyponyms so what
+are the other kind of patterns you can use
+
+182
+00:18:28,289 --> 00:18:40,350
+such y as x ok like such vehicle as car such
+vehicle as bicycle ok x or other y yes car
+
+183
+00:18:40,350 --> 00:18:49,370
+or other vehicle car and other vehicle vehicles
+including car and and so on ok vehicle especially
+
+184
+00:18:49,370 --> 00:18:54,429
+car so this i am given example with car and
+vehicles but you can think of it as with any
+
+185
+00:18:54,429 --> 00:18:59,840
+hyponym hyponym pair so he found out freddy
+such titles and from these patterns he tried
+
+186
+00:18:59,840 --> 00:19:05,440
+to extract the hyponym( Refer Time: 19:00)
+hyponym relation from the text data
+
+187
+00:19:05,440 --> 00:19:09,580
+so here are some examples for these hearst
+patterns and the what kind of example occurrences
+
+188
+00:19:09,580 --> 00:19:15,190
+you can see in the data so the pattern x and
+other y you can see temples tragedies and
+
+189
+00:19:15,190 --> 00:19:20,490
+other important civic buildings so from this
+sentence you can immediately see that ten
+
+190
+00:19:20,490 --> 00:19:26,820
+percent treasuries are sub concepts of civic
+buildings so we can have this pair of hyp
+
+191
+00:19:26,820 --> 00:19:32,029
+hyponym hyponym civic build civic buildings
+are the hyponym and temples is the hyponym
+
+192
+00:19:32,029 --> 00:19:39,659
+similarly treasure is the hyponym x or other
+y so bruises won't broken bones or other injuries
+
+193
+00:19:39,659 --> 00:19:47,529
+so we can have all these as a hyponym of injuries
+y such as x so the bow lute such as the bambara
+
+194
+00:19:47,529 --> 00:19:52,130
+ndang
+so here you can see that ah bow lute is the
+
+195
+00:19:52,130 --> 00:19:58,309
+super concept this is the sub concept such
+y as x such authors as herrick goldsmith and
+
+196
+00:19:58,309 --> 00:20:03,809
+shakespeare so immediately you will see there
+is a relation here and so on y including x
+
+197
+00:20:03,809 --> 00:20:08,720
+y especially x
+so hearst hearst manually found that all these
+
+198
+00:20:08,720 --> 00:20:13,630
+patterns and from these patterns he was trying
+to extract a hyponym hyponym pair piar from
+
+199
+00:20:13,630 --> 00:20:23,149
+the data similarly ber berland and charniaks
+they found out some patterns for meronym relation
+
+200
+00:20:23,149 --> 00:20:27,659
+that is part of relation basement is the part
+of building so they were trying to find out
+
+201
+00:20:27,659 --> 00:20:32,330
+ah patterns for for meronyms so again you
+can think of what are the patterns that come
+
+202
+00:20:32,330 --> 00:20:37,470
+to your mind so so like buildings basement
+so you will think of some example and see
+
+203
+00:20:37,470 --> 00:20:43,169
+what kind of sentences they occurring buildings
+basement basement of the building and so on
+
+204
+00:20:43,169 --> 00:20:48,779
+and you will try to make patterns out of these
+so so let's take these two simple examples
+
+205
+00:20:48,779 --> 00:20:59,020
+so like i am seeing that i have an example
+basement and building ok and this is my suppose
+
+206
+00:20:59,020 --> 00:21:04,519
+my x and this is my y and i want to find out
+many such x y pairs that have the same meronym
+
+207
+00:21:04,519 --> 00:21:13,870
+relation so how will i start i say ok in the
+sentences how will baseman in building occur
+
+208
+00:21:13,870 --> 00:21:21,679
+together something like basements building
+sorry buildings basement so it will be y's
+
+209
+00:21:21,679 --> 00:21:31,980
+x buildings basement ok or basement of the
+building x of the y and so on ok and these
+
+210
+00:21:31,980 --> 00:21:40,330
+are now my patterns ok and then you will try
+to see in my corpus where do all these patterns
+
+211
+00:21:40,330 --> 00:21:47,679
+occur so example is cars wheel wheel of the
+car so we will see ok these x y are related
+
+212
+00:21:47,679 --> 00:21:52,140
+by this meronym relation and that's how you
+will try to so we are in these patterns we
+
+213
+00:21:52,140 --> 00:22:00,159
+will try together many such x x prime y prime
+pairs ok
+
+214
+00:22:00,159 --> 00:22:05,009
+so what berland and charniaks did they selected
+some initial patterns for finding all sentences
+
+215
+00:22:05,009 --> 00:22:10,539
+in the corpus that contain basement and building
+ok that's a normal ah is a nice method of
+
+216
+00:22:10,539 --> 00:22:17,620
+finding these patterns so then they found
+like buildings basement basement of a building
+
+217
+00:22:17,620 --> 00:22:23,620
+basement in a building basements of buildings
+basements and buildings and so on now here
+
+218
+00:22:23,620 --> 00:22:28,279
+they were writing down the patterns so here
+something like n n so they were writing in
+
+219
+00:22:28,279 --> 00:22:35,440
+terms of what is the parts of speech that
+is coming and and so on so of preposition
+
+220
+00:22:35,440 --> 00:22:42,860
+so parts the plural noun of preposition wholes
+n n it's a plural noun
+
+221
+00:22:42,860 --> 00:22:49,970
+so this is part in whole relation ok part
+coming as n n in between there is the word
+
+222
+00:22:49,970 --> 00:22:57,409
+in as a preposition the or a as a determiner
+and in some modifiers so there are now here
+
+223
+00:22:57,409 --> 00:23:03,070
+abstracting so what they are seeing ok ah
+basement in a building but it might be basement
+
+224
+00:23:03,070 --> 00:23:09,370
+in a huge building right so how do i absolutely
+better than i say ok there is in optionally
+
+225
+00:23:09,370 --> 00:23:14,490
+they can be in adjective here so that's why
+they are saying j j or n n is star basement
+
+226
+00:23:14,490 --> 00:23:19,409
+in a civic building and so on all these can
+be captured by slightly ah generalizing these
+
+227
+00:23:19,409 --> 00:23:22,840
+con these patterns
+so that's what you are seeing here j j or
+
+228
+00:23:22,840 --> 00:23:27,890
+n n so you can have a civic building huge
+building and all this will be captured here
+
+229
+00:23:27,890 --> 00:23:32,740
+so like that you try to find out these patterns
+and using this patterns so once you have these
+
+230
+00:23:32,740 --> 00:23:42,230
+patterns you try to extract some other entity
+pairs that are ah involved in this relation
+
+231
+00:23:42,230 --> 00:23:47,100
+so now so this is a nice method if you want
+to sit down and and look at each and every
+
+232
+00:23:47,100 --> 00:23:52,809
+relation and and think about the patterns
+and that's the that's also the problem with
+
+233
+00:23:52,809 --> 00:23:58,360
+this approach that some some persons who are
+ah good with the data who are also language
+
+234
+00:23:58,360 --> 00:24:03,149
+they know how how the system work they can
+they can they can try to get you some hand
+
+235
+00:24:03,149 --> 00:24:08,120
+built patterns so now question the problem
+is that they are hard to write and hard to
+
+236
+00:24:08,120 --> 00:24:13,830
+maintain and there are like you can think
+of zillions of patterns so we can think of
+
+237
+00:24:13,830 --> 00:24:18,520
+so many different ways in which people can
+talk about hyponym hyponym pair in the in
+
+238
+00:24:18,520 --> 00:24:20,950
+the data
+so how do i capture all of these patterns
+
+239
+00:24:20,950 --> 00:24:26,090
+manually and yeah there might be domain dependent
+so every domain you might have different ways
+
+240
+00:24:26,090 --> 00:24:32,600
+of writing things and yes you you can do that
+for some relations but suppose they are thousands
+
+241
+00:24:32,600 --> 00:24:39,970
+of relations how do you do for all these thousand
+relations and yeah so we and these patterns
+
+242
+00:24:39,970 --> 00:24:46,830
+that hearst found or berland and charniaks
+found they were giving ok kind of results
+
+243
+00:24:46,830 --> 00:24:51,450
+but they were not like giving very very accurate
+results so for example hearst patterns give
+
+244
+00:24:51,450 --> 00:24:55,840
+the roughly sixty six percent accuracy on
+hyponym extraction and berland and charniak
+
+245
+00:24:55,840 --> 00:25:00,730
+gave fifty five percent accuracy on meronyms
+so we would like probably prefer to have better
+
+246
+00:25:00,730 --> 00:25:06,360
+accuracy than these numbers so so so that
+is using hand built patterns you can only
+
+247
+00:25:06,360 --> 00:25:13,450
+go little so only small distance and there
+there are also a lot of manual effort is required
+
+248
+00:25:13,450 --> 00:25:17,549
+so how can we avoid this manual effort and
+that's what we will see in the other approaches
+
+249
+00:25:17,549 --> 00:25:22,600
+that we will be discussed it starting from
+how do we do simple bootstrapping here ok
+
+250
+00:25:22,600 --> 00:25:24,640
+and that's all you will be discussing in the
+next lecture
+
+251
+00:25:24,640 --> 00:25:25,460
+thank you
+

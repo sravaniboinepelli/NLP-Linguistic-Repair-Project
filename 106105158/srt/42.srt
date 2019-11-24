@@ -1,0 +1,1220 @@
+1
+00:00:18,420 --> 00:00:23,360
+so everyone welcome back to week nine of this
+course so we have been talking about semantics
+
+2
+00:00:23,360 --> 00:00:28,220
+in the last two weeks and we discussed two
+different approaches of semantics one was
+
+3
+00:00:28,220 --> 00:00:32,349
+using lexical semantics and otherwise using
+distribution semantics and we saw how used
+
+4
+00:00:32,349 --> 00:00:37,340
+the corpus or from a lexicon you can extract
+semantics you can capture the meanings of
+
+5
+00:00:37,340 --> 00:00:42,850
+words in some sense that is whether two words
+are similar to each other and and many other
+
+6
+00:00:42,850 --> 00:00:46,190
+aspects
+so in this week we will discuss another very
+
+7
+00:00:46,190 --> 00:00:50,960
+interesting way of capturing semantics by
+using topic models and they have been a very
+
+8
+00:00:50,960 --> 00:00:56,600
+very popular tools in n l p for whenever you
+have to talk about what are the concepts that
+
+9
+00:00:56,600 --> 00:01:02,620
+are there in a particular document in a particular
+corpus and many other ah questions that that's
+
+10
+00:01:02,620 --> 00:01:09,659
+around ah that are around the semantics so
+let us see what are these topic models
+
+11
+00:01:09,659 --> 00:01:15,740
+so so firstly let us start the brief ah motivation
+that why do we actually need topic models
+
+12
+00:01:15,740 --> 00:01:22,420
+as such ah so so when we talk about the data
+so the text data in general on under that
+
+13
+00:01:22,420 --> 00:01:28,390
+so so there is a huge amount of data available
+right in form of whatever form you can think
+
+14
+00:01:28,390 --> 00:01:34,140
+of there are lot of data in terms of news
+articles scientific articles and blog social
+
+15
+00:01:34,140 --> 00:01:38,340
+media and everywhere
+now so you can think of it as some sort of
+
+16
+00:01:38,340 --> 00:01:43,740
+information overload and you might be interested
+to capture only certain aspect of the data
+
+17
+00:01:43,740 --> 00:01:49,600
+ok so we want capture certain semantics so
+so what is an easy way in which you can some
+
+18
+00:01:49,600 --> 00:01:54,429
+sort of organize this data and then this can
+help you to search or browse through the data
+
+19
+00:01:54,429 --> 00:02:02,140
+more much more effectively so so what other
+so right now what about main tools that we
+
+20
+00:02:02,140 --> 00:02:09,090
+use for doing this search of different information
+either we type some query in our search engine
+
+21
+00:02:09,090 --> 00:02:14,870
+right some human so so free text query we
+type and we get some reals ok and we try to
+
+22
+00:02:14,870 --> 00:02:20,530
+browses the reals and sometimes reals are
+not relevant or even if they are relevant
+
+23
+00:02:20,530 --> 00:02:25,730
+we go to the pages to which the link to and
+keep on browsing so that is some sort of generic
+
+24
+00:02:25,730 --> 00:02:31,540
+behavior of how we we try to explore this
+sort of information
+
+25
+00:02:31,540 --> 00:02:37,760
+but there is no easy ah interface where you
+can you can say ok i want to understand these
+
+26
+00:02:37,760 --> 00:02:42,790
+topics only i want to go too deep into this
+topic i want to go related topics and all
+
+27
+00:02:42,790 --> 00:02:52,310
+that that is not available with this search
+and ah link kind of ah behavior so the topic
+
+28
+00:02:52,310 --> 00:02:57,849
+modeling gives you an ah alternative method
+of going through this huge amount of information
+
+29
+00:02:57,849 --> 00:03:05,110
+by ah some sort of searching based on themes
+criteria so you can think of it as if you
+
+30
+00:03:05,110 --> 00:03:09,770
+are having a set of documents and you know
+what are the themes that are running through
+
+31
+00:03:09,770 --> 00:03:14,220
+this corpus so you know the ok this documentary
+about certain themes related to politics this
+
+32
+00:03:14,220 --> 00:03:19,519
+document is about certain theme related to
+ah dramatic and so on different concepts
+
+33
+00:03:19,519 --> 00:03:25,030
+now you are going to a popular thing and then
+you can either zoom in or zoom out ok so that
+
+34
+00:03:25,030 --> 00:03:29,370
+is you want to go inside the theme to very
+very sub themes or you want to go out to a
+
+35
+00:03:29,370 --> 00:03:35,930
+broader theme so can this be fascinated by
+it by some sort of modeling so so we might
+
+36
+00:03:35,930 --> 00:03:41,830
+also want to look at how the themes in a corpus
+are changing over time ok how they are evolving
+
+37
+00:03:41,830 --> 00:03:45,930
+over time this happens a lot in for example
+scientific article a par particular research
+
+38
+00:03:45,930 --> 00:03:52,180
+in ah in physics might be starting with certain
+certain concepts and over that period of time
+
+39
+00:03:52,180 --> 00:03:58,230
+it starting with ah it is now having new concepts
+ok so by by various discoveries so can we
+
+40
+00:03:58,230 --> 00:04:04,469
+discovered that what are the themes setup
+already over time and you can also talk about
+
+41
+00:04:04,469 --> 00:04:09,120
+this behavior where you have you would select
+the theme first and then you try to examine
+
+42
+00:04:09,120 --> 00:04:17,870
+the documents that talk about that theme
+so topic modeling it is a method that gives
+
+43
+00:04:17,870 --> 00:04:22,960
+you this facility by which you can organize
+all these collections by the themes that are
+
+44
+00:04:22,960 --> 00:04:29,370
+occurring in in those documents and you can
+then understand search and do summarization
+
+45
+00:04:29,370 --> 00:04:35,410
+and many other applications ok without and
+this is important that for doing all that
+
+46
+00:04:35,410 --> 00:04:40,320
+you do not have to give any prior manual efforts
+in in labeling the data so you do not have
+
+47
+00:04:40,320 --> 00:04:44,380
+to tell that this document concerns this topic
+or this document concerns that topic you do
+
+48
+00:04:44,380 --> 00:04:50,320
+not have to do any labeling so the interesting
+aspect is that you give it a corpus an in
+
+49
+00:04:50,320 --> 00:04:55,850
+an uncivilized manner it learns what is the
+overall structure of different topics and
+
+50
+00:04:55,850 --> 00:04:58,570
+these document concerns which topics and so
+on
+
+51
+00:04:58,570 --> 00:05:04,220
+so this is very this is some sort of very
+interesting aspect that made topic modeling
+
+52
+00:05:04,220 --> 00:05:09,600
+very popular that you no need to have any
+prior annotation as such although there are
+
+53
+00:05:09,600 --> 00:05:14,720
+some variations we will also talk about where
+you can give an annotation to get some different
+
+54
+00:05:14,720 --> 00:05:20,060
+sort of ah topic modeling but overall in the
+generic picture you do not have to give any
+
+55
+00:05:20,060 --> 00:05:25,940
+any sort of annotations so it learns on it's
+own from the huge amount of data
+
+56
+00:05:25,940 --> 00:05:30,730
+so so what you do here so you discover what
+are the hidden themes that are pervading to
+
+57
+00:05:30,730 --> 00:05:36,930
+the collection and the topic model itself
+annotates the document as for these themes
+
+58
+00:05:36,930 --> 00:05:40,540
+so it will tell you ok these are the overall
+themes this document contains these themes
+
+59
+00:05:40,540 --> 00:05:45,140
+and so on and [ noise] once you have these
+annotations that are given with the topic
+
+60
+00:05:45,140 --> 00:05:49,460
+model you can use that to for validation task
+like organizing the collection summarizing
+
+61
+00:05:49,460 --> 00:05:53,930
+collection searching when the user query comes
+by using the each annotations so many different
+
+62
+00:05:53,930 --> 00:05:59,550
+applications we will cover some of those in
+this week and yes we can there is a there
+
+63
+00:05:59,550 --> 00:06:03,520
+is a huge huge amount of literature around
+topic models so you can also feel free to
+
+64
+00:06:03,520 --> 00:06:11,400
+read about it
+so so let's talk about one of the applications
+
+65
+00:06:11,400 --> 00:06:16,900
+before we go into the modeling in in detail
+so we talk we are we are cons ah consistently
+
+66
+00:06:16,900 --> 00:06:22,960
+talking about discovering topics from a corpus
+ok that is one of the most important ah application
+
+67
+00:06:22,960 --> 00:06:27,960
+of topic models so something like that so
+you have a large corpus and can you discover
+
+68
+00:06:27,960 --> 00:06:34,520
+that there are many many topics and topic
+look like this ok by topic i mean a set of
+
+69
+00:06:34,520 --> 00:06:41,400
+words that occur a lot in that topic ok so
+so let's see one topic human genomic d n a
+
+70
+00:06:41,400 --> 00:06:45,120
+genetic genes sequence gene molecular sequencing
+map information
+
+71
+00:06:45,120 --> 00:06:51,400
+so so topic model we will try to get you ok
+this is one sort of topics it will not give
+
+72
+00:06:51,400 --> 00:06:55,500
+you a label ok so although you can see this
+looks like a genetics topic of genetics it
+
+73
+00:06:55,500 --> 00:06:59,590
+will not give you a label it will tell you
+that this is there is a topic in this in this
+
+74
+00:06:59,590 --> 00:07:05,780
+corpus there is a theme and in this theme
+each words are more having more higher probability
+
+75
+00:07:05,780 --> 00:07:10,010
+so these are the more important words in this
+theme and then it will tell ok there is general
+
+76
+00:07:10,010 --> 00:07:14,940
+theme that is going through this corpus something
+like this evolution evolutionary species organization
+
+77
+00:07:14,940 --> 00:07:20,770
+life origin biology and then you see a set
+of terms ok these are having a high probability
+
+78
+00:07:20,770 --> 00:07:24,400
+in that theme there is no labels that topic
+model is giving but you can see ok it might
+
+79
+00:07:24,400 --> 00:07:30,830
+be evolutionary biology ok then similarly
+another theme disease host bacteria disease
+
+80
+00:07:30,830 --> 00:07:35,530
+so on and four theme computer models information
+data computers and so on
+
+81
+00:07:35,530 --> 00:07:39,090
+so so the topic models will tell you ok in
+this collection you have these four themes
+
+82
+00:07:39,090 --> 00:07:43,390
+in addition to some other themes ok so that
+is your predefined ah number that you will
+
+83
+00:07:43,390 --> 00:07:48,330
+need need to give to the ah models so you
+can say ok i want fifty different themes in
+
+84
+00:07:48,330 --> 00:07:53,160
+this corpus or twenty different themes in
+this corpus yes although there are again variations
+
+85
+00:07:53,160 --> 00:07:57,830
+where you might not have to specify these
+number a priori we will briefly talk about
+
+86
+00:07:57,830 --> 00:08:01,060
+those also
+but for now let us say we we tell the model
+
+87
+00:08:01,060 --> 00:08:05,250
+we need that money themes so try to discover
+ok these are the important themes that i am
+
+88
+00:08:05,250 --> 00:08:09,610
+seeing with a pervading through this corpus
+and these are some examples these are some
+
+89
+00:08:09,610 --> 00:08:13,270
+examples that we are seeing here that are
+coming from a real corpus by doing the l d
+
+90
+00:08:13,270 --> 00:08:18,280
+s applying the l d a model
+now once you have these themes then the topic
+
+91
+00:08:18,280 --> 00:08:23,930
+model will also tell you ok this document
+is about having ah only these two themes out
+
+92
+00:08:23,930 --> 00:08:28,150
+of these fifty this document is having these
+five themes out of these fifty in in what
+
+93
+00:08:28,150 --> 00:08:33,200
+proportions and so on so like that you can
+now ah think about organizing huge your whole
+
+94
+00:08:33,200 --> 00:08:41,510
+collection and also ah some sort of a summarization
+or searching through this
+
+95
+00:08:41,510 --> 00:08:46,510
+now so why is this intuition interesting so
+when you look at a particular document in
+
+96
+00:08:46,510 --> 00:08:51,439
+general you will see that yes there are actually
+ah some particular themes that are that are
+
+97
+00:08:51,439 --> 00:08:57,240
+pervading this whole document so so that is
+you have somehow thought of making a document
+
+98
+00:08:57,240 --> 00:09:04,110
+that concerns these themes only so here is
+an article from sci science magazine nineteen
+
+99
+00:09:04,110 --> 00:09:11,649
+ninety six seeking lifes bare genetic necessities
+and so if you read this article so this is
+
+100
+00:09:11,649 --> 00:09:17,120
+about using some sort of computational data
+analysis to determine the number of genes
+
+101
+00:09:17,120 --> 00:09:21,250
+and organisms that needs to survive so how
+many genes ah genes and organism needs to
+
+102
+00:09:21,250 --> 00:09:26,379
+survive
+so so this topic this article will blend some
+
+103
+00:09:26,379 --> 00:09:31,649
+of the topics that are important to convey
+this message ok and these words are denoted
+
+104
+00:09:31,649 --> 00:09:36,769
+in various colors here so we are seeing some
+words with pink some words with yellow somewhere
+
+105
+00:09:36,769 --> 00:09:42,860
+to blue and and so on let's read the words
+in in pink so there were organism survives
+
+106
+00:09:42,860 --> 00:09:51,660
+life organisms yellow genes genomes genes
+genetic sequenced genome and blue will be
+
+107
+00:09:51,660 --> 00:09:58,190
+computer productions numbers computational
+computer analysis and so on so you you can
+
+108
+00:09:58,190 --> 00:10:02,800
+clearly see three different themes one is
+about genetics another is about the evolution
+
+109
+00:10:02,800 --> 00:10:08,589
+another is about ah this computational data
+analysis
+
+110
+00:10:08,589 --> 00:10:14,910
+so so this this article is blen blending these
+three themes together ok it's can be capture
+
+111
+00:10:14,910 --> 00:10:20,100
+that in an uncivilized manner without someone
+has to manually annotate this ok this is the
+
+112
+00:10:20,100 --> 00:10:26,260
+themes in this document so if i yes you see
+blue is data analysis pink is evolutionary
+
+113
+00:10:26,260 --> 00:10:34,569
+biology and yellow is genetics so this article
+is blending these three topics in different
+
+114
+00:10:34,569 --> 00:10:40,870
+proportions and that is the motivations that's
+what ah that's what is the hypothesis that
+
+115
+00:10:40,870 --> 00:10:45,440
+we are having about your corpus in the corpus
+there will be various documents there will
+
+116
+00:10:45,440 --> 00:10:50,150
+be a ah there will be some big number of themes
+that are going through this corpus but when
+
+117
+00:10:50,150 --> 00:10:54,649
+you look at a particular document it will
+have only a subset of these themes ok in some
+
+118
+00:10:54,649 --> 00:11:01,550
+proportions can we ah automatically capture
+those by using some modeling
+
+119
+00:11:01,550 --> 00:11:07,660
+so so yeah once you know that this article
+blends this topics together you can situate
+
+120
+00:11:07,660 --> 00:11:12,499
+that in a in a collection of scientific articles
+you can say ok where this where this situates
+
+121
+00:11:12,499 --> 00:11:20,040
+what are the articles it is similar to and
+and so on so so what is the basic idea you
+
+122
+00:11:20,040 --> 00:11:23,459
+are not going to the mathematical details
+that we will cover in the next week but let
+
+123
+00:11:23,459 --> 00:11:30,639
+us see the intuition so so this is the important
+idea so topic model is some sort of generative
+
+124
+00:11:30,639 --> 00:11:36,870
+model and this just as a model that captures
+this idea about the collection having topics
+
+125
+00:11:36,870 --> 00:11:42,509
+and topic document having different proportions
+so what it says is that so you are having
+
+126
+00:11:42,509 --> 00:11:48,129
+a doc having some documents they are nothing
+but mixtures of topic and a topic it's nothing
+
+127
+00:11:48,129 --> 00:11:52,920
+but the probability distribution over words
+ok so what are three themes we are talking
+
+128
+00:11:52,920 --> 00:12:02,879
+about we are talking about a collection that
+is having documents d one d two up to d n
+
+129
+00:12:02,879 --> 00:12:16,689
+here a documents in the collection then you
+are having some topics ok so suppose there
+
+130
+00:12:16,689 --> 00:12:23,379
+are some t one to t k topics and use your
+documents in document some words will occur
+
+131
+00:12:23,379 --> 00:12:32,899
+and you say ok these are my ah vocabulary
+these are my words w one to some w m ok
+
+132
+00:12:32,899 --> 00:12:37,120
+so here three themes in the collection there
+are documents documents some words occur suppose
+
+133
+00:12:37,120 --> 00:12:43,850
+you have a unique words define your vocabulary
+and there are some topics now what topic models
+
+134
+00:12:43,850 --> 00:12:50,170
+say yes topics are nothing but probability
+distribution over words so t one would be
+
+135
+00:12:50,170 --> 00:12:56,000
+something like a distribution ok so here what
+one comes the probability of zero point zero
+
+136
+00:12:56,000 --> 00:13:01,259
+one word two comes with the probability of
+zero point one and so on ok similarly t k
+
+137
+00:13:01,259 --> 00:13:05,769
+will be again a probability distribution what
+one comes with a probability distribution
+
+138
+00:13:05,769 --> 00:13:11,220
+of zero point zero five word two with a zero
+point zero one and so on an idea is that ok
+
+139
+00:13:11,220 --> 00:13:20,649
+probably there will be some part of the themes
+now so this is my topics topics are defined
+
+140
+00:13:20,649 --> 00:13:27,699
+by probability distribution over words now
+what are my documents documents are again
+
+141
+00:13:27,699 --> 00:13:32,759
+some sort of probability distribution over
+topics so i say d one what is d one d one
+
+142
+00:13:32,759 --> 00:13:38,180
+is having a distribution over these k topics
+so i will say ok topic one occurs with the
+
+143
+00:13:38,180 --> 00:13:42,889
+probability of zero point zero five topic
+two with probability zero point two topic
+
+144
+00:13:42,889 --> 00:13:47,999
+three with zero point five and so on ok so
+i will say ok something like topic three and
+
+145
+00:13:47,999 --> 00:13:52,720
+topic two are more turbulent in this document
+and not the other topics and same way i can
+
+146
+00:13:52,720 --> 00:14:00,800
+situate all the documents in some sort of
+mixture of topics ok and this is very important
+
+147
+00:14:00,800 --> 00:14:04,529
+to understand the topic model so what are
+my topics probability distribution over the
+
+148
+00:14:04,529 --> 00:14:09,670
+words and what are my documents again mixture
+components or topics or you can offset probability
+
+149
+00:14:09,670 --> 00:14:14,369
+distribution over the topics ok
+so this is all add up to one this will all
+
+150
+00:14:14,369 --> 00:14:23,649
+add up to one for all the topics for all the
+documents ok so so what is that mean so you
+
+151
+00:14:23,649 --> 00:14:28,750
+have a topic like genetics remember no labeling
+but we can see when you see that words so
+
+152
+00:14:28,750 --> 00:14:32,959
+this is probability word genetics so if we
+have topic about genetics this will have words
+
+153
+00:14:32,959 --> 00:14:38,209
+about genetics with high probability and if
+we have a topical of evolutionary biology
+
+154
+00:14:38,209 --> 00:14:42,800
+it will have a topic about evolutionary biological
+of high probability ok so this will be making
+
+155
+00:14:42,800 --> 00:14:50,759
+two different themes in this connection and
+and the model is a generative model and as
+
+156
+00:14:50,759 --> 00:14:55,649
+we understand generative model so it will
+work like ok from we will first generate the
+
+157
+00:14:55,649 --> 00:15:00,640
+topics yes we first define the topics then
+when we have the topics you will now start
+
+158
+00:15:00,640 --> 00:15:04,529
+building the documents you say ok document
+will have some proportion of these topics
+
+159
+00:15:04,529 --> 00:15:07,474
+and then i will write the words in the in
+the documents so topic search in that the
+
+160
+00:15:07,474 --> 00:15:12,999
+first and then the documents as per the generative
+model ok
+
+161
+00:15:12,999 --> 00:15:19,430
+so so this picture will make themes more clearer
+so so what so we are having seen some nice
+
+162
+00:15:19,430 --> 00:15:23,930
+colors here so on the left you are seeing
+some topics right that's all you are talking
+
+163
+00:15:23,930 --> 00:15:28,839
+about we are having a set of topics any topic
+is a probability distribution over the words
+
+164
+00:15:28,839 --> 00:15:33,240
+in the collection so like here this topic
+has the word gene with the probability of
+
+165
+00:15:33,240 --> 00:15:37,709
+point zero four d n a with point zero two
+genetic with point zero one life with point
+
+166
+00:15:37,709 --> 00:15:43,930
+zero two this is different topic brain neuron
+nerve right data computer number different
+
+167
+00:15:43,930 --> 00:15:48,199
+probabilities you see seen their different
+themes
+
+168
+00:15:48,199 --> 00:15:52,939
+now once we have this corpus wide themes so
+so each topic is a distribution over words
+
+169
+00:15:52,939 --> 00:15:57,980
+do you understand that now what is a document
+so you are seeing a collection here and there
+
+170
+00:15:57,980 --> 00:16:04,240
+are a lot of documents right and we are being
+shown one document so each document is a mixture
+
+171
+00:16:04,240 --> 00:16:09,880
+of corpus wide topics so these are my corpus
+wide topics now i will take a particular mixture
+
+172
+00:16:09,880 --> 00:16:16,980
+of these topics so suppose one of my mixture
+is here i take this topic red yellow and blue
+
+173
+00:16:16,980 --> 00:16:22,439
+i will take these three topics only maybe
+others away with a very very small fraction
+
+174
+00:16:22,439 --> 00:16:26,779
+and this defines the topic distribution of
+my doc document
+
+175
+00:16:26,779 --> 00:16:34,209
+now so i have now seen said that my document
+contains these topics with some proportions
+
+176
+00:16:34,209 --> 00:16:37,540
+now how do i generate the words in the documents
+right that is important i need to generate
+
+177
+00:16:37,540 --> 00:16:43,309
+the words so how are these words generated
+that's again interesting so you have this
+
+178
+00:16:43,309 --> 00:16:49,259
+you think of it as a multinomial distribution
+and from this distribution you sample a topic
+
+179
+00:16:49,259 --> 00:16:57,420
+ok suppose the first sample is this pink that
+pink topic that is about a organism life evolve
+
+180
+00:16:57,420 --> 00:17:03,019
+and so on ok these sample is topic
+now from the same topic you have to generate
+
+181
+00:17:03,019 --> 00:17:08,970
+a word how do you generate a word again this
+topic is what a probability distribution over
+
+182
+00:17:08,970 --> 00:17:13,200
+words think of it as a multinomial distribution
+against a sample a word from here and that's
+
+183
+00:17:13,200 --> 00:17:18,100
+what you will generate in the document and
+this we will keep on going for generating
+
+184
+00:17:18,100 --> 00:17:22,410
+all the words in the document in the in the
+document so you will say ok next word i will
+
+185
+00:17:22,410 --> 00:17:28,670
+again sample a topic i get this yellow topic
+about gene d n d n a genetics i use this topic
+
+186
+00:17:28,670 --> 00:17:33,340
+to generate a word by sampling from a multi
+ah multinomial distribution and that's what
+
+187
+00:17:33,340 --> 00:17:38,110
+are you keep on repeating this is for this
+document again for next document i will select
+
+188
+00:17:38,110 --> 00:17:42,800
+a mixture of topics ok and then once i have
+the mixture i will again keep on selecting
+
+189
+00:17:42,800 --> 00:17:55,370
+the words that will go in the document
+so now so so this is a statistical model also
+
+190
+00:17:55,370 --> 00:18:00,020
+we called it a generative model so what is
+this reflect so it reflects to two important
+
+191
+00:18:00,020 --> 00:18:06,300
+things what are those all the document in
+the collection share the same set of topics
+
+192
+00:18:06,300 --> 00:18:10,760
+right we have an underlying set of topics
+all documents are sharing the same set although
+
+193
+00:18:10,760 --> 00:18:16,210
+the proportions are different ok so each document
+exhibits those topics in different proportions
+
+194
+00:18:16,210 --> 00:18:22,330
+that is one important fact and then what is
+the other other fact each word in each document
+
+195
+00:18:22,330 --> 00:18:27,460
+is drawn from one of the topics where the
+selected topic is chosen from the per document
+
+196
+00:18:27,460 --> 00:18:34,080
+distribution over topics ok
+so is that clear so for each document i have
+
+197
+00:18:34,080 --> 00:18:38,990
+a collection of top i have a distribution
+about topics so i say ok this topic is probably
+
+198
+00:18:38,990 --> 00:18:45,700
+point two point five point one and so on now
+each word in the document is sampled from
+
+199
+00:18:45,700 --> 00:18:51,950
+this ah distribution how you sample a topic
+first and then as per the topics probability
+
+200
+00:18:51,950 --> 00:18:56,660
+distribution you sample a word ok this this
+we will covered in the generative model in
+
+201
+00:18:56,660 --> 00:19:00,660
+more details but that is the intuition that
+we showed also from the picture see there
+
+202
+00:19:00,660 --> 00:19:07,430
+are two important facts about l d f
+now so if we think about the example article
+
+203
+00:19:07,430 --> 00:19:12,480
+from science magazine that we were seeing
+so the distribution over topics would place
+
+204
+00:19:12,480 --> 00:19:19,390
+a probability on genetics data analytics and
+evolutionary biology ok and each word will
+
+205
+00:19:19,390 --> 00:19:24,130
+be drawn from one of these topics so what
+will happen when you are doing the influencing
+
+206
+00:19:24,130 --> 00:19:30,180
+you will say ok these this document contains
+these three topics and how do we generate
+
+207
+00:19:30,180 --> 00:19:35,680
+a word you will sample a topic from here and
+as for the topics probability distribution
+
+208
+00:19:35,680 --> 00:19:44,590
+sample a word and keep on generating the words
+so so this is the genetic model but is that
+
+209
+00:19:44,590 --> 00:19:50,011
+what you also see when we have a real corpus
+we apply l d a and do an influencing so that
+
+210
+00:19:50,011 --> 00:19:57,330
+is what is being shown so for this collection
+of science papers so ah in proper model was
+
+211
+00:19:57,330 --> 00:20:02,150
+trained with hundred topics and this is what
+you see so these are the hundred topics and
+
+212
+00:20:02,150 --> 00:20:06,530
+for this particular document some topics have
+a high probability so this topic have probability
+
+213
+00:20:06,530 --> 00:20:12,610
+point roughly point four point one five point
+one two and the next one having point zero
+
+214
+00:20:12,610 --> 00:20:18,230
+five so if you see the top four topics in
+this in this particular document and try to
+
+215
+00:20:18,230 --> 00:20:23,780
+see the the the most probable words in these
+topics so that's what you see so this topic
+
+216
+00:20:23,780 --> 00:20:29,360
+has human genome d n a genetics and so on
+since our topics that we were showing earlier
+
+217
+00:20:29,360 --> 00:20:35,220
+and you see this was obtained without doing
+any manual labeling so you you find out ok
+
+218
+00:20:35,220 --> 00:20:40,840
+this this document contains these four different
+themes important themes and this is you can
+
+219
+00:20:40,840 --> 00:20:45,470
+also do some labeling later on manually this
+is not done by l d a but get this is also
+
+220
+00:20:45,470 --> 00:20:51,260
+not very very important so what is important
+is that i l d a can help you to obtain this
+
+221
+00:20:51,260 --> 00:20:57,730
+sort of ah distribution this in a very uncivilized
+manner so you can find out what are the overall
+
+222
+00:20:57,730 --> 00:21:03,680
+themes and for a document what are the most
+important themes
+
+223
+00:21:03,680 --> 00:21:09,020
+so now so we talked about ok what is the generative
+model of l d a but what is the main problem
+
+224
+00:21:09,020 --> 00:21:14,520
+of l d a ok so we are saying ok we will generate
+the topic first and then we will generate
+
+225
+00:21:14,520 --> 00:21:21,500
+the documents right by sampling a distribution
+of topics each each for each word i will take
+
+226
+00:21:21,500 --> 00:21:27,530
+a topic it's distribution i will take a word
+and so on ok but that's not how we write the
+
+227
+00:21:27,530 --> 00:21:35,480
+documents right ah so so how will that we
+used so so it has to be used in a manner that
+
+228
+00:21:35,480 --> 00:21:40,700
+i am observing some data i have the generative
+model and now i am trying to estimate the
+
+229
+00:21:40,700 --> 00:21:45,930
+parameters of this genetic model by using
+my observations that is what parameters will
+
+230
+00:21:45,930 --> 00:21:50,910
+maximize the likelihood of seemed observation
+so this is like reversing this whole process
+
+231
+00:21:50,910 --> 00:21:58,090
+of ah l d a that we are talking about ok
+so so so we know the documents object in a
+
+232
+00:21:58,090 --> 00:22:03,710
+collection and if the documents but i do not
+do the topic structure so i do not know what
+
+233
+00:22:03,710 --> 00:22:08,340
+are my topics so whatever distribution of
+words within each topic i do not know for
+
+234
+00:22:08,340 --> 00:22:14,970
+each document what will be the distribution
+of topics and i also do not know for each
+
+235
+00:22:14,970 --> 00:22:19,800
+ah for each word in a document what will be
+the topic assignment i do not know any of
+
+236
+00:22:19,800 --> 00:22:26,530
+this a priori so this is all my hidden structure
+so center problem l d a is to reverses in
+
+237
+00:22:26,530 --> 00:22:33,270
+to process and use the observed documents
+to infer the hidden structure so what is the
+
+238
+00:22:33,270 --> 00:22:38,010
+hidden structure can you infer that by seeing
+only the object documents and this may also
+
+239
+00:22:38,010 --> 00:22:43,150
+called as some sort of reversing the genetic
+process and that is a center problem of l
+
+240
+00:22:43,150 --> 00:22:48,390
+d a so so this is this initial introduction
+lecture was about to give to give you the
+
+241
+00:22:48,390 --> 00:22:54,740
+intuition but now that you have some intuition
+of what l d a is what topic model is we will
+
+242
+00:22:54,740 --> 00:23:00,860
+next going to details about what is the mathematical
+model of l d a ok and how do you solve this
+
+243
+00:23:00,860 --> 00:23:06,670
+problem of ah reversing the generative process
+ok so that will be recovering in more details
+
+244
+00:23:06,670 --> 00:23:08,820
+in the next lecture
+thank you
+

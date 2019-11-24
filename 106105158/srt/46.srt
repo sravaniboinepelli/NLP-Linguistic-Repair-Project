@@ -1,0 +1,1530 @@
+1
+00:00:18,199 --> 00:00:22,210
+so welcome back for the final lecture of this
+week so we are talking about different l d
+
+2
+00:00:22,210 --> 00:00:28,309
+a variants and what are their applications
+and we talked about three different variations
+
+3
+00:00:28,309 --> 00:00:33,170
+like code rate topic models dynamo topic models
+and sewage topic models and we saw how they
+
+4
+00:00:33,170 --> 00:00:39,300
+can model different assumptions we can also
+be used to pair the ah response as as a observation
+
+5
+00:00:39,300 --> 00:00:46,440
+inside the model to to make nicer topic models
+so we now see in this lecture we will also
+
+6
+00:00:46,440 --> 00:00:52,390
+see some two other variants so one is called
+relational topic models another is ah some
+
+7
+00:00:52,390 --> 00:00:55,850
+sort of nonparametric bayesian models and
+you will see what sort of applications they
+
+8
+00:00:55,850 --> 00:01:04,699
+can be used for so ah what is the idea of
+relational topic models see so in so when
+
+9
+00:01:04,699 --> 00:01:09,430
+you are talking about data so many a times
+this is simple text data so where they are
+
+10
+00:01:09,430 --> 00:01:14,040
+not related to each other sometimes this is
+like a network also
+
+11
+00:01:14,040 --> 00:01:17,770
+so where different observations or different
+data points are connected together by some
+
+12
+00:01:17,770 --> 00:01:23,689
+sort of graphic structure so for example think
+about the scientific articles so as such you
+
+13
+00:01:23,689 --> 00:01:28,030
+can think of them as separate different different
+articles ok this is one document another document
+
+14
+00:01:28,030 --> 00:01:35,340
+different observations in fit a topic model
+there or you can think of this as these are
+
+15
+00:01:35,340 --> 00:01:39,670
+documents that are also connected what is
+the connection between the scientific documents
+
+16
+00:01:39,670 --> 00:01:45,340
+with a citation network one paper might cite
+another paper ok
+
+17
+00:01:45,340 --> 00:01:50,529
+so if it will be citing another paper there
+is a link between them so you are seeing these
+
+18
+00:01:50,529 --> 00:01:55,929
+observations are also connected similarly
+think about the web page one web page might
+
+19
+00:01:55,929 --> 00:02:01,380
+give a hyperlink to another web page so again
+these ob these are observations that are connected
+
+20
+00:02:01,380 --> 00:02:05,659
+then you can talk about friends then they
+are connected friends in the social network
+
+21
+00:02:05,659 --> 00:02:12,200
+profile with the profile is kind of the document
+and the connection is like the ah so and you
+
+22
+00:02:12,200 --> 00:02:18,700
+are trying to model the connection
+so now what we are seeing here that can be
+
+23
+00:02:18,700 --> 00:02:25,250
+adapt our l d a model where such that it can
+take care of not only the content but also
+
+24
+00:02:25,250 --> 00:02:31,230
+also of the also of this link that is also
+contained in connection both can this we can
+
+25
+00:02:31,230 --> 00:02:37,150
+this be handled by the topic models and that's
+where you have this variation called a relational
+
+26
+00:02:37,150 --> 00:02:43,209
+topic models or r t m s so relational topic
+models try to take care of this variation
+
+27
+00:02:43,209 --> 00:02:49,180
+that i have the content as well as a connection
+now now so before going to the model how how
+
+28
+00:02:49,180 --> 00:02:53,480
+we will try to do that suppose we did not
+have this relational topic models what we
+
+29
+00:02:53,480 --> 00:02:59,900
+are trying to to predict here i have this
+whole set of observations now which two observations
+
+30
+00:02:59,900 --> 00:03:07,610
+will be connected to each other so or let
+us say i am talking about the scientific articles
+
+31
+00:03:07,610 --> 00:03:13,040
+when i knew a person is writing a new article
+what are the papers he will cite how will
+
+32
+00:03:13,040 --> 00:03:17,069
+i model this
+so so i will think of it as a learning problem
+
+33
+00:03:17,069 --> 00:03:23,640
+i will say ok i have a dataset i know there
+are lot of papers and some papers writing
+
+34
+00:03:23,640 --> 00:03:29,370
+another papers ok so i will say ok i have
+observations document d one d two d three
+
+35
+00:03:29,370 --> 00:03:36,400
+and so on d n i know d three is citing d two
+i know d n is citing d three d n a citing
+
+36
+00:03:36,400 --> 00:03:41,620
+d one so on i have these observations right
+and i want to find out when a new able d n
+
+37
+00:03:41,620 --> 00:03:47,090
+plus one comes in what will it cite how will
+i solve this problem is suppose using l d
+
+38
+00:03:47,090 --> 00:03:54,220
+a what i will do i will first in l d a over
+this corpus and i will find out ok this topic
+
+39
+00:03:54,220 --> 00:04:04,069
+distributions theta d one theta d two up to
+theta d n ok you find that out then i try
+
+40
+00:04:04,069 --> 00:04:13,749
+to model ok given that this is theta d two
+theta d three will they link together or whether
+
+41
+00:04:13,749 --> 00:04:19,720
+d three will link to d two
+how will i model this again you can use a
+
+42
+00:04:19,720 --> 00:04:27,530
+regression here right so you can say ok given
+theta d three and theta d two predict the
+
+43
+00:04:27,530 --> 00:04:34,030
+link yes or no so i have some positive examples
+where ever there is link and negative examples
+
+44
+00:04:34,030 --> 00:04:40,230
+there were where ever there is no link at
+run time when i get a new new document using
+
+45
+00:04:40,230 --> 00:04:47,070
+l d a i get theta d n plus one now i try to
+combine it with d one to d n find out which
+
+46
+00:04:47,070 --> 00:04:50,730
+one it is more likely to linked that is one
+way it can be handled
+
+47
+00:04:50,730 --> 00:04:57,200
+now does that remind your something so that
+will remind if the now last topic that we
+
+48
+00:04:57,200 --> 00:05:06,260
+discussed that was supervised l d a remember
+there also we had the same problem we said
+
+49
+00:05:06,260 --> 00:05:12,790
+ok each document has a response so each document
+might have a response r one r two and so on
+
+50
+00:05:12,790 --> 00:05:20,330
+so we said ok one way could be take theta
+d one and run a regression from theta d one
+
+51
+00:05:20,330 --> 00:05:27,860
+to r one theta d two to r two that was one
+possibility idea plus regression but we said
+
+52
+00:05:27,860 --> 00:05:32,730
+we can do something smarter than that that
+is we take it as an observation within my
+
+53
+00:05:32,730 --> 00:05:42,960
+model and we say ok with each document with
+z you are also sampling your response variable
+
+54
+00:05:42,960 --> 00:05:49,300
+with some eta n sigma
+now can we use the same idea in this relational
+
+55
+00:05:49,300 --> 00:05:55,710
+topic model also so the ah right now the difference
+is that we are working with the pairs ok so
+
+56
+00:05:55,710 --> 00:06:04,630
+what we can do here we can say that i had
+document d one i have document d two now this
+
+57
+00:06:04,630 --> 00:06:11,860
+will have some z this will have some z now
+can i model whether they will link to each
+
+58
+00:06:11,860 --> 00:06:24,990
+other given their individual topics and this
+can now be in observation inside my model
+
+59
+00:06:24,990 --> 00:06:30,660
+ok so this is idea this is a simple and direct
+extension of this over the topic ah l d a
+
+60
+00:06:30,660 --> 00:06:37,180
+that can i now use pairs and model the response
+as my another observation sorry model the
+
+61
+00:06:37,180 --> 00:06:43,880
+connection as my another observation
+so so this is how it is done so you are having
+
+62
+00:06:43,880 --> 00:06:50,070
+the same topic models sorry same model for
+so beta k the topic probabilities over over
+
+63
+00:06:50,070 --> 00:06:55,370
+different observations but now you look at
+different pairs so let us look at these pairs
+
+64
+00:06:55,370 --> 00:07:01,630
+ah document d i and d z so they have theta
+n theta z variable so what you are modeling
+
+65
+00:07:01,630 --> 00:07:09,520
+given ah the z i n and z j n their individual
+topic probabilities whether they will link
+
+66
+00:07:09,520 --> 00:07:15,430
+to each other so there it is per pair this
+is a binary link variable and this is a indirect
+
+67
+00:07:15,430 --> 00:07:21,790
+analogous to what we written in the case sewage
+topic models is eta times this into this ok
+
+68
+00:07:21,790 --> 00:07:30,390
+plus some variance and so this can also allow
+prediction about new and unlinked data
+
+69
+00:07:30,390 --> 00:07:35,520
+so how is it acted so what what are the examples
+so how it will be used to something like this
+
+70
+00:07:35,520 --> 00:07:40,830
+suppose i have a top paper markov chain monte
+carlo convergence diagnostics a comparative
+
+71
+00:07:40,830 --> 00:07:47,561
+review so and i want to find out what are
+the other papers it will link to or i can
+
+72
+00:07:47,561 --> 00:07:51,990
+say ok suppose i am reading this paper what
+are the other paper that are relevant to it
+
+73
+00:07:51,990 --> 00:07:57,310
+like a recommendation problem so i can use
+this idea let what is the other other papers
+
+74
+00:07:57,310 --> 00:08:02,360
+that it will link to win my r t m model
+so here is some examples that this is what
+
+75
+00:08:02,360 --> 00:08:07,210
+your r t m model gives and these are actually
+important papers that this document actually
+
+76
+00:08:07,210 --> 00:08:14,650
+linked to so r t m in general can allow the
+predictions that given ah a document with
+
+77
+00:08:14,650 --> 00:08:19,630
+new words what what are the document will
+link to ok this is one thing that can be done
+
+78
+00:08:19,630 --> 00:08:23,900
+also suppose you give a link that this document
+gives links to another document what will
+
+79
+00:08:23,900 --> 00:08:29,280
+be the approximate distribution of the document
+that also can be found using my r t m model
+
+80
+00:08:29,280 --> 00:08:33,450
+so links given the new words of the document
+and words given the links of a new document
+
+81
+00:08:33,450 --> 00:08:41,640
+both can be handled so so coming back to the
+model so this formulation what it ensures
+
+82
+00:08:41,640 --> 00:08:48,110
+is that the same latent topic assignment is
+used to generate the content of the document
+
+83
+00:08:48,110 --> 00:08:53,500
+and it also generate their linked structure
+so ah you are not separately learning the
+
+84
+00:08:53,500 --> 00:08:58,110
+linked structure you are learning it at the
+same time when you are lot learning your topic
+
+85
+00:08:58,110 --> 00:09:02,950
+distributions so that is interesting in this
+r t m model
+
+86
+00:09:02,950 --> 00:09:09,160
+so from this z i n and z j n you are trying
+to predict what will be your y i j ok now
+
+87
+00:09:09,160 --> 00:09:15,710
+here is one problem ah so so this is your
+simple model so this is your simp ah this
+
+88
+00:09:15,710 --> 00:09:21,020
+is what your lda model is draw your topic
+proportions then for each word draw the topic
+
+89
+00:09:21,020 --> 00:09:27,760
+assignment and the draw the word ok
+now for the relational part for each pair
+
+90
+00:09:27,760 --> 00:09:33,810
+document d and d prime what you are doing
+you are trying to sample the variable y whether
+
+91
+00:09:33,810 --> 00:09:39,080
+they will link or not and this depends on
+the z d and z d prime and what is the function
+
+92
+00:09:39,080 --> 00:09:48,190
+it's a psi of ah given z d z d prime and this
+is model like this this is ah as an exponential
+
+93
+00:09:48,190 --> 00:09:55,000
+function over eta transpose a hadamard product
+over z d and z d prime now what do i mean
+
+94
+00:09:55,000 --> 00:10:02,640
+by that so remember ah in the sewage l d a
+module also we did eta transpose z bar right
+
+95
+00:10:02,640 --> 00:10:08,370
+and this gave me a scalar two vectors you
+are multiplying this ah giving you a scalar
+
+96
+00:10:08,370 --> 00:10:13,950
+you have the same dimensions right now here
+also you have eta transpose same dimensional
+
+97
+00:10:13,950 --> 00:10:22,490
+has the number of topics and you are multiplying
+it with z d bar hadamard product with z d
+
+98
+00:10:22,490 --> 00:10:28,920
+prime bar
+now what is what are z d and z z d prime z
+
+99
+00:10:28,920 --> 00:10:34,840
+d is what are the topic probability is doc
+document d ok and this is in document d prime
+
+100
+00:10:34,840 --> 00:10:42,680
+again they are vectors had not probe probe
+probe is nothing but element wise wise product
+
+101
+00:10:42,680 --> 00:10:47,130
+see you multiply this element with this element
+this element with this element and so on and
+
+102
+00:10:47,130 --> 00:10:53,710
+then you add it and multiply with eta transpose
+so this will again give me a scalar ok and
+
+103
+00:10:53,710 --> 00:11:00,740
+plus you might add some sort of ah bias or
+valence this is a bias here so z d is nothing
+
+104
+00:11:00,740 --> 00:11:08,840
+but the topics of probabilities in each document
+use it for the pair and and get a hadamard
+
+105
+00:11:08,840 --> 00:11:16,790
+product of those and plus with bias term gives
+you ok whether the document is likely to ah
+
+106
+00:11:16,790 --> 00:11:24,880
+ah these two pairs are likely to link or not
+right eta transpose and this total thing and
+
+107
+00:11:24,880 --> 00:11:30,090
+in in the paper they also use the sigmoid
+function apart from the exponential function
+
+108
+00:11:30,090 --> 00:11:36,460
+and link function models each per pair binary
+variable as a logistic regression and this
+
+109
+00:11:36,460 --> 00:11:47,950
+is by eta eta and mu ok
+so ah so this is your relational topic model
+
+110
+00:11:47,950 --> 00:11:56,140
+what is your what is one problem with this
+model so for each pair of documents you have
+
+111
+00:11:56,140 --> 00:12:01,820
+to define their response that is whether they
+are linking together or not so why d one d
+
+112
+00:12:01,820 --> 00:12:06,731
+two is it one or zero then in my document
+is giving a link to another document you can
+
+113
+00:12:06,731 --> 00:12:11,880
+always say to one but whenever document is
+not giving a link to another document it is
+
+114
+00:12:11,880 --> 00:12:16,070
+not necessary that they are not related at
+all it may be that he is not giving the link
+
+115
+00:12:16,070 --> 00:12:21,180
+or the link might occur in future there are
+many other things depending on the data points
+
+116
+00:12:21,180 --> 00:12:26,310
+so one thing is that whenever there is a link
+you take it as one whenever there is no link
+
+117
+00:12:26,310 --> 00:12:30,820
+you take it as an unobserved variables so
+i do not know if there is a link or not so
+
+118
+00:12:30,820 --> 00:12:37,160
+that also helps you in ah being computationally
+efficient it it avoids getting you so many
+
+119
+00:12:37,160 --> 00:12:43,970
+different pairs of document right
+so so that is in especially in the case of
+
+120
+00:12:43,970 --> 00:12:49,000
+social networks whenever there is an absence
+of link you cannot take it as if ah y d one
+
+121
+00:12:49,000 --> 00:12:52,740
+d two is equal to zero for example also you
+can see from your like facebook profile so
+
+122
+00:12:52,740 --> 00:12:58,270
+you are taking the profile as your documents
+and you are finding out if this person will
+
+123
+00:12:58,270 --> 00:13:02,940
+become a friend of another person so even
+if they have not friends at this time it might
+
+124
+00:13:02,940 --> 00:13:07,460
+happen that they will be become friends in
+future so absence of the link cannot be taken
+
+125
+00:13:07,460 --> 00:13:12,290
+for that their response should be zero so
+it can be taken as in an unobserved variable
+
+126
+00:13:12,290 --> 00:13:22,240
+that is a better solution
+so so this is done and and then so they tested
+
+127
+00:13:22,240 --> 00:13:26,810
+whether this words better than the model of
+l d a plus regression this was the person
+
+128
+00:13:26,810 --> 00:13:31,330
+that we saw that you take the topics from
+document d one document d two and learn a
+
+129
+00:13:31,330 --> 00:13:36,340
+regression over there that is one option another
+is you take the pair which are linking as
+
+130
+00:13:36,340 --> 00:13:41,800
+an observed variable and also use it for learning
+your topics inside the model itself and that
+
+131
+00:13:41,800 --> 00:13:47,220
+they found gives much better performance than
+l d a plus regression model for this task
+
+132
+00:13:47,220 --> 00:13:54,540
+given any document what is the document it
+were linked so this is a other examples like
+
+133
+00:13:54,540 --> 00:13:58,870
+for this document competitive environments
+evolved better solutions for complex task
+
+134
+00:13:58,870 --> 00:14:05,279
+documents like coevolving high level representations
+were coming out to be it at ah first position
+
+135
+00:14:05,279 --> 00:14:09,870
+in the r t m model but we were not coming
+out from l d a plus regression model so this
+
+136
+00:14:09,870 --> 00:14:15,510
+was something interesting at the so from this
+model
+
+137
+00:14:15,510 --> 00:14:23,540
+now finally we will wrap up this week by some
+small some simple discussion on nonparametric
+
+138
+00:14:23,540 --> 00:14:30,550
+bayesian models so so what do we see in the
+case of l d a models so in l d a what we are
+
+139
+00:14:30,550 --> 00:14:38,120
+having we are defining that this corpus consists
+of certain topics ok and then each document
+
+140
+00:14:38,120 --> 00:14:42,170
+i find out what are the topic assignment is
+what i find out what is the topic assignment
+
+141
+00:14:42,170 --> 00:14:49,080
+for that word so what is one problem here
+i have to tell a priori how many topics that
+
+142
+00:14:49,080 --> 00:14:54,410
+are there in the data but that may not be
+an easy parameter to always give right you
+
+143
+00:14:54,410 --> 00:14:59,160
+may not know should i use ten topics twenty
+topics hundred topics in this data
+
+144
+00:14:59,160 --> 00:15:05,600
+so can my model itself find out what will
+be the number of topics as such and that's
+
+145
+00:15:05,600 --> 00:15:11,350
+where we come to this topic of nonparametric
+bayesian so this so this parameter goes away
+
+146
+00:15:11,350 --> 00:15:17,690
+you do not have this parameter of number of
+topics and anymore ok so in many data analysis
+
+147
+00:15:17,690 --> 00:15:23,750
+settings you will not know what is the number
+of topics a priori so in bayesian nonparametric
+
+148
+00:15:23,750 --> 00:15:29,800
+models what we assume is that there is an
+so we are not fixing number of parameters
+
+149
+00:15:29,800 --> 00:15:36,020
+but that also means ok my um data can have
+any number of param ah of parameters that
+
+150
+00:15:36,020 --> 00:15:41,300
+means any number of topics
+so i have to a start with the assumption that
+
+151
+00:15:41,300 --> 00:15:47,660
+there are infinite number of topics ok and
+my data can take any finite number of them
+
+152
+00:15:47,660 --> 00:15:52,800
+so it can take hundred five hundred thirty
+whatever it means so in generally i have an
+
+153
+00:15:52,800 --> 00:15:58,850
+infinite number of topics so that is so that's
+what is interesting about it it assumes that
+
+154
+00:15:58,850 --> 00:16:04,540
+there are there is an infinite number of latent
+clusters or topics but only a finite number
+
+155
+00:16:04,540 --> 00:16:09,339
+of them is used to generate the observed data
+but you do not give it as an input to your
+
+156
+00:16:09,339 --> 00:16:14,640
+model how many such questions we need this
+is what model on it's own comes up when it
+
+157
+00:16:14,640 --> 00:16:21,230
+sees the observations
+so the posterior provides the distribution
+
+158
+00:16:21,230 --> 00:16:26,550
+over the number of clusters the assignment
+of data to clusters and the parameters of
+
+159
+00:16:26,550 --> 00:16:31,310
+each cluster all these are different different
+parameters of hilarity model that can be learned
+
+160
+00:16:31,310 --> 00:16:37,130
+from the bayesian nonparametric models so
+we will see so there are actually many ah
+
+161
+00:16:37,130 --> 00:16:43,300
+different variations variations of this bayesian
+nonparametric models also known as hierarchical
+
+162
+00:16:43,300 --> 00:16:50,340
+dirichlet processes because this is a ah very
+wide topic we will not cover this topic in
+
+163
+00:16:50,340 --> 00:16:55,490
+detail in this course we will just give you
+some intuition that what how do you come up
+
+164
+00:16:55,490 --> 00:17:00,580
+with this infinite topics right in your setting
+so and how does it model any finite number
+
+165
+00:17:00,580 --> 00:17:04,220
+of topics in the data even if you are starting
+with infinite topics
+
+166
+00:17:04,220 --> 00:17:08,600
+so we will talk about one particular setting
+that is a chinese restaurant process that
+
+167
+00:17:08,600 --> 00:17:14,720
+can be used for modeling the ah or grouping
+your observation into some finite number of
+
+168
+00:17:14,720 --> 00:17:20,919
+groups the number is not told a priori so
+what is this process is quite interesting
+
+169
+00:17:20,919 --> 00:17:26,329
+so so the chinese restaurant process so so
+we are talking about the restaurant so we
+
+170
+00:17:26,329 --> 00:17:31,700
+have saying that suppose this is a restaurant
+where there are infinite number of tables
+
+171
+00:17:31,700 --> 00:17:35,570
+ok when you see the here here the term infinite
+immediately what comes to your mind ok these
+
+172
+00:17:35,570 --> 00:17:40,610
+are the latent clusters so i have infinite
+tables in that restaurant and then there are
+
+173
+00:17:40,610 --> 00:17:44,559
+customers that are coming up so we are like
+observations so we are fitting the observation
+
+174
+00:17:44,559 --> 00:17:50,929
+to top to different ah clusters
+now the model says ok ah when the customers
+
+175
+00:17:50,929 --> 00:17:56,340
+are coming in the restaurant how are the seated
+on the tables now one thing that it says is
+
+176
+00:17:56,340 --> 00:18:01,909
+that the tables are of infinite capacity so
+they can they can hand each table can take
+
+177
+00:18:01,909 --> 00:18:05,821
+as many customer as as you want so there is
+no limit on the number of customers that can
+
+178
+00:18:05,821 --> 00:18:13,120
+sit on a table ok so now how do we assign
+customers to the tables in this process and
+
+179
+00:18:13,120 --> 00:18:22,850
+that's where so it's a says ok so i have some
+tables infinite number of tables so customer
+
+180
+00:18:22,850 --> 00:18:30,590
+one is comes in and sits at the first table
+ok table one fine so customer one is no problem
+
+181
+00:18:30,590 --> 00:18:40,400
+now now the customer two comes in so idea
+is that customers who two now sits on table
+
+182
+00:18:40,400 --> 00:18:48,820
+one with the probability one divided by one
+plus alpha and sits on a new table with a
+
+183
+00:18:48,820 --> 00:18:57,330
+probability alpha divided by one plus alpha
+ok here c is add adds up to one ok fine so
+
+184
+00:18:57,330 --> 00:19:04,880
+it can sit at either table one or table two
+now when a new customer comes in certain points
+
+185
+00:19:04,880 --> 00:19:11,669
+of c n it can sit of suppose this table this
+table this table is occupied it can sit either
+
+186
+00:19:11,669 --> 00:19:18,549
+at the occupied tables or add a new table
+so what they say it can sit on any of the
+
+187
+00:19:18,549 --> 00:19:33,830
+occ occupied tables with a probability proportional
+to number of customers already there ok an
+
+188
+00:19:33,830 --> 00:19:42,879
+on a new table with the probability proportional
+to alpha so that is so remember that's what
+
+189
+00:19:42,879 --> 00:19:47,490
+we did here this is proportional to one this
+is proportional to alpha and then we normalize
+
+190
+00:19:47,490 --> 00:19:50,999
+we get one divided by one plus alpha alpha
+divided by one plus alpha i have given any
+
+191
+00:19:50,999 --> 00:19:55,129
+given a point of time you will have certain
+configuration different tables will have different
+
+192
+00:19:55,129 --> 00:19:58,480
+number of customers
+so new customer comes in it can sit of any
+
+193
+00:19:58,480 --> 00:20:03,150
+other table with a probability proportional
+to the number of customers already there or
+
+194
+00:20:03,150 --> 00:20:09,419
+it can choose a new table and that's how you
+can fill in any number of customers on any
+
+195
+00:20:09,419 --> 00:20:14,299
+number of tables so you will see at the end
+at the end of this process you can have any
+
+196
+00:20:14,299 --> 00:20:19,379
+number of tables right so random process you
+might have five tables filled ten tables filled
+
+197
+00:20:19,379 --> 00:20:23,629
+fifteen tables filled so you can have any
+number of clusters this is now just does not
+
+198
+00:20:23,629 --> 00:20:30,070
+have to be defined a priori right we ah from
+your ah sampling you can choose any number
+
+199
+00:20:30,070 --> 00:20:36,859
+of topics or clusters
+now one thing what will be the effect of the
+
+200
+00:20:36,859 --> 00:20:51,409
+parameter alpha suppose your alpha is large
+versus alpha is a small if your alpha is large
+
+201
+00:20:51,409 --> 00:20:58,320
+what will happen if alpha is large when a
+customer comes in it has a there is a large
+
+202
+00:20:58,320 --> 00:21:05,659
+probability that will choose a new table ok
+so that means with large alpha you can get
+
+203
+00:21:05,659 --> 00:21:10,929
+large number of topics so is it gives you
+some idea ok if you want more number of topics
+
+204
+00:21:10,929 --> 00:21:15,340
+and each topic having small number of observations
+then you will choose a large alpha but if
+
+205
+00:21:15,340 --> 00:21:19,590
+you choose a smaller alpha you probably by
+you will probably choose a small number of
+
+206
+00:21:19,590 --> 00:21:24,700
+topics because ah if the customer will have
+a higher probability of sitting at any of
+
+207
+00:21:24,700 --> 00:21:30,429
+the tables that are previously occupied so
+that will be the effect of these alpha
+
+208
+00:21:30,429 --> 00:21:36,120
+so so coming back so first customer enters
+and sits at the first table second customer
+
+209
+00:21:36,120 --> 00:21:40,010
+enters and sits at the first table with the
+probability of one by one plus alpha and the
+
+210
+00:21:40,010 --> 00:21:46,610
+or the next unoccupied table with the probability
+alpha divided by one plus alpha and when the
+
+211
+00:21:46,610 --> 00:21:51,799
+another customer arrives she sits at any of
+the occupied tables with a probability proportional
+
+212
+00:21:51,799 --> 00:21:57,100
+to the number of previous customers already
+seated on the table and at the next unoccupied
+
+213
+00:21:57,100 --> 00:22:02,070
+table to the probability proportional to alpha
+and that's how i can distribute all the customers
+
+214
+00:22:02,070 --> 00:22:10,169
+in a restaurant and we saw that if i have
+a large value of alpha i will have more occupied
+
+215
+00:22:10,169 --> 00:22:18,490
+tables and fewer customers per table right
+so we saw that
+
+216
+00:22:18,490 --> 00:22:25,049
+now so so ok it's looks interesting if i have
+a document i can model so these tables as
+
+217
+00:22:25,049 --> 00:22:31,740
+my topics and these words these customers
+as my words and i can say ok which words are
+
+218
+00:22:31,740 --> 00:22:40,700
+send to what topics but how do i model my
+whole corpus you see i can model my one this
+
+219
+00:22:40,700 --> 00:22:44,879
+can be thought of as my one document d one
+i know ok what are the topics and what are
+
+220
+00:22:44,879 --> 00:22:51,019
+the customers but suppose i have a corpus
+right that so i i generally i wanted for my
+
+221
+00:22:51,019 --> 00:22:53,749
+corpus so corpus means i will have multiple
+such documents
+
+222
+00:22:53,749 --> 00:23:02,980
+now one thing would be i i fill it independently
+for each document but if i do that there is
+
+223
+00:23:02,980 --> 00:23:10,059
+no correlation between the assignment here
+in d one and d two ok so it might happened
+
+224
+00:23:10,059 --> 00:23:19,580
+d one i have first table some words are filling
+in here like government table two some words
+
+225
+00:23:19,580 --> 00:23:27,299
+like a sports something ok and document d
+two the word is sports might start coming
+
+226
+00:23:27,299 --> 00:23:32,970
+here and there will be no correlation between
+topics here in this document topics in this
+
+227
+00:23:32,970 --> 00:23:39,989
+document ok so i cannot run this chinese restaurant
+process independently for different documents
+
+228
+00:23:39,989 --> 00:23:46,570
+that way i will not be able to ah have a correlation
+ah between these so what is actually done
+
+229
+00:23:46,570 --> 00:23:52,200
+so we saw that chinese restaurant process
+it helps in obtaining a random partition as
+
+230
+00:23:52,200 --> 00:23:56,489
+the sequence of customers sitting at tables
+in a restaurant so we get a random partition
+
+231
+00:23:56,489 --> 00:24:02,190
+of words into various topics now we also sit
+tables can be thought of as topics and customers
+
+232
+00:24:02,190 --> 00:24:07,619
+as word in the restaurant or restaurant can
+be thought of as document
+
+233
+00:24:07,619 --> 00:24:15,429
+however it cannot model the entire corpus
+for that we can extend c r p to a set of restaurants
+
+234
+00:24:15,429 --> 00:24:22,570
+so that it can be extended to defining each
+document as a separate restaurant ok and this
+
+235
+00:24:22,570 --> 00:24:27,409
+is called chinese restaurant franchise so
+now we are going from chinese restaurant process
+
+236
+00:24:27,409 --> 00:24:33,039
+to chinese restaurant franchise so so this
+franchise has a lot of restaurant and that's
+
+237
+00:24:33,039 --> 00:24:38,169
+why we will try to ah connect the different
+topics so let us see how do we connect the
+
+238
+00:24:38,169 --> 00:24:43,190
+different topics
+so again so this is what is similar to c r
+
+239
+00:24:43,190 --> 00:24:50,759
+p so customer in the jth restaurant sits at
+tables in the same manner as in c r p ok so
+
+240
+00:24:50,759 --> 00:24:57,450
+customer comes in a in the restaurant any
+of the restaurant now it saw it sees which
+
+241
+00:24:57,450 --> 00:25:01,380
+tables already occupied how many customers
+are there the probability proportional to
+
+242
+00:25:01,380 --> 00:25:04,950
+the number of customers is sits at that table
+and the probability proportional to alpha
+
+243
+00:25:04,950 --> 00:25:11,109
+it sits at the next unoccupied table so that
+remains the same as c r p
+
+244
+00:25:11,109 --> 00:25:16,640
+now where is this ah connection among topics
+coming and that is coming in from the nice
+
+245
+00:25:16,640 --> 00:25:22,210
+idea about the franchise that is let us say
+that they just franchise wide menu so now
+
+246
+00:25:22,210 --> 00:25:27,259
+you have a new term of menu there is a certain
+dishes that are there in all the all the restaurants
+
+247
+00:25:27,259 --> 00:25:34,149
+and that is franchise wide
+so whenever a customer comes at a given table
+
+248
+00:25:34,149 --> 00:25:42,519
+it orders a dish from that menu now whoever
+comes in next we will have the same dish whoever
+
+249
+00:25:42,519 --> 00:25:48,409
+customer comes in next we will share the same
+same dish now this dish is shared throughout
+
+250
+00:25:48,409 --> 00:25:56,009
+the restaurants so now this dish at a table
+exercise the topic of that ah of the document
+
+251
+00:25:56,009 --> 00:26:01,519
+so you can have so now the dishes are same
+across the across the different restaurants
+
+252
+00:26:01,519 --> 00:26:08,359
+and that's why you can model it the same topics
+so so how do we achieve coupling among the
+
+253
+00:26:08,359 --> 00:26:16,340
+restaurants so this is achieved by a franchise
+wide menu so so what we say that the first
+
+254
+00:26:16,340 --> 00:26:23,239
+customer to sit at a table in a restaurant
+chooses a dish from the menu and all the customers
+
+255
+00:26:23,239 --> 00:26:31,010
+was sitting sitting at that table will share
+the same menu and this is our chosen with
+
+256
+00:26:31,010 --> 00:26:36,359
+a probability proportional to the number of
+tables which already have that that serve
+
+257
+00:26:36,359 --> 00:26:42,129
+that dish so if this dishes serve at many
+different tables across the franchise then
+
+258
+00:26:42,129 --> 00:26:46,799
+this will have a higher probability
+so that we are also giving you prior probability
+
+259
+00:26:46,799 --> 00:26:54,679
+on choosing a bulk condition on a given table
+so it will look something like that so what
+
+260
+00:26:54,679 --> 00:27:00,779
+you are seeing you are seeing three different
+restaurants in this franchise one two and
+
+261
+00:27:00,779 --> 00:27:10,330
+three now this psi on one tells for the restaurant
+one what is the dish at table one so this
+
+262
+00:27:10,330 --> 00:27:13,919
+is five one this is from the global menu of
+dishes five one five two and so on it is a
+
+263
+00:27:13,919 --> 00:27:17,269
+global menu
+the second table has five two third table
+
+264
+00:27:17,269 --> 00:27:22,899
+has five one that means more than one tables
+can order the same dish that is possible in
+
+265
+00:27:22,899 --> 00:27:28,789
+that ah model so why because you see when
+a customer comes in it will first choose the
+
+266
+00:27:28,789 --> 00:27:34,139
+table right so it can either to choose one
+of the table that is occupied on your a right
+
+267
+00:27:34,139 --> 00:27:39,669
+table then when you choose the table it chooses
+one of the dishes so that means it can the
+
+268
+00:27:39,669 --> 00:27:45,359
+same dishes dish can be chosen at more than
+one tables ok so that means this table also
+
+269
+00:27:45,359 --> 00:27:52,919
+the same dish was chosen and so on
+next second restaurant first table choose
+
+270
+00:27:52,919 --> 00:28:02,369
+dish five three second table five one third
+third table five three and so on ok so it
+
+271
+00:28:02,369 --> 00:28:07,669
+has certain different are choices and and
+then the third restaurant first table choose
+
+272
+00:28:07,669 --> 00:28:13,820
+five and second table choose five two and
+so on now you also seeing the customer assignments
+
+273
+00:28:13,820 --> 00:28:20,649
+so in this first ah restaurant customers are
+coming in theta one one theta one ah two theta
+
+274
+00:28:20,649 --> 00:28:25,759
+one three and so on theta one one sits a table
+one theta one two sits a table two theta one
+
+275
+00:28:25,759 --> 00:28:30,919
+three at table one one four table one one
+eight at table one five six here seven here
+
+276
+00:28:30,919 --> 00:28:36,399
+and so on so there are certain assignments
+that are given to these ah customers
+
+277
+00:28:36,399 --> 00:28:42,950
+similarly here theta two one two two sit here
+and two three two four two six sit here now
+
+278
+00:28:42,950 --> 00:28:52,340
+similar to l l d a what we will have from
+a ah when a customer chooses a ah dish it
+
+279
+00:28:52,340 --> 00:28:57,840
+will see what the other customers have chosen
+ok that's where they will be coupling that
+
+280
+00:28:57,840 --> 00:29:04,349
+the words will be assigned similar sort of
+topics across the different restaurants
+
+281
+00:29:04,349 --> 00:29:09,351
+so so you are seeing each restaurant is modeled
+by a rectangle each customer are seated at
+
+282
+00:29:09,351 --> 00:29:14,779
+the tables and each each table you are serving
+a dish from a glob global menu so this is
+
+283
+00:29:14,779 --> 00:29:20,629
+a table indicator ok so by modeling this now
+you will know that what are the assignments
+
+284
+00:29:20,629 --> 00:29:26,610
+of your different words to different topics
+in all these documents ok in interesting thing
+
+285
+00:29:26,610 --> 00:29:31,940
+is that you do not did not have to tell how
+many topics do you need a priori what is the
+
+286
+00:29:31,940 --> 00:29:38,220
+model can itself learn from the observation
+so so what we have seen we have seemed ok
+
+287
+00:29:38,220 --> 00:29:42,690
+so you have an l d a model you can use it
+for very nice applications like ah finding
+
+288
+00:29:42,690 --> 00:29:50,090
+out similarity between documents words but
+suppose you want to use some rich assumption
+
+289
+00:29:50,090 --> 00:29:55,739
+like topics are collated changing over time
+so you can modify that model that's why it's
+
+290
+00:29:55,739 --> 00:30:02,210
+it has a lot of ah then the model is very
+very strong it can use ah many different variations
+
+291
+00:30:02,210 --> 00:30:07,559
+then you say ok ok i this is unsupervised
+model but suppose i want to model some responses
+
+292
+00:30:07,559 --> 00:30:12,950
+with that that is what is the rating of this
+text or how many likes i can take it as an
+
+293
+00:30:12,950 --> 00:30:19,299
+observation variable inside response variable
+and learn my topics according that it is sewage
+
+294
+00:30:19,299 --> 00:30:24,369
+topic model i can go further and say ok which
+two documents are connected together that
+
+295
+00:30:24,369 --> 00:30:29,940
+i can again measure the link as an observation
+ah so link can be as a response or observation
+
+296
+00:30:29,940 --> 00:30:35,549
+link two pair of document documents this was
+very relational topic models and then we said
+
+297
+00:30:35,549 --> 00:30:40,440
+ok suppose we do not want to use any parameters
+how many how many topics etcetera then you
+
+298
+00:30:40,440 --> 00:30:44,440
+go to bayesian non parametrics and they are
+again there a lot of different models we talked
+
+299
+00:30:44,440 --> 00:30:49,479
+about in very briefly about chinese restaurant
+process and chinese restaurant franchise but
+
+300
+00:30:49,479 --> 00:30:54,970
+they are the other variations also that can
+be used and depending on your application
+
+301
+00:30:54,970 --> 00:30:59,140
+we can choose one of the other models and
+they are tools available that will allow you
+
+302
+00:30:59,140 --> 00:31:04,629
+to model any of this
+so that brings us to the end of this ninth
+
+303
+00:31:04,629 --> 00:31:11,070
+week where we discussed a lot about topic
+models and also about semantics token semantics
+
+304
+00:31:11,070 --> 00:31:14,701
+from the next thing we will start talking
+about different applications so we will talk
+
+305
+00:31:14,701 --> 00:31:19,349
+about entity linking information extraction
+in the next week and there will go about other
+
+306
+00:31:19,349 --> 00:31:25,339
+applications in the subsequent weeks so
+thank you and see you in the next week
+

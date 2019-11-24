@@ -1,0 +1,1608 @@
+1
+00:00:18,880 --> 00:00:22,410
+welcome back for the second lecture of this
+week so in the last lecture we started our
+
+2
+00:00:22,410 --> 00:00:27,070
+discussions on distribution semantics and
+we took a very simple example in the very
+
+3
+00:00:27,070 --> 00:00:31,630
+naive method we constructed that distribution
+matrix and try to compute the similarity across
+
+4
+00:00:31,630 --> 00:00:36,440
+words now you will be see this this concept
+much more formally that how do we construct
+
+5
+00:00:36,440 --> 00:00:41,220
+such models and what are the different applications
+that that we can use them all we will see
+
+6
+00:00:41,220 --> 00:00:52,320
+some some examples so firstly let me just
+go back a step and and see why do we need
+
+7
+00:00:52,320 --> 00:00:58,430
+to talk about the distributional semantics
+so if i talk about a vector space model without
+
+8
+00:00:58,430 --> 00:01:03,299
+distributional semantics what would happen
+so there words would we treated as various
+
+9
+00:01:03,299 --> 00:01:08,110
+atomic symbols so what do i mean by that
+
+10
+00:01:08,110 --> 00:01:13,740
+suppose think of your semantic space as corresponding
+to various various different words that you
+
+11
+00:01:13,740 --> 00:01:21,740
+see in your vocabulary so if your vocabulary
+is of size v so contains word with index one
+
+12
+00:01:21,740 --> 00:01:28,240
+two up to v and i want to give a representation
+to this these words in the vocabulary some
+
+13
+00:01:28,240 --> 00:01:32,359
+representation so what is the representation
+that i can give without any ah looking at
+
+14
+00:01:32,359 --> 00:01:39,689
+any distributions so i will see that say that
+ok each one is a different dimension dimension
+
+15
+00:01:39,689 --> 00:01:48,759
+one dimension two up to dimension v ok and
+how do i denote a word in these dimensions
+
+16
+00:01:48,759 --> 00:01:54,369
+so suppose i have the i th word so i will
+say so let me denote it the i th word this
+
+17
+00:01:54,369 --> 00:02:03,479
+will be a vector in v dimensions where only
+the i th element is one everything else is
+
+18
+00:02:03,479 --> 00:02:12,569
+zero ok so like that i can give a different
+representation to each of the v words right
+
+19
+00:02:12,569 --> 00:02:18,190
+where only one element corresponding to the
+index will be one everything else will be
+
+20
+00:02:18,190 --> 00:02:26,720
+zero and this is also called the one hot encoding
+only one of the entry is one everything else
+
+21
+00:02:26,720 --> 00:02:34,050
+is zero
+now so there is also my semantic space where
+
+22
+00:02:34,050 --> 00:02:38,260
+all the v dimensions correspond to different
+v different words now what is the difference
+
+23
+00:02:38,260 --> 00:02:44,920
+here i am not capturing distribution i am
+just saying this word is the i th dimension
+
+24
+00:02:44,920 --> 00:02:51,640
+nothing else now can i do semantics with that
+or can i capture the meaning of the words
+
+25
+00:02:51,640 --> 00:03:00,440
+with that each word has a different vector
+now suppose i want to find out if wi and wj
+
+26
+00:03:00,440 --> 00:03:09,870
+are more similar than wi and wk so what is
+the similarity between wiwj and wiwk so what
+
+27
+00:03:09,870 --> 00:03:15,400
+will happen if i use this encoding so i will
+find out because here the i th element will
+
+28
+00:03:15,400 --> 00:03:20,710
+be one everything else will be zero here j
+th element will be one everything else will
+
+29
+00:03:20,710 --> 00:03:27,690
+be zero so if i try to take a dot product
+i will get a zero in both the cases even if
+
+30
+00:03:27,690 --> 00:03:33,760
+you find that these two words are looking
+similar than these two words and that is one
+
+31
+00:03:33,760 --> 00:03:42,810
+problem with using on the one hot encoding
+so suppose i take two words here like motel
+
+32
+00:03:42,810 --> 00:03:48,600
+and hotel and suppose motel occur at this
+index it will has one everything as zero hotel
+
+33
+00:03:48,600 --> 00:03:52,840
+occurs this syntax this is one everything
+as zero so if i take to take try to take the
+
+34
+00:03:52,840 --> 00:03:59,680
+dot product of these two i will get a zero
+and if i if i take hotel and book that also
+
+35
+00:03:59,680 --> 00:04:02,580
+will give me (Refer Time: 04 :00) a dot product
+of zero so this will not capture that hotels
+
+36
+00:04:02,580 --> 00:04:09,520
+and motels are much more similar than hotels
+and book now what do we do in distribution
+
+37
+00:04:09,520 --> 00:04:15,580
+semantics so we use this idea that you know
+a word by the company it keeps so instead
+
+38
+00:04:15,580 --> 00:04:24,960
+of putting only one one and everything else
+zero try to model the distributions so suppose
+
+39
+00:04:24,960 --> 00:04:30,820
+i take a word like banking i will not denote
+it by a simply one at its syntax but i will
+
+40
+00:04:30,820 --> 00:04:34,319
+see what are the other words that come its
+context
+
+41
+00:04:34,319 --> 00:04:40,440
+so if we talk it is occurring in in the corpus
+with government dept problems turning crises
+
+42
+00:04:40,440 --> 00:04:50,040
+europe regulations replace etcetera then these
+words will be use to represent banking so
+
+43
+00:04:50,040 --> 00:04:57,680
+now what will happen so instead of my one
+hot encoding i will now go to a distribution
+
+44
+00:04:57,680 --> 00:05:05,690
+representation where i will say for the word
+like banking how many times suppose this is
+
+45
+00:05:05,690 --> 00:05:13,420
+my dimensions corresponding to government
+so how many times it occurs with government
+
+46
+00:05:13,420 --> 00:05:24,270
+say two times similarly here it is my ah dimension
+corresponding to say regulation how many times
+
+47
+00:05:24,270 --> 00:05:29,710
+it is [vocalized noise] occurring with regulation
+so this is i am doing for bank now i can do
+
+48
+00:05:29,710 --> 00:05:37,210
+similar thing for something else like economy
+and so on what they will find probably the
+
+49
+00:05:37,210 --> 00:05:44,919
+word banking economy have quite similar distributions
+than the word like banking and something like
+
+50
+00:05:44,919 --> 00:05:52,090
+play yes so instead of having a on hot encoding
+i am having a distributed representation and
+
+51
+00:05:52,090 --> 00:05:57,480
+thats what is being done by these distribution
+semantic models
+
+52
+00:05:57,480 --> 00:06:04,240
+so now how would i build a distribution semantic
+models step by step so you will take a corpus
+
+53
+00:06:04,240 --> 00:06:09,460
+that is the ah that is something that you
+have require that contains a lot of data the
+
+54
+00:06:09,460 --> 00:06:15,750
+the various usage of different words in the
+sentences now you will do some pre processes
+
+55
+00:06:15,750 --> 00:06:21,500
+to define what are your target words and what
+are your context words context can be context
+
+56
+00:06:21,500 --> 00:06:26,350
+word or something else we will see some examples
+now once you select what are your targets
+
+57
+00:06:26,350 --> 00:06:34,650
+and context from your data and what is the
+next task next you will count how many times
+
+58
+00:06:34,650 --> 00:06:40,650
+the target co occurs with various contextand
+you will give some weights to these contexts
+
+59
+00:06:40,650 --> 00:06:44,760
+it can be the simply number of times they
+co occur or some function applied over this
+
+60
+00:06:44,760 --> 00:06:50,110
+this number and we will see again see some
+examples for that now once you have given
+
+61
+00:06:50,110 --> 00:06:56,670
+the weights you build the matrix distribution
+matrix now some optional step is if you want
+
+62
+00:06:56,670 --> 00:07:00,540
+to reduce the dimensions of this matrix because
+the dimensions in general can be very very
+
+63
+00:07:00,540 --> 00:07:04,510
+high if you are taking talking about a large
+corpus you might have millions of words as
+
+64
+00:07:04,510 --> 00:07:12,510
+your context so do you want to further reduce
+the dimensions then once you have the representation
+
+65
+00:07:12,510 --> 00:07:16,650
+in that reduce dimension you can also try
+to capture the similarity across words so
+
+66
+00:07:16,650 --> 00:07:23,070
+you compute the vector distances on the reduced
+matrix and this is the overall pipeline for
+
+67
+00:07:23,070 --> 00:07:31,479
+constructing a distribution semantic model
+now here there are many design choices that
+
+68
+00:07:31,479 --> 00:07:36,220
+you might have to make for example we said
+that we will define what are my target words
+
+69
+00:07:36,220 --> 00:07:41,490
+what are my context words now it can be i
+there can be many many variations so symbol
+
+70
+00:07:41,490 --> 00:07:47,830
+is could be my targets are words and contexts
+are documents and i am saying how many names
+
+71
+00:07:47,830 --> 00:07:52,340
+this word occurs in this documents and further
+i can give various weights so this is one
+
+72
+00:07:52,340 --> 00:07:58,030
+matrix type another could be word cross word
+how many times this word occurs with another
+
+73
+00:07:58,030 --> 00:08:03,979
+word ok then again keep on going so how many
+times this word occurs with that word in certain
+
+74
+00:08:03,979 --> 00:08:10,210
+such proximity or this adjective occurs with
+this modified noun and word with dependency
+
+75
+00:08:10,210 --> 00:08:14,300
+relation noun and verb with its argument and
+so on so i can have various different sort
+
+76
+00:08:14,300 --> 00:08:20,270
+of matrix types initially we will only focus
+on the ah first and second that is my word
+
+77
+00:08:20,270 --> 00:08:25,490
+is the target and document is the context
+or word is a target and word is the context
+
+78
+00:08:25,490 --> 00:08:32,079
+now once i have this matrix what are the other
+design choices then how do i weight the elements
+
+79
+00:08:32,079 --> 00:08:36,560
+should i use the probabilities to weight them
+should i use length normalization tfidf pmi
+
+80
+00:08:36,560 --> 00:08:42,870
+positive pmi or positive pmi bit discounting
+what is the method that i should use for for
+
+81
+00:08:42,870 --> 00:08:51,839
+weighting the the entries in my ah matrix
+ok then if i am doing [vocalized noise] dimensionality
+
+82
+00:08:51,839 --> 00:08:56,230
+reduction there are the many methods lsa plsa
+lda is also one sort of dimension reduction
+
+83
+00:08:56,230 --> 00:09:07,820
+method pca so on then once even i have done
+that how do i compare two different vectors
+
+84
+00:09:07,820 --> 00:09:11,750
+once i have built the all the vectors in this
+manner should i use the euclidean distance
+
+85
+00:09:11,750 --> 00:09:16,500
+cosine similarity or dice coefficient jaccard
+coefficient etcetera so they are lot of design
+
+86
+00:09:16,500 --> 00:09:20,750
+choices that you might have to make and each
+individual on might make a different sort
+
+87
+00:09:20,750 --> 00:09:25,760
+oF distribution semantics model but the underlining
+idea is the same that you want to capture
+
+88
+00:09:25,760 --> 00:09:34,740
+a distributions from a large corpus
+so now and then there might be different questions
+
+89
+00:09:34,740 --> 00:09:38,620
+that you might be going to answer that once
+you have built the distribution matrix how
+
+90
+00:09:38,620 --> 00:09:43,390
+do different rows in the matrix let to each
+other and how do different columns in the
+
+91
+00:09:43,390 --> 00:09:50,860
+matrix let to each other so so what we have
+seen a number of parameters that we need to
+
+92
+00:09:50,860 --> 00:09:56,350
+fix like what type of context should i use
+what weighting schemes are use [vocalized
+
+93
+00:09:56,350 --> 00:10:02,060
+noise] yes and what similarity measures should
+i use ok and different models might be a different
+
+94
+00:10:02,060 --> 00:10:10,410
+settings of these parameters n now lets starts
+with the simplest case where words are the
+
+95
+00:10:10,410 --> 00:10:15,240
+targets and documents are the context now
+here is a simple example so you areseeing
+
+96
+00:10:15,240 --> 00:10:21,870
+some words as a as a rows and documents as
+columns and what do the entries denote that
+
+97
+00:10:21,870 --> 00:10:26,700
+against occurs in the document d four one
+times in d seven three times d eight two times
+
+98
+00:10:26,700 --> 00:10:32,420
+d nine three times document it occurs it does
+not occurs ok and thats how you are represent
+
+99
+00:10:32,420 --> 00:10:37,010
+giving a representation to the word against
+these doing without any weighting just simply
+
+100
+00:10:37,010 --> 00:10:44,010
+the row counts and this you can be very easily
+find for any different any word so in information
+
+101
+00:10:44,010 --> 00:10:52,510
+table also this is done for each word how
+many times it occurs in various talkings
+
+102
+00:10:52,510 --> 00:10:57,060
+on the other hand suppose your context are
+the word then you are trying to show how many
+
+103
+00:10:57,060 --> 00:11:03,210
+times a word occurs with another word so in
+this particular case so the word against occurs
+
+104
+00:11:03,210 --> 00:11:08,480
+with age ninety times age agent thirty nine
+times and so on and this diagnoses tells how
+
+105
+00:11:08,480 --> 00:11:15,140
+many times the word agent occurs ok so it
+is being computed ah by ah as if co occurring
+
+106
+00:11:15,140 --> 00:11:23,860
+with itself so so here so again you will you
+will define a context window it can be a sentence
+
+107
+00:11:23,860 --> 00:11:29,100
+or something and you will find out how many
+times the word air occurs with against and
+
+108
+00:11:29,100 --> 00:11:33,100
+age occurs with age and so on this you can
+do for all the words or a specific set of
+
+109
+00:11:33,100 --> 00:11:44,660
+word that you have already chosen for your
+analysis this is simply the count now ah if
+
+110
+00:11:44,660 --> 00:11:49,470
+i am using my words as contexts document contexts
+are easy because i know what is the context
+
+111
+00:11:49,470 --> 00:11:52,959
+window size this is the whole document so
+i will say whether this words occurs in the
+
+112
+00:11:52,959 --> 00:11:58,620
+document or not or how many times it occurs
+now suppose i am using words at constant now
+
+113
+00:11:58,620 --> 00:12:02,370
+now the question comes in what should be the
+size of my context window should i choose
+
+114
+00:12:02,370 --> 00:12:08,930
+only the co occurrence within two words occurring
+or within a paragraph within the whole document
+
+115
+00:12:08,930 --> 00:12:13,570
+and this is the [vocalized noise] design choice
+that you can make depending on are you trying
+
+116
+00:12:13,570 --> 00:12:18,660
+to measure ah similarity on based on some
+very close co occurrences or you are alloying
+
+117
+00:12:18,660 --> 00:12:27,590
+even a some very very distant ah co occurrences
+in the same document so so what wsa the parameters
+
+118
+00:12:27,590 --> 00:12:33,830
+here what is a size of my widow ok so how
+far am i looking it and what is the shape
+
+119
+00:12:33,830 --> 00:12:40,621
+of my window is a rectangular triangular or
+something else let me just briefly let what
+
+120
+00:12:40,621 --> 00:12:52,370
+do i mean by the shape of the window
+so that is suppose i am having a word w ok
+
+121
+00:12:52,370 --> 00:13:04,230
+and it has some context so i am trying to
+see how many times this word occurs with these
+
+122
+00:13:04,230 --> 00:13:11,110
+words around the context so suppose this is
+the previous word previous to previous word
+
+123
+00:13:11,110 --> 00:13:21,440
+next word next to next word ok so my size
+is am i looking at only two words around it
+
+124
+00:13:21,440 --> 00:13:28,630
+or more than that three four and so on this
+is my size so this is the size and what do
+
+125
+00:13:28,630 --> 00:13:34,820
+i mean by shape so we said it can be triangular
+ok so triangular will be something like this
+
+126
+00:13:34,820 --> 00:13:44,899
+was is rectangular what is the difference
+in triangular what i will do as i keep on
+
+127
+00:13:44,899 --> 00:13:53,279
+moving away from my target word i reduce the
+ah the count i will say ok this count i will
+
+128
+00:13:53,279 --> 00:13:59,680
+treat as one this i will treat as point five
+so this is the strength is decrease as you
+
+129
+00:13:59,680 --> 00:14:04,290
+go away from the target word similarly this
+can be one this can be point five and you
+
+130
+00:14:04,290 --> 00:14:09,339
+can as such were give it any shape like exponential
+or whatever ok in that that way you can capture
+
+131
+00:14:09,339 --> 00:14:14,990
+even much far the co occurrences in that you
+know what you will what you will do you will
+
+132
+00:14:14,990 --> 00:14:20,779
+say ok i will count each co occurrence size
+same same way so each has a weight of one
+
+133
+00:14:20,779 --> 00:14:26,430
+or whatever you give
+so this is the idea of window size and window
+
+134
+00:14:26,430 --> 00:14:37,149
+shape now what the so so so let us take one
+example ah from some these article so this
+
+135
+00:14:37,149 --> 00:14:42,890
+is my passage the suspected communist rebels
+on fourth july nineteen eighty nine killed
+
+136
+00:14:42,890 --> 00:14:50,770
+and so on ok this is my passage and i want
+to capture the co occurrence over there are
+
+137
+00:14:50,770 --> 00:14:58,606
+so so what i will do i will first define what
+is my window size suppose i have a window
+
+138
+00:14:58,606 --> 00:15:05,770
+of size five i want to use window of size
+five where i am taking two words either side
+
+139
+00:15:05,770 --> 00:15:12,550
+of my target word so what will the window
+look like take the word like rebels here i
+
+140
+00:15:12,550 --> 00:15:17,040
+will find out its co occurrence only with
+two words on the left and two words on the
+
+141
+00:15:17,040 --> 00:15:22,610
+right so here suspected and communist come
+here on and four come here similarly when
+
+142
+00:15:22,610 --> 00:15:28,209
+rebels occur here says and communist come
+here have and killed come here so these are
+
+143
+00:15:28,209 --> 00:15:34,860
+my context words in the window so i will only
+define rebel rebels coming with these words
+
+144
+00:15:34,860 --> 00:15:41,550
+everything else i will not i will count as
+zero so this is my unfiltered window ok i
+
+145
+00:15:41,550 --> 00:15:48,560
+am not filtering any words i can also use
+a filtered window where i can filter the words
+
+146
+00:15:48,560 --> 00:15:57,029
+so something like that so i will take two
+words either side of the target word but now
+
+147
+00:15:57,029 --> 00:16:02,709
+these are filtered so that they do not contain
+the stop words so here on the left i have
+
+148
+00:16:02,709 --> 00:16:08,260
+the two words suspect and communist but on
+the right i remove the words on four and a
+
+149
+00:16:08,260 --> 00:16:13,110
+number like nineteen eighty nine and i am
+taking the words july and killed ok similarly
+
+150
+00:16:13,110 --> 00:16:18,339
+here i have says and communist in my window
+but not have have is like a stop word so i
+
+151
+00:16:18,339 --> 00:16:23,410
+have remove that and then killed is there
+up to sixty five is not there and soldiers
+
+152
+00:16:23,410 --> 00:16:29,850
+so you can take either the filtered window
+or an unfiltered window
+
+153
+00:16:29,850 --> 00:16:36,040
+now how do i weight the context so again let
+us take the two cases when my documents are
+
+154
+00:16:36,040 --> 00:16:41,110
+context was is when my words are context so
+when my documents are [vocalized noise] context
+
+155
+00:16:41,110 --> 00:16:48,360
+how should i weight the occurrence of a word
+in my document so so what it should depend
+
+156
+00:16:48,360 --> 00:16:57,740
+on so in how many times a word is occurring
+in the document what it should depend on or
+
+157
+00:16:57,740 --> 00:17:04,890
+what the weight should depend on so i am denoting
+a word in documents and i am going to give
+
+158
+00:17:04,890 --> 00:17:11,470
+a weight suppose it occurs five times in this
+documents ok and another word occurs seven
+
+159
+00:17:11,470 --> 00:17:20,059
+times and now i am convert that into some
+weight so what should thethis weight depend
+
+160
+00:17:20,059 --> 00:17:26,339
+on so what can be the the the different ah
+parameters on which it can depend firstly
+
+161
+00:17:26,339 --> 00:17:35,520
+if a wordoccurs more number of times it should
+get a high weight ok so this weight should
+
+162
+00:17:35,520 --> 00:17:45,740
+the proportional to number of times it occurs
+and we call it the term frequency how many
+
+163
+00:17:45,740 --> 00:17:55,900
+times a word occurs in a document
+what else if the document is very very long
+
+164
+00:17:55,900 --> 00:18:02,970
+so you might have take that window count so
+suppose i have a document d one of size hundred
+
+165
+00:18:02,970 --> 00:18:10,580
+and i have a document d two of size thousand
+ok and i know that word one occurs in d one
+
+166
+00:18:10,580 --> 00:18:22,140
+with five times and it occurs in d two ten
+times i cannot simply say that in document
+
+167
+00:18:22,140 --> 00:18:28,850
+two word one has a high weight because document
+two itself is very very long so the weight
+
+168
+00:18:28,850 --> 00:18:34,860
+should be inversely proportion to the length
+of the document ok as the length of the document
+
+169
+00:18:34,860 --> 00:18:41,170
+increases the weight should also reduce and
+what can be the other measure another measure
+
+170
+00:18:41,170 --> 00:18:47,030
+is very very important also you can you can
+ah even know that if you have ah heard about
+
+171
+00:18:47,030 --> 00:18:54,070
+ah some information debate topics so this
+is called the inverse document frequency so
+
+172
+00:18:54,070 --> 00:19:09,630
+that is idf inverse document frequency and
+what is the idea so idea is if a word occurs
+
+173
+00:19:09,630 --> 00:19:17,320
+in many many documents through my corpus was
+such if a words occurs in only selective documents
+
+174
+00:19:17,320 --> 00:19:25,121
+whom should i give a more weight ok so that
+is suppose my word w one occurs in this document
+
+175
+00:19:25,121 --> 00:19:31,700
+five times and w two occurs seven times that
+is ok but suppose i also find that w one occurs
+
+176
+00:19:31,700 --> 00:19:43,290
+only in three documents overall and w two
+occurs in fifty documents
+
+177
+00:19:43,290 --> 00:19:48,799
+what can i say about the nature of the these
+two words so one thing i can say is that w
+
+178
+00:19:48,799 --> 00:19:55,280
+two is probably a very generic term and w
+one is a very very specific term ok this becomes
+
+179
+00:19:55,280 --> 00:20:05,020
+a generic term and this is a specific term
+so idea is that specific term might have more
+
+180
+00:20:05,020 --> 00:20:08,549
+information about the document than a generic
+term because generic term might be occurring
+
+181
+00:20:08,549 --> 00:20:15,240
+in many many different documents so i want
+to give a high weight to w one because it
+
+182
+00:20:15,240 --> 00:20:22,100
+occurs in very few documents and it has occurred
+here so that means i will give a weight proportional
+
+183
+00:20:22,100 --> 00:20:32,030
+to one divide by number of documents that
+it occurs in ok so i can call it a document
+
+184
+00:20:32,030 --> 00:20:38,360
+frequency if the document frequency is high
+i give it a small weight so these are three
+
+185
+00:20:38,360 --> 00:20:46,710
+different parameters or factors on which my
+function bit will ah depend on how many times
+
+186
+00:20:46,710 --> 00:20:51,780
+a word appears in the document then what is
+the different number of words that occur in
+
+187
+00:20:51,780 --> 00:20:58,120
+a document and how many different documents
+a word occurs in and as we saw its weight
+
+188
+00:20:58,120 --> 00:21:02,010
+should be proportion to the number of times
+that occur in the documents should be inversely
+
+189
+00:21:02,010 --> 00:21:06,260
+proportion to the other two factors and there
+are various different induction functions
+
+190
+00:21:06,260 --> 00:21:12,299
+that that have been proposed that take into
+account all these ideas and one very common
+
+191
+00:21:12,299 --> 00:21:17,600
+measure that is used a tfidf that is i give
+a weight of proportional to the frequency
+
+192
+00:21:17,600 --> 00:21:27,400
+fij times log of n by nj ok so nj is the document
+frequency so if it is higher i give it a smaller
+
+193
+00:21:27,400 --> 00:21:32,580
+weight and where tis the document coming in
+to picture document length so because once
+
+194
+00:21:32,580 --> 00:21:37,470
+i compute the tf idf for each individual term
+the document i take the l two norm so if there
+
+195
+00:21:37,470 --> 00:21:42,520
+are lot of terms the document the individual
+weights will be reduced ok
+
+196
+00:21:42,520 --> 00:21:48,890
+so this is one very ah commonly used ah induction
+function called tf idf i see what are the
+
+197
+00:21:48,890 --> 00:21:53,740
+number of times that word occurs in the document
+and how many different documents that occurs
+
+198
+00:21:53,740 --> 00:21:58,480
+in so one thing they have many variations
+that have been proposed for this function
+
+199
+00:21:58,480 --> 00:22:04,190
+this is the simplest function that has been
+know for tf idf and finally we have to take
+
+200
+00:22:04,190 --> 00:22:08,030
+the l two norm this is something that we should
+not forget that i have to [vocalized noise]
+
+201
+00:22:08,030 --> 00:22:13,039
+finally normalize all the different values
+in a single document so that some of the squares
+
+202
+00:22:13,039 --> 00:22:20,690
+adds up to one so now suppose i take words
+as my context instead of documents then what
+
+203
+00:22:20,690 --> 00:22:27,870
+is the interesting weighting function i can
+use lets take an example so here my target
+
+204
+00:22:27,870 --> 00:22:34,010
+words is word is dog in both the cases context
+word is small and domesticated two different
+
+205
+00:22:34,010 --> 00:22:39,610
+words as my context and what you been shown
+here so target word has the same frequency
+
+206
+00:22:39,610 --> 00:22:47,070
+yes but the context words in one case is small
+as if it sorry small has a frequency of four
+
+207
+00:22:47,070 --> 00:22:52,680
+ninety thousand five eighty and domesticated
+has a frequency of nine hundred and eighty
+
+208
+00:22:52,680 --> 00:22:57,809
+so you can clearly see here see here that
+the word small is very very common and domesticated
+
+209
+00:22:57,809 --> 00:23:03,799
+is very specific term
+now suppose i find out the co occurrence the
+
+210
+00:23:03,799 --> 00:23:08,429
+dog are occurs with small eight fifty five
+times and dog occurs with domesticated twenty
+
+211
+00:23:08,429 --> 00:23:15,340
+nine times now my question is what number
+i should used denote how much dog co occurs
+
+212
+00:23:15,340 --> 00:23:21,600
+with the word like ah small and domesticated
+so if i do not give any weights what will
+
+213
+00:23:21,600 --> 00:23:26,549
+happen here i will say dog occurs a lot with
+the small eight fifty five times and dog occurs
+
+214
+00:23:26,549 --> 00:23:31,620
+very rarely with domesticated twenty nine
+times ok but that is not capture the whole
+
+215
+00:23:31,620 --> 00:23:36,190
+picture so what is the whole picture domesticate
+is the very very rare word it occurs only
+
+216
+00:23:36,190 --> 00:23:41,500
+in nine hundred documents out of which in
+thirty documents occurs with dog a small occurs
+
+217
+00:23:41,500 --> 00:23:45,530
+in four ninety thousand documents out of which
+only in eight fifty five documents it occurs
+
+218
+00:23:45,530 --> 00:23:53,260
+with dog so can i use the idea that if a word
+is rare word its co occurrence with the target
+
+219
+00:23:53,260 --> 00:23:59,310
+word should have a higher weights than if
+the word is very very common word ok so that
+
+220
+00:23:59,310 --> 00:24:04,960
+is can i use the frequency of the individual
+words also when i give the weights to their
+
+221
+00:24:04,960 --> 00:24:11,360
+co occurrence and thats what we do why using
+various association measures that i used to
+
+222
+00:24:11,360 --> 00:24:19,549
+give various weights to the context and the
+idea is that the less frequent target and
+
+223
+00:24:19,549 --> 00:24:24,810
+context elements are the higher the weight
+you give to their co occurrence count ok so
+
+224
+00:24:24,810 --> 00:24:31,929
+in this case what will happen so because my
+context element is less frequent here in domesticated
+
+225
+00:24:31,929 --> 00:24:41,549
+their ah occurrence with dog should be given
+a high weights so co occurrence with the frequent
+
+226
+00:24:41,549 --> 00:24:47,711
+context element small will be less informative
+here than the co occurrence with the rarer
+
+227
+00:24:47,711 --> 00:24:54,030
+word domesticated and there are various measures
+that captures that like mutual information
+
+228
+00:24:54,030 --> 00:24:58,950
+is very very popular measure and also log
+likelihood ratio etcetera they try to capture
+
+229
+00:24:58,950 --> 00:25:04,809
+this so how common and rare or rare the words
+that among which i am finding co occurrence
+
+230
+00:25:04,809 --> 00:25:09,280
+are and how many times they co occurred together
+so they try to use both of these into a single
+
+231
+00:25:09,280 --> 00:25:16,110
+function so what is my what is the function
+for point wise mutual information for two
+
+232
+00:25:16,110 --> 00:25:21,179
+different words w one w two i will find out
+in mutual information
+
+233
+00:25:21,179 --> 00:25:27,540
+what is the probability that they co occurred
+together in the corpus i will divide it by
+
+234
+00:25:27,540 --> 00:25:32,900
+what is the probability that they would have
+co occurred together had they been they been
+
+235
+00:25:32,900 --> 00:25:39,190
+occurring independently ok so this mutual
+information tells me how much information
+
+236
+00:25:39,190 --> 00:25:45,720
+do i gain by seeing how many times they are
+co occurring that i that i wouldnt have obtain
+
+237
+00:25:45,720 --> 00:25:52,170
+by their random co occurrences so so thats
+the formula thats the formula so what is their
+
+238
+00:25:52,170 --> 00:25:57,780
+probability of of they co occurrence in the
+corpus divided by what is the probability
+
+239
+00:25:57,780 --> 00:26:03,730
+of a co occurrence in the corpus if they were
+independent now how do we capture the probability
+
+240
+00:26:03,730 --> 00:26:09,559
+of their occurring of they occurring independently
+in the corpus so that would be i will say
+
+241
+00:26:09,559 --> 00:26:14,650
+ok the probability with which w one occurs
+and among those times w two could have occurred
+
+242
+00:26:14,650 --> 00:26:20,010
+again with this probability so it will be
+the probability of occurrence of w one times
+
+243
+00:26:20,010 --> 00:26:27,710
+probability of occurrence of w two so so this
+is a function that i can use probability with
+
+244
+00:26:27,710 --> 00:26:32,600
+which w one w two co occur divide by probability
+with which w one occurs times probability
+
+245
+00:26:32,600 --> 00:26:39,920
+with which w two occurs and i will take a
+log of for that and how do i capture probability
+
+246
+00:26:39,920 --> 00:26:45,360
+of occurrence in a in the corpus for two words
+number of times they co occurred together
+
+247
+00:26:45,360 --> 00:26:52,679
+is a simple co occurrence count divided by
+n so n here would denote the different ah
+
+248
+00:26:52,679 --> 00:26:58,610
+number of context that you can see or in in
+or it can be also the number of different
+
+249
+00:26:58,610 --> 00:27:04,280
+tokens that you have in your data similarly
+probability corpus of the word w is very simple
+
+250
+00:27:04,280 --> 00:27:10,850
+this is the unigram model number of times
+this word occurs divided by a num all total
+
+251
+00:27:10,850 --> 00:27:14,940
+different ah number of token that you have
+seen
+
+252
+00:27:14,940 --> 00:27:24,059
+so 
+so in pmi what would happen in in sudden cases
+
+253
+00:27:24,059 --> 00:27:31,240
+the value might also go to ah negative values
+so what we what is some variations there so
+
+254
+00:27:31,240 --> 00:27:36,169
+you can use up only the positive values and
+this is called positive pmi ppmi so where
+
+255
+00:27:36,169 --> 00:27:40,890
+only those ah values that are greater than
+zero are taking into consideration everything
+
+256
+00:27:40,890 --> 00:27:51,669
+else is converted to zero now there is one
+problem in this mutual information approach
+
+257
+00:27:51,669 --> 00:27:57,080
+that there is a biased words some in frequent
+evens so remember why why we came this idea
+
+258
+00:27:57,080 --> 00:28:03,039
+of mutual information we wanted to give high
+weight to the evens that are in frequent ok
+
+259
+00:28:03,039 --> 00:28:07,810
+if two words are rare we do wanted to give
+their association a high high weights but
+
+260
+00:28:07,810 --> 00:28:13,539
+what happens if two evens two words are very
+very rare they get they might get some high
+
+261
+00:28:13,539 --> 00:28:20,650
+weight ok so some one particular cases suppose
+think about the scenario with wi and wj have
+
+262
+00:28:20,650 --> 00:28:28,289
+the same occurrence in the corpus as w i wjwj
+together ok now what to do the probability
+
+263
+00:28:28,289 --> 00:28:38,460
+or the mutual information in this case so
+pmi between wi wj is log of probability wi
+
+264
+00:28:38,460 --> 00:28:46,559
+wj divided by probability w i times probability
+wj and suppose all three are equal so what
+
+265
+00:28:46,559 --> 00:28:57,220
+would happen this would cancel so this will
+be log one by p wi so what it is saying if
+
+266
+00:28:57,220 --> 00:29:05,210
+these three are equal pmi will be high if
+pwi is low and immediately that that gives
+
+267
+00:29:05,210 --> 00:29:11,830
+a bias in in the favor of events that are
+smaller though or words that occur very very
+
+268
+00:29:11,830 --> 00:29:16,890
+rarely ok so you can think of two scenarios
+where all this three probabilities are one
+
+269
+00:29:16,890 --> 00:29:23,330
+by hundred or versus all these three probabilities
+are one by ten thousands so either we i would
+
+270
+00:29:23,330 --> 00:29:27,180
+like the association to be the same in both
+the cases but what would happen in this formula
+
+271
+00:29:27,180 --> 00:29:34,050
+the association become high when the probability
+is low and this is not desired ok so this
+
+272
+00:29:34,050 --> 00:29:38,600
+will create a problem when their ah individual
+probabilities are very very low this this
+
+273
+00:29:38,600 --> 00:29:43,400
+immediately will become pmi will become very
+very high
+
+274
+00:29:43,400 --> 00:29:49,620
+and there are another ah another case where
+you can see that if the word wj occurs only
+
+275
+00:29:49,620 --> 00:29:57,760
+once in the corpus and it also occurs that
+time in with wi so what would happen so pwiwj
+
+276
+00:29:57,760 --> 00:30:08,970
+and pwj will become similar here also because
+what i am i saying wj occurs once also with
+
+277
+00:30:08,970 --> 00:30:20,500
+wi ok so pwj will be one by n and pwiwj will
+also be one by n so if i put that here it
+
+278
+00:30:20,500 --> 00:30:25,880
+will again come out to be this formula and
+that means it will the pmi will depend on
+
+279
+00:30:25,880 --> 00:30:33,750
+wi if wi is frequent pmi will be low if it
+is rare it will become high i mean this is
+
+280
+00:30:33,750 --> 00:30:39,290
+not desire so to evaluate this problem so
+they are two different things that you can
+
+281
+00:30:39,290 --> 00:30:45,600
+do one is you can ah probably start by the
+moving all the words that are having very
+
+282
+00:30:45,600 --> 00:30:50,860
+very low occurrences so all the words that
+are occurring less than two or three times
+
+283
+00:30:50,860 --> 00:30:55,180
+you can remove from your data all together
+and huh the words that are occurring more
+
+284
+00:30:55,180 --> 00:31:03,270
+than that this problem will be not ah not
+that bad but if you want took also take into
+
+285
+00:31:03,270 --> 00:31:07,309
+considerations the very very infrequent words
+so what you might have to do you might have
+
+286
+00:31:07,309 --> 00:31:13,980
+to ah takes into consideration some sort of
+ah bias
+
+287
+00:31:13,980 --> 00:31:20,299
+so what is the idea so there is this very
+important discounting factors that are proposed
+
+288
+00:31:20,299 --> 00:31:26,510
+by pantel and lin so what it says that you
+multiply the pmi value with this discounting
+
+289
+00:31:26,510 --> 00:31:32,690
+factor that is fij divided by the fij plus
+one times minimum of fi fj divided by minimum
+
+290
+00:31:32,690 --> 00:31:38,740
+of fi fj plus one so what would happen now
+so you will multiply this with pmi so is a
+
+291
+00:31:38,740 --> 00:31:44,559
+frequency of the individual events are very
+very small this factor will become smaller
+
+292
+00:31:44,559 --> 00:31:53,360
+so like thats take two cases here one where
+fi is equal to fj is equal to fij is one where
+
+293
+00:31:53,360 --> 00:32:01,110
+they are even second fi is equal to fj is
+equal to fij is equal to ten not so rare ok
+
+294
+00:32:01,110 --> 00:32:06,909
+so in the first case what will be the discounting
+factors one divided by one plus one times
+
+295
+00:32:06,909 --> 00:32:12,320
+one divided by one plus one this will be one
+by four in this case it will be one divided
+
+296
+00:32:12,320 --> 00:32:16,830
+by ten plus one times one divided by ten plus
+one this will be sorry ten divided by that
+
+297
+00:32:16,830 --> 00:32:25,429
+so this will hundred divided by hundred twenty
+one so discounting will be much more higher
+
+298
+00:32:25,429 --> 00:32:32,010
+here so you will divide the pmi by point two
+five here you will or multiply by point two
+
+299
+00:32:32,010 --> 00:32:37,530
+five here you multiply by roughly point eight
+and this takes care of the problems that we
+
+300
+00:32:37,530 --> 00:32:43,669
+had talked about in with infrequent events
+so whenever there are infrequent pmi will
+
+301
+00:32:43,669 --> 00:32:48,899
+become very high so if you use this discounting
+it will again come back to a reasonable value
+
+302
+00:32:48,899 --> 00:32:56,670
+and this will not create a problem when the
+evens are not so rare so here is one example
+
+303
+00:32:56,670 --> 00:33:02,800
+of what kind of vector do you get by taking
+this pmi ok so on the left hand side you have
+
+304
+00:33:02,800 --> 00:33:09,659
+so so what is done here you taking a large
+corpus and finding out for individual words
+
+305
+00:33:09,659 --> 00:33:15,000
+what are the other other vectors that i having
+high pmi values and then you are doing some
+
+306
+00:33:15,000 --> 00:33:19,890
+normalization so that all the pmi value is
+on this course for a given word add up to
+
+307
+00:33:19,890 --> 00:33:26,309
+one so what do you see here if i take a word
+like petroleum you find words like oil gas
+
+308
+00:33:26,309 --> 00:33:31,840
+crude barrels exploration that are coming
+out to be having very high pmi values with
+
+309
+00:33:31,840 --> 00:33:36,770
+drug you find words like trafficking cocaine
+narcotics insurance you find a words like
+
+310
+00:33:36,770 --> 00:33:43,909
+insurers premiums lloyds with forest you find
+the words like timber trees land and robots
+
+311
+00:33:43,909 --> 00:33:49,470
+robotics you find word like robots automation
+and so on and all this is coming out just
+
+312
+00:33:49,470 --> 00:33:56,679
+by putting this pmi function over this corpus
+where different words and sentences are ah
+
+313
+00:33:56,679 --> 00:34:01,789
+are put together ok i am computing this function
+and finding out for a word what are similar
+
+314
+00:34:01,789 --> 00:34:06,130
+words and you can see that it is capturing
+very nicely what are the other very similar
+
+315
+00:34:06,130 --> 00:34:11,859
+words to that ah to s starting word like robotics
+you find words like robots and automation
+
+316
+00:34:11,859 --> 00:34:16,849
+but the word like forest you find immediately
+words like trees etcetera and this can give
+
+317
+00:34:16,849 --> 00:34:21,190
+you nice intuition that you can use that very
+nicely to capture which two words are similar
+
+318
+00:34:21,190 --> 00:34:26,129
+which two words are very very different and
+in in some of application you can make use
+
+319
+00:34:26,129 --> 00:34:33,149
+of that so i will start from here in the ah
+so for the for the next lecture and we will
+
+320
+00:34:33,149 --> 00:34:40,069
+see how we can use that for some very interesting
+application like ah term information i will
+
+321
+00:34:40,069 --> 00:34:42,249
+define the problem and see how do you use
+that
+
+322
+00:34:42,249 --> 00:34:43,109
+thank you
+

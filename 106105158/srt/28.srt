@@ -1,0 +1,1295 @@
+1
+00:00:17,859 --> 00:00:23,439
+so welcome to the second lecture of this week
+so we had started for our dependency parsing
+
+2
+00:00:23,439 --> 00:00:29,160
+formulation and we define what is the problem
+and what are the very ah formal conditions
+
+3
+00:00:29,160 --> 00:00:34,320
+on a dependency graph in the last lecture
+so we are given a input sentence i want to
+
+4
+00:00:34,320 --> 00:00:39,579
+obtain a dependency graph for that sentence
+and further if we discuss that there are certain
+
+5
+00:00:39,579 --> 00:00:44,290
+ways we can handle this problem and in this
+course we will mainly focus on the approaches
+
+6
+00:00:44,290 --> 00:00:48,199
+that you just that use some sort of labeled
+data for this task
+
+7
+00:00:48,199 --> 00:00:52,940
+so it will be some sort of machine learning
+task for finding out the dependency paths
+
+8
+00:00:52,940 --> 00:01:00,600
+for a new sentence so now so in the in the
+next four lectures in this week i will cover
+
+9
+00:01:00,600 --> 00:01:05,880
+two different methods for the same problem
+but before discussing the methods in detail
+
+10
+00:01:05,880 --> 00:01:09,939
+let me try to give you a basic intuition on
+what we are trying to achieve and this will
+
+11
+00:01:09,939 --> 00:01:15,579
+also help you to understand that if you are
+given a new problem and you want to take it
+
+12
+00:01:15,579 --> 00:01:20,750
+in a machine you want to solve it in a machine
+learning based method then how you should
+
+13
+00:01:20,750 --> 00:01:29,470
+go about it ok
+so so let me take this case so i have a sentence
+
+14
+00:01:29,470 --> 00:01:35,250
+that contains some words ok this is some arbitrary
+sentence this is a new sentence i might not
+
+15
+00:01:35,250 --> 00:01:41,960
+have seen it before and my goal is to come
+up with the dependency graph ok these are
+
+16
+00:01:41,960 --> 00:01:50,700
+nodes are different words and they have certain
+relations r one r two etcetera are certain
+
+17
+00:01:50,700 --> 00:01:58,600
+relations ok this is my dependency graph so
+i want to go from the sentence to my dependency
+
+18
+00:01:58,600 --> 00:02:04,130
+graph
+now suppose i want to do it in a in some sort
+
+19
+00:02:04,130 --> 00:02:12,069
+of systematic manner by using some sort of
+data so what i will do i will try to convert
+
+20
+00:02:12,069 --> 00:02:20,930
+that to some sort of configuration format
+ok some initial configuration so that means
+
+21
+00:02:20,930 --> 00:02:25,590
+there will be a function that will take any
+sentence as input and convert that to initial
+
+22
+00:02:25,590 --> 00:02:30,210
+configuration
+now i will define some operations that i can
+
+23
+00:02:30,210 --> 00:02:43,170
+make on this initial configuration ok and
+that will take me to some intermediate configuration
+
+24
+00:02:43,170 --> 00:02:50,270
+and i should be able to keep on doing this
+operations until at some point of time i arrived
+
+25
+00:02:50,270 --> 00:02:58,950
+at a terminal configuration and terminal configuration
+should be something that resembles a dependency
+
+26
+00:02:58,950 --> 00:03:04,709
+graph ok so my whole task is now starting
+from the input sentence converted to a initial
+
+27
+00:03:04,709 --> 00:03:10,970
+configuration apply some well defined operations
+and go to intermediate configuration until
+
+28
+00:03:10,970 --> 00:03:17,060
+you finally reach a terminal configuration
+that may be deterministic may not be deterministic
+
+29
+00:03:17,060 --> 00:03:23,260
+so now so this is my whole thing this is my
+sentence and this is my dependency graph and
+
+30
+00:03:23,260 --> 00:03:28,310
+operations are something i do not know but
+i need to define i need to find out for a
+
+31
+00:03:28,310 --> 00:03:31,980
+particular configuration what are the operation
+that i should take
+
+32
+00:03:31,980 --> 00:03:37,550
+now where does machine learning comes in here
+so this looks like very deterministic what
+
+33
+00:03:37,550 --> 00:03:44,450
+is the problem the problem is they may not
+be a single operation so i should have a way
+
+34
+00:03:44,450 --> 00:03:49,591
+to find out for the given configuration what
+is the operation that i should take and that
+
+35
+00:03:49,591 --> 00:03:54,480
+i am trying to learn from the data that i
+have so that's where the machine learning
+
+36
+00:03:54,480 --> 00:04:04,940
+comes in so we have data where we have a set
+of sentences and their corresponding dependency
+
+37
+00:04:04,940 --> 00:04:12,700
+graphs ok
+so there i can find out for what configuration
+
+38
+00:04:12,700 --> 00:04:22,460
+what was the operation that i had taken and
+i will use that to learn for a new sentence
+
+39
+00:04:22,460 --> 00:04:27,629
+or a new configuration what operation i should
+be taking so that given any new sentence i
+
+40
+00:04:27,629 --> 00:04:34,960
+can actually find out it's dependency graph
+and this is just generic idea we will see
+
+41
+00:04:34,960 --> 00:04:39,879
+specifically how it will be used in the two
+different methods that we will cover in this
+
+42
+00:04:39,879 --> 00:04:42,939
+course
+so now the first method that we are going
+
+43
+00:04:42,939 --> 00:04:51,159
+to cover is a transition based parsing method
+ok so so we will see it's formulation so what
+
+44
+00:04:51,159 --> 00:04:57,590
+is the basic idea so it's similar to the intuition
+that i had provided earlier that is i have
+
+45
+00:04:57,590 --> 00:05:05,560
+to derive a a single syntactic representation
+it's called the dependency graph via a deterministic
+
+46
+00:05:05,560 --> 00:05:10,419
+sequence of elementary parsing actions and
+this is what we were saying as operations
+
+47
+00:05:10,419 --> 00:05:15,979
+i start with the sentence i keep on having
+certain operations over that until i i arrive
+
+48
+00:05:15,979 --> 00:05:21,930
+at some dependency graph
+so now in this particular case of transition
+
+49
+00:05:21,930 --> 00:05:28,250
+based parsing what what do i mean by a configuration
+what do we mean by a configuration look like
+
+50
+00:05:28,250 --> 00:05:37,029
+so a configuration i will need a triple that
+is s stack buffer and a set of arcs so that
+
+51
+00:05:37,029 --> 00:05:42,240
+is at any point i can define a configuration
+in the configuration i will have a stack where
+
+52
+00:05:42,240 --> 00:05:48,009
+there will be some set of words that has been
+partially processed then the buffer it will
+
+53
+00:05:48,009 --> 00:05:55,520
+contain words that are remaining and whatever
+arcs i have already obtained via my ah operations
+
+54
+00:05:55,520 --> 00:06:01,580
+this will be in the set of arcs so at the
+bottom of this slide you are seen one example
+
+55
+00:06:01,580 --> 00:06:05,069
+of a configuration
+so this is for the sentence he sent her a
+
+56
+00:06:05,069 --> 00:06:10,699
+letter so this is the intermediate configuration
+where you have the words sent her a in the
+
+57
+00:06:10,699 --> 00:06:16,089
+stack so you are partially processed at this
+point the word letter and punctuation are
+
+58
+00:06:16,089 --> 00:06:21,319
+in the buffer they are remaining and there
+is already an arc between the words he and
+
+59
+00:06:21,319 --> 00:06:27,360
+sent and he is the subject of the word sent
+the verb sent so this is the intermediate
+
+60
+00:06:27,360 --> 00:06:35,240
+configuration
+now how do i formally define my whole transition
+
+61
+00:06:35,240 --> 00:06:42,830
+system so formally so it will be very analogous
+to what i started discussing ok so i need
+
+62
+00:06:42,830 --> 00:06:48,990
+to define what are my possible configurations
+how do i go from a sentence to an initial
+
+63
+00:06:48,990 --> 00:06:54,240
+configuration and which configuration will
+i call as a final configuration and what are
+
+64
+00:06:54,240 --> 00:06:58,889
+the operations i should make so that i can
+transit from one configuration to another
+
+65
+00:06:58,889 --> 00:07:04,940
+configuration and that's why the name of transition
+system also comes in so then formally we will
+
+66
+00:07:04,940 --> 00:07:11,759
+define dependency parsing transition system
+as a quadruple that has c t c s and c t and
+
+67
+00:07:11,759 --> 00:07:16,219
+what are these capital c is a set of configurations
+all the configuration that are possible
+
+68
+00:07:16,219 --> 00:07:23,749
+now capital t denotes a set of transitions
+and each transition takes me from one configuration
+
+69
+00:07:23,749 --> 00:07:28,339
+to another configuration from c to c one configuration
+in the set c to another configuration in the
+
+70
+00:07:28,339 --> 00:07:34,559
+set c now c s will be an initialization function
+that you will give a sentence as input and
+
+71
+00:07:34,559 --> 00:07:39,849
+you will find the initial configuration as
+output and then you will have a set of terminal
+
+72
+00:07:39,849 --> 00:07:45,179
+configurations so that means whenever you
+reach a terminal configuration via your operations
+
+73
+00:07:45,179 --> 00:07:50,689
+you will stop anyway call it as your dependency
+graph
+
+74
+00:07:50,689 --> 00:07:59,399
+now whenever you are given a sentence x what
+is my transition sequence so it's sequence
+
+75
+00:07:59,399 --> 00:08:04,939
+will be a set of configurations it's starting
+from c zero to c m and what are the conditions
+
+76
+00:08:04,939 --> 00:08:15,239
+on those c zero is something that you can
+derive from the sentence ok so suppose x is
+
+77
+00:08:15,239 --> 00:08:20,500
+the sentence that you are giving as a input
+and you want to find out it's dependency graph
+
+78
+00:08:20,500 --> 00:08:25,929
+so now what is the idea you have a function
+initialization function you have apply that
+
+79
+00:08:25,929 --> 00:08:32,570
+function over x and you get a transition sorry
+you get a configuration c zero
+
+80
+00:08:32,570 --> 00:08:42,450
+now you keep on applying various operations
+and get c one c two up to c m and c m is in
+
+81
+00:08:42,450 --> 00:08:48,820
+the set of terminal configurations ok this
+is my initialization function set of terminal
+
+82
+00:08:48,820 --> 00:08:55,062
+configurations and c zero to c m all are in
+the set of configurations and what is the
+
+83
+00:08:55,062 --> 00:09:01,199
+relation between any two conjugative c i and
+c i plus one relation would be i can obtained
+
+84
+00:09:01,199 --> 00:09:11,440
+c i plus one by making a transition over c
+i ok for some transition i have defined in
+
+85
+00:09:11,440 --> 00:09:17,279
+my set capital t so this is my process it
+starts with the sentence apply the initial
+
+86
+00:09:17,279 --> 00:09:24,180
+initialization function get the initial configuration
+keep on applying by a various transitions
+
+87
+00:09:24,180 --> 00:09:29,069
+until you obtain a terminal configuration
+ok
+
+88
+00:09:29,069 --> 00:09:38,240
+now as per the transition system that we have
+defined what will be the initialization initialization
+
+89
+00:09:38,240 --> 00:09:44,089
+will be simple so i have to define what is
+my s stack what is my buffer and what are
+
+90
+00:09:44,089 --> 00:09:54,899
+my arcs because whenever when i am starting
+with the sentence w one to w n ok initially
+
+91
+00:09:54,899 --> 00:09:59,560
+my structure contain the set of partially
+processed words so there is nothing that is
+
+92
+00:09:59,560 --> 00:10:05,899
+processed right now so my stack will be empty
+my buffer should contain the set of remaining
+
+93
+00:10:05,899 --> 00:10:13,949
+input words so remaining words are all the
+words w one to w n and my arc should contain
+
+94
+00:10:13,949 --> 00:10:18,980
+whatever dependency relation i have already
+found so it will be empty this will be empty
+
+95
+00:10:18,980 --> 00:10:28,360
+set so this is my initialization
+now what will be the terminal configuration
+
+96
+00:10:28,360 --> 00:10:35,040
+a termination so the idea is i should not
+have any words remaining in the buffer so
+
+97
+00:10:35,040 --> 00:10:44,690
+my buffer should be empty so terminal condition
+i can define as stack would have some may
+
+98
+00:10:44,690 --> 00:10:52,709
+or may not some words buffer should be empty
+and i will have obtained a set of arcs so
+
+99
+00:10:52,709 --> 00:10:57,680
+this is important my buffer should be empty
+a stack may or may not contain some words
+
+100
+00:10:57,680 --> 00:11:01,319
+and arcs will have some dependency relations
+already
+
+101
+00:11:01,319 --> 00:11:06,199
+so now once you know what is my initial configuration
+what is my termination condition now what
+
+102
+00:11:06,199 --> 00:11:11,460
+is remaining in this ah in this whole thing
+we know all the possible set of configurations
+
+103
+00:11:11,460 --> 00:11:17,220
+so what is remaining is what are all all the
+possible transitions that i can take for going
+
+104
+00:11:17,220 --> 00:11:21,399
+from one configuration to another configuration
+how can i move from initial configuration
+
+105
+00:11:21,399 --> 00:11:28,439
+by a sequence of operations so that i arrive
+at a terminal configuration ok
+
+106
+00:11:28,439 --> 00:11:34,750
+so now in this system there are four transitions
+that have been defined ok so that means for
+
+107
+00:11:34,750 --> 00:11:39,089
+any configuration you can take one of these
+four four transitions so in this slide i am
+
+108
+00:11:39,089 --> 00:11:43,790
+showing you the four transitions different
+transitions that you can take so how you should
+
+109
+00:11:43,790 --> 00:11:53,730
+read it so in the left the names of the transitions
+left arc right arc for a dependency d reduce
+
+110
+00:11:53,730 --> 00:12:00,029
+and shift these are the four transitions possible
+now for each transitions like left arc you
+
+111
+00:12:00,029 --> 00:12:05,850
+will have what is the configuration that is
+the input to that of with which you are starting
+
+112
+00:12:05,850 --> 00:12:11,399
+on top and what is the configuration that
+you will end up with a starting from this
+
+113
+00:12:11,399 --> 00:12:19,100
+configuration if you apply a left arc what
+configuration you will arrive at and finally
+
+114
+00:12:19,100 --> 00:12:24,050
+in the right if there is something that is
+a condition what is the condition under which
+
+115
+00:12:24,050 --> 00:12:30,310
+you can apply this transition this is just
+a necessary condition you need to have this
+
+116
+00:12:30,310 --> 00:12:34,139
+conditions satisfied to be able to apply this
+transition
+
+117
+00:12:34,139 --> 00:12:43,389
+so for example if i see the left arc transition
+what does it say it says that i can apply
+
+118
+00:12:43,389 --> 00:12:51,130
+it when there is stack contain some words
+and i have been shown here the last word in
+
+119
+00:12:51,130 --> 00:12:57,040
+the stack i can also call it the top of this
+stack the word is s i buffer contains some
+
+120
+00:12:57,040 --> 00:13:07,889
+words w j it is starting from w j top of buffer
+is w j and i have some set of arcs now what
+
+121
+00:13:07,889 --> 00:13:16,019
+do i mean by left arc left arc means i making
+a transition from w j to w i yes this is the
+
+122
+00:13:16,019 --> 00:13:21,810
+left arc because the words are occurring in
+the in the same order that they occur in the
+
+123
+00:13:21,810 --> 00:13:28,470
+sentence
+so there is a arc from w j to w i so what
+
+124
+00:13:28,470 --> 00:13:38,529
+is the head here w i is the head and dependent
+is sorry w j is the head and w i is the dependent
+
+125
+00:13:38,529 --> 00:13:47,740
+ok so now there is also a condition here w
+i should not already have a head and let us
+
+126
+00:13:47,740 --> 00:13:56,680
+try to understand this condition so what am
+i saying my stack contains some words and
+
+127
+00:13:56,680 --> 00:14:07,439
+and top is w i buffer contains some words
+starting from w j and i making a left arc
+
+128
+00:14:07,439 --> 00:14:16,209
+so the left arc as the name says it will be
+from buffer to s stack and we are we have
+
+129
+00:14:16,209 --> 00:14:19,420
+always operating on the top words in buffer
+and stack
+
+130
+00:14:19,420 --> 00:14:23,959
+so i making an arc from the top word in buffer
+to the top word in s stack this is the left
+
+131
+00:14:23,959 --> 00:14:38,790
+arc now what is the condition condition is
+w i should not already have a head now why
+
+132
+00:14:38,790 --> 00:14:47,550
+is this condition just see here i am if i
+am making this transition we are saying that
+
+133
+00:14:47,550 --> 00:14:55,649
+the w j is the head of w i now if w i already
+has a head i cannot apply this why can you
+
+134
+00:14:55,649 --> 00:15:01,701
+see what what particular condition in dependency
+parse does it violate so dependency parse
+
+135
+00:15:01,701 --> 00:15:09,790
+has a single head constraint ok so it is a
+single head constraint so that says each word
+
+136
+00:15:09,790 --> 00:15:18,779
+can have at most one head so if w i already
+has a head then i cannot apply this particular
+
+137
+00:15:18,779 --> 00:15:25,759
+transition ok so that is left arc can be applied
+only if w i does not already have a head
+
+138
+00:15:25,759 --> 00:15:33,559
+now suppose if i apply a left arc now i start
+with a configuration like that what is my
+
+139
+00:15:33,559 --> 00:15:43,629
+real thing configuration so real thing configuration
+would be i will remove w i from the s stack
+
+140
+00:15:43,629 --> 00:15:53,410
+ok it will contain all the words except w
+i buffer will remain as it is and my arcs
+
+141
+00:15:53,410 --> 00:16:08,389
+will be i have got a new arc what is that
+w j dependent each w this is my new arc ok
+
+142
+00:16:08,389 --> 00:16:16,499
+so i have removed w i from my s stack now
+you might have this question ah why am i removing
+
+143
+00:16:16,499 --> 00:16:23,269
+w i from the s stack if the word is removed
+i cannot put it back so i can remove a word
+
+144
+00:16:23,269 --> 00:16:29,290
+from the s stack only if i am sure that all
+it's relations have already been captured
+
+145
+00:16:29,290 --> 00:16:39,800
+now so the question here is can this word
+w i have anymore relations with any words
+
+146
+00:16:39,800 --> 00:16:46,019
+so if w i has any relation with the words
+that occurs before w i it would already have
+
+147
+00:16:46,019 --> 00:16:51,370
+been captured at this point because these
+are already partially processed words so the
+
+148
+00:16:51,370 --> 00:16:58,459
+only relation w i might have is with any words
+after w j
+
+149
+00:16:58,459 --> 00:17:06,270
+now let's take a scenario take a word a w
+k ok now what kind of relation w i might have
+
+150
+00:17:06,270 --> 00:17:19,780
+with w k it can be either an incoming arc
+or it can be an outgoing arc ok now can it
+
+151
+00:17:19,780 --> 00:17:28,740
+can have an incoming arc from w k it cannot
+yes because it can have only one single one
+
+152
+00:17:28,740 --> 00:17:36,880
+head so this is not possible now what is the
+other condition that can it have ah outgoing
+
+153
+00:17:36,880 --> 00:17:45,440
+arc to some word w k now what do you think
+about it is that possible now if you think
+
+154
+00:17:45,440 --> 00:17:49,210
+again about the formal conditions that we
+are defined what condition is it violating
+
+155
+00:17:49,210 --> 00:18:01,649
+remember the condition on projectivity if
+there is a relation from j to i then from
+
+156
+00:18:01,649 --> 00:18:10,570
+i the next dependent can be only on this side
+of j it cannot be on that side of j ok so
+
+157
+00:18:10,570 --> 00:18:17,480
+this has to be either in between that is not
+possible or here ok so so this is also not
+
+158
+00:18:17,480 --> 00:18:23,929
+a possibility so that means w i cannot have
+any further relations so that's why we can
+
+159
+00:18:23,929 --> 00:18:28,340
+remove w i from the s stack and this my s
+stack and this contain everything other than
+
+160
+00:18:28,340 --> 00:18:35,980
+w i buffer remains the same
+now let us look at the ah second transition
+
+161
+00:18:35,980 --> 00:18:43,020
+right arc so now right arc is you are making
+a relation from w i to w j w i is the head
+
+162
+00:18:43,020 --> 00:18:51,200
+and w j is the dependent there is no conditions
+that you have to see here and when you apply
+
+163
+00:18:51,200 --> 00:18:59,570
+this particular transition what do you obtain
+w j goes to the s stack so i do not remove
+
+164
+00:18:59,570 --> 00:19:08,860
+w i and w j goes to the s stack and i get
+a new arc ok so now again you can try to think
+
+165
+00:19:08,860 --> 00:19:15,830
+here why we didn't remove w i from the s stack
+ah why we didn't remove w j from the buffer
+
+166
+00:19:15,830 --> 00:19:20,750
+and remove it all together why we are not
+doing that and try to think in terms of the
+
+167
+00:19:20,750 --> 00:19:26,240
+constraints that we are put over our dependency
+parsing ok and we will come up with some nice
+
+168
+00:19:26,240 --> 00:19:31,860
+ah intuitions that why we are defining the
+transitions in this particular manner so we
+
+169
+00:19:31,860 --> 00:19:35,890
+have seen we have seen the justification for
+the previous case now try to justification
+
+170
+00:19:35,890 --> 00:19:44,770
+for yourself for this case but here the the
+difference is that now the transition is from
+
+171
+00:19:44,770 --> 00:19:50,390
+w i to w j and accordingly i am getting a
+new arc
+
+172
+00:19:50,390 --> 00:19:59,669
+then we have two more transitions reduce and
+shift what is reduce in reduce i remove the
+
+173
+00:19:59,669 --> 00:20:06,270
+the top word from the s stack and the condition
+is w i already has a head if w i already has
+
+174
+00:20:06,270 --> 00:20:13,870
+a head i can remove that and finally the fourth
+transition is shift what is that i take the
+
+175
+00:20:13,870 --> 00:20:19,679
+top word on the buffer and shift it to the
+top of s stack and these are the four transitions
+
+176
+00:20:19,679 --> 00:20:26,870
+now the the main thing here is when you are
+at a particular configuration you might be
+
+177
+00:20:26,870 --> 00:20:33,140
+able to take more than one of these operations
+or transitions and your task could be to find
+
+178
+00:20:33,140 --> 00:20:39,221
+out what is the transition that i should take
+in a particular scenario so i hope the four
+
+179
+00:20:39,221 --> 00:20:46,380
+transitions are clear ah
+let us see a particular example and how we
+
+180
+00:20:46,380 --> 00:20:53,269
+do apply these transitions so we will take
+a very simple example so what we will have
+
+181
+00:20:53,269 --> 00:20:59,550
+we will have a sentence he sent her a letter
+and we also know the dependency parse of this
+
+182
+00:20:59,550 --> 00:21:04,390
+sentence now once you are given the sentence
+and it's actual dependency parse that you
+
+183
+00:21:04,390 --> 00:21:10,090
+want to obtain you have to find out what are
+the transitions that i should that you should
+
+184
+00:21:10,090 --> 00:21:16,150
+be taking at each intermediate or initial
+configuration so that you can end up with
+
+185
+00:21:16,150 --> 00:21:24,340
+the dependency graph so let us do this exercise
+so here this is my sentence he sent her a
+
+186
+00:21:24,340 --> 00:21:30,890
+letter and there is also a punctuation mark
+how do we start find out what is the initial
+
+187
+00:21:30,890 --> 00:21:37,550
+configuration now how do we convert this sentence
+to the initial configuration s stack would
+
+188
+00:21:37,550 --> 00:21:42,720
+be empty buffer would contain all the words
+and arcs would be empty and that is what initial
+
+189
+00:21:42,720 --> 00:21:49,420
+configuration s stack is empty buffer contains
+all the words and arcs is empty now your task
+
+190
+00:21:49,420 --> 00:21:53,570
+is starts this is the initial configuration
+now what is the transition that you must be
+
+191
+00:21:53,570 --> 00:22:02,340
+taking here so so this one is relatively easy
+i cannot do left arc left arc means say arc
+
+192
+00:22:02,340 --> 00:22:08,799
+from he to a word in s stack there is no word
+in s stack they cannot be any dependency relation
+
+193
+00:22:08,799 --> 00:22:13,960
+similarly right arc is not possible because
+there is no word on the top of s stack i cannot
+
+194
+00:22:13,960 --> 00:22:18,970
+be reduce because again there is no word in
+the on the top of s stack so the only transition
+
+195
+00:22:18,970 --> 00:22:25,480
+possible is shift i can take the top word
+in the buffer and move that to to the stack
+
+196
+00:22:25,480 --> 00:22:29,669
+and this is what i will do i will take the
+transition as shift
+
+197
+00:22:29,669 --> 00:22:36,830
+so if i do right how do i modify my configuration
+so if i do a shift he will go from buffer
+
+198
+00:22:36,830 --> 00:22:45,230
+to the s stack and that is what i will obtain
+now now this is my configuration now again
+
+199
+00:22:45,230 --> 00:22:50,950
+you defined out what is the transition that
+he must be taking at this point and that's
+
+200
+00:22:50,950 --> 00:22:56,929
+where you will look at the dependency graph
+that you want to obtain and you will see is
+
+201
+00:22:56,929 --> 00:23:02,750
+there any relation you want to establish between
+the top of s stack and top of buffer so in
+
+202
+00:23:02,750 --> 00:23:09,950
+the parse we are seeing he is a subject for
+sent that means you can establish a relation
+
+203
+00:23:09,950 --> 00:23:15,779
+between sent and he and what will be that
+it should be from sent to he so it should
+
+204
+00:23:15,779 --> 00:23:21,880
+be a left arc relation so that means i can
+take a left arc transition at this point and
+
+205
+00:23:21,880 --> 00:23:27,300
+if i take a left arc what will be the output
+configuration i will remove he from the s
+
+206
+00:23:27,300 --> 00:23:34,210
+stack buffer will remain as it is and arcs
+i will get one more arc and that is what is
+
+207
+00:23:34,210 --> 00:23:42,019
+my next configuration s stack is empty buffer
+contains the remaining words and i have one
+
+208
+00:23:42,019 --> 00:23:46,620
+arc obtained
+now you are at this configuration now what
+
+209
+00:23:46,620 --> 00:23:52,200
+is the transition you should take again whenever
+stack is empty the only transition possible
+
+210
+00:23:52,200 --> 00:24:02,360
+is shift so i will do a shift ok now i have
+one word in the in that stack sent and there
+
+211
+00:24:02,360 --> 00:24:07,560
+are some word in the buffer her a and letter
+now what is the transition you can take at
+
+212
+00:24:07,560 --> 00:24:14,470
+this point again you will try to have a look
+at the dependency parse you will see if this
+
+213
+00:24:14,470 --> 00:24:22,210
+is relation between sent and her yes her is
+a dependent and sent is a modifier sorry sent
+
+214
+00:24:22,210 --> 00:24:31,170
+is the head so what is this transition from
+sent to her it will be a right arc so i will
+
+215
+00:24:31,170 --> 00:24:37,830
+take a right arc transition and what will
+be the output of the right arc the word her
+
+216
+00:24:37,830 --> 00:24:45,460
+should go the s stack and i will get a new
+relation in my arcs so this will be my configuration
+
+217
+00:24:45,460 --> 00:24:51,029
+at this point i have the words sent and her
+in the s stack a and letter in buffer and
+
+218
+00:24:51,029 --> 00:24:56,059
+i got the arcs
+now am i at the point where i have some words
+
+219
+00:24:56,059 --> 00:25:01,230
+in the s stack i have some words in the buffer
+and now i have to see what is the transition
+
+220
+00:25:01,230 --> 00:25:08,720
+i should be taking care so let us have a look
+can i take a left arc or right arc you see
+
+221
+00:25:08,720 --> 00:25:13,740
+her and a are not related in my dependency
+parse so i cannot take left arc or right arc
+
+222
+00:25:13,740 --> 00:25:19,910
+now what are the possibilities the possibilities
+are i can either take a reduce or shift these
+
+223
+00:25:19,910 --> 00:25:27,500
+both are possible now how do i choose between
+reduce and shift and there is a rule of thumb
+
+224
+00:25:27,500 --> 00:25:35,010
+for choosing between rule shift and reduce
+and the idea is if you find the danger word
+
+225
+00:25:35,010 --> 00:25:40,860
+in the stack not on the top just they were
+before the top any words before the top of
+
+226
+00:25:40,860 --> 00:25:47,049
+the s stack that connects to that word on
+the top of the buffer you do reduce otherwise
+
+227
+00:25:47,049 --> 00:25:52,600
+shift of course you can do reduce only if
+you have already found the head for their
+
+228
+00:25:52,600 --> 00:25:57,480
+word
+so in this case should i take reduce or shift
+
+229
+00:25:57,480 --> 00:26:06,019
+let us take this this rule of thumb is there
+a word in the stack below her that connects
+
+230
+00:26:06,019 --> 00:26:19,150
+to the top of buffer there is not so i cannot
+take reduce i should take shift so if i do
+
+231
+00:26:19,150 --> 00:26:28,899
+shift that is what i get i take a shift i
+now have sent her a letter now once i made
+
+232
+00:26:28,899 --> 00:26:34,799
+this configuration what is the next transition
+i will take this time it is easy there is
+
+233
+00:26:34,799 --> 00:26:43,010
+a relation between letter and a this should
+be left arc left arc means i removing
+
+234
+00:26:43,010 --> 00:26:50,940
+so now again i am here there is no relation
+between her and letter so now so that means
+
+235
+00:26:50,940 --> 00:26:59,549
+you can choose between reduce and shift so
+use the rule of thumb again is there a word
+
+236
+00:26:59,549 --> 00:27:04,559
+below the top in the stack that connects to
+the top of buffer and you will see yes the
+
+237
+00:27:04,559 --> 00:27:11,519
+word sent in the s stack connects to the word
+letter in the buffer so here you can do reduce
+
+238
+00:27:11,519 --> 00:27:16,309
+and you do reduce and you have the word sent
+in the s stack and letter and punctuation
+
+239
+00:27:16,309 --> 00:27:23,490
+in the buffer now is there any relation yes
+there should be a right arc relation so right
+
+240
+00:27:23,490 --> 00:27:31,620
+arc means letter will go to the s stack yes
+again there is no relation between letter
+
+241
+00:27:31,620 --> 00:27:37,410
+and dot the punctuation what should i take
+is there relation between any other word in
+
+242
+00:27:37,410 --> 00:27:46,059
+s stack with the buffer yes sent and punctuation
+are related so i will do a reduce here now
+
+243
+00:27:46,059 --> 00:27:52,429
+sent and punctuation are related by right
+arc and by right arc i will take the dot to
+
+244
+00:27:52,429 --> 00:28:01,259
+the s stack ok and this is my configuration
+now what do you see should i go any further
+
+245
+00:28:01,259 --> 00:28:08,759
+ah once i have reach this configuration and
+you will say no because what is the condition
+
+246
+00:28:08,759 --> 00:28:14,049
+terminal configuration the condition is that
+my buffer should be empty so at this point
+
+247
+00:28:14,049 --> 00:28:18,539
+my buffer is already empty so that means i
+have arrived at a terminal configuration and
+
+248
+00:28:18,539 --> 00:28:27,789
+that's where i i will stop and i have obtained
+all the possible set of arcs for this sentence
+
+249
+00:28:27,789 --> 00:28:35,370
+so now this is an example we have seen just
+to understand how to take all these transitions
+
+250
+00:28:35,370 --> 00:28:41,799
+but ah does that help you to solve this problem
+whenever you are giving a new sentence why
+
+251
+00:28:41,799 --> 00:28:47,190
+a new sentence i mean you do not know dependency
+graph or or you might also ask if i already
+
+252
+00:28:47,190 --> 00:28:53,860
+know the dependency parse for a sentence what
+is the need for doing all these transitions
+
+253
+00:28:53,860 --> 00:29:01,360
+and that's where the the concept of learning
+will come into picture so we have seen here
+
+254
+00:29:01,360 --> 00:29:09,179
+if we know the dependency graph we can choose
+the configurations ok at run time whenever
+
+255
+00:29:09,179 --> 00:29:16,759
+i am given a sentence my whole task is to
+find out what are the transitions i should
+
+256
+00:29:16,759 --> 00:29:24,170
+be taking at different configuration and this
+i will learn from my already labeled data
+
+257
+00:29:24,170 --> 00:29:29,490
+and this is what we will discuss in detail
+in the next lecture that is how do i use how
+
+258
+00:29:29,490 --> 00:29:35,029
+do i use this concept to define it as a learning
+problem and for a new sentence how do i come
+
+259
+00:29:35,029 --> 00:29:37,950
+up with a dependency graph
+thank you
+

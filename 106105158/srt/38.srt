@@ -1,0 +1,1929 @@
+1
+00:00:19,590 --> 00:00:24,700
+yes welcome back to the second lecture of
+this weak so in the last lecture we started
+
+2
+00:00:24,700 --> 00:00:31,220
+with lexical semantics and we defined the
+relation between lexical entities and we talked
+
+3
+00:00:31,220 --> 00:00:40,690
+about ah polysemy hyponym hyponymy meronymy
+and and so on and and in this lecture we'll
+
+4
+00:00:40,690 --> 00:00:48,940
+see resource wordnet and how it captures all
+these relations
+
+5
+00:00:48,940 --> 00:00:54,500
+so wordnet you can you can get a lot of information
+of wordnet on this website so its an its an
+
+6
+00:00:54,500 --> 00:01:01,579
+effort started at princeton and there are
+lot of versions that that have come up and
+
+7
+00:01:01,579 --> 00:01:06,060
+you can you can find out the latest version
+of wordnet and also download that and you
+
+8
+00:01:06,060 --> 00:01:11,400
+can use that also in once you download you
+can use that in your command term[inal]- terminal
+
+9
+00:01:11,400 --> 00:01:19,320
+also so what is wordnet wordnet as such is
+a hierarchically organized lexical database
+
+10
+00:01:19,320 --> 00:01:24,780
+ok and its completely machine readable
+so you can you can use that in in different
+
+11
+00:01:24,780 --> 00:01:30,930
+applications you can call wordnet get get
+the recent information from there so as such
+
+12
+00:01:30,930 --> 00:01:36,229
+on this website you will find the wordnet
+for english but there are other so there are
+
+13
+00:01:36,229 --> 00:01:41,539
+many many other versions for other languages
+also also built so there are lot of wordnets
+
+14
+00:01:41,539 --> 00:01:45,890
+available for european languages and a lot
+of effort has happened in the last decade
+
+15
+00:01:45,890 --> 00:01:51,030
+for building wordnets for indian languages
+and that you can also ah download many any
+
+16
+00:01:51,030 --> 00:01:55,039
+many of those versions are also available
+for download for free so for that you can
+
+17
+00:01:55,039 --> 00:02:03,950
+look at indo wordnet ah website so ah so there
+you will also find out what sort of synsets
+
+18
+00:02:03,950 --> 00:02:08,619
+or concepts in one language are relate to
+some other concepts in other language
+
+19
+00:02:08,619 --> 00:02:14,240
+so this information would be available in
+this ah in this indo wordnet and and euro
+
+20
+00:02:14,240 --> 00:02:21,020
+wordnet websites so now div now we will focus
+only on the the english wordnet part in this
+
+21
+00:02:21,020 --> 00:02:26,209
+in this ah lecture but the methods would be
+easily applicable to other wor[d]- wordnets
+
+22
+00:02:26,209 --> 00:02:31,451
+that are having shared by single structure
+so if we talk about english wordnet so there
+
+23
+00:02:31,451 --> 00:02:37,290
+are mai[nly]- mainly four different part of
+speech words that are ah and there and what
+
+24
+00:02:37,290 --> 00:02:41,480
+we are seeing here how many different synsets
+are there for each part of speech so there
+
+25
+00:02:41,480 --> 00:02:46,480
+are roughly eighteen thousand ss synsets for
+nouns thirteen thousand plus synsets for verb
+
+26
+00:02:46,480 --> 00:02:52,680
+and eighteen thoudsand plus synsets for adjective
+and three thousand plus for adverbs now so
+
+27
+00:02:52,680 --> 00:02:57,690
+so one important thing is that we when we
+talk about wordnet we talk in terms of synset
+
+28
+00:02:57,690 --> 00:03:04,790
+now what is the idea of a synset in wordnet
+so in synset what will happen so there is
+
+29
+00:03:04,790 --> 00:03:11,659
+different words that have similar meanings
+will be stored but a single word might have
+
+30
+00:03:11,659 --> 00:03:19,749
+multiple meanings also so how are how are
+both of these things taken care together so
+
+31
+00:03:19,749 --> 00:03:25,140
+so lets take an example
+so ah so example is particular synset corresponding
+
+32
+00:03:25,140 --> 00:03:29,629
+to chump that is a noun and that is a person
+who is a believable and easy to take advantage
+
+33
+00:03:29,629 --> 00:03:36,459
+of and suppose chump the first synset this
+programme meaning so word has have might have
+
+34
+00:03:36,459 --> 00:03:41,319
+multiple synsets so chump first synsets is
+this meaning but there might be other words
+
+35
+00:03:41,319 --> 00:03:49,329
+also that have the sense and so this word
+its nine sense denotes this particular meaning
+
+36
+00:03:49,329 --> 00:03:56,480
+so i have to say that the word mark its nineth
+sense is this meaning the word fool its second
+
+37
+00:03:56,480 --> 00:04:02,469
+sense is this meaning the word goal the first
+sense is this meaning and similarly fall guy
+
+38
+00:04:02,469 --> 00:04:11,360
+and so on so what i will do here each word
+might be represented by multiple synsets so
+
+39
+00:04:11,360 --> 00:04:18,460
+a word might have sense one sense two sense
+three and so on and what i will do if suppose
+
+40
+00:04:18,460 --> 00:04:25,610
+the third sense of word one and second sense
+of word two shared the same meaning i will
+
+41
+00:04:25,610 --> 00:04:31,930
+put them in a single synset and that is the
+idea of synset different words that share
+
+42
+00:04:31,930 --> 00:04:40,750
+a same meaning and by words here i will mean
+the lexim ok or a particular sense and for
+
+43
+00:04:40,750 --> 00:04:46,180
+wordnet this list might denote what is the
+meaning of the word chump or you will also
+
+44
+00:04:46,180 --> 00:04:52,570
+find some gross information of the wordnet
+so now this also this figures some so[rt]-
+
+45
+00:04:52,570 --> 00:04:58,199
+some sort of explains what is the relation
+between the word form or the lemma and the
+
+46
+00:04:58,199 --> 00:05:06,270
+synsets so what you are seeing here so there
+is many to many relation so that is for example
+
+47
+00:05:06,270 --> 00:05:13,610
+the word note it can go to note and to end
+bullenthri so denotes two different synsets
+
+48
+00:05:13,610 --> 00:05:20,740
+in one sense it goes to note synsets another
+sense it goes to bill synset but this bill
+
+49
+00:05:20,740 --> 00:05:26,280
+synset will contain note and also contains
+bill and some other words ok so what you are
+
+50
+00:05:26,280 --> 00:05:32,120
+seeing here many different lemmas that share
+the same sense can come together in a single
+
+51
+00:05:32,120 --> 00:05:41,150
+synset and the same semma same lemma for different
+meanings can go to different synsets and that
+
+52
+00:05:41,150 --> 00:05:46,530
+is captured by giving some unique identifies
+to different two different synsets of the
+
+53
+00:05:46,530 --> 00:05:51,490
+same lemma
+so i will start talking about now lime one
+
+54
+00:05:51,490 --> 00:05:58,210
+lime two lime three instead of just saying
+lime ok and each of these three will be ah
+
+55
+00:05:58,210 --> 00:06:06,270
+in different synsets so what are all the possible
+relations that ah that you see in wordnet
+
+56
+00:06:06,270 --> 00:06:13,440
+here is some example so in wordnet you have
+relations like antonyms hypernyms hyponyms
+
+57
+00:06:13,440 --> 00:06:21,569
+entavment relations synonyms and so on ok
+many of these we have already seen in the
+
+58
+00:06:21,569 --> 00:06:27,879
+previous lecture lets see some example types
+of these relations so like what are the relations
+
+59
+00:06:27,879 --> 00:06:37,050
+between ah various ve[rb]- nouns so the relation
+hyponym that we discussed so hyponym is relation
+
+60
+00:06:37,050 --> 00:06:46,190
+between a concept and its super concept ok
+so like breakfast is a kind of meal so i was
+
+61
+00:06:46,190 --> 00:06:56,140
+a meal is a hyponym of breakfast so this relation
+will be there in the wordnet where the breakfast
+
+62
+00:06:56,140 --> 00:07:04,120
+one synset or the corresponding sense its
+connected to meal one by the relation of breakfast
+
+63
+00:07:04,120 --> 00:07:09,379
+is a hyponym of meal and meal is a hyponym
+of breakfast similarly the converse relation
+
+64
+00:07:09,379 --> 00:07:21,409
+of hyponym meal and lunch member so faculties
+in so professor is a member of faculty harinstins
+
+65
+00:07:21,409 --> 00:07:30,919
+is composer in instins s bash austin is a
+instins of author member maronym like capital
+
+66
+00:07:30,919 --> 00:07:36,370
+is a member of crew part maronym from whole
+two parts
+
+67
+00:07:36,370 --> 00:07:46,539
+so table to leg part holonym the other way
+round from parts to whole coarse to meal yes
+
+68
+00:07:46,539 --> 00:07:52,180
+and antonym that is a opposite diden follower
+so what would happen all these relations are
+
+69
+00:07:52,180 --> 00:07:57,530
+defined in wordnet you know what what the
+relation means and then you can find out for
+
+70
+00:07:57,530 --> 00:08:03,669
+a word collision what are the different pairs
+or given pair in the wordnet is there any
+
+71
+00:08:03,669 --> 00:08:10,419
+realtion ah that is defined similarly there
+are relations between verb elements also like
+
+72
+00:08:10,419 --> 00:08:19,210
+hyponym fly and travel so fly is a kind of
+travel so travel would be the ah hyponym for
+
+73
+00:08:19,210 --> 00:08:26,409
+fly tropoynym from a verb to a specific manner
+for that verb like walk and stool so stool
+
+74
+00:08:26,409 --> 00:08:32,270
+is a typical manner of or a particular manner
+of walking they can be eh entanment relation
+
+75
+00:08:32,270 --> 00:08:38,180
+also from verbs to the words that they end
+till like snoring and sleeping so i'll say
+
+76
+00:08:38,180 --> 00:08:43,920
+snore and tell sleeping so this is also relation
+that is captured in wordnet and then there
+
+77
+00:08:43,920 --> 00:08:50,680
+can be antonyms for the opposites so increase
+and decrease they are antonyms for each other
+
+78
+00:08:50,680 --> 00:08:58,000
+further in wordnet we can also capture ah
+what is the complete hierarchy of a given
+
+79
+00:08:58,000 --> 00:09:04,020
+concept and what do you mean by hierarchy
+that is starting from the root word and wordnet
+
+80
+00:09:04,020 --> 00:09:08,900
+how do you go down to that particular word
+ok what are the different concepts that you
+
+81
+00:09:08,900 --> 00:09:13,850
+need to pass through and that you can find
+for all the different synsets for the for
+
+82
+00:09:13,850 --> 00:09:21,090
+a given word and so thats why we said that
+ah wordnet is very very hierarchically organized
+
+83
+00:09:21,090 --> 00:09:28,170
+database so you can find out or you can locate
+each concept or a subset ah each synset in
+
+84
+00:09:28,170 --> 00:09:35,330
+that complete hierarchical tree so for example
+if i see the word mouse so i'll find it has
+
+85
+00:09:35,330 --> 00:09:41,390
+four synsets so for sense one mouse you can
+find out the complete hierarchy so mouse is
+
+86
+00:09:41,390 --> 00:09:48,770
+a kind of rodent kind of placental kind of
+mammal vertebrate and so on up to animal living
+
+87
+00:09:48,770 --> 00:09:54,920
+thing object physical entity and entity ok
+you can go to the root of the wordnet entity
+
+88
+00:09:54,920 --> 00:10:01,120
+starting from this particular sense of mouse
+here is another sense of mouse that is a computer
+
+89
+00:10:01,120 --> 00:10:08,510
+mouse again you can keep on going up the hierarchy
+electronic device device artifact object physical
+
+90
+00:10:08,510 --> 00:10:15,320
+object physical entity entity and you can
+see where do they depart so mouse comes under
+
+91
+00:10:15,320 --> 00:10:20,470
+whole then an artifact and this mouse comes
+under living thing thats where they depart
+
+92
+00:10:20,470 --> 00:10:27,760
+in that ah in that wordnet hierarchical tree
+and this we can do for any any sense any word
+
+93
+00:10:27,760 --> 00:10:37,980
+word in the wordnet you can find out the complete
+hierarchy now so so as such wordnet will always
+
+94
+00:10:37,980 --> 00:10:46,100
+store which two concepts are related by wap
+relations and ah suppose car an automobile
+
+95
+00:10:46,100 --> 00:10:52,210
+occur in the same synset if you query in a
+wordnet there is a very easy way you can query
+
+96
+00:10:52,210 --> 00:10:57,500
+in wordnet ah and you can find out if they
+are part of the same synsets then you can
+
+97
+00:10:57,500 --> 00:11:03,200
+say ok they are similar but suppose two words
+are not part of any sense any particular synset
+
+98
+00:11:03,200 --> 00:11:09,300
+in wordnet and i want to give it a number
+like to what degree are they similar similar
+
+99
+00:11:09,300 --> 00:11:14,350
+to what we ga[ve]- did in the case of distribution
+semantics we found out how much two words
+
+100
+00:11:14,350 --> 00:11:19,580
+are similar to each other by seeing how much
+their patterns are similar so can i do sim
+
+101
+00:11:19,580 --> 00:11:25,740
+something in the ca[se]- case of wordnet that
+is given two concepts or two words how similar
+
+102
+00:11:25,740 --> 00:11:32,791
+they are even if they are not part of the
+same synsets so so by using synonymy i can
+
+103
+00:11:32,791 --> 00:11:37,920
+only see that the two words are synonymous
+or not but suppose you want to do the matrix
+
+104
+00:11:37,920 --> 00:11:42,570
+for word similarity or word distance so what
+are the different things in wordnet i can
+
+105
+00:11:42,570 --> 00:11:45,850
+use
+so in wordnet there are many other relations
+
+106
+00:11:45,850 --> 00:11:51,100
+also defined so i can also use the fact that
+whether there is any other kind of relation
+
+107
+00:11:51,100 --> 00:11:57,950
+between these two words or do the words do
+these words share a common hypernym hyponym
+
+108
+00:11:57,950 --> 00:12:04,380
+and so on also you might have a have a look
+at the gloss of these two ah entit entries
+
+109
+00:12:04,380 --> 00:12:12,601
+whether their glosses are very similar so
+so i i'll say two words are similar if they
+
+110
+00:12:12,601 --> 00:12:17,940
+share many different features of meaning and
+if features can be captured in terms of ah
+
+111
+00:12:17,940 --> 00:12:25,230
+how many relations are common how many words
+are common in their gloss and so on now one
+
+112
+00:12:25,230 --> 00:12:30,720
+thing that then that we must keep in mind
+when we are talking about establishing relation
+
+113
+00:12:30,720 --> 00:12:35,640
+between different en[tities]- entities in
+in wordnet we are talking about relation between
+
+114
+00:12:35,640 --> 00:12:42,590
+different synsets and not the words ok because
+a word might have mutiple synsets and the
+
+115
+00:12:42,590 --> 00:12:47,760
+relation that is there in in one sense of
+word one ad one sense of another another word
+
+116
+00:12:47,760 --> 00:12:58,340
+may not be there in the ah other other synsets
+so so for example here so ah for example is
+
+117
+00:12:58,340 --> 00:13:06,440
+a word bank this is sense one this is in the
+sense of you can say in the economics and
+
+118
+00:13:06,440 --> 00:13:15,370
+sense two is like river bank ok and then they
+have i have another word like fund ok and
+
+119
+00:13:15,370 --> 00:13:22,390
+there is s one that is for economy so as you
+see that this sense one of bank is connected
+
+120
+00:13:22,390 --> 00:13:28,420
+to this particular sense of fund but i cannot
+say that this is connected to fund this is
+
+121
+00:13:28,420 --> 00:13:36,860
+not true so i cannot say that bank is connected
+to fund saying that will not be correct what
+
+122
+00:13:36,860 --> 00:13:44,770
+i will say sense one of bank is connected
+to sense one of fund so we'll talk about relations
+
+123
+00:13:44,770 --> 00:13:50,990
+between synset of words and not word directly
+all though we'll try to extend it later to
+
+124
+00:13:50,990 --> 00:13:58,950
+the words ok so instead of saying bank is
+like fund i will say something like bank one
+
+125
+00:13:58,950 --> 00:14:04,580
+is similar to fund three suppose that is the
+third sense of fund and bank two is similar
+
+126
+00:14:04,580 --> 00:14:11,080
+to slope five the fifth sense of slope and
+so on
+
+127
+00:14:11,080 --> 00:14:17,890
+now we will also compute similarity over words
+and synsets both so let us see how do we do
+
+128
+00:14:17,890 --> 00:14:25,510
+that by using the wordnet hierarchy and any
+other information that we have so now this
+
+129
+00:14:25,510 --> 00:14:30,720
+is something that that we have talked about
+earlier that if i want to find out similarity
+
+130
+00:14:30,720 --> 00:14:37,490
+between words there are two two ver[ry]- very
+popular methods one is by using distribution
+
+131
+00:14:37,490 --> 00:14:42,580
+algorithms and that we discussed in in detail
+in the last week there i can find out the
+
+132
+00:14:42,580 --> 00:14:47,510
+distribution patterns of two words and compare
+those but if you wa[nt]- if i want to use
+
+133
+00:14:47,510 --> 00:14:56,010
+a lexar resource like wordnet so here can
+i use the idea that some words are more near
+
+134
+00:14:56,010 --> 00:15:02,550
+in the wordnet hierarchy than others so if
+two words are near in the hierarchy i might
+
+135
+00:15:02,550 --> 00:15:06,880
+say they are similar if they are very far
+apart in the hierarchy they might be different
+
+136
+00:15:06,880 --> 00:15:13,230
+so can i use this idea to establish if two
+words are similar by using the ah wordnet
+
+137
+00:15:13,230 --> 00:15:23,480
+resource and we'll we'll so we'll now see
+lot of such methods of doing that so so as
+
+138
+00:15:23,480 --> 00:15:31,390
+such i can use any relations like maronym
+hyponym troponym glosses examples yes but
+
+139
+00:15:31,390 --> 00:15:36,620
+in particular with this sort of based methods
+that that we have they mainly use the e j
+
+140
+00:15:36,620 --> 00:15:43,490
+hierarchy tree the hyponym hyponym relation
+tree sometimes we will also use the glosses
+
+141
+00:15:43,490 --> 00:15:50,880
+of the of the words so we'll start by seeing
+some examples or some particular ah ah methods
+
+142
+00:15:50,880 --> 00:15:55,330
+that ca[n]- that try to use the the hierarchy
+wordnet hierarchy to capture the similarity
+
+143
+00:15:55,330 --> 00:15:59,970
+between between the words and then we'll also
+see a particular method that uses the glosses
+
+144
+00:15:59,970 --> 00:16:09,810
+of the of the different synsets to capture
+their similarity now so one thing that that
+
+145
+00:16:09,810 --> 00:16:15,620
+you might ah have seen or have understood
+by know that by using all these methods we
+
+146
+00:16:15,620 --> 00:16:19,860
+are not capturing the synonymy as synonymy
+as such we are not seeing that that we are
+
+147
+00:16:19,860 --> 00:16:24,680
+finding two words that are very very similar
+what you finding is that two words that are
+
+148
+00:16:24,680 --> 00:16:33,050
+related or are used in similar sort of context
+and topic so like if i take car and bicycle
+
+149
+00:16:33,050 --> 00:16:36,680
+they are quite similar but car and gasoline
+they might be related but not similar
+
+150
+00:16:36,680 --> 00:16:41,930
+so by these methods car and gasoline might
+come come closer but all that means is that
+
+151
+00:16:41,930 --> 00:16:52,520
+they are related they may not be exacty similar
+so now now coming to the methods to capturing
+
+152
+00:16:52,520 --> 00:16:59,790
+similarity across words so what is the first
+idea first idea is to use the path between
+
+153
+00:16:59,790 --> 00:17:06,289
+two words in the hypernymn graph and what
+can be a simple measure i will say that two
+
+154
+00:17:06,289 --> 00:17:13,500
+words are similar if the path that connects
+the two words in the in that hierarchy is
+
+155
+00:17:13,500 --> 00:17:22,850
+small ok so two words are similar if they
+are nearby in the hypernymn graph and to give
+
+156
+00:17:22,850 --> 00:17:29,779
+a formal measure or quantity to that i can
+define the path length between two concepts
+
+157
+00:17:29,779 --> 00:17:36,480
+so path length between two concepts what will
+be that that is the number of h h in the shortest
+
+158
+00:17:36,480 --> 00:17:42,419
+path in my graph between synsets c one and
+c two so what is the length of the shortest
+
+159
+00:17:42,419 --> 00:17:48,580
+path that connects c one and c two in my whole
+graph now once have have found this path length
+
+160
+00:17:48,580 --> 00:17:53,780
+how do i use that to compare the similarity
+between these two concepts so that is path
+
+161
+00:17:53,780 --> 00:18:00,799
+length is large they are less similar if path
+length is small they are ah very very similar
+
+162
+00:18:00,799 --> 00:18:06,150
+so my similarity should be inversely proportion
+to the path length so one measure can be one
+
+163
+00:18:06,150 --> 00:18:11,129
+divided by one plus path length and this is
+one simple measure that is in which the path
+
+164
+00:18:11,129 --> 00:18:18,600
+similarity between two concept is one divided
+by one plus path length of c one and c two
+
+165
+00:18:18,600 --> 00:18:25,500
+so thats how we can find out the relation
+between two synsets so now suppose i want
+
+166
+00:18:25,500 --> 00:18:30,429
+to extend that to find the similarity between
+two words
+
+167
+00:18:30,429 --> 00:18:35,760
+so one way is to i find out similarity between
+all the synsets and take an average but a
+
+168
+00:18:35,760 --> 00:18:43,700
+more ah commonly extended measure is find
+out similarity between all the possible ah
+
+169
+00:18:43,700 --> 00:18:49,620
+payers of synsets between the two words and
+take the maximum ok so what you mean by that
+
+170
+00:18:49,620 --> 00:18:57,080
+suppose i have word one word two that is sense
+s one one s one two s one three and this a
+
+171
+00:18:57,080 --> 00:19:05,809
+synsets s two one s two two ok so by using
+this measure i can find similarity between
+
+172
+00:19:05,809 --> 00:19:11,990
+any two pair s one one s two two what is the
+similarity similarly i can do for all these
+
+173
+00:19:11,990 --> 00:19:20,269
+pairs now how do i establish similarity between
+w one and w two so that is similarity is the
+
+174
+00:19:20,269 --> 00:19:30,970
+maximum value of similarity between s one
+i and s two j you take any sense for the the
+
+175
+00:19:30,970 --> 00:19:35,009
+firs[t] first word any sense for the second
+word whatever the maximum similarity between
+
+176
+00:19:35,009 --> 00:19:40,490
+between a pair this gets me the simi[larity]-
+maximum similarity or the similarity between
+
+177
+00:19:40,490 --> 00:19:45,460
+these two words that is a very simple way
+in which i can extend all these ideas to word
+
+178
+00:19:45,460 --> 00:19:53,640
+similarity so in whatever we will see ah in
+the ne[xt]- for the next methods we will also
+
+179
+00:19:53,640 --> 00:19:58,740
+alway[s]- all always talk about similarity
+between synsets and extended for similarity
+
+180
+00:19:58,740 --> 00:20:07,149
+between words so i will say similarity between
+words w and w two is nothing but the maximum
+
+181
+00:20:07,149 --> 00:20:16,059
+similarity between any of the synset of the
+word one and word two so lets take an example
+
+182
+00:20:16,059 --> 00:20:21,779
+that how what will this ah path way similarity
+look like so this is my wordnet ah hyponym
+
+183
+00:20:21,779 --> 00:20:26,970
+graph so not all the notes are shown only
+if if very few notes are shown so we are starting
+
+184
+00:20:26,970 --> 00:20:34,309
+with entity abstraction measure standard although
+with entity there will other concepts here
+
+185
+00:20:34,309 --> 00:20:37,320
+then you are you are coming to a particular
+branch with where you have medium of exchange
+
+186
+00:20:37,320 --> 00:20:43,259
+currency coinage coin nickel and so on
+now i want to find out similarity across two
+
+187
+00:20:43,259 --> 00:20:48,330
+different concepts so what is similarity between
+nickel and coin so i will say what is the
+
+188
+00:20:48,330 --> 00:20:53,620
+path length path that connects nickel and
+coin what is the length of this path so here
+
+189
+00:20:53,620 --> 00:20:59,440
+the length is only one so similarity between
+these two concepts will be one divided by
+
+190
+00:20:59,440 --> 00:21:04,600
+one plus one to point five and what is the
+similarity between nickel and dayne it will
+
+191
+00:21:04,600 --> 00:21:10,330
+be one divided by one plus path length and
+path length is two so it will be point three
+
+192
+00:21:10,330 --> 00:21:18,101
+three and if you see nickel in a very different
+concepts like richard scale so here you will
+
+193
+00:21:18,101 --> 00:21:24,039
+find similarities point one to five because
+the path length is seven so like that i can
+
+194
+00:21:24,039 --> 00:21:29,109
+capture the similarity between two concepts
+by using the path length
+
+195
+00:21:29,109 --> 00:21:35,600
+now there is ah another similarity measure
+along the same lines so this is called l c
+
+196
+00:21:35,600 --> 00:21:42,909
+similarity so what it says the similarity
+between two concepts is minus log of path
+
+197
+00:21:42,909 --> 00:21:48,490
+length divided by two d so this is just a
+sim different function over path length so
+
+198
+00:21:48,490 --> 00:21:53,799
+earlier we had a function one divided by one
+plus x now they have function minus log x
+
+199
+00:21:53,799 --> 00:22:02,019
+divided by two d ok and what is d here d is
+the maximum depth in my my hierarchy ok wha[t]-
+
+200
+00:22:02,019 --> 00:22:06,630
+so starting from the root note what is the
+maximum depth of a ah hierarchy for any any
+
+201
+00:22:06,630 --> 00:22:13,840
+of the leaf note and and this helps in that
+this ah this path length will always be less
+
+202
+00:22:13,840 --> 00:22:19,950
+than or equal to two d and this will give
+me a similarity between these two concepts
+
+203
+00:22:19,950 --> 00:22:27,379
+so ah so what is the problem with this l c
+similarity or the previous similarity that
+
+204
+00:22:27,379 --> 00:22:34,309
+we have seen so what they are saying for any
+two concepts find out the path length and
+
+205
+00:22:34,309 --> 00:22:40,470
+and one and the similarity is nothing but
+a function of path length if path length increases
+
+206
+00:22:40,470 --> 00:22:48,330
+the similarity decreases but when problem
+with with these approaches is that any two
+
+207
+00:22:48,330 --> 00:22:53,999
+pairs of concepts if the path length is same
+the similarity will be the same irrespective
+
+208
+00:22:53,999 --> 00:23:01,830
+of wherever they occur in the tree
+so let us just go back to the previous tree
+
+209
+00:23:01,830 --> 00:23:06,879
+so what these approaches will say so what
+is similarity between coin and nickel the
+
+210
+00:23:06,879 --> 00:23:11,759
+path length is one similarity is one divided
+by one plus one that is point five but what
+
+211
+00:23:11,759 --> 00:23:16,480
+would be the similarity between entity and
+abstraction their path length is also one
+
+212
+00:23:16,480 --> 00:23:22,350
+so their similarity will also become one divided
+by one plus one so that is point five but
+
+213
+00:23:22,350 --> 00:23:27,389
+ideally what would we want do we want the
+similarity of entity of entity abstraction
+
+214
+00:23:27,389 --> 00:23:35,429
+to be the same as between coin and nickel
+so if we think about it as we are going down
+
+215
+00:23:35,429 --> 00:23:41,320
+in the hierarchy we are moving to very very
+specific concepts so while we are moving this
+
+216
+00:23:41,320 --> 00:23:47,450
+specific concepts the same path length should
+amount should amount to a higher similarity
+
+217
+00:23:47,450 --> 00:23:56,639
+noun that it was doing earlier so entity and
+abstraction this similarity should be much
+
+218
+00:23:56,639 --> 00:24:02,580
+lower than the similarity this similarity
+should be very very high but these methods
+
+219
+00:24:02,580 --> 00:24:08,480
+as of now as of now do not capture this idea
+so they will have this path length to contribute
+
+220
+00:24:08,480 --> 00:24:16,140
+same way as this path length so now can we
+do something different so that here the similarity
+
+221
+00:24:16,140 --> 00:24:26,269
+becomes high but here similarity becomes low
+so so you want a matrix that lets us assign
+
+222
+00:24:26,269 --> 00:24:33,769
+different lengths to different average so
+so the ah so what is the idea that we will
+
+223
+00:24:33,769 --> 00:24:43,220
+be using and for that we use the idea of concept
+probability model now what is this so ah so
+
+224
+00:24:43,220 --> 00:24:48,120
+in the wordnet whatever concepts we are seeing
+we will assign them into probability so what
+
+225
+00:24:48,120 --> 00:24:55,490
+is the probability with which i see this concept
+in a corpus now idea would be whatever i am
+
+226
+00:24:55,490 --> 00:25:01,970
+seeing in my corpus is an entity because its
+part of the tree where entity is the root
+
+227
+00:25:01,970 --> 00:25:06,590
+so whatever word is in the tree is an entity
+so in the other word whatever word i am saying
+
+228
+00:25:06,590 --> 00:25:15,119
+in the corpus is an entity but it may not
+be an abstraction so there will be some words
+
+229
+00:25:15,119 --> 00:25:21,539
+that are abstraction and some words that are
+not so what i will do whenever i encounter
+
+230
+00:25:21,539 --> 00:25:30,490
+a word i will find out what are all the concepts
+to which it contributes and i will add a count
+
+231
+00:25:30,490 --> 00:25:37,490
+to all these concepts and finally i'll give
+i will convert them to probability values
+
+232
+00:25:37,490 --> 00:25:42,039
+so what would happen the root note will get
+a probability of one because every everything
+
+233
+00:25:42,039 --> 00:25:52,389
+i see is a is an entity but as you go down
+these values will keep on decreasing i'll
+
+234
+00:25:52,389 --> 00:25:58,450
+use this idea ok to convert them into log
+log values and then taking the difference
+
+235
+00:25:58,450 --> 00:26:04,590
+between the two values as the path length
+ok and that can converted to finding the similarity
+
+236
+00:26:04,590 --> 00:26:11,429
+between two synsets so so let us say p c is
+the probability that are randomly selected
+
+237
+00:26:11,429 --> 00:26:17,129
+word in the corpus is an instance of c so
+what would happen probability of root is one
+
+238
+00:26:17,129 --> 00:26:22,919
+and a lower a note in the hierarchy the lower
+is its probability and how it can be estimated
+
+239
+00:26:22,919 --> 00:26:30,020
+these probabilities we count something called
+concept activations in the corpus so what
+
+240
+00:26:30,020 --> 00:26:36,210
+would happen whenever encounter a nine i'll
+also increment a call for coin currency standard
+
+241
+00:26:36,210 --> 00:26:40,780
+etcetera
+so what is the idea so i have a wordnet hierarchy
+
+242
+00:26:40,780 --> 00:26:53,720
+tree is starting from root that is my entity
+and going down so what would happen suppose
+
+243
+00:26:53,720 --> 00:26:59,730
+this is my word x whenever i encounter this
+word x x in my corpus i increment its count
+
+244
+00:26:59,730 --> 00:27:07,470
+by one and all its parents because whenever
+i am encounting encounting i am also encounting
+
+245
+00:27:07,470 --> 00:27:13,450
+this concept and so on so what would happen
+whatever i encounter i always add one to the
+
+246
+00:27:13,450 --> 00:27:23,730
+root ok but only to its parents so when i
+do that root will have so all the counts will
+
+247
+00:27:23,730 --> 00:27:32,820
+be added to root and i can find the probability
+by dividing everything by the count of root
+
+248
+00:27:32,820 --> 00:27:37,809
+so so suppose i do that on my corpus so this
+is one example so so here you can see there
+
+249
+00:27:37,809 --> 00:27:45,809
+are one point nine million roughly instances
+overall because entity has been ah always
+
+250
+00:27:45,809 --> 00:27:52,200
+ah appended with one but their num[bers]-
+the numbers are different so diamond and nickel
+
+251
+00:27:52,200 --> 00:27:58,100
+has only eight and ten coin has thousand hundred
+and eight ok so you see the we are not showing
+
+252
+00:27:58,100 --> 00:28:03,570
+the whole tree thats why there will some other
+branches of coin also that are not here now
+
+253
+00:28:03,570 --> 00:28:08,519
+once i have got these counts i know opt in
+the probability values by dividing everything
+
+254
+00:28:08,519 --> 00:28:15,350
+by this number
+so this will be my concept probability now
+
+255
+00:28:15,350 --> 00:28:22,989
+how do i use this concept probability to define
+or define my so what i will do i will convert
+
+256
+00:28:22,989 --> 00:28:28,940
+them in some in some information value what
+is the information content of each concept
+
+257
+00:28:28,940 --> 00:28:33,019
+and the information contemp content can be
+directly obtained by the probability values
+
+258
+00:28:33,019 --> 00:28:39,730
+by using minus log probability ok idea is
+that if the probability of something is very
+
+259
+00:28:39,730 --> 00:28:44,369
+high it does nt have much information but
+the probability is low it contains a lot of
+
+260
+00:28:44,369 --> 00:28:52,769
+information so i use the information content
+of a concept as a minus logarithm of the probability
+
+261
+00:28:52,769 --> 00:29:01,389
+of that con[cepts]- concept so i can do that
+for all the concepts and i can also define
+
+262
+00:29:01,389 --> 00:29:07,760
+what is my lowest common subsumer that is
+if i take two notes or two concepts c one
+
+263
+00:29:07,760 --> 00:29:14,169
+and c two the lowest common subsumer is the
+lowest note in the hierarchy that subsumes
+
+264
+00:29:14,169 --> 00:29:19,179
+both the notes or what is the is the lowest
+note in the in the tree where these two concepts
+
+265
+00:29:19,179 --> 00:29:25,669
+meet
+and now you can see how you can use that ah
+
+266
+00:29:25,669 --> 00:29:34,149
+computing similarity between concepts so these
+by using from the probability if i take minus
+
+267
+00:29:34,149 --> 00:29:39,889
+log probability the other different numbers
+i will get so minus log one becomes the different
+
+268
+00:29:39,889 --> 00:29:43,999
+numbers i will get so minus log one becomes
+zero then point five minus six and so on now
+
+269
+00:29:43,999 --> 00:29:50,320
+what is something that you are seeing here
+so as you are going down these numbers are
+
+270
+00:29:50,320 --> 00:29:56,860
+increasing so one simple way of capturing
+ah similarity between two words is by seeing
+
+271
+00:29:56,860 --> 00:30:01,789
+what is the lower common subsumer and what
+is the information content of that so nickel
+
+272
+00:30:01,789 --> 00:30:08,159
+and dime what is the similarity path length
+is two but the lowest common subsumer that
+
+273
+00:30:08,159 --> 00:30:14,419
+is coin has a information content of seven
+point four five five on the other hand if
+
+274
+00:30:14,419 --> 00:30:20,749
+i take these two concepts medium of exchange
+and scale their common lowest subsumer standard
+
+275
+00:30:20,749 --> 00:30:24,889
+has an information content of six point one
+one
+
+276
+00:30:24,889 --> 00:30:31,009
+so immediately you can see this this can be
+said to have a higher similarity than this
+
+277
+00:30:31,009 --> 00:30:39,610
+pair ok so what are the formal method by which
+we can capture this so one is resting similarity
+
+278
+00:30:39,610 --> 00:30:47,889
+so that says how similar two words are depends
+on how much they have in common so that is
+
+279
+00:30:47,889 --> 00:30:52,299
+find out their lowest common subsumer and
+find out their information content of that
+
+280
+00:30:52,299 --> 00:30:57,200
+and that will denote the info the similarity
+between these two concepts so it measures
+
+281
+00:30:57,200 --> 00:31:05,480
+the commonalty by the information content
+of the lowest common subsumer ok so like here
+
+282
+00:31:05,480 --> 00:31:12,340
+nickel and dime the similarity would be the
+information content of the l c s that is coin
+
+283
+00:31:12,340 --> 00:31:17,919
+so similarity between them is seven point
+four five five now nickel and money similarity
+
+284
+00:31:17,919 --> 00:31:23,859
+would be the information content of their
+l c s that is medium of exchange so that would
+
+285
+00:31:23,859 --> 00:31:32,450
+be six point two five five and so on ok so
+now immediately you can see that as you keep
+
+286
+00:31:32,450 --> 00:31:39,739
+on going up in the hierarchy the similarity
+will be decreasing so to be highest when you
+
+287
+00:31:39,739 --> 00:31:45,269
+have took single leaf notes but if you keep
+on going up the similarity will ah decrease
+
+288
+00:31:45,269 --> 00:31:50,009
+so this capturing what you wanted to do but
+still there is one problem here so can you
+
+289
+00:31:50,009 --> 00:31:57,149
+find out what is the problem so one problem
+here is if i find the similarity between coinage
+
+290
+00:31:57,149 --> 00:32:04,269
+and money this would be same as similarity
+between coinage and budget yes because their
+
+291
+00:32:04,269 --> 00:32:12,600
+l c s is the same so here what is being captured
+is that how much information they share but
+
+292
+00:32:12,600 --> 00:32:17,529
+what is not being captured is how much information
+they do not share or how much they are different
+
+293
+00:32:17,529 --> 00:32:22,249
+so we have a different measure for capturing
+how much information they do not share and
+
+294
+00:32:22,249 --> 00:32:29,559
+this is called lin similarity so it says that
+ah the similarity this measure is not about
+
+295
+00:32:29,559 --> 00:32:36,359
+just commonalities we also have to capture
+the differences so the more information they
+
+296
+00:32:36,359 --> 00:32:41,659
+share the more similar they are but the more
+information they do not share the less similar
+
+297
+00:32:41,659 --> 00:32:46,820
+they should be ok
+so accordingly the lin similarity between
+
+298
+00:32:46,820 --> 00:32:53,889
+two concepts is defined as two times logarithm
+of or two time information content of th l
+
+299
+00:32:53,889 --> 00:33:01,230
+c s divide by information content of the concept
+plus information content of the concep concepts
+
+300
+00:33:01,230 --> 00:33:09,730
+so while doing that what would happen now
+if i take the similarity between coinage and
+
+301
+00:33:09,730 --> 00:33:17,179
+money this would be six point two five five
+times to divide by seven point four one nine
+
+302
+00:33:17,179 --> 00:33:22,129
+plus eight point zero four two and if i take
+the similarity between the coinage and budget
+
+303
+00:33:22,129 --> 00:33:26,059
+it will have a term of ten point four two
+three in the denominator instead of eight
+
+304
+00:33:26,059 --> 00:33:31,220
+point zero two four two so immediately this
+similarity will become lower than this similarity
+
+305
+00:33:31,220 --> 00:33:37,159
+so lin similarity is a much more well accepted
+measure than the ah the previous measure that
+
+306
+00:33:37,159 --> 00:33:43,200
+we have seen the resting similarity there
+are some variations here so for example the
+
+307
+00:33:43,200 --> 00:33:48,869
+jc similarity
+so what they say in jc similarity find out
+
+308
+00:33:48,869 --> 00:33:57,149
+or give a value to each h that is a distance
+between two concepts and this would be the
+
+309
+00:33:57,149 --> 00:34:05,299
+information content of the concept minus the
+information content of the hyponym and i can
+
+310
+00:34:05,299 --> 00:34:11,730
+define the distance between two concepts as
+their distance so how do i go from one concepts
+
+311
+00:34:11,730 --> 00:34:18,950
+concept to its ah l c s and second concept
+to it its l c s and i just add the distances
+
+312
+00:34:18,950 --> 00:34:25,250
+and i compute similarity by taking the inverse
+of this distance so what am i doing here i
+
+313
+00:34:25,250 --> 00:34:34,910
+am having different notes in my hierarchy
+yes and suppose that you have already found
+
+314
+00:34:34,910 --> 00:34:49,410
+what is their information content ok so what
+do you do in in the case of resting similarity
+
+315
+00:34:49,410 --> 00:35:03,120
+in resting similarity the c one c two c three
+and this is c zero in resting similarity the
+
+316
+00:35:03,120 --> 00:35:08,840
+similarity of c one and c three is nothing
+but the information content of c zero so as
+
+317
+00:35:08,840 --> 00:35:24,440
+per resnic similarity of c one c three is
+i c c g one ok as per lin similarity this
+
+318
+00:35:24,440 --> 00:35:33,310
+would be two times information content of
+c zero divide by information content of c
+
+319
+00:35:33,310 --> 00:35:40,720
+one plus information content of c three now
+in jc similarity what you would do you would
+
+320
+00:35:40,720 --> 00:35:48,000
+count you would find out the distance this
+is distance is nothing but c one minus c zero
+
+321
+00:35:48,000 --> 00:35:56,260
+and this distance is c three minus c zero
+so for gsc similarity it will be c one minus
+
+322
+00:35:56,260 --> 00:36:02,340
+c zero plus c three minus c zero is the distance
+between these two concepts and the similarity
+
+323
+00:36:02,340 --> 00:36:08,850
+between the one divided by that ok and thats
+what is written here information content of
+
+324
+00:36:08,850 --> 00:36:14,190
+c one plus information content of c two minus
+two times information content of the l c f
+
+325
+00:36:14,190 --> 00:36:20,000
+of the two and the thats what you can say
+here i c f c one i c f c three minus two times
+
+326
+00:36:20,000 --> 00:36:24,630
+i c f of a i c s so i hope by this example
+you understood what is the difference between
+
+327
+00:36:24,630 --> 00:36:32,470
+resting similarity lin similarity and jc similarity
+and among these lin similarity is very very
+
+328
+00:36:32,470 --> 00:36:35,620
+popular ok
+so i hope it is clear that how do you apply
+
+329
+00:36:35,620 --> 00:36:41,060
+these three different similarity measures
+so here you have example that a if we use
+
+330
+00:36:41,060 --> 00:36:46,520
+the jc similarity what is the different values
+you will obtain among different concepts so
+
+331
+00:36:46,520 --> 00:36:53,910
+i'll ena increase that you will you try and
+find out that say suppose between nickel and
+
+332
+00:36:53,910 --> 00:36:59,410
+richard scale or between nickel and coin can
+you obtain the same values by by applying
+
+333
+00:36:59,410 --> 00:37:09,210
+the formulas so now i will ah ah also talk
+about briefly the other approach for computing
+
+334
+00:37:09,210 --> 00:37:15,110
+similarity between two concepts in in wordnet
+so till now we have only used the the hierarchy
+
+335
+00:37:15,110 --> 00:37:19,630
+tree in wordnet and i am saying two words
+are similar if they are nearby in the in the
+
+336
+00:37:19,630 --> 00:37:26,620
+hierarchy tree or some other formulation and
+that that we have seen some examples now suppose
+
+337
+00:37:26,620 --> 00:37:31,720
+i want to use their glosses the way their
+the different concepts are defined in wordnet
+
+338
+00:37:31,720 --> 00:37:37,280
+for comparing similarity so these are very
+simple algorithm called lesk algorithm also
+
+339
+00:37:37,280 --> 00:37:42,430
+have a extended lesk version that is used
+for that and what is the idea two concepts
+
+340
+00:37:42,430 --> 00:37:50,010
+are similar if their glosses contain similar
+word and the word drawing paper defined as
+
+341
+00:37:50,010 --> 00:37:55,130
+paper that is especially prepared for using
+drafting and decal the art of transferring
+
+342
+00:37:55,130 --> 00:38:00,480
+designs from specially prepared paper to a
+wood or glass or metal surface i want to find
+
+343
+00:38:00,480 --> 00:38:05,290
+out how similar they are
+so what i will do i will see how many words
+
+344
+00:38:05,290 --> 00:38:11,160
+are common there so as such you are seeing
+that three words that are common paper especially
+
+345
+00:38:11,160 --> 00:38:19,230
+and prepared ok that a kind both the glosses
+so what algorithm does is that it counts how
+
+346
+00:38:19,230 --> 00:38:27,230
+many n grams are common so n gram in the sense
+of one unigram bigrams and trigrams and so
+
+347
+00:38:27,230 --> 00:38:32,900
+on see you will see that this bigram is specially
+prepared is common to both the glosses glosses
+
+348
+00:38:32,900 --> 00:38:39,470
+and the unigram page is common and whenever
+an n gram is common it adds a score of n square
+
+349
+00:38:39,470 --> 00:38:46,610
+so that you have is given for a commonality
+of bigram trigram and so on so in this case
+
+350
+00:38:46,610 --> 00:38:51,510
+what would be the similarity one bigram is
+common so two square and one unigram is common
+
+351
+00:38:51,510 --> 00:38:59,020
+and one square so similarity would be two
+square plus one square five ok one plus four
+
+352
+00:38:59,020 --> 00:39:08,360
+five that is the similarity of using lesk
+algorithm now so so we have talked about what
+
+353
+00:39:08,360 --> 00:39:15,610
+are the different ah relations we can capture
+using wordnet and we have also seen how we
+
+354
+00:39:15,610 --> 00:39:22,720
+can find out similarity of across two words
+and that looks like very simple method once
+
+355
+00:39:22,720 --> 00:39:29,380
+the wordnet is given and you might ah also
+wonder this might this might be a better method
+
+356
+00:39:29,380 --> 00:39:35,780
+of capturing similarity than ah distribution
+similarity ok because i i have a manually
+
+357
+00:39:35,780 --> 00:39:41,340
+created this orders i know which of the words
+occur where in the tree i can simply use the
+
+358
+00:39:41,340 --> 00:39:47,600
+distance or measure to find out how similar
+they are but there is one ah inherent problem
+
+359
+00:39:47,600 --> 00:39:53,720
+in using wordnet for any of the task
+so can you think of what is the problem so
+
+360
+00:39:53,720 --> 00:40:01,290
+so let me give you the hint if you know if
+you want to capture similarity across synsets
+
+361
+00:40:01,290 --> 00:40:07,560
+wordnet is very good it can capture the similarity
+between the synsets very nicely but if you
+
+362
+00:40:07,560 --> 00:40:13,770
+want to catch similarity between words that
+is very difficult now when we encounter natural
+
+363
+00:40:13,770 --> 00:40:19,820
+language we will only encounter the words
+and when we see the words we do not know what
+
+364
+00:40:19,820 --> 00:40:25,800
+are the synsets that are being used so i cannot
+directly apply wordnet there because i do
+
+365
+00:40:25,800 --> 00:40:30,530
+not know the sense i can only do an approximation
+where i can find out ok i am assuming this
+
+366
+00:40:30,530 --> 00:40:37,930
+word corresponds to or i am i am applying
+the methods i used for synsets for the words
+
+367
+00:40:37,930 --> 00:40:45,470
+ok this would be an approximation and it works
+sometimes but does not work some other times
+
+368
+00:40:45,470 --> 00:40:51,640
+so to be able to apply wordnet to be able
+to use wordnet one important problem that
+
+369
+00:40:51,640 --> 00:40:57,640
+we have to deal with is i need to find out
+if a word is used in in a particular sentence
+
+370
+00:40:57,640 --> 00:41:04,470
+what is the what is the wordnet sense that
+has been used for that ok and that is is difficult
+
+371
+00:41:04,470 --> 00:41:10,310
+problem that we will try to address but this
+problem is very very common and we will just
+
+372
+00:41:10,310 --> 00:41:15,610
+take a very simple example for that so we
+see very sim[ple]- very very easy sentence
+
+373
+00:41:15,610 --> 00:41:21,230
+i saw a man who is ninety eight years old
+and can still walk and tell jokes yes this
+
+374
+00:41:21,230 --> 00:41:26,780
+is a very simple sentence now for the simple
+sentence what do you think are there many
+
+375
+00:41:26,780 --> 00:41:32,240
+different synsets of this word or this whole
+sentence or there is one interpretation so
+
+376
+00:41:32,240 --> 00:41:37,480
+when we when we hear this term this sentence
+we have only one interpretation in mind but
+
+377
+00:41:37,480 --> 00:41:45,510
+in wordnet what are different synsets of individual
+words so let us see so if i go to wordnet
+
+378
+00:41:45,510 --> 00:41:51,260
+the word saw has twenty five senses man has
+eleven senses age has four jokes has four
+
+379
+00:41:51,260 --> 00:41:56,780
+tell has eight and so on so now if you combine
+if you combine all these together they are
+
+380
+00:41:56,780 --> 00:42:02,030
+as a sixty seven million plus senses that
+are possible sentence this might look like
+
+381
+00:42:02,030 --> 00:42:07,460
+a very extreme case but you might have examples
+where they are multiple divisions for the
+
+382
+00:42:07,460 --> 00:42:13,120
+same sentence and different words can have
+can occur in multiple synsets so my problem
+
+383
+00:42:13,120 --> 00:42:21,290
+is if there are so many synsets how do i find
+out what exact synset wordnet is being used
+
+384
+00:42:21,290 --> 00:42:28,530
+and thats where we'll talk about the problem
+of word sense among the many possibilities
+
+385
+00:42:28,530 --> 00:42:34,330
+dissimilate the particular sense of the word
+and that we will start in the next lecture
+
+386
+00:42:34,330 --> 00:42:34,580
+thank you
+

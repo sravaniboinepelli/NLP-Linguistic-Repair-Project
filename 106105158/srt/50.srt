@@ -1,0 +1,1509 @@
+1
+00:00:18,039 --> 00:00:22,210
+welcome back for the fourth lecture of this
+week so we started talking about information
+
+2
+00:00:22,210 --> 00:00:26,689
+extraction and there we discussed about the
+particular problem of relation extraction
+
+3
+00:00:26,689 --> 00:00:32,290
+and we discussed some ah so one approach that
+is using hand built patterns so we can build
+
+4
+00:00:32,290 --> 00:00:36,350
+some patterns manually and we saw that by
+using that we can extract certain relations
+
+5
+00:00:36,350 --> 00:00:41,309
+between entities and there there was some
+limitations with that so we will now see some
+
+6
+00:00:41,309 --> 00:00:49,899
+other approaches apart from hand built patterns
+so so you starting with a bootstrapping approaches
+
+7
+00:00:49,899 --> 00:00:54,400
+so we we had talked about bootstrapping approaches
+in one of the earlier topic that is one word
+
+8
+00:00:54,400 --> 00:00:59,330
+sense disambiguation but let us see how do
+we apply these approaches for the task of
+
+9
+00:00:59,330 --> 00:01:01,559
+relation extraction
+
+10
+00:01:01,559 --> 00:01:08,690
+so here so so you will use these approaches
+only if you do not have a lot of annotated
+
+11
+00:01:08,690 --> 00:01:13,540
+data because if you have some annotations
+already available then you can use some supervisor
+
+12
+00:01:13,540 --> 00:01:17,540
+approaches that might give you better else
+but suppose you do not have annotated data
+
+13
+00:01:17,540 --> 00:01:23,940
+that means data where it is labeled entity
+one is related to entity two by a particular
+
+14
+00:01:23,940 --> 00:01:27,200
+relation r if you do not have such data you
+will use your bootstrapping approach
+
+15
+00:01:27,200 --> 00:01:34,500
+so so you do not have enough data but what
+you have r some seed instances of the relation
+
+16
+00:01:34,500 --> 00:01:39,560
+and that is very easy now what they mean by
+seed instances so remember ah we were talking
+
+17
+00:01:39,560 --> 00:01:44,530
+about hyponyms or meronyms see all you know
+some seed relation so you know ok basement
+
+18
+00:01:44,530 --> 00:01:48,090
+and buildings are connected by the meronym
+relation car and vehicles are connected by
+
+19
+00:01:48,090 --> 00:01:54,409
+the hyponym hyponym hyponym hyponym relation
+so you know some seed instances ok then what
+
+20
+00:01:54,409 --> 00:02:01,500
+else do you need or you might have some patterns
+that you know and lots and lots of unannotated
+
+21
+00:02:01,500 --> 00:02:07,960
+data so that means you should have a lot of
+corpus where you have a lot of text data it
+
+22
+00:02:07,960 --> 00:02:14,970
+may be an an unannotated its a simple text
+data so so idea is using some seed patterns
+
+23
+00:02:14,970 --> 00:02:21,810
+running running some idea over this whole
+data you can try to bootstrap your your approach
+
+24
+00:02:21,810 --> 00:02:28,689
+for relation extraction
+so ah so the questions here are so suppose
+
+25
+00:02:28,689 --> 00:02:33,870
+so here you have some seed instances so how
+do you use them for doing something meaningful
+
+26
+00:02:33,870 --> 00:02:38,810
+or so that you can extract where is other
+entities so you have some seed ah instances
+
+27
+00:02:38,810 --> 00:02:45,099
+how do you use that for extracting more more
+such examples and so this can be consider
+
+28
+00:02:45,099 --> 00:02:50,790
+some sort of a semi supervised approach so
+what do we do here so let us take some simple
+
+29
+00:02:50,790 --> 00:02:59,909
+example so ah here suppose i have my relation
+is burial place so x is buried in place y
+
+30
+00:02:59,909 --> 00:03:04,969
+i want to find out all such entities that
+are connected by this relation
+
+31
+00:03:04,969 --> 00:03:10,989
+so how do i go about it firstly i need to
+see if i have some ah seed instances that
+
+32
+00:03:10,989 --> 00:03:16,019
+is some entities that are connected by this
+relation suppose i have an instance that is
+
+33
+00:03:16,019 --> 00:03:23,809
+mark twain is and the burial place is elmira
+new york so i have this seed tuple now how
+
+34
+00:03:23,809 --> 00:03:32,159
+do i start so remember what did we need we
+need some seed instances and a lot of corpus
+
+35
+00:03:32,159 --> 00:03:36,180
+data
+so now you can use the intuition that how
+
+36
+00:03:36,180 --> 00:03:42,599
+are you finding out ah the patterns in the
+in the case of hand built patterns so again
+
+37
+00:03:42,599 --> 00:03:48,699
+we were starting with some hand with some
+ah seed instance so like basement building
+
+38
+00:03:48,699 --> 00:03:53,139
+and we were trying to go to the corpus and
+seeing wherever these two words occur what
+
+39
+00:03:53,139 --> 00:03:58,819
+is the ah what is the ah pattern in which
+they occurring same thing you can do here
+
+40
+00:03:58,819 --> 00:04:06,450
+so you know ok i have two entities elmira
+and mark twain now you can search your whole
+
+41
+00:04:06,450 --> 00:04:10,749
+corpus to find out where all all these two
+entities occurred together any single sentence
+
+42
+00:04:10,749 --> 00:04:14,780
+or in some proximity
+now wherever they occur you try to find out
+
+43
+00:04:14,780 --> 00:04:19,739
+in what pattern do they connect to each other
+and these patterns you can generalize as your
+
+44
+00:04:19,739 --> 00:04:25,330
+gen generic patterns without having to manually
+go through each of these so something like
+
+45
+00:04:25,330 --> 00:04:30,900
+so i have these and it is mark twain elmira
+and maybe i can google this google this google
+
+46
+00:04:30,900 --> 00:04:35,030
+this entities mark twain elmira together and
+let us see what do i what are the kind of
+
+47
+00:04:35,030 --> 00:04:42,630
+sentences do i get and suppose i get a sentences
+like this excuse me mark twain is buried in
+
+48
+00:04:42,630 --> 00:04:49,060
+elmira new york this is the sentence and i
+know what am i entities here mark twain is
+
+49
+00:04:49,060 --> 00:04:55,470
+x elmira is y so i can immediately from a
+pattern x is buried in y in this becomes my
+
+50
+00:04:55,470 --> 00:04:59,980
+pattern
+the next sentence the grave of mark twain
+
+51
+00:04:59,980 --> 00:05:08,650
+is in elmira so i can have this pattern the
+grave of x is in y similarly elmira is mark
+
+52
+00:05:08,650 --> 00:05:16,200
+twins final resting place so i have this pattern
+now y is x s final resting place and so on
+
+53
+00:05:16,200 --> 00:05:20,450
+so we are getting this sentence is from the
+sentence you are extracting over you are entities
+
+54
+00:05:20,450 --> 00:05:26,380
+x and y and you are building patterns in terms
+of x and y so what you saw here just by using
+
+55
+00:05:26,380 --> 00:05:32,910
+one seed instance and a lot of unannotated
+data you can find out some patterns
+
+56
+00:05:32,910 --> 00:05:37,260
+now once you have patterns what you will do
+you will you will use these patterns to find
+
+57
+00:05:37,260 --> 00:05:43,100
+out more and more such entity pairs that are
+connected by this pattern and that will enhance
+
+58
+00:05:43,100 --> 00:05:49,050
+your seed seed tuples or seed instances then
+you can again use this seed instances to again
+
+59
+00:05:49,050 --> 00:05:54,280
+such the corpus find out more such patterns
+and this can be done in an iterative manner
+
+60
+00:05:54,280 --> 00:06:00,490
+until there is some convergence going on or
+you are seeing that there is not helping much
+
+61
+00:06:00,490 --> 00:06:06,280
+so so now you have these patterns and you
+use these to search for new tuples so describe
+
+62
+00:06:06,280 --> 00:06:11,420
+described by the simple flow chart that is
+you are starting with this some sort of seed
+
+63
+00:06:11,420 --> 00:06:16,870
+tuples like mark twain elmira then you are
+searching with tuples in the in the corpus
+
+64
+00:06:16,870 --> 00:06:21,560
+and you are finding various patterns and this
+becomes your pattern set you might also have
+
+65
+00:06:21,560 --> 00:06:26,610
+some seed patterns already but you are getting
+some patterns now now using this patterns
+
+66
+00:06:26,610 --> 00:06:31,770
+you are searching the corpus and finding more
+tuples and i putting them in your relational
+
+67
+00:06:31,770 --> 00:06:37,740
+table and that is going to your tuple set
+now using your tuple set you can search these
+
+68
+00:06:37,740 --> 00:06:43,700
+and find out more patterns and this can keep
+on going in many many iterations and this
+
+69
+00:06:43,700 --> 00:06:48,860
+is in a very nice approach you can see that
+you only need data that is ah freely available
+
+70
+00:06:48,860 --> 00:06:56,430
+everywhere and you need some very few seed
+instances and you can apply this algorithm
+
+71
+00:06:56,430 --> 00:07:01,020
+and this does not require to do everything
+manually
+
+72
+00:07:01,020 --> 00:07:06,450
+so yes but there are some problems with the
+that approach the problems for example are
+
+73
+00:07:06,450 --> 00:07:11,450
+that the seed instance with which we start
+should be a good instance such that there
+
+74
+00:07:11,450 --> 00:07:17,790
+are many occurrences of this seed in the corpus
+if the seed ah pair does not arrange the corpus
+
+75
+00:07:17,790 --> 00:07:22,639
+you will not be able to extract many relations
+many patterns from this so this is one problem
+
+76
+00:07:22,639 --> 00:07:26,990
+with this approach so this is sensitive to
+the original set of seeds that you use for
+
+77
+00:07:26,990 --> 00:07:33,270
+your algorithm and in general there can be
+many parameters to be tuned for example how
+
+78
+00:07:33,270 --> 00:07:38,670
+many top patterns will i take from from my
+set how many iterations i will go through
+
+79
+00:07:38,670 --> 00:07:43,500
+and how many times i will send the same pattern
+for my first search there can be many a many
+
+80
+00:07:43,500 --> 00:07:50,240
+parameters that you have to fix and yeah there
+is no such probabilistic interpretation so
+
+81
+00:07:50,240 --> 00:07:55,651
+its difficult to know how confident you are
+in each pattern or each tuple that you are
+
+82
+00:07:55,651 --> 00:07:58,860
+finding by this approach
+so here some sort of problems with this approach
+
+83
+00:07:58,860 --> 00:08:06,250
+but it is a nice approach if you use to want
+to ah to get get it done without ah without
+
+84
+00:08:06,250 --> 00:08:10,590
+building some sort of machine learning method
+also so on you can use this approach very
+
+85
+00:08:10,590 --> 00:08:17,330
+ah for some simple ah and easy results but
+we will see if you want to build a more over
+
+86
+00:08:17,330 --> 00:08:22,430
+system that what kind of approaches you can
+you can use
+
+87
+00:08:22,430 --> 00:08:29,901
+so so for that we can talk about some supervised
+approaches for relation extraction so what
+
+88
+00:08:29,901 --> 00:08:36,339
+is the idea so first you will ah define what
+are the kind of relations you want to extract
+
+89
+00:08:36,339 --> 00:08:43,020
+so relations can be many like ok i want extract
+ah family relations so parent of ah wife of
+
+90
+00:08:43,020 --> 00:08:49,790
+husband of and so on you can you can extract
+some ah ah organization relation this is an
+
+91
+00:08:49,790 --> 00:08:55,379
+employee of and and subsidiary of and so on
+so we will define a set of relations
+
+92
+00:08:55,379 --> 00:09:02,490
+now for each relation you will find data and
+label the data so they should be some manual
+
+93
+00:09:02,490 --> 00:09:06,870
+labeling involved somebody has to label the
+data that ok in this sentence these entities
+
+94
+00:09:06,870 --> 00:09:12,709
+are connected by this relation so you will
+choose a representative corpus where you think
+
+95
+00:09:12,709 --> 00:09:17,839
+that there can be some instances of this relation
+now you will label the named entities in the
+
+96
+00:09:17,839 --> 00:09:22,620
+corpus and hand label the relations between
+the entities
+
+97
+00:09:22,620 --> 00:09:27,350
+so what will happen you have a corpus you
+will find out sentence s one s two s three
+
+98
+00:09:27,350 --> 00:09:34,990
+s four and you say in the sentence this entity
+one this entity two and you know what is the
+
+99
+00:09:34,990 --> 00:09:40,490
+relation between them similarly here you find
+ok there is one entity one prime entity two
+
+100
+00:09:40,490 --> 00:09:49,740
+prime and there is some relation prime here
+and this has to be hand labeled why do you
+
+101
+00:09:49,740 --> 00:09:55,649
+need hand labeling so once you have these
+hand labels they are like your ah so this
+
+102
+00:09:55,649 --> 00:10:05,230
+is like your bold standard that you can you
+as your training as well as testing data
+
+103
+00:10:05,230 --> 00:10:09,860
+so we will train train you are system using
+ok in in this sentence if these are the entities
+
+104
+00:10:09,860 --> 00:10:15,819
+there is a relation between them so in a new
+sentence suppose two entities are there is
+
+105
+00:10:15,819 --> 00:10:21,869
+there is the relation rel between them so
+this can be some machine learning model that
+
+106
+00:10:21,869 --> 00:10:29,390
+you can built by using this gold standard
+and then you will ah yeah break into training
+
+107
+00:10:29,390 --> 00:10:33,680
+development in text that is the usual practice
+in machine learning and then you will train
+
+108
+00:10:33,680 --> 00:10:42,790
+a classifier on the training set
+so now so so here it might be one problem
+
+109
+00:10:42,790 --> 00:10:49,180
+while you are using this approach in general
+they can be hundreds of relations and so you
+
+110
+00:10:49,180 --> 00:10:55,290
+need to ah so so when in ah you are given
+a sentence between two entities take they
+
+111
+00:10:55,290 --> 00:10:59,879
+can be many relations but they may not be
+any relation at all it might happen that two
+
+112
+00:10:59,879 --> 00:11:04,059
+entities are occurring in a sentence but they
+are not connected by any relation there is
+
+113
+00:11:04,059 --> 00:11:11,611
+no relation as such
+so what you might do is to have the first
+
+114
+00:11:11,611 --> 00:11:17,360
+step that says ok in a sentence i know what
+are all the entities and this first step tells
+
+115
+00:11:17,360 --> 00:11:22,559
+me which two entities are connected and which
+two are not connected and once you have the
+
+116
+00:11:22,559 --> 00:11:27,129
+output of this step you know these two entities
+are connected then you run your additional
+
+117
+00:11:27,129 --> 00:11:31,160
+classifier to find out what is the relation
+between them among all the hundreds of relations
+
+118
+00:11:31,160 --> 00:11:36,149
+that you have
+so this issue this is seemed to be working
+
+119
+00:11:36,149 --> 00:11:39,930
+in this in this area of relation extraction
+that first you find out what entities are
+
+120
+00:11:39,930 --> 00:11:47,230
+connected second what is relation between
+them so its a two stage approach so so you
+
+121
+00:11:47,230 --> 00:11:52,980
+find all pairs of named entities in a sentence
+and the extra a step can be build a simple
+
+122
+00:11:52,980 --> 00:11:58,360
+binary classifier so that is says yes or no
+and it decides whether two entities are related
+
+123
+00:11:58,360 --> 00:12:05,920
+or not and if you find an answer yes to this
+is step use another classifier to find out
+
+124
+00:12:05,920 --> 00:12:13,990
+what is the relation between these two entities
+and why will that help because in the first
+
+125
+00:12:13,990 --> 00:12:19,699
+step build itself you will be able to eliminate
+a lot of extra pairs that are not involved
+
+126
+00:12:19,699 --> 00:12:23,889
+in any relation so we will not bother about
+those you will only bother about those entities
+
+127
+00:12:23,889 --> 00:12:28,720
+that are probably connected by some relation
+other advantage could be you can think of
+
+128
+00:12:28,720 --> 00:12:32,990
+the idea sort of features that you will used
+for the first step that is finding out if
+
+129
+00:12:32,990 --> 00:12:37,189
+there is a relation or not and the second
+step that is if this relation what is that
+
+130
+00:12:37,189 --> 00:12:41,410
+relation you can think of very set of features
+that you can imply both for both of these
+
+131
+00:12:41,410 --> 00:12:49,209
+ah steps
+so here is ah one visualization of what this
+
+132
+00:12:49,209 --> 00:12:55,809
+will look like so suppose you have this sentence
+american airlines a unit of a m r immediately
+
+133
+00:12:55,809 --> 00:13:03,809
+matched the move a spokesman tim wagner said
+ok so now suppose by using the first step
+
+134
+00:13:03,809 --> 00:13:09,420
+you found out that american airlines and tim
+wagner are connected by a relation ok so now
+
+135
+00:13:09,420 --> 00:13:13,579
+you want to find out what is the relation
+so here you have a sentence two entities you
+
+136
+00:13:13,579 --> 00:13:17,390
+need to find out what is the relation among
+all these pos possibilities is family relation
+
+137
+00:13:17,390 --> 00:13:21,660
+citizen relation subsidiary relation founder
+relation and so on so lot of relations are
+
+138
+00:13:21,660 --> 00:13:24,569
+there you want to find out what is the relation
+between these two entities
+
+139
+00:13:24,569 --> 00:13:29,089
+now how do you solve this problem how would
+you solve this problem so you will have a
+
+140
+00:13:29,089 --> 00:13:33,129
+lot of labeled data when you know these are
+the entities here and this is the relation
+
+141
+00:13:33,129 --> 00:13:40,279
+between them so in classification what we
+do from this labeled data we try to abstract
+
+142
+00:13:40,279 --> 00:13:45,320
+over some sort of features so we will say
+ok so these are the features that i see in
+
+143
+00:13:45,320 --> 00:13:51,209
+this sentence and these features indicate
+relation one other sentence i am seeing this
+
+144
+00:13:51,209 --> 00:13:57,489
+kind of features that indicating relation
+two and so on so this is what i i will i will
+
+145
+00:13:57,489 --> 00:14:01,309
+have from my training data now attached data
+again i will try to find out what are the
+
+146
+00:14:01,309 --> 00:14:06,750
+features and using these features i will try
+to match with with one of this previous examples
+
+147
+00:14:06,750 --> 00:14:11,929
+i have seen in training data this is a simple
+ah this is simple illustration but it is generally
+
+148
+00:14:11,929 --> 00:14:15,550
+more complex than that but this is the basic
+idea
+
+149
+00:14:15,550 --> 00:14:21,759
+so the whole ah effort goes in deciding what
+should be my ideal features by which i can
+
+150
+00:14:21,759 --> 00:14:27,050
+represent all my data points so so how do
+i say ok these two are connected by this relation
+
+151
+00:14:27,050 --> 00:14:31,519
+what are the different things in the surrounding
+in the context about these entities that i
+
+152
+00:14:31,519 --> 00:14:36,709
+should be using to to make this decision and
+that is your task of each engineering find
+
+153
+00:14:36,709 --> 00:14:40,119
+out what are the features that will help you
+in this task
+
+154
+00:14:40,119 --> 00:14:46,050
+in most of the application this is one of
+the ah main challenges that for this for this
+
+155
+00:14:46,050 --> 00:14:52,759
+task find out what are the appropriate set
+of features i can used so we will see some
+
+156
+00:14:52,759 --> 00:14:57,449
+examples at what so so here you can use all
+the different concepts that are covered in
+
+157
+00:14:57,449 --> 00:15:03,860
+this course so its starting from simple ah
+language models part of speech tags dependency
+
+158
+00:15:03,860 --> 00:15:08,800
+parse synthetic parse everything you can use
+to do find out to define what are your features
+
+159
+00:15:08,800 --> 00:15:15,580
+in this task and you will see a lot of examples
+here and and this is ah one ah so if you want
+
+160
+00:15:15,580 --> 00:15:19,670
+to build your own system you you might have
+to start thinking in terms of what are the
+
+161
+00:15:19,670 --> 00:15:26,489
+important insight from data that i here use
+use as in the form of my features
+
+162
+00:15:26,489 --> 00:15:31,860
+so remember features are something that that
+you think can help me ah discriminate between
+
+163
+00:15:31,860 --> 00:15:36,850
+various relations here so it can help me tell
+me tell if this is a family relation versus
+
+164
+00:15:36,850 --> 00:15:41,690
+if it is a citizen relation what are the different
+things that can help a are these various words
+
+165
+00:15:41,690 --> 00:15:46,209
+that occur in the context are these part of
+speech tags and or or this is a something
+
+166
+00:15:46,209 --> 00:15:50,559
+else so this you can abstract in terms of
+here features
+
+167
+00:15:50,559 --> 00:15:56,129
+so let us see what are the kind of features
+we can use for this task so i have the sentence
+
+168
+00:15:56,129 --> 00:16:02,199
+american airlines etcetera and my initial
+features could be what are the words in my
+
+169
+00:16:02,199 --> 00:16:08,509
+mention m one and m two so m one is american
+airlines m two is tim wagner so what are the
+
+170
+00:16:08,509 --> 00:16:14,089
+words that i used in these two mentions so
+feature here can be bag of words features
+
+171
+00:16:14,089 --> 00:16:19,639
+so mention one use uses words like a american
+airlines and mention two uses words like tim
+
+172
+00:16:19,639 --> 00:16:26,200
+wagner so these are simple features i can
+also use what are the headwords of these two
+
+173
+00:16:26,200 --> 00:16:33,820
+mentions the headword mention of of of mention
+one is airlines and for mention two it is
+
+174
+00:16:33,820 --> 00:16:40,049
+wagner and you can also see what is the headword
+mention of one plus two airlines plus wagner
+
+175
+00:16:40,049 --> 00:16:44,589
+so why you are using this headword kind of
+features so here you are having american airlines
+
+176
+00:16:44,589 --> 00:16:49,459
+but suppose there is something like indian
+airlines or or some other air airlines so
+
+177
+00:16:49,459 --> 00:16:55,819
+by using the headwords using capture e one
+a new ah new word that has the same headword
+
+178
+00:16:55,819 --> 00:16:59,629
+but the the initial word was different it
+can be captured by using headwords same with
+
+179
+00:16:59,629 --> 00:17:04,689
+tim wagner so you are capturing the surname
+here by headword but suppose if someone else
+
+180
+00:17:04,689 --> 00:17:12,750
+has a surname wagner so it can also be used
+then i can use a what are the words that are
+
+181
+00:17:12,750 --> 00:17:18,429
+coming around the mentions so that is what
+are the words are coming before american airlines
+
+182
+00:17:18,429 --> 00:17:24,820
+after tim wagner and what are the words in
+between so what can be my features so words
+
+183
+00:17:24,820 --> 00:17:30,160
+or bigrams in particular positions left and
+right of m one m two like what is the word
+
+184
+00:17:30,160 --> 00:17:36,951
+before m two so its a spokesman what is the
+word next to ah m two that is said ok so what
+
+185
+00:17:36,951 --> 00:17:42,520
+you are abstracting here i have an entity
+before which i have a word spokesman and next
+
+186
+00:17:42,520 --> 00:17:49,190
+word is said so the new context whenever i
+see what is spokesman before what said afterwards
+
+187
+00:17:49,190 --> 00:17:55,620
+it might indicate that there might be this
+relation ok a spokesman x said it might be
+
+188
+00:17:55,620 --> 00:18:02,440
+a good indicator of this relation
+you can also use the back of words or bigrams
+
+189
+00:18:02,440 --> 00:18:06,330
+between the two entities that is what are
+the different kind of words that occur between
+
+190
+00:18:06,330 --> 00:18:12,290
+the two entities here so we will say ok so
+words like a m r immediately matched a spokesman
+
+191
+00:18:12,290 --> 00:18:16,580
+unit etcetera they are all occurring between
+the two entities and they all go as you are
+
+192
+00:18:16,580 --> 00:18:21,340
+features
+so you can have named entity type and mention
+
+193
+00:18:21,340 --> 00:18:28,750
+type features so for example what is the named
+entity tag for the mention one so its like
+
+194
+00:18:28,750 --> 00:18:35,250
+american airlines organization so this you
+can get by using various ah named entity recognition
+
+195
+00:18:35,250 --> 00:18:39,830
+tools you can run in any are and you can find
+out what are the various named entities so
+
+196
+00:18:39,830 --> 00:18:45,460
+its say ok mention one is in organization
+similarly mention two is a person so this
+
+197
+00:18:45,460 --> 00:18:50,581
+can be nice ah feature that can help you this
+is in organization this is a person so what
+
+198
+00:18:50,581 --> 00:18:56,400
+can be a relation between them and yeah it
+can be together also what is the named entity
+
+199
+00:18:56,400 --> 00:19:04,500
+for one in two together organization person
+then you can also find out entity levels of
+
+200
+00:19:04,500 --> 00:19:09,630
+mentioned is the name nominal or pronoun so
+here first one is a name second one is also
+
+201
+00:19:09,630 --> 00:19:15,760
+a name but suppose in the sentence you have
+it he etcetera so we can call it as a pronoun
+
+202
+00:19:15,760 --> 00:19:20,290
+on the other hand if you have a word like
+the company you will call it as a nominal
+
+203
+00:19:20,290 --> 00:19:28,040
+so all these can also be your features
+now suppose you want to use the dependency
+
+204
+00:19:28,040 --> 00:19:33,930
+between them so you will see when you convert
+the sentence to a dependency graph what is
+
+205
+00:19:33,930 --> 00:19:38,180
+the connection between the two entities what
+are the different branch in that in the tree
+
+206
+00:19:38,180 --> 00:19:43,650
+are connected so suppose you find this dependency
+graph so we will see ok so they are connected
+
+207
+00:19:43,650 --> 00:19:49,990
+by this path matched said and you are saying
+going to wagner airlines matched said wagner
+
+208
+00:19:49,990 --> 00:19:56,200
+so now you will try to use certain features
+based on this path also ok so it can be maybe
+
+209
+00:19:56,200 --> 00:20:02,360
+what are the words that occurring in this
+path or what is the complete path altogether
+
+210
+00:20:02,360 --> 00:20:09,160
+so here what is the headword of of the dependence
+the dependency headword for word one so you
+
+211
+00:20:09,160 --> 00:20:17,250
+had ah airlines matched airlines is the dependency
+for the word one for headword two so we have
+
+212
+00:20:17,250 --> 00:20:23,610
+the dependency said and wagner this can be
+a feature immediate dependency feature matched
+
+213
+00:20:23,610 --> 00:20:30,960
+airlines said wagner then what is the path
+airlines matched said wagner and and you can
+
+214
+00:20:30,960 --> 00:20:35,610
+also think of some other features ok what
+is the label they are at in that dependency
+
+215
+00:20:35,610 --> 00:20:40,730
+graph how many different words they are connected
+to and so on
+
+216
+00:20:40,730 --> 00:20:45,650
+and then you can also do chunking and is use
+used features like ok if you chunk them you
+
+217
+00:20:45,650 --> 00:20:50,620
+will find american airlines a unit of a m
+r etcetera and your feature could be what
+
+218
+00:20:50,620 --> 00:20:57,630
+is the chunk in which it participates what
+is the next chunk after this and so on you
+
+219
+00:20:57,630 --> 00:21:03,140
+can also use the constituency parse feature
+so you have the two words here american airlines
+
+220
+00:21:03,140 --> 00:21:09,580
+and tim wagner and this is the party of the
+sentence so you can use the the the path from
+
+221
+00:21:09,580 --> 00:21:15,260
+here for noun phrase to this particular noun
+phrase that connects tim wagner so what is
+
+222
+00:21:15,260 --> 00:21:19,780
+the path here going to an noun phrase to a
+sentence to a sentence to a noun phrase this
+
+223
+00:21:19,780 --> 00:21:24,730
+path can be helpful again here you can use
+what is the label in the tree they are at
+
+224
+00:21:24,730 --> 00:21:31,850
+and what is the sibling and so on so these
+can be your various features
+
+225
+00:21:31,850 --> 00:21:37,180
+then they can be some ah sort of features
+that you can obtain from various gazetteer
+
+226
+00:21:37,180 --> 00:21:43,700
+and ah different terms kinship terms so if
+your relations contain mother of and parents
+
+227
+00:21:43,700 --> 00:21:49,650
+of an all that so you can use some kinship
+terms so like parents wife husband grandparent
+
+228
+00:21:49,650 --> 00:21:57,480
+etcetera and this can be obtained from various
+electrical sources like wordnet also and then
+
+229
+00:21:57,480 --> 00:22:01,930
+you can use various gazetteer like what are
+the cont country name list so you can see
+
+230
+00:22:01,930 --> 00:22:05,000
+ok
+so the next word after the entity one is a
+
+231
+00:22:05,000 --> 00:22:10,110
+name of the country or the previous word after
+the entity two any of a country similarly
+
+232
+00:22:10,110 --> 00:22:17,100
+for names of very famous celebrities or persons
+all these can be used as your features so
+
+233
+00:22:17,100 --> 00:22:22,990
+so this is the idea that that you have this
+task you have to find out the relations and
+
+234
+00:22:22,990 --> 00:22:27,780
+you you should be able to use whatever sort
+of features you think will help in this task
+
+235
+00:22:27,780 --> 00:22:32,720
+so we are seeing we are using a lot of different
+sort of features and so and they are using
+
+236
+00:22:32,720 --> 00:22:39,180
+all the different concepts and topics that
+you have seen in the basics of this course
+
+237
+00:22:39,180 --> 00:22:46,370
+so you can have country name list others of
+entries etcetera so now once you have identified
+
+238
+00:22:46,370 --> 00:22:51,000
+what are your features so what will happen
+if youre training data each instance you can
+
+239
+00:22:51,000 --> 00:22:55,380
+convert in a feature vector so we know what
+are the different features that are that are
+
+240
+00:22:55,380 --> 00:23:02,010
+involved in this particular sense and then
+you have you can use various classifiers to
+
+241
+00:23:02,010 --> 00:23:07,220
+built ah to find out given a new sentence
+how do i find out if the two entities have
+
+242
+00:23:07,220 --> 00:23:11,000
+a relation and what is the relation and then
+you can you can use multiple classifiers like
+
+243
+00:23:11,000 --> 00:23:21,450
+naive bayes classifier or s p m or maxent
+etcetera and this is the rule always you train
+
+244
+00:23:21,450 --> 00:23:26,160
+on the training set tune on development set
+and test from the test sets
+
+245
+00:23:26,160 --> 00:23:32,860
+so you should never use your test set for
+building your features or ah whatever ah patterns
+
+246
+00:23:32,860 --> 00:23:37,080
+so you should never use it as set you should
+be kept separate so you will only tune on
+
+247
+00:23:37,080 --> 00:23:43,100
+your development set if you your training
+set you run your classifier and ini initially
+
+248
+00:23:43,100 --> 00:23:47,130
+test on the development set if it doesnt work
+keep on improving and once you are satisfied
+
+249
+00:23:47,130 --> 00:23:53,290
+then the on the test set and find the accuracy
+and you might also have to compare with others
+
+250
+00:23:53,290 --> 00:24:00,790
+if you want to find out if you are doing something
+better than what people have already done
+
+251
+00:24:00,790 --> 00:24:06,680
+so now how do i so once you have done this
+classifier you will get your ah so classifier
+
+252
+00:24:06,680 --> 00:24:10,560
+will tag in this sentence these two entities
+are connected by this relation and so on now
+
+253
+00:24:10,560 --> 00:24:14,900
+how do you find out how good your system is
+performing ha and how we compare with the
+
+254
+00:24:14,900 --> 00:24:22,320
+system so for that we will talk about what
+are the various ah evaluation measures or
+
+255
+00:24:22,320 --> 00:24:29,460
+evaluation metrics matrix how do i evaluate
+it ok so in standard that evaluation metrics
+
+256
+00:24:29,460 --> 00:24:37,230
+are what is the precision what is the recall
+and what is the f major
+
+257
+00:24:37,230 --> 00:24:43,640
+so how do i define these what is the precision
+recall etcetera so here are the simple definitions
+
+258
+00:24:43,640 --> 00:24:48,330
+so precision is so for suppose i am doing
+it for each relation separately so precision
+
+259
+00:24:48,330 --> 00:24:53,950
+would be what are the number of correctly
+classified or extracted relations divided
+
+260
+00:24:53,950 --> 00:25:03,090
+by total number of extracted relations so
+that is ah suppose my system ah is giving
+
+261
+00:25:03,090 --> 00:25:13,622
+ok so these entities these pair of entities
+are connected by a relation r ok this is the
+
+262
+00:25:13,622 --> 00:25:21,620
+output of my system
+now from a gold standard suppose i know that
+
+263
+00:25:21,620 --> 00:25:26,900
+this this and this is correct and this is
+incorrect system will give four output three
+
+264
+00:25:26,900 --> 00:25:33,900
+are correct so precision here will be three
+by four so this is one very important metric
+
+265
+00:25:33,900 --> 00:25:38,320
+that my system should have a high precision
+it should be whatever relational predicting
+
+266
+00:25:38,320 --> 00:25:49,550
+should be correct what is the other criteria
+so the criteria is recall recall is what are
+
+267
+00:25:49,550 --> 00:25:54,580
+the number of correctly extracted relations
+but my system identified divided by total
+
+268
+00:25:54,580 --> 00:25:59,060
+number of gold relations now its important
+to find the see the distinction between that
+
+269
+00:25:59,060 --> 00:26:05,430
+two so ah what we will do in re recall so
+the system output in requires the see what
+
+270
+00:26:05,430 --> 00:26:17,910
+is the what are the gold standard relations
+supposing my gold standard i had five entities
+
+271
+00:26:17,910 --> 00:26:22,590
+i know these entities are connected by this
+relation and suppose my system has found out
+
+272
+00:26:22,590 --> 00:26:27,180
+so it has found out three it is found out
+this this and this but my system could not
+
+273
+00:26:27,180 --> 00:26:33,250
+find out this and this so what is the recall
+of my system my system could recall three
+
+274
+00:26:33,250 --> 00:26:40,001
+out of five possible relation so recall here
+would be three by five ok and this i can do
+
+275
+00:26:40,001 --> 00:26:46,100
+for every relation independently and i can
+show my system does work for this relation
+
+276
+00:26:46,100 --> 00:26:51,140
+with this precision this recall and so on
+now there is also a a metric where you can
+
+277
+00:26:51,140 --> 00:26:58,240
+combine these two and that is called f measure
+and what you do is to take a some sort of
+
+278
+00:26:58,240 --> 00:27:03,640
+harmonic means so this is two p r divided
+by p plus r you will take a harmonic mean
+
+279
+00:27:03,640 --> 00:27:10,660
+of precision recall and that is called your
+f measure so this is f measure two p r divided
+
+280
+00:27:10,660 --> 00:27:15,200
+by p plus r although there are variations
+where you can give different weights to precision
+
+281
+00:27:15,200 --> 00:27:19,820
+and recall also but this is quite accepted
+measure that you give a equal weightage to
+
+282
+00:27:19,820 --> 00:27:27,350
+precision recall and find out an f one measure
+so now if we try to summarize the supervised
+
+283
+00:27:27,350 --> 00:27:33,840
+relations extraction task what we did here
+so ah so in general it can achieve very high
+
+284
+00:27:33,840 --> 00:27:41,990
+accuracy for some relation and if we have
+lots of hand labeled training data so for
+
+285
+00:27:41,990 --> 00:27:46,510
+most of the machine learning algorithms they
+all depend on how much label data that you
+
+286
+00:27:46,510 --> 00:27:50,460
+have so if you have lots and lots of data
+they can give you better better and better
+
+287
+00:27:50,460 --> 00:27:56,540
+accuracy so so that is one bottle neck also
+so you need to label lot of data to be able
+
+288
+00:27:56,540 --> 00:28:03,750
+to get good accuracy and so this is the limitations
+here so labeling large training set and the
+
+289
+00:28:03,750 --> 00:28:09,640
+entities mighty be very very expensive and
+it may not generalize to different relation
+
+290
+00:28:09,640 --> 00:28:14,770
+so i have labeled for some relations but suppose
+i want to now extract some new relation i
+
+291
+00:28:14,770 --> 00:28:20,270
+cannot use this label i need to get new labels
+for the new relation
+
+292
+00:28:20,270 --> 00:28:25,580
+so whatever i have labeled the the model will
+only be able to extract those relations a
+
+293
+00:28:25,580 --> 00:28:31,580
+new relation i have to do the labeling again
+so this also does does not generalize so so
+
+294
+00:28:31,580 --> 00:28:35,350
+we sought to approaches in this lecture we
+saw bootstrapping you have you do not want
+
+295
+00:28:35,350 --> 00:28:40,410
+to annotated lot of data here some seed instance
+you go for that but you can if you can annotated
+
+296
+00:28:40,410 --> 00:28:45,660
+lot of data then you can use a supervised
+approaches and they are the main problem is
+
+297
+00:28:45,660 --> 00:28:53,200
+ah after labeling find out interesting features
+that can help with this task
+
+298
+00:28:53,200 --> 00:28:57,590
+now in in the in the final lecture for this
+week you will see an interesting approach
+
+299
+00:28:57,590 --> 00:29:03,560
+that blends these two approaches together
+bootstrapping and supervised approaches and
+
+300
+00:29:03,560 --> 00:29:08,910
+this can also generalize to many many different
+relations that that you have so we so this
+
+301
+00:29:08,910 --> 00:29:13,450
+is take this approach is called distance super
+provision so in the next lecture we will talk
+
+302
+00:29:13,450 --> 00:29:14,220
+about that approach
+thank you
+

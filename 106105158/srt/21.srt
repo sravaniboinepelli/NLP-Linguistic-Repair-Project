@@ -1,0 +1,1197 @@
+1
+00:00:18,119 --> 00:00:23,410
+so welcome back for the final lecture of this
+week so ah we are talking about the problem
+
+2
+00:00:23,410 --> 00:00:27,880
+of part of speech tagging and the methods
+that we are discussing our generic methods
+
+3
+00:00:27,880 --> 00:00:34,000
+for any sequence labeling task so input is
+a sequence like here sequence of the words
+
+4
+00:00:34,000 --> 00:00:38,600
+and output is again a sequence were for each
+word i going to predict what is a corresponding
+
+5
+00:00:38,600 --> 00:00:45,650
+part of speech tags so we talked about hidden
+markov models and also maxent model so in
+
+6
+00:00:45,650 --> 00:00:50,850
+general in maxent model we talked about how
+do you we use that simple classifier for a
+
+7
+00:00:50,850 --> 00:00:56,859
+sequence labeling task so we will call that
+the maximum entropy markov model ok and the
+
+8
+00:00:56,859 --> 00:01:02,489
+formation was very easy that is if predict
+the tag for each word and then multiply the
+
+9
+00:01:02,489 --> 00:01:11,570
+probabilities for the whole sequence there
+was one ah problem though that because we
+
+10
+00:01:11,570 --> 00:01:18,630
+we need the sequence of the we need the tag
+of the previous word in certain features to
+
+11
+00:01:18,630 --> 00:01:24,030
+assign the tag at this this particular word
+we will need to use beam search algorithm
+
+12
+00:01:24,030 --> 00:01:27,060
+and we also discuss what is the beam search
+algorithm
+
+13
+00:01:27,060 --> 00:01:32,399
+so what i will do in this lecture i will take
+a take an example there we we will see how
+
+14
+00:01:32,399 --> 00:01:38,959
+to use beam search algorithm and then i briefly
+discuss what a condition random fields and
+
+15
+00:01:38,959 --> 00:01:42,590
+how are the different from maximum entropy
+models so condition random fields again is
+
+16
+00:01:42,590 --> 00:01:46,879
+a very vast topic we will not cover fully
+we will only give you the hint that once you
+
+17
+00:01:46,879 --> 00:01:52,209
+know maxcent or m e m a models what are condition
+random fields how are they different from
+
+18
+00:01:52,209 --> 00:01:59,759
+those so starting with a practice question
+so here so so we are having the same sentence
+
+19
+00:01:59,759 --> 00:02:06,349
+the light book and you are given that ah for
+all the three words the light and book the
+
+20
+00:02:06,349 --> 00:02:12,420
+top put x are determine a noun verb adjective
+and verb noun ok
+
+21
+00:02:12,420 --> 00:02:19,170
+now you want to use your m e m a model so
+for the given tag or given word w i the you
+
+22
+00:02:19,170 --> 00:02:24,769
+use particular context what is a context here
+the previous word next word and the tag given
+
+23
+00:02:24,769 --> 00:02:29,569
+to the previous word this is the context so
+that means all your features we will be defined
+
+24
+00:02:29,569 --> 00:02:34,930
+over this context so here is a example we
+have showing some sample like you have given
+
+25
+00:02:34,930 --> 00:02:40,519
+a different features and now we have to use
+the beam search algorithm to find out what
+
+26
+00:02:40,519 --> 00:02:42,319
+will be the appropriate tag sequence for the
+sentence
+
+27
+00:02:42,319 --> 00:02:48,610
+so ah so what are the features giving so features
+are simple like the previous tag the tag given
+
+28
+00:02:48,610 --> 00:02:54,150
+to the previous word is determiner and current
+tag is adjective previous tag is noun current
+
+29
+00:02:54,150 --> 00:02:58,620
+tag is verb previous tag is adjective current
+tag is noun previous word is the current tag
+
+30
+00:02:58,620 --> 00:03:04,060
+is adjective so on ok now then you also have
+feature like the next word is light current
+
+31
+00:03:04,060 --> 00:03:09,659
+tag is determiner previous word is null and
+current tag is noun what it means is that
+
+32
+00:03:09,659 --> 00:03:15,530
+this the ith word will be starting a sentence
+thats why the previous word will be null so
+
+33
+00:03:15,530 --> 00:03:20,139
+now you are given this features and for simplicity
+you are should given that each feature has
+
+34
+00:03:20,139 --> 00:03:25,459
+a uniform weight of one now your task is to
+use beam search algorithm with the beam size
+
+35
+00:03:25,459 --> 00:03:30,859
+of two what do you mean by a beam size of
+two at any given point you will keep only
+
+36
+00:03:30,859 --> 00:03:38,170
+the top two highest ah probability tag sequence
+and everything else you will forget so at
+
+37
+00:03:38,170 --> 00:03:42,800
+any point you will know what are the top two
+tag sequences till this point and overall
+
+38
+00:03:42,800 --> 00:03:47,680
+you have to find the highest probability tag
+sequence for the sentence that is the light
+
+39
+00:03:47,680 --> 00:03:48,680
+book
+
+40
+00:03:48,680 --> 00:04:00,279
+so let we see how do we solve this so we are
+having three ah words in the sentence the
+
+41
+00:04:00,279 --> 00:04:08,909
+light and book ok the word the has two text
+two possible text it can be either a determiner
+
+42
+00:04:08,909 --> 00:04:22,780
+or a noun the word light can be a verb or
+an adjective and the word book can be a verb
+
+43
+00:04:22,780 --> 00:04:38,280
+or a noun ok so now how do we start you to
+find out probability tag i given w i and so
+
+44
+00:04:38,280 --> 00:04:43,780
+del y let me write the context x i or h i
+give different notations for that so here
+
+45
+00:04:43,780 --> 00:04:55,580
+context is w i minus one w i w i plus one
+and t is tag ok and what is the formulation
+
+46
+00:04:55,580 --> 00:05:06,569
+of this tag i given ah the current word ah
+current here it will be 
+
+47
+00:05:06,569 --> 00:05:15,110
+exponent summation lambda i f i ok and feature
+we know is a function of input and the tag
+
+48
+00:05:15,110 --> 00:05:20,750
+divide by z and z is nothing but a normalization
+constant so that all the text probability
+
+49
+00:05:20,750 --> 00:05:23,680
+let of two one so let us try to do that
+
+50
+00:05:23,680 --> 00:05:30,960
+when the tag is determiner word is the ok
+so what so let we just write down exponent
+
+51
+00:05:30,960 --> 00:05:36,449
+of summation lambda i f i and lambda i is
+lambda h is one here in this problem so it
+
+52
+00:05:36,449 --> 00:05:40,889
+will be simply exponent summation over f i
+so what features are one and what features
+
+53
+00:05:40,889 --> 00:05:48,750
+are zero so for this word so everywhere where
+we need the previous tag or the previous word
+
+54
+00:05:48,750 --> 00:05:53,050
+should be zero because this is the start of
+the sentence so i do not have any previous
+
+55
+00:05:53,050 --> 00:05:57,050
+word tag or any previous word so all these
+features value will become zero
+
+56
+00:05:57,050 --> 00:06:02,240
+now what is the feature that will become one
+what should be this one this needs the next
+
+57
+00:06:02,240 --> 00:06:09,490
+word i is light and the current tag is determiner
+is that ah will that you one so if you see
+
+58
+00:06:09,490 --> 00:06:14,699
+here current tag is determiner on the next
+word is light so it could be one that is for
+
+59
+00:06:14,699 --> 00:06:26,030
+feature f i so so it is one so i will say
+it is exponent or let we write e to the power
+
+60
+00:06:26,030 --> 00:06:33,259
+one this lambda is one divided by z let we
+find out that later let if find out the the
+
+61
+00:06:33,259 --> 00:06:39,840
+value for noun noun so again similar to this
+one all of features from f one to f six will
+
+62
+00:06:39,840 --> 00:06:44,870
+become zero because you do not know what is
+a previous word or previous tag this feature
+
+63
+00:06:44,870 --> 00:06:48,770
+could have become one but the current tag
+is not determiner but noun so this will also
+
+64
+00:06:48,770 --> 00:06:56,669
+be zero this feature previous word is null
+yes that is true is a start of the sentence
+
+65
+00:06:56,669 --> 00:07:00,910
+and the current tag is noun this will also
+become one ok so this the only features that
+
+66
+00:07:00,910 --> 00:07:03,189
+become the one for noun
+
+67
+00:07:03,189 --> 00:07:11,110
+so this is e to the power one and what is
+the normalization this plus this ok so two
+
+68
+00:07:11,110 --> 00:07:17,240
+times e to the power divided by two times
+e to the power one so both will become point
+
+69
+00:07:17,240 --> 00:07:25,110
+five ok so fine so have this point all the
+two tags have we [bo/both] both the tags has
+
+70
+00:07:25,110 --> 00:07:29,909
+probability point five and any of because
+i am using a beam size of two i will have
+
+71
+00:07:29,909 --> 00:07:35,050
+to keep both these tags so now i keeping both
+this tags with probability point five point
+
+72
+00:07:35,050 --> 00:07:41,770
+five now let us go to the next word light
+now again so i have to use probability of
+
+73
+00:07:41,770 --> 00:07:53,370
+verb given this history now the this stage
+previous word current word next word and the
+
+74
+00:07:53,370 --> 00:08:00,750
+previous tag so now when i going about talking
+about verb if i have to compute this features
+
+75
+00:08:00,750 --> 00:08:05,710
+i need to know what are the what is the previous
+tag ok here it can be a either determiner
+
+76
+00:08:05,710 --> 00:08:09,169
+or noun so that's why i need talk in terms
+of the sequences
+
+77
+00:08:09,169 --> 00:08:19,530
+so here i have one sequence determiner noun
+determiner verb and second sequence with noun
+
+78
+00:08:19,530 --> 00:08:27,849
+verb so we have to take both the sequences
+separately in compute the probability similarly
+
+79
+00:08:27,849 --> 00:08:35,110
+i will have to do the same for adjective ok
+so let us try do that for one sequence so
+
+80
+00:08:35,110 --> 00:08:44,990
+noun verb sequence ok so what will be the
+probability of ah tag i given the word so
+
+81
+00:08:44,990 --> 00:08:51,990
+this we can write here so let me write only
+this summation lambda i f i part so this will
+
+82
+00:08:51,990 --> 00:09:02,550
+be 
+summation lambda i f i so let us go to the
+
+83
+00:09:02,550 --> 00:09:09,870
+features here so noun verb so let us go to
+the features first features previous tag is
+
+84
+00:09:09,870 --> 00:09:16,279
+determiner no previous tag is noun here this
+is zero previous tag is noun yes and the current
+
+85
+00:09:16,279 --> 00:09:22,230
+tag is verb this is ok this could be one so
+f two is one f three zero because previous
+
+86
+00:09:22,230 --> 00:09:29,620
+tag is not a adjective f four previous tag
+is the no yes previous word is the current
+
+87
+00:09:29,620 --> 00:09:38,310
+tag is adjective no it's verb then this will
+be also not correct because the current tag
+
+88
+00:09:38,310 --> 00:09:45,300
+is not a adjective but verb previous word
+is light noun next word is light noun previous
+
+89
+00:09:45,300 --> 00:09:47,730
+word is null noun so only f two is one
+
+90
+00:09:47,730 --> 00:09:58,330
+so this will be for this sequence it will
+be a to the power one divided by the normalization
+
+91
+00:09:58,330 --> 00:10:06,200
+that now what will this normalization depend
+on this will depend on from all everywhere
+
+92
+00:10:06,200 --> 00:10:13,760
+where this context is taken what are the ah
+probabilities so i have to compute the probability
+
+93
+00:10:13,760 --> 00:10:24,260
+for this one also to find out this z ok so
+i know this probability i know this function
+
+94
+00:10:24,260 --> 00:10:28,670
+this function and i will normalize them to
+at two one so what will be for the function
+
+95
+00:10:28,670 --> 00:10:35,089
+for noun and adjective that is try that from
+the features again previous tag is adject
+
+96
+00:10:35,089 --> 00:10:41,310
+determiner gone previous tag is noun but current
+tag is verb noun previous tag is adjective
+
+97
+00:10:41,310 --> 00:10:47,449
+noun previous word is the yes and tag is which
+adjective yes so this will become one f four
+
+98
+00:10:47,449 --> 00:10:53,110
+will become become one previous word is the
+yes next word is book yes current tag is adjective
+
+99
+00:10:53,110 --> 00:11:00,000
+this will also become one all fill will be
+zero so now this will become e to the power
+
+100
+00:11:00,000 --> 00:11:09,240
+two divide by z and z i can write as e plus
+e square same here e plus e square ok
+
+101
+00:11:09,240 --> 00:11:16,000
+so now i know the probability of getting verb
+at this position given the previous tag is
+
+102
+00:11:16,000 --> 00:11:21,740
+noun and adjective at this position given
+the previous tag is noun but what is the probability
+
+103
+00:11:21,740 --> 00:11:28,110
+of this whole sequence it will be multiplied
+by the probability of getting noun that is
+
+104
+00:11:28,110 --> 00:11:42,060
+half similarly here half ok so this is the
+probability of selecting this sequence similarly
+
+105
+00:11:42,060 --> 00:11:47,290
+i will compute the probability of selecting
+this and this normalized them multiplied by
+
+106
+00:11:47,290 --> 00:11:54,490
+point five so now i will get the probability
+for four sequences so that is noun verb determiner
+
+107
+00:11:54,490 --> 00:11:59,840
+verb determiner adjective and noun adjective
+i have the probability of sequence of this
+
+108
+00:11:59,840 --> 00:12:05,690
+system and then i will select only top two
+from there ok so suppose the top two could
+
+109
+00:12:05,690 --> 00:12:13,529
+be say noun verb and determiner adjective
+so what will happen now for the next step
+
+110
+00:12:13,529 --> 00:12:25,940
+i will consider only say determiner adjective
+and noun verb and other know also their probabilities
+
+111
+00:12:25,940 --> 00:12:32,449
+then i will take each individual as a history
+and see ok determiner adjective then noun
+
+112
+00:12:32,449 --> 00:12:40,360
+determiner adjective then verb normalizer
+probability see will noun verb noun noun verb
+
+113
+00:12:40,360 --> 00:12:45,100
+verb normalizer probability accordingly multiply
+this so again you will have four sequences
+
+114
+00:12:45,100 --> 00:12:50,269
+here you will have probability for all four
+sequences and take the one that is having
+
+115
+00:12:50,269 --> 00:12:57,190
+the highest probability and that will be your
+final ah tag sequence in this example ok
+
+116
+00:12:57,190 --> 00:13:01,970
+so i hope the idea is clear i am not solving
+this fully but i am i will encourage you that
+
+117
+00:13:01,970 --> 00:13:05,750
+you you do it on your own and see that you
+can you can find out what is the appropriate
+
+118
+00:13:05,750 --> 00:13:12,680
+sequence using the m m a model so this was
+how do you use beam search algorithm for m
+
+119
+00:13:12,680 --> 00:13:19,120
+m a model now i will just talk briefly with
+what is the problem with this ah what is the
+
+120
+00:13:19,120 --> 00:13:24,430
+single problem with this ah maximum entropy
+model then so let we have to think about ah
+
+121
+00:13:24,430 --> 00:13:29,009
+condition random fields
+
+122
+00:13:29,009 --> 00:13:35,139
+so in maximum entropy model we do a per state
+normalization that is all the mass that arrives
+
+123
+00:13:35,139 --> 00:13:42,800
+at a state must be distributed among the possible
+successor states and this is giving rise to
+
+124
+00:13:42,800 --> 00:13:50,050
+a label bias problem ok so let's see what
+is the intuition so what do i mean by this
+
+125
+00:13:50,050 --> 00:13:54,910
+so let we ah take the same example so first
+let me take the same example to explain what
+
+126
+00:13:54,910 --> 00:14:04,699
+do i mean by normalization at each state so
+take this one ok so you are computing noun
+
+127
+00:14:04,699 --> 00:14:12,670
+verb and noun adjective ok and you had the
+features like e square and e one but you where
+
+128
+00:14:12,670 --> 00:14:20,750
+normalizing them by so even normalizing then
+such that these two add up to one same thing
+
+129
+00:14:20,750 --> 00:14:25,250
+will you will do with determiner you will
+make sure that these two add up to one so
+
+130
+00:14:25,250 --> 00:14:30,000
+your normalizing at each state ok
+
+131
+00:14:30,000 --> 00:14:38,570
+so why will the that we a problem so let we
+just taken hypothetical example suppose in
+
+132
+00:14:38,570 --> 00:14:46,670
+your ah maximum entropy model you were having
+a tag t one and tag t two at any given point
+
+133
+00:14:46,670 --> 00:14:58,649
+so next point so this one t one you can go
+to go two different tags t one prime and t
+
+134
+00:14:58,649 --> 00:15:04,500
+one double prime and from t two again you
+can go to t two prime t two double prime then
+
+135
+00:15:04,500 --> 00:15:11,390
+may be same they may not be same now how do
+you compute this probability it will be e
+
+136
+00:15:11,390 --> 00:15:17,490
+to the power summation lambda i f i divide
+by z z is something but the addition of these
+
+137
+00:15:17,490 --> 00:15:23,480
+two same here now this is what is the importance
+for how how many features you were having
+
+138
+00:15:23,480 --> 00:15:26,430
+and so on
+
+139
+00:15:26,430 --> 00:15:35,579
+suppose for a particular ah choice of these
+tags it happens that in one of the branch
+
+140
+00:15:35,579 --> 00:15:46,250
+they are having this value has zero point
+zero zero two ok and this value has zero point
+
+141
+00:15:46,250 --> 00:15:55,620
+ah zero zero zero one ok or let us say ah
+even much smaller value and this branch is
+
+142
+00:15:55,620 --> 00:16:12,870
+having value of zero point zero three zero
+point zero four so so what will happen now
+
+143
+00:16:12,870 --> 00:16:18,480
+this not normalized values ok so it tells
+that this summation lambda f i is getting
+
+144
+00:16:18,480 --> 00:16:24,779
+a higher score in these two cases and lower
+score in these two cases but because you are
+
+145
+00:16:24,779 --> 00:16:31,259
+doing for it should normalization you will
+divided by zero point zero zero two plus zero
+
+146
+00:16:31,259 --> 00:16:37,089
+point zero zero zero one and that will be
+closed to say very closed to one zero point
+
+147
+00:16:37,089 --> 00:16:42,870
+nine eight or something ok on the other hand
+this will be closed to point four five or
+
+148
+00:16:42,870 --> 00:16:50,910
+point five five so what is happening here
+even though this probability was low when
+
+149
+00:16:50,910 --> 00:16:58,430
+i normalized this became very ah this became
+very high that is one particular problem on
+
+150
+00:16:58,430 --> 00:17:04,750
+the other hand suppose that from t one there
+was no possibility of going to t one double
+
+151
+00:17:04,750 --> 00:17:10,610
+prime so there was only one tag possible so
+you will in independent of the context it
+
+152
+00:17:10,610 --> 00:17:14,510
+will always get a probability of one because
+you have to normalize at each state that is
+
+153
+00:17:14,510 --> 00:17:20,010
+if from t one i can only go to one tag t one
+prime and everything else has a probability
+
+154
+00:17:20,010 --> 00:17:25,159
+of zero because if normalization this will
+become one so we multiply this probability
+
+155
+00:17:25,159 --> 00:17:33,169
+t one independent of the context and this
+is called as the label bias problem and this
+
+156
+00:17:33,169 --> 00:17:48,510
+comes because you are normalizing at each
+step that is one problem with the ah maximum
+
+157
+00:17:48,510 --> 00:17:50,820
+entropy markov models
+
+158
+00:17:50,820 --> 00:17:56,660
+so so let us see how we avoid this problem
+in condition random fields so i hope this
+
+159
+00:17:56,660 --> 00:18:02,740
+problem is clear that you are doing normalization
+at easy step at easy state and that is giving
+
+160
+00:18:02,740 --> 00:18:11,130
+some bias towards ah those states that are
+having few transitions then the having more
+
+161
+00:18:11,130 --> 00:18:18,060
+number of transitions ok so ok so let me just
+telling one thing so suppose i have two different
+
+162
+00:18:18,060 --> 00:18:25,740
+tags from t one you have two possible transitions
+from t two you have five possible transitions
+
+163
+00:18:25,740 --> 00:18:33,360
+what will happen these will get a but there
+will be a bias towards choosing this state
+
+164
+00:18:33,360 --> 00:18:37,480
+because this will be normalized and one of
+this will gave a get a higher value and this
+
+165
+00:18:37,480 --> 00:18:41,960
+may not happen here because there are five
+possible transitions so this get's a bias
+
+166
+00:18:41,960 --> 00:18:49,640
+and that is not ah what is idle so how do
+we avoid this problem and conditional random
+
+167
+00:18:49,640 --> 00:18:50,660
+fields
+
+168
+00:18:50,660 --> 00:18:56,580
+so conditional random fields are under acted
+graphical models and while there are many
+
+169
+00:18:56,580 --> 00:19:00,700
+variations of conditional random fields so
+there is a generic structure we will look
+
+170
+00:19:00,700 --> 00:19:12,030
+at the linear generic structure 
+so here is shows we has here we are seen the
+
+171
+00:19:12,030 --> 00:19:17,710
+linear generic structure of conditional random
+fields so again like in the previous case
+
+172
+00:19:17,710 --> 00:19:24,200
+you are having a sequence x one two x n and
+these are the tags y one to y n assign to
+
+173
+00:19:24,200 --> 00:19:26,010
+these tag
+
+174
+00:19:26,010 --> 00:19:29,630
+now how they are so in what way they are very
+similar to maximum entropy model they are
+
+175
+00:19:29,630 --> 00:19:34,120
+similar in the sense that we they use the
+same for the feature functions so what you
+
+176
+00:19:34,120 --> 00:19:39,059
+are seeing here for the ith point the feature
+function so suppose i is equal to three would
+
+177
+00:19:39,059 --> 00:19:47,350
+be a function over the previous tag y two
+current tag y three the whole the input you
+
+178
+00:19:47,350 --> 00:19:53,720
+can take any any number of words before and
+after x three and this is ith index ok so
+
+179
+00:19:53,720 --> 00:19:59,390
+feature functions are again function of the
+input current tag and previous tag this is
+
+180
+00:19:59,390 --> 00:20:02,259
+in the linear generic structure
+
+181
+00:20:02,259 --> 00:20:07,950
+so conditional random fields are like ah ah
+factor graphs so what happens the probability
+
+182
+00:20:07,950 --> 00:20:18,720
+of each ah node will depending on only its
+its neighbor ok so and you can use the same
+
+183
+00:20:18,720 --> 00:20:25,580
+sort of features so like ah so this is what
+we had discuss in maximum entropy model also
+
+184
+00:20:25,580 --> 00:20:32,480
+so i have a feature that is one if previous
+tag is i n current tag is n n p and the current
+
+185
+00:20:32,480 --> 00:20:36,740
+word is september and zero otherwise so we
+will see there are very similar sort functions
+
+186
+00:20:36,740 --> 00:20:42,520
+that we are using in maxent so so they are
+same in as maxent in in that sense but how
+
+187
+00:20:42,520 --> 00:20:50,140
+they are different so a difference comes in
+how the normalization is done in maxent model
+
+188
+00:20:50,140 --> 00:20:57,400
+or maximum entropy markov model we are doing
+normalization for each state ok so that is
+
+189
+00:20:57,400 --> 00:21:01,740
+at easy state if i have multiple transitions
+i will make sure that the probability for
+
+190
+00:21:01,740 --> 00:21:07,620
+them at adds up two one this does not happen
+in conditional random fields so we will compute
+
+191
+00:21:07,620 --> 00:21:13,240
+ah the features ah expectations of feature
+values for each possible transition whole
+
+192
+00:21:13,240 --> 00:21:19,070
+sequence and then i will do normalization
+so that we can see from the probability function
+
+193
+00:21:19,070 --> 00:21:20,070
+here
+
+194
+00:21:20,070 --> 00:21:25,440
+so y is the whole y is a whole sequence y
+one to y n given a current the current input
+
+195
+00:21:25,440 --> 00:21:31,730
+sequence x one to x n and lambda is the the
+feature ah we its that you will learn and
+
+196
+00:21:31,730 --> 00:21:39,102
+this is one by z x say see a single nomination
+parameter exponent summation over i is equal
+
+197
+00:21:39,102 --> 00:21:47,309
+to one two one summation j lambda j f j ok
+so ah let us try to understand quickly what
+
+198
+00:21:47,309 --> 00:21:58,140
+this ah function means so here having one
+up on z x exponent summation i is equal to
+
+199
+00:21:58,140 --> 00:22:12,659
+one to n summation over j lambda j f j and
+say f j is a jth feature and this is probability
+
+200
+00:22:12,659 --> 00:22:19,789
+y given x lambda lambda are the feature x
+let us try to understand this what do you
+
+201
+00:22:19,789 --> 00:22:28,590
+mean by y y is a sequence y one to y n and
+x is the input sequence and there are many
+
+202
+00:22:28,590 --> 00:22:39,940
+such sequences possible so this is a probability
+for a given sequence and this z is a normalization
+
+203
+00:22:39,940 --> 00:22:45,400
+that is done over all so that is a summation
+over all the sequences so we can write it
+
+204
+00:22:45,400 --> 00:22:53,400
+as 
+so so this will be summation over all the
+
+205
+00:22:53,400 --> 00:22:57,850
+sequences i will i have this value for only
+sequence y current sequence y i will add it
+
+206
+00:22:57,850 --> 00:23:00,309
+over all the sequence that will give me z
+
+207
+00:23:00,309 --> 00:23:11,770
+so sum mission over all y possible y e x p
+and whatever was in set so now how do we get
+
+208
+00:23:11,770 --> 00:23:20,080
+this equation so remember this equation summation
+j lambda j f j that is for a particular tag
+
+209
+00:23:20,080 --> 00:23:28,539
+ah y is a given at the ah sorry a particular
+tag given at the ith position ok so i have
+
+210
+00:23:28,539 --> 00:23:46,510
+exponent summation j lambda j f j that is
+probability of a tag y i given x i x i can
+
+211
+00:23:46,510 --> 00:23:53,960
+be all history at the given point divided
+by z was there but forget about the now here
+
+212
+00:23:53,960 --> 00:23:58,649
+we are computing probability for the whole
+sequence y i i is equal to one to n so so
+
+213
+00:23:58,649 --> 00:24:07,490
+this will be multiplication so multiply i
+is equal to one to n so multiply i is equal
+
+214
+00:24:07,490 --> 00:24:14,570
+to one to n now if i multiplying multiple
+exponent this is like so so for example e
+
+215
+00:24:14,570 --> 00:24:22,299
+to the power x times e to the power y becomes
+e to the power x plus y so that is multiplication
+
+216
+00:24:22,299 --> 00:24:29,370
+of all the exponent is nothing but like summation
+of what is inside exponent summation i is
+
+217
+00:24:29,370 --> 00:24:40,010
+equal to one to n summation j lambda j f j
+ok and that is the function a and z x is normalization
+
+218
+00:24:40,010 --> 00:24:47,630
+over all such ah transitions all such sorry
+all such ah sequences
+
+219
+00:24:47,630 --> 00:24:52,980
+so you are not doing normalization here so
+what happens in maxent you are doing normalization
+
+220
+00:24:52,980 --> 00:24:58,370
+here so for for a given i you make sure that
+everything adds up to one and that is not
+
+221
+00:24:58,370 --> 00:25:03,890
+being done here you are you are not making
+sure that at each i all the tags will the
+
+222
+00:25:03,890 --> 00:25:06,880
+probability for the text will add up to one
+now you are doing a normalization only in
+
+223
+00:25:06,880 --> 00:25:10,350
+the end i know the probability or something
+that is proportion to probability for each
+
+224
+00:25:10,350 --> 00:25:16,350
+tag sequence and then i will normalize everything
+by this z x and that's why this this avoids
+
+225
+00:25:16,350 --> 00:25:26,049
+the label bias problem so this is the function
+that is using conditional random fields so
+
+226
+00:25:26,049 --> 00:25:31,650
+what we can see that so ah conditional random
+fields have the advantage of maximum entropy
+
+227
+00:25:31,650 --> 00:25:36,289
+markov model they use a same sort of features
+the kind of model is very very similar to
+
+228
+00:25:36,289 --> 00:25:41,179
+maximum entropy markov model but they avoid
+the label bias problem
+
+229
+00:25:41,179 --> 00:25:47,510
+so c r fs are globally normalized whereas
+m m ms are locally normalized so that we had
+
+230
+00:25:47,510 --> 00:25:53,140
+discussed and they are very widely used and
+applied for many many sequence labeling task
+
+231
+00:25:53,140 --> 00:25:58,600
+and so so they were very closed to the state
+of the art models for many of these sequence
+
+232
+00:25:58,600 --> 00:26:04,669
+labeling task so so what whatever sequence
+labeling task that comes your mind so starting
+
+233
+00:26:04,669 --> 00:26:09,980
+from part of speech tagging to name and recognition
+so there you can apply a conditional random
+
+234
+00:26:09,980 --> 00:26:14,270
+field model and lot of libraries are also
+[avai/available] available so one particular
+
+235
+00:26:14,270 --> 00:26:20,299
+appeal that is very popular and then there
+are c r a plus plus and and many other libraries
+
+236
+00:26:20,299 --> 00:26:25,289
+that you can use what is important is that
+you understand what is the sort of features
+
+237
+00:26:25,289 --> 00:26:30,890
+that that you need to use ok and then the
+model will will help you to train you are
+
+238
+00:26:30,890 --> 00:26:37,799
+own c r f so this ends our discussion on ah
+part of speech tagging we did discuss a lot
+
+239
+00:26:37,799 --> 00:26:43,860
+about what will be the models for sequence
+tagging so now so in the from the next week
+
+240
+00:26:43,860 --> 00:26:50,610
+we will start discussion on ah on syntax that
+how do we find out what are the word what
+
+241
+00:26:50,610 --> 00:26:57,210
+are the word arrangement in a sentence and
+how do we group them in various sort of ah
+
+242
+00:26:57,210 --> 00:26:59,980
+phrases so so i will see you next week
+thank you
+

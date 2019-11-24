@@ -1,0 +1,715 @@
+1
+00:00:17,830 --> 00:00:25,290
+so hello everyone so ah so welcome to this
+final lecture of week eight and so in this
+
+2
+00:00:25,290 --> 00:00:30,860
+week we have talked about our a different
+method of semantics that is lexical semantics
+
+3
+00:00:30,860 --> 00:00:36,020
+and we saw that how we can use connection
+between words to find out semantics and last
+
+4
+00:00:36,020 --> 00:00:40,250
+two lectures we we talked about a very classical
+problem of word senses disambiguation that
+
+5
+00:00:40,250 --> 00:00:46,080
+is even a word if it has multiple senses
+how do you find out ah in a given context
+
+6
+00:00:46,080 --> 00:00:52,299
+what particular sense has been used and this
+is a very generic kind of problem and you
+
+7
+00:00:52,299 --> 00:00:57,040
+can use a lot of different methods for solving
+that and we saw that how you can use simple
+
+8
+00:00:57,040 --> 00:01:03,190
+knowledge base approaches by using the dictionary
+definitions and you can use some machine learning
+
+9
+00:01:03,190 --> 00:01:10,010
+methods you can use some bootstrapping based
+methods and also unsupervised methods there
+
+10
+00:01:10,010 --> 00:01:15,460
+we also talked about a page rank based algorithm
+if you want to jointly find out the senses
+
+11
+00:01:15,460 --> 00:01:22,150
+for each words you did not describe that algorithm
+fully so if you want to know in in that algorithm
+
+12
+00:01:22,150 --> 00:01:26,510
+details so you might have to wait till we
+cover the summarization topic in summarization
+
+13
+00:01:26,510 --> 00:01:32,370
+i will talk about pagerank in detail but i
+sense the generic idea you can also get from
+
+14
+00:01:32,370 --> 00:01:36,930
+the what we discussed and also you can look
+it up
+
+15
+00:01:36,930 --> 00:01:43,910
+so now so this lecture we are taking a new
+research problem that is coming from word
+
+16
+00:01:43,910 --> 00:01:49,840
+sense disambiguation idea itself and also
+from whatever we discussed in the towards
+
+17
+00:01:49,840 --> 00:01:54,490
+the end of in the last lecture so in the towards
+the end of the last lecture we were talking
+
+18
+00:01:54,490 --> 00:02:01,060
+about ah learning the word senses in an unsupervised
+manner that is now i am not talking about
+
+19
+00:02:01,060 --> 00:02:06,870
+senses defined in a dictionary so i am saying
+ok i have a corpus i know how the word has
+
+20
+00:02:06,870 --> 00:02:12,370
+been used multiple times can i use the the
+usage of the word to find out what are it's
+
+21
+00:02:12,370 --> 00:02:22,730
+senses and what was the basic idea
+so basic idea was that if i know that i have
+
+22
+00:02:22,730 --> 00:02:35,780
+a corpus see my corpus and i can find out
+which words co occurred other words ok so
+
+23
+00:02:35,780 --> 00:02:45,260
+like that i can construct some some what model
+i know what what's co occur what and all words
+
+24
+00:02:45,260 --> 00:02:52,360
+so idea was it suppose i am constructing this
+network if a word has two senses what will
+
+25
+00:02:52,360 --> 00:02:58,900
+happen the words that correspond to it's so
+there is suppose my center word so words that
+
+26
+00:02:58,900 --> 00:03:03,580
+i connect corresponding to one sense will
+be connected together words that are in second
+
+27
+00:03:03,580 --> 00:03:08,830
+sense will be connected together this is sense
+one this is sense two
+
+28
+00:03:08,830 --> 00:03:13,520
+so if i am building the whole co occurrence
+graph if i center it around the particular
+
+29
+00:03:13,520 --> 00:03:22,440
+word and try to cluster it i can find out
+it's different senses it is a very generic
+
+30
+00:03:22,440 --> 00:03:34,400
+idea and this i call as word sense induction
+also also known as from wsi there are many
+
+31
+00:03:34,400 --> 00:03:38,080
+ways of doing that because they are many ways
+you can do this clustering you can apply any
+
+32
+00:03:38,080 --> 00:03:41,500
+graph based clustering method
+so for example chinese whispers is a very
+
+33
+00:03:41,500 --> 00:03:49,489
+popular algorithm and you can use any other
+methods also so idea would be now when you
+
+34
+00:03:49,489 --> 00:03:57,050
+do that for each word you will get some senses
+s one s two s three and so on and these might
+
+35
+00:03:57,050 --> 00:04:02,739
+correspond to say the words these are the
+words it can be different words we can have
+
+36
+00:04:02,739 --> 00:04:09,580
+weights and so on now so this is you have
+give a corpus you can find out what are the
+
+37
+00:04:09,580 --> 00:04:16,049
+word senses but in this lecture we will talking
+about the problem that can you find out if
+
+38
+00:04:16,049 --> 00:04:21,810
+a word has got a new sense or not in some
+recent time had you got a new sense
+
+39
+00:04:21,810 --> 00:04:28,800
+now does that happen so over the time we keep
+on using the same words new new and senses
+
+40
+00:04:28,800 --> 00:04:33,830
+ok so and with the social media that is becoming
+a lot more common that you are using the same
+
+41
+00:04:33,830 --> 00:04:39,779
+word in some new senses that is that it was
+never used before so let's see one example
+
+42
+00:04:39,779 --> 00:04:45,349
+so i have the word sick right sick is a very
+common and popular word and you will say ok
+
+43
+00:04:45,349 --> 00:04:51,330
+what is the meaning of sick something to be
+related to some disease illness ok so like
+
+44
+00:04:51,330 --> 00:04:57,960
+so this is the pub dictionary definition so
+affected with a disease or illness of or relating
+
+45
+00:04:57,960 --> 00:05:02,809
+to people who are ill and very annoyed or
+bored by something because you have had too
+
+46
+00:05:02,809 --> 00:05:09,449
+much of it so i am sick of that
+so now this is one common sense of sick now
+
+47
+00:05:09,449 --> 00:05:16,469
+do you think sick has got any new sense in
+recent times and and and if you think about
+
+48
+00:05:16,469 --> 00:05:21,740
+it sick has got a very a new sense and that
+is completely opposite of this particular
+
+49
+00:05:21,740 --> 00:05:28,460
+sense so what is that sense so let us look
+at this tweet so listening to paulo nutinis
+
+50
+00:05:28,460 --> 00:05:35,099
+new record it's sick ok so now what is the
+meaning of sick here of the same word sick
+
+51
+00:05:35,099 --> 00:05:42,789
+it's not boring ok so this thick means something
+that is very very cool ok so this sick has
+
+52
+00:05:42,789 --> 00:05:47,069
+got a very new meaning from whatever we were
+seeing earlier something that disease illness
+
+53
+00:05:47,069 --> 00:05:52,710
+to something that is very cool
+now so what's keep on getting these new meanings
+
+54
+00:05:52,710 --> 00:06:01,909
+in the in the ah in the corpus so the way
+people are using that now the problem is suppose
+
+55
+00:06:01,909 --> 00:06:07,539
+my dictionary or my lexicon like word net
+is not getting updated regularly so if this
+
+56
+00:06:07,539 --> 00:06:12,729
+word sick has got this new sense and it is
+being used in this new sense in the corpus
+
+57
+00:06:12,729 --> 00:06:16,830
+i will never be able to match it to any of
+the sense in the word net because word net
+
+58
+00:06:16,830 --> 00:06:22,379
+has not recorded the sense at all so does
+not know probably sick has the sense also
+
+59
+00:06:22,379 --> 00:06:25,699
+and this is happening for many other words
+ok
+
+60
+00:06:25,699 --> 00:06:30,870
+so now what is done in this field of novel
+word sense detection from the corpus and the
+
+61
+00:06:30,870 --> 00:06:35,949
+way the words are being used can i detect
+whether the word has got new sense and if
+
+62
+00:06:35,949 --> 00:06:42,210
+i can detect it i can populate different lexicons
+and different and also my word net version
+
+63
+00:06:42,210 --> 00:06:49,639
+i can update using this definitions so how
+do we find out the word has got new sense
+
+64
+00:06:49,639 --> 00:06:53,759
+now again so this is a new area but there
+have been some different sort of methods and
+
+65
+00:06:53,759 --> 00:06:57,270
+works i will not go into details of any of
+those works
+
+66
+00:06:57,270 --> 00:07:00,780
+but what i will do i will try to give you
+a basic idea that if you understand watson
+
+67
+00:07:00,780 --> 00:07:07,730
+induction how can you use that to find out
+new word sense or novel word sense so let
+
+68
+00:07:07,730 --> 00:07:16,360
+us so have a basic idea the basic idea is
+that i can try to compare the sense so that
+
+69
+00:07:16,360 --> 00:07:22,169
+is if your word is undergoing sense change
+it can be detected by comparing the sense
+
+70
+00:07:22,169 --> 00:07:27,389
+clusters obtained from two different time
+periods ok
+
+71
+00:07:27,389 --> 00:07:32,960
+so something like this so you take the word
+compiler suppose in nineteen not nine nineteen
+
+72
+00:07:32,960 --> 00:07:40,340
+fifty three so the we take took the data and
+we did the watsons induction and from the
+
+73
+00:07:40,340 --> 00:07:45,360
+induction we found out that the word compiler
+has these two senses so one sense is in the
+
+74
+00:07:45,360 --> 00:07:51,490
+sense of reporter auditor listener etcetera
+second is on scientists compositor philosopher
+
+75
+00:07:51,490 --> 00:07:56,330
+publisher preacher so there are two different
+senses this so what it means is that these
+
+76
+00:07:56,330 --> 00:08:00,119
+words come together to form one sense and
+these words come together to form another
+
+77
+00:08:00,119 --> 00:08:02,659
+senses in nineteen not nine nineteen fifty
+three
+
+78
+00:08:02,659 --> 00:08:09,259
+compiler was merely some sort of person who
+wish to compile now if i look at this word
+
+79
+00:08:09,259 --> 00:08:13,870
+in recent time like two thousand two thousand
+five compiler has got the sense in the sense
+
+80
+00:08:13,870 --> 00:08:18,759
+of ah programming language compilers this
+sense was not available not there in nineteen
+
+81
+00:08:18,759 --> 00:08:23,610
+not nine nineteen fifty three so can i automatically
+detect that the word has got a new sense from
+
+82
+00:08:23,610 --> 00:08:29,830
+the data itself so what i will do again into
+v into two thousand five i will do the watsons
+
+83
+00:08:29,830 --> 00:08:33,800
+induction so suppose i do induction and i
+find these two senses
+
+84
+00:08:33,800 --> 00:08:39,190
+so one is again the same sense translator
+editor listener reader commentator that is
+
+85
+00:08:39,190 --> 00:08:45,080
+similar to what we had earlier but you see
+a new sense also coming up preprocessor driver
+
+86
+00:08:45,080 --> 00:08:51,080
+handler hardware software loader kernel dbms
+ok and you can immediately see by looking
+
+87
+00:08:51,080 --> 00:08:57,370
+at these words in the computer sense this
+sense was not available earlier
+
+88
+00:08:57,370 --> 00:09:02,160
+so now this is interesting observation that
+if i simply do watson sense induction over
+
+89
+00:09:02,160 --> 00:09:07,910
+the new time period i find a sense cluster
+that was not available before and this gives
+
+90
+00:09:07,910 --> 00:09:15,380
+me a generic framework so what i will do i
+will take my data that is over several time
+
+91
+00:09:15,380 --> 00:09:20,200
+so it can be say eighteen hundred to two thousand
+ten or whatever so it's starting from some
+
+92
+00:09:20,200 --> 00:09:26,080
+t one to t two i want to find out what words
+have undergone sense change so what i will
+
+93
+00:09:26,080 --> 00:09:32,720
+do i will try to take some slice of this data
+call it time point t one
+
+94
+00:09:32,720 --> 00:09:41,260
+take another slice later on time point t two
+is that ok so now i will do i will compute
+
+95
+00:09:41,260 --> 00:09:47,270
+my co occurrence ah and whatever i want to
+compute my distributional casares then i will
+
+96
+00:09:47,270 --> 00:09:54,780
+do watsons induction so for each word i will
+find out s one in time t one s two in time
+
+97
+00:09:54,780 --> 00:10:02,820
+t one s three in time t one and so on and
+that i will do for all the words similarly
+
+98
+00:10:02,820 --> 00:10:10,320
+i will do the same thing at time t two so
+i am at w and i will say s one at time t two
+
+99
+00:10:10,320 --> 00:10:16,800
+s two at time t two s three at time t two
+and so on ok
+
+100
+00:10:16,800 --> 00:10:24,900
+now i have got the sense cluster at time t
+one and at time t two now i will try to compare
+
+101
+00:10:24,900 --> 00:10:29,780
+these to find out if the word has got a new
+sense cluster that was not available in the
+
+102
+00:10:29,780 --> 00:10:33,960
+previous time point and the second do for
+all the words and by doing that i can find
+
+103
+00:10:33,960 --> 00:10:44,210
+out which words have got a new sense of the
+newer time period so and in general i can
+
+104
+00:10:44,210 --> 00:10:47,800
+define various ah various different sort of
+sense change
+
+105
+00:10:47,800 --> 00:10:55,350
+for example it might happen that earlier a
+word as a sense it has got to split into multiple
+
+106
+00:10:55,350 --> 00:11:02,320
+senses or it can be a join two different senses
+of joined together to form the same sense
+
+107
+00:11:02,320 --> 00:11:08,450
+they may not be so common but what is common
+is something like a birth that the word had
+
+108
+00:11:08,450 --> 00:11:12,410
+initially two senses s one and s two now in
+the new time period it has got a new sense
+
+109
+00:11:12,410 --> 00:11:17,610
+s n this is very very common and then they
+might be death of a sense also that earlier
+
+110
+00:11:17,610 --> 00:11:22,820
+it had a sense of s zero now in the new time
+period i cannot sense find out the sense so
+
+111
+00:11:22,820 --> 00:11:28,540
+all these you can find out just by comparing
+these sense clusters
+
+112
+00:11:28,540 --> 00:11:33,970
+so here is another example that we observed
+from the data so this is from the work that
+
+113
+00:11:33,970 --> 00:11:41,410
+we did ah in two thousand fourteen so this
+was in a c l two thousand fourteen if you
+
+114
+00:11:41,410 --> 00:11:53,700
+want to have a look so the title was that's
+sick dude ok and there was some other subtitle
+
+115
+00:11:53,700 --> 00:11:59,420
+so this was in year two thousand fourteen
+so so we did so we took the data from google
+
+116
+00:11:59,420 --> 00:12:05,380
+anagrams and we took the whole data from starting
+from ah somewhere around sixteen hundred to
+
+117
+00:12:05,380 --> 00:12:12,160
+two thousand eight divided into eight different
+time points then ah so that they were divided
+
+118
+00:12:12,160 --> 00:12:15,370
+such that in each time point you have roughly
+the same amount of data
+
+119
+00:12:15,370 --> 00:12:22,160
+so as you go over ah recent years even like
+three years and four years for making a complete
+
+120
+00:12:22,160 --> 00:12:25,500
+time duration in earlier it might be hundred
+years together because the data was not too
+
+121
+00:12:25,500 --> 00:12:33,560
+much and then we took different time points
+constructed distribution of and then you ah
+
+122
+00:12:33,560 --> 00:12:38,280
+chinese algorithm to find out sense clusters
+and then complain the clusters and so what
+
+123
+00:12:38,280 --> 00:12:43,430
+are the words that are getting some new sense
+so here was an one example so we found that
+
+124
+00:12:43,430 --> 00:12:49,400
+the word registers earlier had these senses
+and you can see these are like dictionaries
+
+125
+00:12:49,400 --> 00:12:55,380
+directories libraries compilations bulletins
+these are registers as you like paper registers
+
+126
+00:12:55,380 --> 00:13:02,250
+and so on so that you have even now similarly
+here notebook diary returns accounts
+
+127
+00:13:02,250 --> 00:13:06,500
+so in the new time period we form that these
+two senses are there directories compilations
+
+128
+00:13:06,500 --> 00:13:14,050
+manuals summaries schedules ledgers notebook
+but a very new senses come up and can you
+
+129
+00:13:14,050 --> 00:13:20,150
+think of the sense what is the sense peripherals
+processor circuits workstations devices so
+
+130
+00:13:20,150 --> 00:13:25,160
+register has got the sense of if the sense
+of computing in a hardware that
+
+131
+00:13:25,160 --> 00:13:32,750
+so now ah so this new sense we could detect
+simply by using the corpus that these all
+
+132
+00:13:32,750 --> 00:13:38,030
+words are being used with resistance and and
+they were having similar ah co occurrence
+
+133
+00:13:38,030 --> 00:13:41,710
+such as the word to resistance so we found
+this is a new sense cluster that is coming
+
+134
+00:13:41,710 --> 00:13:49,330
+up and like then many other senses so this
+is i will say as i was saying this is a new
+
+135
+00:13:49,330 --> 00:13:53,690
+research field and some works have have come
+up in this in this field this is one such
+
+136
+00:13:53,690 --> 00:13:58,230
+work but i hope the basic ideas care that
+if you want to detect new word sense what
+
+137
+00:13:58,230 --> 00:14:04,790
+you need to do so that ends this week of lexical
+semantics
+
+138
+00:14:04,790 --> 00:14:08,710
+so next week again we will continue with the
+topic of semantics so we have started with
+
+139
+00:14:08,710 --> 00:14:12,590
+distributions of semantics one idea then we
+talked about lexical semantics another idea
+
+140
+00:14:12,590 --> 00:14:18,750
+of semantics now we will see how we can capture
+semantics using topics ok can we find out
+
+141
+00:14:18,750 --> 00:14:23,350
+what are the topics that are there in my data
+use that for some semantics and that's why
+
+142
+00:14:23,350 --> 00:14:28,870
+we will discuss topic models detail ok and
+there are again very very popular tools in
+
+143
+00:14:28,870 --> 00:14:32,760
+n l p so
+thank you i will see you in the next week
+
